@@ -6,28 +6,48 @@ import Home from '../Home/index';
 import styles from './layout.module.css';
 import Employees from '../Employees/index';
 import Projects from '../Projects';
+import ProjectForm from '../Projects/Form/index';
 import TimeSheets from '../TimeSheets';
 import Tasks from '../Tasks/index';
 
 function Layout() {
   let currentScreen = <Home />;
-  switch (window.location.pathname) {
-    case '/admins':
+  const path = window.location.pathname.split('/')[1];
+  switch (path) {
+    case 'admins':
       currentScreen = <Admins />;
       break;
-    case '/super-admins':
+    case 'admin-form':
+      currentScreen = <Admins />;
+      break;
+    case 'super-admins':
       currentScreen = <SuperAdmins />;
       break;
-    case '/employees':
+    case 'super-admin-form':
+      currentScreen = <SuperAdmins />;
+      break;
+    case 'employees':
       currentScreen = <Employees />;
       break;
-    case '/projects':
+    case 'employee-form':
+      currentScreen = <Employees />;
+      break;
+    case 'projects':
       currentScreen = <Projects />;
       break;
-    case '/time-sheets':
+    case 'project-form':
+      currentScreen = <ProjectForm />;
+      break;
+    case 'time-sheets':
       currentScreen = <TimeSheets />;
       break;
-    case '/tasks':
+    case 'time-sheet-form':
+      currentScreen = <TimeSheets />;
+      break;
+    case 'tasks':
+      currentScreen = <Tasks />;
+      break;
+    case 'task-form':
       currentScreen = <Tasks />;
       break;
     default:
