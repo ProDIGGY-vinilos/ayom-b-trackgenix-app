@@ -36,7 +36,7 @@ function Layout() {
       currentScreen = <Projects />;
       break;
     case 'project-form':
-      currentScreen = <ProjectForm />;
+      currentScreen = <ProjectForm text={'Submit'} />;
       break;
     case 'time-sheets':
       currentScreen = <TimeSheets />;
