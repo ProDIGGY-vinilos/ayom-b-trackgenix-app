@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './time-sheets.module.css';
 import ExpandButton from './Expand button';
 import DeleteButton from './Delete Button';
+import CreateButton from './Create Button';
 
 function TimeSheets() {
   const [TimeSheets, saveTimeSheets] = useState([]);
@@ -67,6 +68,7 @@ function TimeSheets() {
           );
         })}
       </table>
+      <CreateButton />
     </section>
   );
 }

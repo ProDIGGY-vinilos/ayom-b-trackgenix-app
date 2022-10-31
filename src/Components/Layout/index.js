@@ -8,6 +8,7 @@ import Employees from '../Employees/index';
 import Projects from '../Projects';
 import ProjectForm from '../Projects/Form/index';
 import TimeSheets from '../TimeSheets';
+import TimeSheetsForm from '../TimeSheets/Form';
 import Tasks from '../Tasks/index';
 
 function Layout() {
@@ -42,7 +43,7 @@ function Layout() {
       currentScreen = <TimeSheets />;
       break;
     case 'time-sheet-form':
-      currentScreen = <TimeSheets />;
+      currentScreen = <TimeSheetsForm />;
       break;
     case 'tasks':
       currentScreen = <Tasks />;
