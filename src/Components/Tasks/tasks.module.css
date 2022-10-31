@@ -122,3 +122,17 @@
 .addItem div{
   margin: 10px 0;
 }
+
+.goBackButton{
+  margin: 0px 10px;
+  padding: 10px;
+  color: #373867;
+  background-color: #F13312;
+  border-radius: 8px;
+  border-color: #9e210b;
+}
+
+.goBackButton:hover{
+  background-color: #9e210b;
+  border-color: #F13312;
+}

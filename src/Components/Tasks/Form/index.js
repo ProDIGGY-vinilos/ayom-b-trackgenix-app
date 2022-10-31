@@ -56,6 +56,9 @@ function Form() {
           <button className={styles.addButton} type="submit">
             Save
           </button>
+          <a href="/tasks">
+            <button className={styles.goBackButton}>Go back</button>
+          </a>
         </div>
       </form>
     </div>
