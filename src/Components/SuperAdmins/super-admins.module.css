@@ -4,13 +4,23 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
-table {
+table{
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
+  border: 1px solid #ddd;
+  text-align: center;
 }
-#probando{
+th, .info {
+  width: 100%;
+}
+tr{
   display: flex;
-  width: 550px;
+  flex-direction: row;
+  width: 100%;
+}
+.btn{
+  width: 25%;
 }
