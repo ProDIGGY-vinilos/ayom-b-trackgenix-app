@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import List from './adminList';
-import AddItem from './addAdmin';
+//import AddItem from './editAdminForm';
 import styles from './admins.module.css';
 
 function Admins() {
   const [admins, saveAdmins] = useState([]);
 
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/admins`)
+  useEffect(async () => {
+    await fetch(`${process.env.REACT_APP_API_URL}/admins`)
       .then((response) => response.json())
       .then((response) => {
         saveAdmins(response.data);
@@ -18,21 +18,14 @@ function Admins() {
     saveAdmins([...admins.filter((newListItem) => newListItem._id !== id)]);
   };
 
-  const addItem = ({ name, lastName, email, password }) => {
-    const newItem = {
-      id: Math.floor(Math.random() * 1000),
-      name,
-      lastName,
-      email,
-      password
-    };
-    saveAdmins([...admins, newItem]);
-  };
-
   return (
     <div className={styles.container}>
-      <h2>Admin</h2>
-      <AddItem addAdmin={addItem} />
+      <div className={styles.adminHeader}>
+        <h2>Admin</h2>
+        <a href={`admins/form`}>
+          <button>+</button>
+        </a>
+      </div>
       <List list={admins} saveAdmins={saveAdmins} deleteItem={deleteAdmin} />
     </div>
   );

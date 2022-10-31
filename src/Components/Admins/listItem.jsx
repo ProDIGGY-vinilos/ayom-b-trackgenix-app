@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import Form from './editAdminForm';
 import Modal from '../Admins/modalAdmin';
 
 const ListAdmin = ({ listAdmin, deleteAdmin }) => {
@@ -24,9 +23,6 @@ const ListAdmin = ({ listAdmin, deleteAdmin }) => {
       body: JSON.stringify(listAdmin)
     });
   };
-  const onSubmit = (list) => {
-    <Form editList={list} saveAdmins={list} />;
-  };
 
   return (
     <tr>
@@ -37,7 +33,7 @@ const ListAdmin = ({ listAdmin, deleteAdmin }) => {
       <td>{listAdmin.password}</td>
       <td>
         <a href={`admins/form?id=${listAdmin._id}`}>
-          <button onClick={() => onSubmit(listAdmin)}>Edit</button>
+          <button>Edit</button>
         </a>
       </td>
       <td>
