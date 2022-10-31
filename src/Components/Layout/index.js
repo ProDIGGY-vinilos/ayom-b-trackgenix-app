@@ -9,6 +9,7 @@ import Projects from '../Projects';
 import ProjectForm from '../Projects/Form/index';
 import TimeSheets from '../TimeSheets';
 import Tasks from '../Tasks/index';
+import TasksForm from '../Tasks/Form/index';
 
 function Layout() {
   let currentScreen = <Home />;
@@ -48,7 +49,7 @@ function Layout() {
       currentScreen = <Tasks />;
       break;
     case 'task-form':
-      currentScreen = <Tasks />;
+      currentScreen = <TasksForm />;
       break;
     default:
       break;
