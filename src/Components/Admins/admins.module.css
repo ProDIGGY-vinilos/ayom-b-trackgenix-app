@@ -1,8 +1,10 @@
 .container {
   flex: 1;
   display: flex;
-  justify-content: center;
   align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
 }
 
 .list > table{
@@ -36,4 +38,44 @@ font-weight: bold;
   align-items: center;
   margin: 5px;
   padding: 10px;
+}
+
+.moduleContainer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal {
+  width: 500px;
+  height: 200px;
+  background-color: white;
+  border-radius: 5px;
+  border: solid 1px grey;
+  margin: auto;
+  margin-top: 200px;
+}
+.modalHeader {
+  padding: 2px 16px;
+  background-color: #373867;
+  color: white;
+}
+
+.modalBody {padding: 2px 16px;}
+
+.deleteButton {
+  background: #F13312;
+  border-radius: 5px;
+  color: white;
+}
+
+.closeButton {
+  background: #AACE9B;
+  border-radius: 5px;
+  color: white;
 }

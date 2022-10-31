@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import List from './adminList';
 import AddItem from './addAdmin';
+import styles from './admins.module.css';
 
 function Admins() {
   const [admins, saveAdmins] = useState([]);
@@ -29,7 +30,8 @@ function Admins() {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
+      <h2>Admin</h2>
       <AddItem addAdmin={addItem} />
       <List list={admins} saveAdmins={saveAdmins} deleteItem={deleteAdmin} />
     </div>
