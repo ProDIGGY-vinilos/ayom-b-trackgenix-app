@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import List from './adminList';
-//import AddItem from './editAdminForm';
+import Table from './adminTable';
 import styles from './admins.module.css';
 
 function Admins() {
@@ -26,7 +25,7 @@ function Admins() {
           <button>+</button>
         </a>
       </div>
-      <List list={admins} saveAdmins={saveAdmins} deleteItem={deleteAdmin} />
+      <Table list={admins} saveAdmins={saveAdmins} deleteItem={deleteAdmin} />
     </div>
   );
 }

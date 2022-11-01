@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import Modal from '../Admins/modalAdmin';
 
-const ListAdmin = ({ listAdmin, deleteAdmin }) => {
+const RowAdmin = ({ listAdmin, deleteAdmin }) => {
   const [showModal, setModal] = useState(false);
 
   const openModal = () => {
@@ -33,7 +33,9 @@ const ListAdmin = ({ listAdmin, deleteAdmin }) => {
       <td>{listAdmin.password}</td>
       <td>
         <a href={`admins/form?id=${listAdmin._id}`}>
-          <button>Edit</button>
+          <button>
+            <img src={`${process.env.PUBLIC_URL}/assets/images/iconEdit.svg`} />
+          </button>
         </a>
       </td>
       <td>
@@ -45,9 +47,11 @@ const ListAdmin = ({ listAdmin, deleteAdmin }) => {
           title={'DELETE ADMIN'}
           text={`Do you want to remove ${listAdmin.name}?`}
         />
-        <button onClick={openModal}>Delete</button>
+        <button onClick={openModal}>
+          <img src={`${process.env.PUBLIC_URL}/assets/images/iconTrash.svg`} />
+        </button>
       </td>
     </tr>
   );
 };
-export default ListAdmin;
+export default RowAdmin;

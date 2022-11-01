@@ -1,4 +1,4 @@
-import styles from './admins.module.css';
+import styles from './modal.module.css';
 
 function Modal(props) {
   if (!props.show) {
@@ -30,5 +30,4 @@ function Modal(props) {
     </div>
   );
 }
-
 export default Modal;

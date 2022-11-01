@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
 
 function Form() {
-  const [nameValue, setNameValue] = useState({
+  const [inputValue, setInputValue] = useState({
     name: '',
     lastName: '',
     email: '',
@@ -10,13 +10,13 @@ function Form() {
   });
 
   useEffect(async () => {
-    const paramas = new URLSearchParams(window.location.search);
-    const clientID = paramas.get('id');
-    if (clientID !== null) {
+    const params = new URLSearchParams(window.location.search);
+    const adminId = params.get('id');
+    if (adminId !== null) {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${clientID}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`);
         const data = await response.json();
-        setNameValue({
+        setInputValue({
           name: data.data.name,
           lastName: data.data.lastName,
           email: data.data.email,
@@ -24,28 +24,29 @@ function Form() {
         });
         return;
       } catch (err) {
-        console.error(err);
+        setTimeout(() => {
+          alert(err.message);
+        }, 10);
       }
     }
   }, []);
 
   const onChange = (e) => {
-    setNameValue({ ...nameValue, [e.target.name]: e.target.value });
+    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const paramas = new URLSearchParams(window.location.search);
-    const clientID = paramas.get('id');
-    if (clientID !== null) {
+  const onSubmit = () => {
+    const params = new URLSearchParams(window.location.search);
+    const clientId = params.get('id');
+    if (clientId !== null) {
       const options = {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(nameValue)
+        body: JSON.stringify(inputValue)
       };
-      const url = `${process.env.REACT_APP_API_URL}/admins/${clientID}`;
+      const url = `${process.env.REACT_APP_API_URL}/admins/${clientId}`;
       fetch(url, options).then(async (response) => {
         if (response.status !== 200 && response.status !== 201) {
           const { message } = await response.json();
@@ -53,6 +54,9 @@ function Form() {
             alert(message);
           }, 10);
         } else {
+          setTimeout(() => {
+            alert('Admin was successfully edited');
+          }, 10);
           return response.json();
         }
       });
@@ -62,17 +66,19 @@ function Form() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(nameValue)
+        body: JSON.stringify(inputValue)
       };
       const url = `${process.env.REACT_APP_API_URL}/admins`;
       fetch(url, options).then(async (response) => {
-        console.log('STATUS', response.status);
         if (response.status !== 200 && response.status !== 201) {
           const { message } = await response.json();
           setTimeout(() => {
             alert(message);
           }, 10);
         } else {
+          setTimeout(() => {
+            alert('Admin was created successfully');
+          }, 10);
           return response.json();
         }
       });
@@ -88,22 +94,22 @@ function Form() {
       </div>
       <div className={styles.fromInput}>
         <label>Name</label>
-        <input type="text" name="name" value={nameValue.name} onChange={onChange} />
+        <input type="text" name="name" value={inputValue.name} onChange={onChange} />
       </div>
       <div className={styles.fromInput}>
         <label>LastName</label>
-        <input type="text" name="lastName" value={nameValue.lastName} onChange={onChange} />
+        <input type="text" name="lastName" value={inputValue.lastName} onChange={onChange} />
       </div>
       <div className={styles.fromInput}>
         <label>Email</label>
-        <input type="text" name="email" value={nameValue.email} onChange={onChange} />
+        <input type="text" name="email" value={inputValue.email} onChange={onChange} />
       </div>
       <div className={styles.fromInput}>
         <label>Pasasword</label>
-        <input type="text" name="password" value={nameValue.password} onChange={onChange} />
+        <input type="text" name="password" value={inputValue.password} onChange={onChange} />
       </div>
       <div className={styles.formButton}>
-        <button type="submit" onClick={onSubmit}>
+        <button type="button" onClick={onSubmit}>
           Save
         </button>
       </div>

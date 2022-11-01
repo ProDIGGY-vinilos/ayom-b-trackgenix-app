@@ -1,8 +1,8 @@
 import React from 'react';
-import ListAdmin from './listItem';
+import RowAdmin from './adminRow';
 import styles from './admins.module.css';
 
-const List = ({ list, deleteItem }) => {
+const AdminTable = ({ list, deleteItem }) => {
   return (
     <div className={styles.list}>
       <table>
@@ -19,7 +19,7 @@ const List = ({ list, deleteItem }) => {
         </thead>
         <tbody>
           {list.map((admins) => {
-            return <ListAdmin key={admins._id} listAdmin={admins} deleteAdmin={deleteItem} />;
+            return <RowAdmin key={admins._id} listAdmin={admins} deleteAdmin={deleteItem} />;
           })}
         </tbody>
       </table>
@@ -27,4 +27,4 @@ const List = ({ list, deleteItem }) => {
   );
 };
 
-export default List;
+export default AdminTable;
