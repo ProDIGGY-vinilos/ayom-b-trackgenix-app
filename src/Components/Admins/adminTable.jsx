@@ -18,9 +18,13 @@ const AdminTable = ({ list, deleteItem }) => {
           </tr>
         </thead>
         <tbody>
-          {list.map((admins) => {
-            return <RowAdmin key={admins._id} listAdmin={admins} deleteAdmin={deleteItem} />;
-          })}
+          {list === undefined || list.length === 0 ? (
+            <td>There are no admin yet!</td>
+          ) : (
+            list.map((admins) => {
+              return <RowAdmin key={admins._id} listAdmin={admins} deleteAdmin={deleteItem} />;
+            })
+          )}
         </tbody>
       </table>
     </div>

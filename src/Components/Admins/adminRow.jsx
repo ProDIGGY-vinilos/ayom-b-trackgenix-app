@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import Modal from '../Admins/modalAdmin';
+import Modal from './Modal/modalAdmin';
 
 const RowAdmin = ({ listAdmin, deleteAdmin }) => {
   const [showModal, setModal] = useState(false);
@@ -22,8 +22,10 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
       },
       body: JSON.stringify(listAdmin)
     });
+    setTimeout(() => {
+      alert('Admin was deleted');
+    }, 10);
   };
-
   return (
     <tr>
       <td>{listAdmin._id}</td>
