@@ -59,7 +59,9 @@ function TimeSheets() {
               </td>
               <td key={TimeSheet._id}>{TimeSheet.hours}</td>
               <td>
-                <button>Edit</button>
+                <a href={`/time-sheet-form/${TimeSheet._id}`}>
+                  <button>Edit</button>
+                </a>
               </td>
               <td key={TimeSheet._id}>
                 <DeleteButton onDelete={deleteTimesheet} timeSheetId={TimeSheet._id} />

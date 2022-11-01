@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
+import Select from '../Select/';
 
 const TimeSheetsForm = () => {
   const [Projects, setProjects] = useState([]);
@@ -11,6 +12,12 @@ const TimeSheetsForm = () => {
   const [ProjectId, setProjectId] = useState('');
   const [EmployeeId, setEmployeeId] = useState('');
   const [TaskId, setTaskId] = useState('');
+  const [timeSheet, setTimeSheet] = useState({});
+  const path = window.location.pathname.split('/');
+  let timeSheetId = path[path.length - 1];
+  let formSwitch;
+
+  timeSheetId.length == 24 ? (formSwitch = true) : (formSwitch = false);
 
   const projectsFetch = async () => {
     try {
@@ -20,6 +27,15 @@ const TimeSheetsForm = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const setStates = (timesheet) => {
+    setDescription(timesheet.description);
+    setDate(timesheet.date);
+    setHours(timesheet.hours);
+    setProjectId(timesheet.project);
+    setEmployeeId(timesheet.employee);
+    setTaskId(timesheet.task);
   };
 
   const tasksFetch = async () => {
@@ -42,11 +58,25 @@ const TimeSheetsForm = () => {
     }
   };
 
+  const timeSheetFetch = async (id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`);
+      const data = await response.json();
+      setTimeSheet(data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     projectsFetch();
     tasksFetch();
     employeesFetch();
-  }, []);
+    if (formSwitch) {
+      timeSheetFetch(timeSheetId);
+      setStates(timeSheet);
+    }
+  }, [timeSheet]);
 
   const createTimeSheet = async (Description, Date, Hours, ProjectId, TaskId, EmployeeId) => {
     const req = {
@@ -57,19 +87,28 @@ const TimeSheetsForm = () => {
       employee: EmployeeId,
       hours: Hours
     };
-    console.log(JSON.stringify(req));
-    await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(req)
-    });
+    if (formSwitch) {
+      await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${timeSheetId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(req)
+      });
+    } else {
+      await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(req)
+      });
+    }
   };
 
   return (
     <div className={styles.container}>
-      <h2>Add new time sheet</h2>
+      {formSwitch ? <h2>Edit time sheet</h2> : <h2>Add new time sheet</h2>}
       <form>
         <label>Description</label>
         <textarea
@@ -87,35 +126,11 @@ const TimeSheetsForm = () => {
           placeholder="Hours"
         ></input>
         <label>Select Project</label>
-        <select onChange={(e) => setProjectId(e.target.value)}>
-          {Projects.map((Project) => {
-            return (
-              <option value={Project._id} key={Project._id}>
-                {Project.name}
-              </option>
-            );
-          })}
-        </select>
+        <Select Data={Projects} setId={setProjectId} field="description" />
         <label>Select Employee</label>
-        <select onChange={(e) => setEmployeeId(e.target.value)}>
-          {Employees.map((Employee) => {
-            return (
-              <option value={Employee._id} key={Employee._id}>
-                {Employee.name}
-              </option>
-            );
-          })}
-        </select>
-        <label>Select Tasks</label>
-        <select onChange={(e) => setTaskId(e.target.value)}>
-          {Tasks.map((Task) => {
-            return (
-              <option value={Task._id} key={Task._id}>
-                {Task.description}
-              </option>
-            );
-          })}
-        </select>
+        <Select Data={Employees} setId={setEmployeeId} field="name" />
+        <label>Select Task</label>
+        <Select Data={Tasks} setId={setTaskId} field="description" />
       </form>
       <button
         onClick={() => createTimeSheet(Description, Date, Hours, ProjectId, TaskId, EmployeeId)}
