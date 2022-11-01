@@ -30,6 +30,7 @@ font-weight: bold;
   align-items: center;
   border-bottom: 1px solid #707070;
 }
+
 .list tbody tr:last-of-type {
   align-items: center;
   border-bottom: 2px solid  #AACE9B;
@@ -71,7 +72,6 @@ font-weight: bold;
   border-radius: 5px;
   border: solid 1px grey;
   margin: auto;
-
 }
 
 .fromInput{
@@ -100,7 +100,6 @@ font-weight: bold;
   border: 5px;
   border-radius: 5px;
 }
-
 
 .formButton > button{
   display: flex;

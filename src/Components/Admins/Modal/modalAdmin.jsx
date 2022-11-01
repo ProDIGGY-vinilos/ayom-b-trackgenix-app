@@ -1,16 +1,19 @@
 import styles from './modal.module.css';
 
 function Modal(props) {
-  if (!props.show) {
+  if (!props.openModal) {
     return null;
   }
-  const onCloseModal = () => {
+
+  const cancelButtonAction = () => {
     props.closeModal();
   };
-  const onConfirmModal = () => {
-    props.onCloseModal();
+
+  const deleteButtonAction = () => {
+    props.deleteAction();
     props.closeModal();
   };
+
   return (
     <div className={styles.moduleContainer}>
       <div className={styles.modal}>
@@ -18,16 +21,17 @@ function Modal(props) {
           <h3>{props.title}</h3>
         </div>
         <div className={styles.modalBody}>
-          <p>{props.text}</p>
+          <p>{props.warningText}</p>
         </div>
-        <button onClick={onCloseModal} className={styles.closeButton}>
+        <button onClick={cancelButtonAction} className={styles.closeButton}>
           Cancel
         </button>
-        <button onClick={onConfirmModal} className={styles.deleteButton}>
+        <button onClick={deleteButtonAction} className={styles.deleteButton}>
           Delete
         </button>
       </div>
     </div>
   );
 }
+
 export default Modal;

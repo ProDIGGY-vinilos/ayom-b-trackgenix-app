@@ -13,18 +13,15 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
     setModal(false);
   };
 
-  const onCloseModal = () => {
+  const removeAdmin = async () => {
     deleteAdmin(listAdmin._id);
-    fetch(`${process.env.REACT_APP_API_URL}/admins/${listAdmin._id}`, {
+    await fetch(`../assets/admins/${listAdmin._id}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json'
       },
       body: JSON.stringify(listAdmin)
     });
-    setTimeout(() => {
-      alert('Admin was deleted');
-    }, 10);
   };
   return (
     <tr>
@@ -34,20 +31,20 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
       <td>{listAdmin.email}</td>
       <td>{listAdmin.password}</td>
       <td>
-        <a href={`admins/form?id=${listAdmin._id}`}>
-          <button>
-            <img src={`${process.env.PUBLIC_URL}/assets/images/iconEdit.svg`} />
+        <a href={`admins-form/${listAdmin._id}`}>
+          <button type="button">
+            <img src={`../assets/images/iconEdit.svg`} />
           </button>
         </a>
       </td>
       <td>
         <Modal
-          show={showModal}
+          openModal={showModal}
           closeModal={closeModal}
-          onCloseModal={onCloseModal}
+          deleteAction={removeAdmin}
           id={listAdmin._id}
           title={'DELETE ADMIN'}
-          text={`Do you want to remove ${listAdmin.name}?`}
+          warningText={`Do you want to remove ${listAdmin.name}?`}
         />
         <button onClick={openModal}>
           <img src={`${process.env.PUBLIC_URL}/assets/images/iconTrash.svg`} />

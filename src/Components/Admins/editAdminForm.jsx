@@ -10,9 +10,9 @@ function Form() {
   });
 
   useEffect(async () => {
-    const params = new URLSearchParams(window.location.search);
-    const adminId = params.get('id');
-    if (adminId !== null) {
+    const path = window.location.pathname.split('/');
+    const adminId = path[path.length - 1];
+    if (adminId !== 'admins-form') {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`);
         const data = await response.json();
@@ -36,9 +36,9 @@ function Form() {
   };
 
   const onSubmit = () => {
-    const params = new URLSearchParams(window.location.search);
-    const clientId = params.get('id');
-    if (clientId !== null) {
+    const path = window.location.pathname.split('/');
+    const adminId = path[path.length - 1];
+    if (adminId !== 'admins-form') {
       const options = {
         method: 'PUT',
         headers: {
@@ -46,7 +46,7 @@ function Form() {
         },
         body: JSON.stringify(inputValue)
       };
-      const url = `${process.env.REACT_APP_API_URL}/admins/${clientId}`;
+      const url = `${process.env.REACT_APP_API_URL}/admins/${adminId}`;
       fetch(url, options).then(async (response) => {
         if (response.status !== 200 && response.status !== 201) {
           const { message } = await response.json();
