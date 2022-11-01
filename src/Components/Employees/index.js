@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import Button from './Button';
 import Employee from './Employee';
-import FormAddEmployee from './FormAddEmployee';
 
 function Employees() {
   const [employees, saveEmployees] = useState([]);
-  const [showAddEmployee, setShowAddEmployee] = useState(false);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/employees`)
@@ -23,13 +21,10 @@ function Employees() {
 
   return (
     <section className={styles.container}>
-      <h2>Employees</h2>
-      <Button
-        onClick={() => setShowAddEmployee(!showAddEmployee)}
-        color="green"
-        text={!showAddEmployee ? 'Add' : 'Close'}
-      />
-      {showAddEmployee && <FormAddEmployee />}
+      <div className={styles.title}>
+        <h2>Employees</h2>
+        <Button color="green" text={'Add'} href={'/employee-form'} />
+      </div>
       {employees.map((employee) => (
         <Employee key={employee._id} employee={employee} onClickDelete={deleteEmployee} />
       ))}

@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './employees.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+const path = window.location.pathname.split('/');
+let employeeId = path[path.length - 1];
 
 const FormAddEmployee = () => {
   const [userInput, setUserInput] = useState({
@@ -11,38 +13,54 @@ const FormAddEmployee = () => {
     password: ''
   });
 
+  useEffect(async () => {
+    if (employeeId !== 'employee-form') {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${employeeId}`);
+        const data = await response.json();
+        setUserInput({
+          name: data.data.name,
+          lastName: data.data.lastName,
+          email: data.data.email,
+          phone: data.data.phone,
+          password: data.data.password
+        });
+        return;
+      } catch (err) {
+        setTimeout(() => {
+          alert(err.message);
+        }, 10);
+      }
+    }
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserInput((prev) => ({
       ...prev,
       [name]: value
     }));
-    console.log(userInput);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(userInput);
-    const requestOptions = {
-      method: 'POST',
-      body: JSON.stringify(userInput)
-    };
 
-    fetch(`${process.env.REACT_APP_API_URL}/employees`, requestOptions).then((response) => {
+    const requestOptions = {
+      method: employeeId === 'employee-form' ? 'POST' : 'PUT',
+      body: JSON.stringify(userInput),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    let url = employeeId === 'employee-form' ? '' : '/' + employeeId;
+
+    fetch(`${process.env.REACT_APP_API_URL}/employees${url}`, requestOptions).then((response) => {
       if (response.status !== 200 || response.status !== 201) {
         return response.json().then(({ message }) => {
           throw new Error(message);
         });
       }
-      console.log(response);
       return response.json();
-    });
-    setUserInput({
-      name: '',
-      lastName: '',
-      phone: '',
-      email: '',
-      password: ''
     });
   };
   return (
