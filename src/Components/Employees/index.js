@@ -6,6 +6,7 @@ import FormAddEmployee from './FormAddEmployee';
 
 function Employees() {
   const [employees, saveEmployees] = useState([]);
+  const [showAddEmployee, setShowAddEmployee] = useState(false);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/employees`)
@@ -23,13 +24,16 @@ function Employees() {
   return (
     <section className={styles.container}>
       <h2>Employees</h2>
-      <Button color="green" text="Add" />
-      <FormAddEmployee />
+      <Button
+        onClick={() => setShowAddEmployee(!showAddEmployee)}
+        color="green"
+        text={!showAddEmployee ? 'Add' : 'Close'}
+      />
+      {showAddEmployee && <FormAddEmployee />}
       {employees.map((employee) => (
         <Employee key={employee._id} employee={employee} onClickDelete={deleteEmployee} />
       ))}
     </section>
   );
 }
-
 export default Employees;
