@@ -1,6 +1,5 @@
 import styles from './projects.module.css';
 import { useState, useEffect } from 'react';
-/* import Form from './Form/index'; */
 import List from './List/index';
 
 function Projects() {
@@ -25,24 +24,22 @@ function Projects() {
   return (
     <section className={styles.container}>
       <h2 className={styles.header}>Projects</h2>
-      <button>
-        <a href="/project-form">Add New Project</a>
-      </button>
       {projects.length > 0 ? (
         <div className={styles.tableContainer}>
-          <table>
-            <thead>
+          <h3 className={styles.tableTitle}>Current Projects</h3>
+          <table className={styles.table}>
+            <thead className={styles.tableHeader}>
               <tr>
-                <th>Name</th>
+                <th>Project</th>
                 <th>Description</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Client</th>
                 <th>Employees</th>
-                <th>Edit</th>
+                <th>Options</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className={styles.borderBottom}>
               {projects.map((project) => {
                 return <List key={project._id} projectItem={project} onDeleteItem={onDeleteItem} />;
               })}
@@ -52,6 +49,11 @@ function Projects() {
       ) : (
         <p>There are not projects</p>
       )}
+      <button className={styles.btn}>
+        <a className={styles.btnText} href="/project-form">
+          Add New Project
+        </a>
+      </button>
     </section>
   );
 }

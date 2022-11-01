@@ -2,7 +2,7 @@ import React from 'react';
 
 const Employee = ({ employee }) => {
   return (
-    <td>
+    <td key={employee._id}>
       <p>{employee.employee.name}</p>
       <p>{employee.role}</p>
       <p>{employee.rate}</p>

@@ -1,17 +1,61 @@
 import React, { useEffect, useState } from 'react';
+import FormEmployee from './FormEmployees/index';
+import Modal from '../Modal';
+import styles from './form.module.css';
 
 const index = ({ text }) => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [clientName, setClientName] = useState('');
-  const [employee, setemployee] = useState('');
-  const [role, setRole] = useState('');
-  const [rate, setRate] = useState('');
   const [idState, setIdState] = useState('');
+  const [projectBody, setProjectBody] = useState({
+    name: '',
+    description: '',
+    startDate: '',
+    endDate: '',
+    clientName: '',
+    employees: [
+      {
+        employee: '',
+        role: '',
+        rate: ''
+      }
+    ]
+  });
+  const [showModal, setShowModal] = useState(false);
+  const [fetched, setFectched] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [projectBody, setProjectBody] = useState({});
+  /* const addNewEmployee = () => {
+    setProjectBody((currentBody) => {
+      return {
+        ...currentBody,
+        employees: [
+          ...projectBody.employees,
+          {
+            employee: '',
+            role: '',
+            rate: ''
+          }
+        ]
+      };
+    });
+  }; */
+
+  /* const test = projectBody.employees.filter((employee, id) => employee.employee !== id);*/
+
+  /* const deleteEmployee = () => {
+    setProjectBody((currentEmployees) => {
+      return currentEmployees.employees.pop();
+    });
+    console.log(projectBody.employees[1]);
+  }; */
+
+  const openModal = (e) => {
+    e.preventDefault();
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(async () => {
     const path = window.location.pathname.split('/');
@@ -22,67 +66,75 @@ const index = ({ text }) => {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}api/projects/${projectId}`);
         const data = await response.json();
-        setProjectBody(data.data);
+        console.log(data.data);
+        setFectched('true');
+        setProjectBody({
+          name: data.data.name,
+          description: data.data.description,
+          startDate: data.data.startDate.substring(0, 10),
+          endDate: data.data.endDate.substring(0, 10),
+          clientName: data.data.clientName,
+          employees: [
+            {
+              employee: data.data.employees[0].employee._id,
+              role: data.data.employees[0].role,
+              rate: data.data.employees[0].rate
+            }
+          ]
+        });
       } catch (error) {
         console.error(error);
       }
     }
+    if (projectId === 'project-form') {
+      setFectched('false');
+    }
+    setIsLoading(false);
   }, [idState]);
 
-  console.log(projectBody);
-
-  console.log(projectBody.employees);
-
   const onChangeNameValue = (e) => {
-    setName(e.target.value);
+    setProjectBody({ ...projectBody, name: e.target.value });
   };
 
   const onChangeDescriptionValue = (e) => {
-    setDescription(e.target.value);
+    setProjectBody({ ...projectBody, description: e.target.value });
   };
 
   const onChangeStartDateValue = (e) => {
-    setStartDate(e.target.value);
+    setProjectBody({ ...projectBody, startDate: e.target.value });
   };
 
   const onChangeEndDateValue = (e) => {
-    setEndDate(e.target.value);
+    setProjectBody({ ...projectBody, endDate: e.target.value });
   };
 
   const onChangeClientNameValue = (e) => {
-    setClientName(e.target.value);
+    setProjectBody({ ...projectBody, clientName: e.target.value });
   };
 
   const onChangeEmployeeValue = (e) => {
-    setemployee(e.target.value);
+    setProjectBody({
+      ...projectBody,
+      employees: [{ ...projectBody.employees[0], employee: e.target.value }]
+    });
   };
 
   const onChangeRoleValue = (e) => {
-    setRole(e.target.value);
+    setProjectBody({
+      ...projectBody,
+      employees: [{ ...projectBody.employees[0], role: e.target.value }]
+    });
   };
 
   const onChangeRateValue = (e) => {
-    setRate(e.target.value);
+    setProjectBody({
+      ...projectBody,
+      employees: [{ ...projectBody.employees[0], rate: e.target.value }]
+    });
   };
 
-  let bodyToSend = {
-    name: name.toString(),
-    description: description.toString(),
-    startDate: startDate.toString(),
-    endDate: endDate.toString(),
-    clientName: clientName.toString(),
-    employees: [
-      {
-        employee: employee.toString(),
-        role: role.toString(),
-        rate: rate
-      }
-    ]
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    console.log(JSON.stringify(bodyToSend));
+  const onSubmit = async () => {
+    console.log(JSON.stringify(projectBody));
 
     if (idState.length === 24) {
       const updateProject = await fetch(`${process.env.REACT_APP_API_URL}api/projects/${idState}`, {
@@ -90,7 +142,7 @@ const index = ({ text }) => {
         headers: {
           'Content-type': 'application/json'
         },
-        body: JSON.stringify(bodyToSend)
+        body: JSON.stringify(projectBody)
       });
 
       console.log(updateProject);
@@ -100,7 +152,7 @@ const index = ({ text }) => {
         headers: {
           'Content-type': 'application/json'
         },
-        body: JSON.stringify(bodyToSend)
+        body: JSON.stringify(projectBody)
       });
 
       console.log(updateProject);
@@ -108,12 +160,15 @@ const index = ({ text }) => {
   };
 
   return (
-    <div>
-      <form onSubmit={onSubmit} action="">
-        {projectBody ? (
+    <div className={styles.container}>
+      {isLoading && <h3>Loading</h3>}
+      {fetched === 'true' && <h2>Edit Project</h2>}
+      {fetched === 'false' && <h2>Add New Project</h2>}
+      <form className={styles.formContainer} onSubmit={onSubmit}>
+        {fetched === 'true' ? (
           <>
-            <div>
-              <label>Name</label>
+            <div className={styles.formDiv}>
+              <label>Project Name: </label>
               <input
                 type="text"
                 name="name"
@@ -122,111 +177,150 @@ const index = ({ text }) => {
                 required
               />
             </div>
-            <div>
-              <label>Description</label>
-              <input
-                type="text"
-                name="description"
-                defaultValue={projectBody.description}
-                onChange={onChangeNameValue}
-                required
-              />
-            </div>
-            <div>
-              <label>Start Date</label>
-              <input
-                type="text"
-                name="start date"
-                defaultValue={projectBody.startDate}
-                onChange={onChangeNameValue}
-                required
-              />
-            </div>
-            <div>
-              <label>End Date</label>
-              <input
-                type="text"
-                name="end date"
-                defaultValue={projectBody.endDate}
-                onChange={onChangeNameValue}
-                required
-              />
-            </div>
-            <div>
+            <div className={styles.formDiv}>
               <label>Client Name</label>
               <input
                 type="text"
                 name="client name"
                 defaultValue={projectBody.clientName}
-                onChange={onChangeNameValue}
+                onChange={onChangeClientNameValue}
                 required
               />
             </div>
-            {/* {projectBody.employees.map((employee) => {
-              <div>
-                <label>Employee</label>
-                <input
-                  type="text"
-                  name="employee"
-                  defaultValue={employee.name}
-                  onChange={onChangeNameValue}
-                  required
-                />
-                <label>Role</label>
-                <input
-                  type="text"
-                  name="role"
-                  defaultValue={employee.role}
-                  onChange={onChangeNameValue}
-                  required
-                />
-                <label>Rate</label>
-                <input
-                  type="number"
-                  name="rate"
-                  defaultValue={employee.rate}
-                  onChange={onChangeNameValue}
-                  required
-                />
-              </div>;
-            })} */}
+            <div className={styles.formFull}>
+              <label>Description</label>
+              <textarea
+                name=""
+                id=""
+                cols="30"
+                rows="10"
+                className={styles.textarea}
+                defaultValue={projectBody.description}
+                onChange={onChangeDescriptionValue}
+              ></textarea>
+            </div>
+            <div className={styles.formDiv}>
+              <label>Start Date</label>
+              <input
+                type="text"
+                name="start date"
+                defaultValue={projectBody.startDate}
+                onChange={onChangeStartDateValue}
+                required
+              />
+            </div>
+            <div className={styles.formDiv}>
+              <label>End Date</label>
+              <input
+                type="text"
+                name="end date"
+                defaultValue={projectBody.endDate}
+                onChange={onChangeEndDateValue}
+                required
+              />
+            </div>
+            <h4 className={styles.formFull}>Employees: </h4>
+            {projectBody.employees.map((employee) => {
+              return (
+                <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
+                  <FormEmployee
+                    key={employee}
+                    eachEmployee={employee}
+                    changeEmployeeValue={onChangeEmployeeValue}
+                    changeRoleValue={onChangeRoleValue}
+                    changeRateValue={onChangeRateValue}
+                  />
+                </div>
+              );
+            })}
           </>
         ) : (
           <>
-            <div>
-              <label htmlFor="">Name</label>
-              <input type="text" on onChange={onChangeNameValue} required />
+            <div className={styles.formDiv}>
+              <label>Project Name: </label>
+              <input type="text" on onChange={onChangeNameValue} />
             </div>
-            <div>
-              <label htmlFor="">Description</label>
-              <input type="text" onChange={onChangeDescriptionValue} />
-            </div>
-            <div>
-              <label htmlFor="">Start Date</label>
-              <input type="text" onChange={onChangeStartDateValue} />
-            </div>
-            <div>
-              <label htmlFor="">End Date</label>
-              <input type="text" onChange={onChangeEndDateValue} />
-            </div>
-            <div>
-              <label htmlFor="">Client Name</label>
+            <div className={styles.formDiv}>
+              <label htmlFor="">Client Name: </label>
               <input type="text" onChange={onChangeClientNameValue} />
             </div>
-            <div>
+            <div className={styles.formFull}>
+              <label htmlFor="">Description: </label>
+              <textarea
+                name=""
+                id=""
+                cols="30"
+                rows="10"
+                className={styles.textarea}
+                onChange={onChangeDescriptionValue}
+              ></textarea>
+            </div>
+            <div className={styles.formDiv}>
+              <label htmlFor="">Start Date: </label>
+              <input type="text" onChange={onChangeStartDateValue} />
+            </div>
+            <div className={styles.formDiv}>
+              <label htmlFor="">End Date: </label>
+              <input type="text" onChange={onChangeEndDateValue} />
+            </div>
+            <h4 className={styles.formFull}>Employees: </h4>
+            {projectBody.employees.map((index) => {
+              return (
+                <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
+                  {/* <h4 className={styles.formFull}>Employees: </h4> */}
+                  <FormEmployee
+                    numberOfEmployee={index}
+                    /* deleteEmployee={deleteEmployee} */
+                    changeEmployeeValue={onChangeEmployeeValue}
+                    changeRoleValue={onChangeRoleValue}
+                    changeRateValue={onChangeRateValue}
+                  />
+                </div>
+              );
+            })}
+            {/* <button
+              onClick={(e) => {
+                e.preventDefault();
+                addNewEmployee();
+              }}
+            >
+              Add New Employee
+            </button> */}
+            {/* <div>
               <label htmlFor="">Employee</label>
               <input type="text" onChange={onChangeEmployeeValue} />
               <label htmlFor="">Role</label>
               <input type="text" onChange={onChangeRoleValue} />
               <label htmlFor="">Rate</label>
               <input type="number" onChange={onChangeRateValue} />
-            </div>
+            </div> */}
           </>
         )}
-        <button type="submit" onClick={onSubmit}>
-          {text}
-        </button>
+        <div>
+          <button className={styles.btn} onClick={openModal}>
+            {text}
+          </button>
+        </div>
       </form>
+      {fetched === 'true' && (
+        <Modal
+          show={showModal}
+          closeModal={closeModal}
+          onAddUpdate={onSubmit}
+          id={projectBody._id}
+          title={'Update Project'}
+          text={`Are you sure you want to update the project "${projectBody.name}"?`}
+        />
+      )}
+      {fetched === 'false' && (
+        <Modal
+          show={showModal}
+          closeModal={closeModal}
+          onAddUpdate={onSubmit}
+          title={'Add New Project'}
+          text={`Are you sure you want to add the project "${projectBody.name}"?`}
+        />
+      )}
     </div>
   );
 };

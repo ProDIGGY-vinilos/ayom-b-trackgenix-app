@@ -1,0 +1,29 @@
+.btn {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 0px;
+  background-color: #EA3354;
+}
+
+.btn:hover{
+  background-color: #c61d3c;
+}
+
+.btnText{
+  color: white;
+  text-decoration: none;
+}
+
+.btnBlack {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 0px;
+  background-color: black;
+}
+
+.btnBlack:hover{
+  cursor: pointer;
+  background-color: rgb(50, 50, 50);
+}

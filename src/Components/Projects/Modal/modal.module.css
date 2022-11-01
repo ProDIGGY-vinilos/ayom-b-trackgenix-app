@@ -1,0 +1,54 @@
+.moduleContainer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal {
+  width: 500px;
+  height: fit-content;
+  background-color: white;
+  border-radius: 15px;
+  margin: auto;
+  margin-top: 200px;
+}
+
+.modalHeader {
+  padding: 2px 16px;
+  background-color: #EA3354;
+  border-radius: 15px 15px 0px 0px;
+  color: white;
+}
+
+.modalBody {padding: 2px 16px;}
+
+.deleteButton {
+  margin: 10px;
+  padding: 15px;
+  background: #EA3354;
+  border-style: none;
+  border-radius: 5px;
+  color: white;
+}
+
+.deleteButton:hover{
+  cursor: pointer;
+}
+
+.closeButton {
+  margin: 10px;
+  padding: 15px;
+  background: #F0F4F9;
+  border-style: none;
+  border-radius: 5px;
+  color: black;
+}
+
+.closeButton:hover{
+  cursor: pointer;
+}
