@@ -7,7 +7,7 @@ function Projects() {
 
   useEffect(async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}api/projects`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`);
       const data = await response.json();
       setProjects(data.data);
     } catch (error) {

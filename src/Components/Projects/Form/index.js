@@ -39,7 +39,7 @@ const index = ({ text }) => {
     setIdState(projectId);
     if (projectId !== 'project-form') {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}api/projects/${projectId}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`);
         const data = await response.json();
         setFectched('true');
         setProjectBody({
@@ -68,7 +68,7 @@ const index = ({ text }) => {
 
   useEffect(async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}api/employees`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`);
       const data = await response.json();
       setEmployees(data.data);
     } catch (error) {
@@ -119,7 +119,7 @@ const index = ({ text }) => {
 
   const onSubmit = async () => {
     if (idState.length === 24) {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}api/projects/${idState}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${idState}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json'
@@ -139,7 +139,7 @@ const index = ({ text }) => {
         alert(data.msg);
       }
     } else {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}api/projects/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json'

@@ -16,15 +16,12 @@ const List = ({ projectItem, onDeleteItem }) => {
   };
 
   const deleteItem = async () => {
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}api/projects/${projectItem._id}`,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-type': 'application/json'
-        }
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${projectItem._id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json'
       }
-    );
+    });
     const data = await response.json();
 
     if (response.status === 200) {
