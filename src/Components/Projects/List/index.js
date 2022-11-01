@@ -16,7 +16,7 @@ const List = ({ projectItem, onDeleteItem }) => {
   };
 
   const deleteItem = async () => {
-    const updateProject = await fetch(
+    const response = await fetch(
       `${process.env.REACT_APP_API_URL}api/projects/${projectItem._id}`,
       {
         method: 'DELETE',
@@ -25,16 +25,25 @@ const List = ({ projectItem, onDeleteItem }) => {
         }
       }
     );
-    updateProject.status === 200 && onDeleteItem(projectItem._id);
+    const data = await response.json();
 
-    console.log(updateProject);
+    if (response.status === 200) {
+      onDeleteItem(projectItem._id);
+      alert(data.msg);
+    } else if (response.status === 400) {
+      alert(data.message);
+    } else if (response.status === 404) {
+      alert(data.msg);
+    } else if (response.status === 500) {
+      alert(data.msg);
+    }
   };
 
   return (
     <>
       <tr key={projectItem._id} className={styles.borderBottom}>
         <td>{projectItem.name}</td>
-        <td>{projectItem.description}</td>
+        <td>{projectItem.description.substring(0, 10)}...</td>
         <td>{projectItem.startDate.substring(0, 10)}</td>
         <td>{projectItem.endDate.substring(0, 10)}</td>
         <td>{projectItem.clientName}</td>

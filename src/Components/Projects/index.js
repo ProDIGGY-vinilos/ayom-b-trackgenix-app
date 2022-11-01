@@ -9,14 +9,12 @@ function Projects() {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}api/projects`);
       const data = await response.json();
-      console.log(data);
       setProjects(data.data);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   }, []);
 
-  //DELETE VIEW ITEM
   const onDeleteItem = (id) => {
     setProjects([...projects.filter((projectItem) => projectItem._id !== id)]);
   };

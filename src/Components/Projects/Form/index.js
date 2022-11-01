@@ -19,34 +19,10 @@ const index = ({ text }) => {
       }
     ]
   });
+  const [employees, setEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [fetched, setFectched] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-
-  /* const addNewEmployee = () => {
-    setProjectBody((currentBody) => {
-      return {
-        ...currentBody,
-        employees: [
-          ...projectBody.employees,
-          {
-            employee: '',
-            role: '',
-            rate: ''
-          }
-        ]
-      };
-    });
-  }; */
-
-  /* const test = projectBody.employees.filter((employee, id) => employee.employee !== id);*/
-
-  /* const deleteEmployee = () => {
-    setProjectBody((currentEmployees) => {
-      return currentEmployees.employees.pop();
-    });
-    console.log(projectBody.employees[1]);
-  }; */
 
   const openModal = (e) => {
     e.preventDefault();
@@ -61,12 +37,10 @@ const index = ({ text }) => {
     const path = window.location.pathname.split('/');
     let projectId = path[path.length - 1];
     setIdState(projectId);
-    console.log(projectId);
     if (projectId !== 'project-form') {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}api/projects/${projectId}`);
         const data = await response.json();
-        console.log(data.data);
         setFectched('true');
         setProjectBody({
           name: data.data.name,
@@ -92,6 +66,16 @@ const index = ({ text }) => {
     setIsLoading(false);
   }, [idState]);
 
+  useEffect(async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}api/employees`);
+      const data = await response.json();
+      setEmployees(data.data);
+    } catch (error) {
+      alert(error);
+    }
+  }, []);
+
   const onChangeNameValue = (e) => {
     setProjectBody({ ...projectBody, name: e.target.value });
   };
@@ -112,17 +96,17 @@ const index = ({ text }) => {
     setProjectBody({ ...projectBody, clientName: e.target.value });
   };
 
-  const onChangeEmployeeValue = (e) => {
+  const onChangeEmployeeValue = (newValue) => {
     setProjectBody({
       ...projectBody,
-      employees: [{ ...projectBody.employees[0], employee: e.target.value }]
+      employees: [{ ...projectBody.employees[0], employee: newValue }]
     });
   };
 
-  const onChangeRoleValue = (e) => {
+  const onChangeRoleValue = (newValue) => {
     setProjectBody({
       ...projectBody,
-      employees: [{ ...projectBody.employees[0], role: e.target.value }]
+      employees: [{ ...projectBody.employees[0], role: newValue }]
     });
   };
 
@@ -134,28 +118,42 @@ const index = ({ text }) => {
   };
 
   const onSubmit = async () => {
-    console.log(JSON.stringify(projectBody));
-
     if (idState.length === 24) {
-      const updateProject = await fetch(`${process.env.REACT_APP_API_URL}api/projects/${idState}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}api/projects/${idState}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json'
         },
         body: JSON.stringify(projectBody)
       });
+      const data = await response.json();
 
-      console.log(updateProject);
+      if (response.status === 200) {
+        alert(data.msg);
+        window.location.href = document.location.href = '/projects';
+      } else if (response.status === 400) {
+        alert(data.message);
+      } else if (response.status === 404) {
+        alert(data.msg);
+      } else if (response.status === 500) {
+        alert(data.msg);
+      }
     } else {
-      const updateProject = await fetch(`${process.env.REACT_APP_API_URL}api/projects/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}api/projects/`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json'
         },
         body: JSON.stringify(projectBody)
       });
+      const data = await response.json();
 
-      console.log(updateProject);
+      if (response.status === 201) {
+        alert(data.message);
+        window.location.href = document.location.href = '/projects';
+      } else if (response.status === 400) {
+        alert(data.message);
+      }
     }
   };
 
@@ -225,6 +223,7 @@ const index = ({ text }) => {
                 <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
                   <FormEmployee
                     key={employee}
+                    employees={employees}
                     eachEmployee={employee}
                     changeEmployeeValue={onChangeEmployeeValue}
                     changeRoleValue={onChangeRoleValue}
@@ -267,10 +266,9 @@ const index = ({ text }) => {
             {projectBody.employees.map((index) => {
               return (
                 <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
-                  {/* <h4 className={styles.formFull}>Employees: </h4> */}
                   <FormEmployee
+                    employees={employees}
                     numberOfEmployee={index}
-                    /* deleteEmployee={deleteEmployee} */
                     changeEmployeeValue={onChangeEmployeeValue}
                     changeRoleValue={onChangeRoleValue}
                     changeRateValue={onChangeRateValue}
@@ -278,22 +276,6 @@ const index = ({ text }) => {
                 </div>
               );
             })}
-            {/* <button
-              onClick={(e) => {
-                e.preventDefault();
-                addNewEmployee();
-              }}
-            >
-              Add New Employee
-            </button> */}
-            {/* <div>
-              <label htmlFor="">Employee</label>
-              <input type="text" onChange={onChangeEmployeeValue} />
-              <label htmlFor="">Role</label>
-              <input type="text" onChange={onChangeRoleValue} />
-              <label htmlFor="">Rate</label>
-              <input type="number" onChange={onChangeRateValue} />
-            </div> */}
           </>
         )}
         <div>
