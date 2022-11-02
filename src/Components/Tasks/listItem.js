@@ -15,7 +15,7 @@ const ListTask = ({ listTask, deleteTask }) => {
     setPopUp(false);
   };
 
-  const onClosePopUp = () => {
+  const deleteTaskFunction = () => {
     deleteTask(listTask._id);
     fetch(`${process.env.REACT_APP_API_URL}/tasks/${listTask._id}`, {
       method: 'DELETE',
@@ -44,7 +44,7 @@ const ListTask = ({ listTask, deleteTask }) => {
         <PopUp
           show={showPopUp}
           closePopUp={closePopUp}
-          onClosePopUp={onClosePopUp}
+          cancelAction={deleteTaskFunction}
           id={listTask._id}
           title={'Are you sure?'}
           text={`Deleting a task cannot be undone`}

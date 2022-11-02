@@ -4,11 +4,11 @@ function PopUp(props) {
   if (!props.show) {
     return null;
   }
-  const onClosePopUp = () => {
+  const cancelAction = () => {
     props.closePopUp();
   };
-  const onConfirmPopUp = () => {
-    props.onClosePopUp();
+  const deleteAction = () => {
+    props.cancelAction();
     props.closePopUp();
   };
   return (
@@ -20,10 +20,10 @@ function PopUp(props) {
         <div>
           <p>{props.text}</p>
         </div>
-        <button onClick={onConfirmPopUp} className={styles.deleteButton}>
+        <button onClick={deleteAction} className={styles.deleteButton}>
           Delete
         </button>
-        <button onClick={onClosePopUp} className={styles.cancelButton}>
+        <button onClick={cancelAction} className={styles.cancelButton}>
           Cancel
         </button>
       </div>

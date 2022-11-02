@@ -13,7 +13,7 @@ function Tasks() {
     } catch (error) {
       console.error(error);
     }
-  }, [tasks]);
+  }, []);
 
   const deleteTask = (id) => {
     saveTasks([...tasks.filter((newTasks) => newTasks._id !== id)]);

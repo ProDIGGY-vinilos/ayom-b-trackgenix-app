@@ -25,7 +25,7 @@
   padding: 10px;
 }
 
-.listTable button {
+button {
   margin: 5px;
   padding: 10px;
 }
@@ -64,6 +64,7 @@
   border-radius: 8px;
   margin: auto;
   margin-top: 100px;
+  text-align: center;
 }
 
 .popUpHeader {
@@ -76,7 +77,9 @@
 .popUp h3 {
   padding: 20px;
 }
-
+.popUp p {
+  margin: 25px;
+}
 .cancelButton {
   background-color: #49A37B;
   border-radius: 8px;
@@ -119,7 +122,7 @@
   border-radius: 5px;
 }
 
-.addItem div{
+.buttonsDiv {
   margin: 10px 0;
 }
 
@@ -129,9 +132,17 @@
   color: #373867;
   background-color: #F13312;
   border-radius: 8px;
-  border-color: #9e210b;
+  border: #9e210b solid 2px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: small;
 }
 
+.goBackButton:visited{
+  text-decoration: none;
+  color: #373867;
+  font-weight: bold;
+}
 .goBackButton:hover{
   background-color: #9e210b;
   border-color: #F13312;
