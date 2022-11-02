@@ -6,13 +6,13 @@
   bottom: 0;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0,0,0,0.5);
+  background-color: #00000080;
 }
 
 .modal {
   width: 500px;
   height: fit-content;
-  background-color: white;
+  background-color: #ffffff;
   border-radius: 15px;
   margin: auto;
   margin-top: 200px;
@@ -22,7 +22,7 @@
   padding: 2px 16px;
   background-color: #EA3354;
   border-radius: 15px 15px 0px 0px;
-  color: white;
+  color: #ffffff;
 }
 
 .modalBody {padding: 2px 16px;}
@@ -33,7 +33,7 @@
   background: #EA3354;
   border-style: none;
   border-radius: 5px;
-  color: white;
+  color: #ffffff;
 }
 
 .deleteButton:hover{
@@ -46,7 +46,7 @@
   background: #F0F4F9;
   border-style: none;
   border-radius: 5px;
-  color: black;
+  color: #000000;
 }
 
 .closeButton:hover{
