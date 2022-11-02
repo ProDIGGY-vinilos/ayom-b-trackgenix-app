@@ -88,7 +88,6 @@ const index = () => {
   };
 
   const onSubmit = async () => {
-    console.log(projectBody);
     if (idState.length === 24) {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${idState}`, {
         method: 'PUT',
@@ -131,140 +130,88 @@ const index = () => {
       {isLoading && <h3>Loading</h3>}
       {isFetched ? <h2>Edit Project</h2> : <h2>Add New Project</h2>}
       <form className={styles.formContainer} onSubmit={onSubmit}>
-        {isFetched === true ? (
-          <>
-            <div className={styles.formDiv}>
-              <label>Project Name: </label>
-              <input
-                type="text"
-                name="name"
-                defaultValue={projectBody.name}
-                onChange={(e) => onChangeValue('name', e.target.value)}
-                required
+        <div className={styles.formDiv}>
+          <label>Project Name: </label>
+          <input
+            type="text"
+            name="name"
+            defaultValue={isFetched ? projectBody.name : undefined}
+            onChange={(e) => onChangeValue('name', e.target.value)}
+            required
+          />
+        </div>
+        <div className={styles.formDiv}>
+          <label>Client Name</label>
+          <input
+            type="text"
+            name="client name"
+            defaultValue={isFetched ? projectBody.clientName : undefined}
+            onChange={(e) => onChangeValue('clientName', e.target.value)}
+            required
+          />
+        </div>
+        <div className={styles.formFull}>
+          <label>Description</label>
+          <textarea
+            name="description"
+            cols="30"
+            rows="10"
+            className={styles.textarea}
+            defaultValue={isFetched ? projectBody.description : undefined}
+            onChange={(e) => onChangeValue('description', e.target.value)}
+          ></textarea>
+        </div>
+        <div className={styles.formDiv}>
+          <label>Start Date</label>
+          <input
+            type="text"
+            name="start date"
+            defaultValue={isFetched ? projectBody.startDate : undefined}
+            onChange={(e) => onChangeValue('startDate', e.target.value)}
+            required
+          />
+        </div>
+        <div className={styles.formDiv}>
+          <label>End Date</label>
+          <input
+            type="text"
+            name="end date"
+            defaultValue={isFetched ? projectBody.endDate : undefined}
+            onChange={(e) => onChangeValue('endDate', e.target.value)}
+            required
+          />
+        </div>
+        <h4 className={styles.formFull}>Employees: </h4>
+        {projectBody.employees.map((employee) => {
+          return (
+            <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
+              <FormEmployee
+                key={employee}
+                employees={employees}
+                employee={isFetched ? employee : undefined}
+                changeValue={onChangeValue}
               />
             </div>
-            <div className={styles.formDiv}>
-              <label>Client Name</label>
-              <input
-                type="text"
-                name="client name"
-                defaultValue={projectBody.clientName}
-                onChange={(e) => onChangeValue('clientName', e.target.value)}
-                required
-              />
-            </div>
-            <div className={styles.formFull}>
-              <label>Description</label>
-              <textarea
-                name="description"
-                cols="30"
-                rows="10"
-                className={styles.textarea}
-                defaultValue={projectBody.description}
-                onChange={(e) => onChangeValue('description', e.target.value)}
-              ></textarea>
-            </div>
-            <div className={styles.formDiv}>
-              <label>Start Date</label>
-              <input
-                type="text"
-                name="start date"
-                defaultValue={projectBody.startDate}
-                onChange={(e) => onChangeValue('startDate', e.target.value)}
-                required
-              />
-            </div>
-            <div className={styles.formDiv}>
-              <label>End Date</label>
-              <input
-                type="text"
-                name="end date"
-                defaultValue={projectBody.endDate}
-                onChange={(e) => onChangeValue('endDate', e.target.value)}
-                required
-              />
-            </div>
-            <h4 className={styles.formFull}>Employees: </h4>
-            {projectBody.employees.map((employee) => {
-              return (
-                <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
-                  <FormEmployee
-                    key={employee}
-                    employees={employees}
-                    employee={employee}
-                    changeValue={onChangeValue}
-                  />
-                </div>
-              );
-            })}
-          </>
-        ) : (
-          <>
-            <div className={styles.formDiv}>
-              <label>Project Name: </label>
-              <input type="text" onChange={(e) => onChangeValue('name', e.target.value)} />
-            </div>
-            <div className={styles.formDiv}>
-              <label>Client Name: </label>
-              <input type="text" onChange={(e) => onChangeValue('clientName', e.target.value)} />
-            </div>
-            <div className={styles.formFull}>
-              <label>Description: </label>
-              <textarea
-                name="description"
-                cols="30"
-                rows="10"
-                className={styles.textarea}
-                onChange={(e) => onChangeValue('description', e.target.value)}
-              ></textarea>
-            </div>
-            <div className={styles.formDiv}>
-              <label>Start Date: </label>
-              <input type="text" onChange={(e) => onChangeValue('startDate', e.target.value)} />
-            </div>
-            <div className={styles.formDiv}>
-              <label>End Date: </label>
-              <input type="text" onChange={(e) => onChangeValue('endDate', e.target.value)} />
-            </div>
-            <h4 className={styles.formFull}>Employees: </h4>
-            {projectBody.employees.map((index) => {
-              return (
-                <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
-                  <FormEmployee
-                    employees={employees}
-                    numberOfEmployee={index}
-                    changeValue={onChangeValue}
-                  />
-                </div>
-              );
-            })}
-          </>
-        )}
+          );
+        })}
         <div>
           <button className={styles.btn} onClick={openModal}>
             Submit
           </button>
         </div>
       </form>
-      {isFetched === true && (
-        <Modal
-          show={showModal}
-          closeModal={closeModal}
-          onAddUpdate={onSubmit}
-          id={projectBody._id}
-          title={'Update Project'}
-          text={`Are you sure you want to update the project "${projectBody.name}"?`}
-        />
-      )}
-      {isFetched === false && (
-        <Modal
-          show={showModal}
-          closeModal={closeModal}
-          onAddUpdate={onSubmit}
-          title={'Add New Project'}
-          text={`Are you sure you want to add the project "${projectBody.name}"?`}
-        />
-      )}
+      <Modal
+        show={showModal}
+        closeModal={closeModal}
+        onAddUpdate={onSubmit}
+        id={isFetched ? projectBody._id : undefined}
+        title={isFetched ? 'Update Project' : 'Add New Project'}
+        text={
+          isFetched
+            ? `Are you sure you want to update the project?`
+            : `Are you sure you want to add the project "${projectBody.name}"?`
+        }
+      />
     </div>
   );
 };
