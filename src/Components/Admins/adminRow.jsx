@@ -15,7 +15,7 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
 
   const removeAdmin = async () => {
     deleteAdmin(listAdmin._id);
-    await fetch(`../assets/admins/${listAdmin._id}`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/admins/${listAdmin._id}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json'
@@ -48,7 +48,7 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
           warningText={`Do you want to remove ${listAdmin.name}?`}
         />
         <button onClick={openModal}>
-          <img src={`${process.env.PUBLIC_URL}/assets/images/iconTrash.svg`} />
+          <img src={`../assets/images/iconTrash.svg`} />
         </button>
       </td>
     </tr>

@@ -5,9 +5,7 @@ import styles from './admins.module.css';
 const AdminTable = ({ list, deleteItem }) => {
   return (
     <div className={styles.list}>
-      {list === undefined || list.length === 0 ? (
-        <span>There are no admin yet!</span>
-      ) : (
+      {list.length ? (
         <table>
           <thead>
             <tr>
@@ -26,6 +24,8 @@ const AdminTable = ({ list, deleteItem }) => {
             })}
           </tbody>
         </table>
+      ) : (
+        <span>There are no admin yet!</span>
       )}
     </div>
   );
