@@ -58,6 +58,10 @@
 }
 
 .addform {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
   margin-bottom: 40px;
 }
 
@@ -70,6 +74,8 @@
 }
 
 .formcontrol input {
+  display: flex;
+  justify-content: center;
   width: 100%;
   height: 40px;
   margin: 5px;
@@ -78,5 +84,6 @@
 }
 
 a {
+  color: #fff;
   text-decoration: none !important;
 }
