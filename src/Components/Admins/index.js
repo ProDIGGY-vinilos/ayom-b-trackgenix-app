@@ -21,7 +21,7 @@ function Admins() {
     <div className={styles.container}>
       <div className={styles.adminHeader}>
         <h2>Admin</h2>
-        <a href={`admins/form`}>Add Button</a>
+        <a href={`admins-form`}>x</a>
       </div>
       <Table list={admins} saveAdmins={saveAdmins} deleteItem={deleteAdmin} />
     </div>

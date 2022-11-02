@@ -49,12 +49,13 @@ font-weight: bold;
   align-items: center;
 }
 
-.adminHeader a button{
+.adminHeader a{
   margin-left: 50px;
+  text-align: center;
   background-color: #AACE9B;;
   color: #373867;
   border-style: none;
-  font-size: 30px;
+  font-size: 35px;
   font-weight: 800;
   border-radius: 30px;
   height: 60px;

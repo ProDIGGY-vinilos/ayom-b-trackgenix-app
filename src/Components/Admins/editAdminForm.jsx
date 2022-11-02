@@ -50,13 +50,9 @@ function Form() {
       fetch(url, options).then(async (response) => {
         if (response.status !== 200 && response.status !== 201) {
           const { message } = await response.json();
-          setTimeout(() => {
-            alert(message);
-          }, 10);
+          alert(message);
         } else {
-          setTimeout(() => {
-            alert('Admin was successfully edited');
-          }, 10);
+          alert('Admin was successfully edited');
           return response.json();
         }
       });
@@ -72,13 +68,9 @@ function Form() {
       fetch(url, options).then(async (response) => {
         if (response.status !== 200 && response.status !== 201) {
           const { message } = await response.json();
-          setTimeout(() => {
-            alert(message);
-          }, 10);
+          alert(message);
         } else {
-          setTimeout(() => {
-            alert('Admin was created successfully');
-          }, 10);
+          alert('Admin was created successfully');
           return response.json();
         }
       });

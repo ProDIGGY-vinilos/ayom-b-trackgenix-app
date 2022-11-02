@@ -22,6 +22,7 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
       },
       body: JSON.stringify(listAdmin)
     });
+    alert('The administrator was successfully removed');
   };
   return (
     <tr>
