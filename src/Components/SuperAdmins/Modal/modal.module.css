@@ -1,0 +1,60 @@
+.moduleContainer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+}
+.modal {
+    width: 500px;
+    height: 200px;
+    background-color: white;
+    border-radius: 5px;
+    border: solid 1px grey;
+    margin: auto;
+    margin-top: 200px;
+}
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 16px;
+    background-color: #EA3354;
+    color: white;
+}
+.modalBody {
+    padding: 2px 16px;
+}
+.confirmBtn {
+    margin-top: 20px;
+    margin-left: 10px;
+    padding: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background: #AACE9B;
+    border-color: #AACE9B;
+    border-radius: 5px;
+    color: white;
+}
+.cancelBtn {
+    margin-top: 20px;
+    padding: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-color: #EA3354;
+    border-radius: 5px;
+    color: #AACE9B;
+    background-color: transparent;
+}
+.cancelBtnX {
+    font-size: 25px;
+    margin-right: 20px;
+}
+    .cancelBtn:hover,
+    .cancelBtnX:hover,
+    .confirmBtn:hover {
+    cursor: pointer;
+}
