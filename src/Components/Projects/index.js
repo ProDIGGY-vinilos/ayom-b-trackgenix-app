@@ -11,7 +11,7 @@ function Projects() {
       const data = await response.json();
       setProjects(data.data);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   }, []);
 

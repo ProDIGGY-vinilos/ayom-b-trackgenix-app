@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Employee = ({ employee }) => {
+const EmployeeItem = ({ employee, index }) => {
   return (
-    <td key={employee._id}>
+    <td key={index}>
       <p>{employee.employee.lastName}</p>
       <p>{employee.role}</p>
       <p>{employee.rate}</p>
@@ -10,4 +10,4 @@ const Employee = ({ employee }) => {
   );
 };
 
-export default Employee;
+export default EmployeeItem;

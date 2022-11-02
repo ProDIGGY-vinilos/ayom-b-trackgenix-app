@@ -3,7 +3,7 @@ import FormEmployee from './FormEmployees/index';
 import Modal from '../Modal';
 import styles from './form.module.css';
 
-const index = ({ text }) => {
+const index = () => {
   const [idState, setIdState] = useState('');
   const [projectBody, setProjectBody] = useState({
     name: '',
@@ -21,7 +21,7 @@ const index = ({ text }) => {
   });
   const [employees, setEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [fetched, setFectched] = useState('');
+  const [isFetched, setIsFetched] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const openModal = (e) => {
@@ -39,9 +39,9 @@ const index = ({ text }) => {
     setIdState(projectId);
     if (projectId !== 'project-form') {
       try {
+        setIsFetched(true);
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`);
         const data = await response.json();
-        setFectched('true');
         setProjectBody({
           name: data.data.name,
           description: data.data.description,
@@ -57,14 +57,14 @@ const index = ({ text }) => {
           ]
         });
       } catch (error) {
-        console.error(error);
+        setIsFetched(false);
+        alert(error);
       }
-    }
-    if (projectId === 'project-form') {
-      setFectched('false');
+    } else {
+      setIsFetched(false);
     }
     setIsLoading(false);
-  }, [idState]);
+  }, []);
 
   useEffect(async () => {
     try {
@@ -76,48 +76,19 @@ const index = ({ text }) => {
     }
   }, []);
 
-  const onChangeNameValue = (e) => {
-    setProjectBody({ ...projectBody, name: e.target.value });
-  };
-
-  const onChangeDescriptionValue = (e) => {
-    setProjectBody({ ...projectBody, description: e.target.value });
-  };
-
-  const onChangeStartDateValue = (e) => {
-    setProjectBody({ ...projectBody, startDate: e.target.value });
-  };
-
-  const onChangeEndDateValue = (e) => {
-    setProjectBody({ ...projectBody, endDate: e.target.value });
-  };
-
-  const onChangeClientNameValue = (e) => {
-    setProjectBody({ ...projectBody, clientName: e.target.value });
-  };
-
-  const onChangeEmployeeValue = (newValue) => {
-    setProjectBody({
-      ...projectBody,
-      employees: [{ ...projectBody.employees[0], employee: newValue }]
-    });
-  };
-
-  const onChangeRoleValue = (newValue) => {
-    setProjectBody({
-      ...projectBody,
-      employees: [{ ...projectBody.employees[0], role: newValue }]
-    });
-  };
-
-  const onChangeRateValue = (e) => {
-    setProjectBody({
-      ...projectBody,
-      employees: [{ ...projectBody.employees[0], rate: e.target.value }]
-    });
+  const onChangeValue = (key, value, keyArray = false) => {
+    if (keyArray) {
+      setProjectBody({
+        ...projectBody,
+        employees: [{ ...projectBody.employees[0], [key]: value }]
+      });
+    } else {
+      setProjectBody({ ...projectBody, [key]: value });
+    }
   };
 
   const onSubmit = async () => {
+    console.log(projectBody);
     if (idState.length === 24) {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${idState}`, {
         method: 'PUT',
@@ -131,12 +102,10 @@ const index = ({ text }) => {
       if (response.status === 200) {
         alert(data.msg);
         window.location.href = document.location.href = '/projects';
+      } else if ([404, 500].includes(response.status)) {
+        alert(data.msg);
       } else if (response.status === 400) {
         alert(data.message);
-      } else if (response.status === 404) {
-        alert(data.msg);
-      } else if (response.status === 500) {
-        alert(data.msg);
       }
     } else {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
@@ -160,10 +129,9 @@ const index = ({ text }) => {
   return (
     <div className={styles.container}>
       {isLoading && <h3>Loading</h3>}
-      {fetched === 'true' && <h2>Edit Project</h2>}
-      {fetched === 'false' && <h2>Add New Project</h2>}
+      {isFetched ? <h2>Edit Project</h2> : <h2>Add New Project</h2>}
       <form className={styles.formContainer} onSubmit={onSubmit}>
-        {fetched === 'true' ? (
+        {isFetched === true ? (
           <>
             <div className={styles.formDiv}>
               <label>Project Name: </label>
@@ -171,7 +139,7 @@ const index = ({ text }) => {
                 type="text"
                 name="name"
                 defaultValue={projectBody.name}
-                onChange={onChangeNameValue}
+                onChange={(e) => onChangeValue('name', e.target.value)}
                 required
               />
             </div>
@@ -181,20 +149,19 @@ const index = ({ text }) => {
                 type="text"
                 name="client name"
                 defaultValue={projectBody.clientName}
-                onChange={onChangeClientNameValue}
+                onChange={(e) => onChangeValue('clientName', e.target.value)}
                 required
               />
             </div>
             <div className={styles.formFull}>
               <label>Description</label>
               <textarea
-                name=""
-                id=""
+                name="description"
                 cols="30"
                 rows="10"
                 className={styles.textarea}
                 defaultValue={projectBody.description}
-                onChange={onChangeDescriptionValue}
+                onChange={(e) => onChangeValue('description', e.target.value)}
               ></textarea>
             </div>
             <div className={styles.formDiv}>
@@ -203,7 +170,7 @@ const index = ({ text }) => {
                 type="text"
                 name="start date"
                 defaultValue={projectBody.startDate}
-                onChange={onChangeStartDateValue}
+                onChange={(e) => onChangeValue('startDate', e.target.value)}
                 required
               />
             </div>
@@ -213,7 +180,7 @@ const index = ({ text }) => {
                 type="text"
                 name="end date"
                 defaultValue={projectBody.endDate}
-                onChange={onChangeEndDateValue}
+                onChange={(e) => onChangeValue('endDate', e.target.value)}
                 required
               />
             </div>
@@ -224,10 +191,8 @@ const index = ({ text }) => {
                   <FormEmployee
                     key={employee}
                     employees={employees}
-                    eachEmployee={employee}
-                    changeEmployeeValue={onChangeEmployeeValue}
-                    changeRoleValue={onChangeRoleValue}
-                    changeRateValue={onChangeRateValue}
+                    employee={employee}
+                    changeValue={onChangeValue}
                   />
                 </div>
               );
@@ -237,30 +202,29 @@ const index = ({ text }) => {
           <>
             <div className={styles.formDiv}>
               <label>Project Name: </label>
-              <input type="text" on onChange={onChangeNameValue} />
+              <input type="text" onChange={(e) => onChangeValue('name', e.target.value)} />
             </div>
             <div className={styles.formDiv}>
-              <label htmlFor="">Client Name: </label>
-              <input type="text" onChange={onChangeClientNameValue} />
+              <label>Client Name: </label>
+              <input type="text" onChange={(e) => onChangeValue('clientName', e.target.value)} />
             </div>
             <div className={styles.formFull}>
-              <label htmlFor="">Description: </label>
+              <label>Description: </label>
               <textarea
-                name=""
-                id=""
+                name="description"
                 cols="30"
                 rows="10"
                 className={styles.textarea}
-                onChange={onChangeDescriptionValue}
+                onChange={(e) => onChangeValue('description', e.target.value)}
               ></textarea>
             </div>
             <div className={styles.formDiv}>
-              <label htmlFor="">Start Date: </label>
-              <input type="text" onChange={onChangeStartDateValue} />
+              <label>Start Date: </label>
+              <input type="text" onChange={(e) => onChangeValue('startDate', e.target.value)} />
             </div>
             <div className={styles.formDiv}>
-              <label htmlFor="">End Date: </label>
-              <input type="text" onChange={onChangeEndDateValue} />
+              <label>End Date: </label>
+              <input type="text" onChange={(e) => onChangeValue('endDate', e.target.value)} />
             </div>
             <h4 className={styles.formFull}>Employees: </h4>
             {projectBody.employees.map((index) => {
@@ -269,9 +233,7 @@ const index = ({ text }) => {
                   <FormEmployee
                     employees={employees}
                     numberOfEmployee={index}
-                    changeEmployeeValue={onChangeEmployeeValue}
-                    changeRoleValue={onChangeRoleValue}
-                    changeRateValue={onChangeRateValue}
+                    changeValue={onChangeValue}
                   />
                 </div>
               );
@@ -280,11 +242,11 @@ const index = ({ text }) => {
         )}
         <div>
           <button className={styles.btn} onClick={openModal}>
-            {text}
+            Submit
           </button>
         </div>
       </form>
-      {fetched === 'true' && (
+      {isFetched === true && (
         <Modal
           show={showModal}
           closeModal={closeModal}
@@ -294,7 +256,7 @@ const index = ({ text }) => {
           text={`Are you sure you want to update the project "${projectBody.name}"?`}
         />
       )}
-      {fetched === 'false' && (
+      {isFetched === false && (
         <Modal
           show={showModal}
           closeModal={closeModal}

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import Employee from '../Employees';
+import Employee from './Employees';
 import styles from './list.module.css';
 import Modal from '../Modal';
 
-const List = ({ projectItem, onDeleteItem }) => {
+const ProjectList = ({ projectItem, onDeleteItem }) => {
   const [showModal, setShowModal] = useState(false);
-  const urlId = `/project-form/${projectItem._id}`;
 
   const openModal = () => {
     setShowModal(true);
@@ -27,12 +26,10 @@ const List = ({ projectItem, onDeleteItem }) => {
     if (response.status === 200) {
       onDeleteItem(projectItem._id);
       alert(data.msg);
+    } else if ([404, 500].includes(response.status)) {
+      alert(data.msg);
     } else if (response.status === 400) {
       alert(data.message);
-    } else if (response.status === 404) {
-      alert(data.msg);
-    } else if (response.status === 500) {
-      alert(data.msg);
     }
   };
 
@@ -44,12 +41,12 @@ const List = ({ projectItem, onDeleteItem }) => {
         <td>{projectItem.startDate.substring(0, 10)}</td>
         <td>{projectItem.endDate.substring(0, 10)}</td>
         <td>{projectItem.clientName}</td>
-        {projectItem.employees.map((employee) => {
-          return <Employee key={employee._id} employee={employee} />;
+        {projectItem.employees.map((employee, index) => {
+          return <Employee key={employee._id} employee={employee} index={index} />;
         })}
         <td>
           <button className={styles.btn}>
-            <a className={styles.btnText} href={urlId}>
+            <a className={styles.btnText} href={`/project-form/${projectItem._id}`}>
               Edit Project
             </a>
           </button>
@@ -70,4 +67,4 @@ const List = ({ projectItem, onDeleteItem }) => {
   );
 };
 
-export default List;
+export default ProjectList;
