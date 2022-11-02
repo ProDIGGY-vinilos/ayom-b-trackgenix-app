@@ -1,5 +1,3 @@
-//import styles from './select.module.css';
-
 function Select({ Data, setId, field }) {
   return (
     <select onChange={(e) => setId(e.target.value)}>

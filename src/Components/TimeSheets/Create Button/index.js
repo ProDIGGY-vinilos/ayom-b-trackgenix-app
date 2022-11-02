@@ -1,8 +1,10 @@
+import styles from './create-button.module.css';
+
 function Button() {
   return (
-    <a href="/time-sheet-form">
-      <button>Create new Timesheet</button>
-    </a>
+    <button className={styles.createButton}>
+      <a href="/time-sheet-form">Create new Timesheet</a>
+    </button>
   );
 }
 

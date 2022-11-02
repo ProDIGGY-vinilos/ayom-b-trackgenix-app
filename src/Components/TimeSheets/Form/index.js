@@ -110,36 +110,52 @@ const TimeSheetsForm = () => {
     <div className={styles.container}>
       {formSwitch ? <h2>Edit time sheet</h2> : <h2>Add new time sheet</h2>}
       <form>
-        <label>Description</label>
-        <textarea
-          value={Description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description"
-        ></textarea>
-        <label>Date</label>
-        <input value={Date} onChange={(e) => setDate(e.target.value)} type="date"></input>
-        <label>Hours</label>
-        <input
-          value={Hours}
-          onChange={(e) => setHours(e.target.value)}
-          type="text"
-          placeholder="Hours"
-        ></input>
-        <label>Select Project</label>
-        <Select Data={Projects} setId={setProjectId} field="description" />
-        <label>Select Employee</label>
-        <Select Data={Employees} setId={setEmployeeId} field="name" />
-        <label>Select Task</label>
-        <Select Data={Tasks} setId={setTaskId} field="description" />
+        <div className={styles.formcontainer}>
+          <div>
+            <label>Date</label>
+            <input value={Date} onChange={(e) => setDate(e.target.value)} type="date"></input>
+          </div>
+          <div>
+            <label>Hours</label>
+            <input
+              value={Hours}
+              onChange={(e) => setHours(e.target.value)}
+              type="text"
+              placeholder="Hours"
+            ></input>
+          </div>
+          <div>
+            <label>Select Project</label>
+            <Select Data={Projects} setId={setProjectId} field="description" />
+          </div>
+          <div>
+            <label>Select Employee</label>
+            <Select Data={Employees} setId={setEmployeeId} field="name" />
+          </div>
+          <div>
+            <label>Select Task</label>
+            <Select Data={Tasks} setId={setTaskId} field="description" />
+          </div>
+        </div>
+        <div className={styles.textareacontainer}>
+          <label>Description</label>
+          <textarea
+            value={Description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Description"
+          ></textarea>
+        </div>
       </form>
-      <button
-        onClick={() => createTimeSheet(Description, Date, Hours, ProjectId, TaskId, EmployeeId)}
-      >
-        Submit
-      </button>
-      <a href="/../time-sheets">
-        <button>Go Back</button>
-      </a>
+      <div className={styles.buttons}>
+        <button
+          onClick={() => createTimeSheet(Description, Date, Hours, ProjectId, TaskId, EmployeeId)}
+        >
+          Submit
+        </button>
+        <button>
+          <a href="/../time-sheets">Go Back</a>
+        </button>
+      </div>
     </div>
   );
 };
