@@ -76,7 +76,7 @@ const TimeSheetsForm = () => {
       timeSheetFetch(timeSheetId);
       setStates(timeSheet);
     }
-  }, [timeSheet]);
+  }, []);
 
   const createTimeSheet = async (Description, Date, Hours, ProjectId, TaskId, EmployeeId) => {
     const req = {

@@ -18,12 +18,17 @@ function TimeSheets() {
     } catch (error) {
       console.error(error);
     }
-  }, [TimeSheets]);
+  }, []);
 
-  const deleteTimesheet = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
+  const deleteTimesheet = async (id, Timesheets) => {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
       method: 'DELETE'
     });
+    if (response.status === 204) {
+      setTimeSheets([...Timesheets.filter((timeSheetItem) => timeSheetItem._id !== id)]);
+    } else {
+      alert(response.message);
+    }
   };
 
   const closeModal = () => {
@@ -93,7 +98,11 @@ function TimeSheets() {
                   </button>
                 </td>
                 <td key={TimeSheet._id}>
-                  <DeleteButton onDelete={deleteTimesheet} timeSheetId={TimeSheet._id} />
+                  <DeleteButton
+                    onDelete={deleteTimesheet}
+                    timeSheetId={TimeSheet._id}
+                    timeSheets={TimeSheets}
+                  />
                 </td>
               </tr>
             );

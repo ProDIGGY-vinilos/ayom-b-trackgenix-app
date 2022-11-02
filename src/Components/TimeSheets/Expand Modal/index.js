@@ -4,7 +4,6 @@ function Modal(props) {
   if (!props.openModal) {
     return null;
   }
-  console.log(props.data);
 
   switch (props.element) {
     case 'Task':
