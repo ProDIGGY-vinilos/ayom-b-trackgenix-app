@@ -100,7 +100,7 @@ const index = () => {
 
       if (response.status === 200) {
         alert(data.msg);
-        window.location.href = document.location.href = '/projects';
+        document.location.href = '/projects';
       } else if ([404, 500].includes(response.status)) {
         alert(data.msg);
       } else if (response.status === 400) {
@@ -118,7 +118,7 @@ const index = () => {
 
       if (response.status === 201) {
         alert(data.message);
-        window.location.href = document.location.href = '/projects';
+        document.location.href = '/projects';
       } else if (response.status === 400) {
         alert(data.message);
       }
@@ -164,7 +164,7 @@ const index = () => {
         <div className={styles.formDiv}>
           <label>Start Date</label>
           <input
-            type="text"
+            type="date"
             name="start date"
             defaultValue={isFetched ? projectBody.startDate : undefined}
             onChange={(e) => onChangeValue('startDate', e.target.value)}
@@ -174,7 +174,7 @@ const index = () => {
         <div className={styles.formDiv}>
           <label>End Date</label>
           <input
-            type="text"
+            type="date"
             name="end date"
             defaultValue={isFetched ? projectBody.endDate : undefined}
             onChange={(e) => onChangeValue('endDate', e.target.value)}

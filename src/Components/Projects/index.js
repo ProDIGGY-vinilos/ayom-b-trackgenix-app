@@ -22,7 +22,7 @@ function Projects() {
   return (
     <section className={styles.container}>
       <h2 className={styles.header}>Projects</h2>
-      {projects.length > 0 ? (
+      {projects.length ? (
         <div className={styles.tableContainer}>
           <h3 className={styles.tableTitle}>Current Projects</h3>
           <table className={styles.table}>

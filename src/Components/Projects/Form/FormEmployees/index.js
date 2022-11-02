@@ -15,7 +15,7 @@ const FormEmployee = ({ employees, employee, changeValue }) => {
               <option
                 value={singleEmployee._id}
                 key={singleEmployee._id}
-                selected={employee && singleEmployee._id === employee.employee ? true : undefined}
+                selected={employee && singleEmployee._id === employee.employee}
               >
                 {singleEmployee.lastName}
               </option>
@@ -29,11 +29,7 @@ const FormEmployee = ({ employees, employee, changeValue }) => {
           <option value="" className={styles.displayNone} selected></option>
           {roles.map((role) => {
             return (
-              <option
-                value={role}
-                key={role.index}
-                selected={employee && role === employee.role ? true : undefined}
-              >
+              <option value={role} key={role.index} selected={employee && role === employee.role}>
                 {role}
               </option>
             );
