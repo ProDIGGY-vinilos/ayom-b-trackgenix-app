@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import Button from './Button';
 import Employee from './Employee';
+import Modal from './modal/modal';
 
 function Employees() {
+  const [showModal, setShowModal] = useState(false);
   const [employees, saveEmployees] = useState([]);
 
   useEffect(() => {
@@ -19,6 +21,14 @@ function Employees() {
     saveEmployees(employees.filter((e) => e._id != id));
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
   return (
     <section className={styles.container}>
       <div className={styles.title}>
@@ -26,7 +36,17 @@ function Employees() {
         <Button color="green" text={'Add'} href={'/employee-form'} />
       </div>
       {employees.map((employee) => (
-        <Employee key={employee._id} employee={employee} onClickDelete={deleteEmployee} />
+        <>
+          <Employee key={employee._id} employee={employee} onClickDelete={openModal} />
+          <Modal
+            openModal={showModal}
+            closeModal={closeModal}
+            deleteAction={deleteEmployee}
+            id={employee._id}
+            warningText={`Are you sure you want to remove Employee: ${employee.name}`}
+            title={'DELETE EMPLOYEE'}
+          />
+        </>
       ))}
     </section>
   );

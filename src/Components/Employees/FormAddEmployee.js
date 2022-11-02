@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './employees.module.css';
 import { useEffect, useState } from 'react';
+// import Modal from './modal/modal';
 const path = window.location.pathname.split('/');
 let employeeId = path[path.length - 1];
 
@@ -115,7 +116,9 @@ const FormAddEmployee = () => {
           onChange={handleChange}
         />
       </div>
-      <input type="submit" value="Save Employee" className={styles.btn} />
+      <button type="submit" value="Save Employee" className={styles.btn}>
+        Confirm
+      </button>
     </form>
   );
 };
