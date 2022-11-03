@@ -1,22 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MessagePopUp from '../Modal/messageModal';
 import styles from '../tasks.module.css';
+import stylesModal from '../Modal/tasks.module.css';
 
 function Form() {
   const [userInput, setNameValue] = useState({
     description: ''
   });
 
-  const [showPopUp, setPopUp] = useState(false);
+  const [showPopUp, setShowPopup] = useState(false);
   const [statusPopUp, setStatusPopUp] = useState();
-  const [textPopUp, setText] = useState(false);
+  const [textPopUp, setTextPopUp] = useState(false);
 
   const openPopUp = () => {
-    setPopUp(true);
+    setShowPopup(true);
   };
 
   const closePopUp = () => {
-    setPopUp(false);
+    setShowPopup(false);
   };
 
   const setStatus = (status) => {
@@ -24,12 +25,23 @@ function Form() {
   };
 
   const setTextFunction = (text) => {
-    setText(text);
+    setTextPopUp(text);
   };
 
-  const onChange = (e) => {
-    setNameValue({ ...userInput, [e.target.name]: e.target.value });
+  useEffect(async () => {
+    const params = new URLSearchParams(window.location.search);
+    const taskId = params.get('id');
+    if (taskId != null) {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`);
+      const data = await response.json();
+      setNameValue({ ...userInput, description: data.data.description });
+    }
+  }, []);
+
+  const updateInput = async (e) => {
+    setNameValue({ ...userInput, description: e.target.value });
   };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const params = new URLSearchParams(window.location.search);
@@ -62,7 +74,6 @@ function Form() {
       const data = await response.json();
       if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
         setStatus('Error');
-        console.log(statusPopUp);
         setTextFunction(data.message);
         openPopUp();
         return;
@@ -71,7 +82,7 @@ function Form() {
       openPopUp();
       return data;
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
   return (
@@ -79,7 +90,12 @@ function Form() {
       <form className={styles.addItem} onSubmit={onSubmit}>
         <div>
           <label>Description: </label>
-          <input type="text" name="description" value={userInput.description} onChange={onChange} />
+          <input
+            type="text"
+            name="description"
+            value={userInput.description}
+            onChange={updateInput}
+          />
         </div>
         <div className={styles.buttonsDiv}>
           <button className={styles.addButton} type="submit">
@@ -91,8 +107,7 @@ function Form() {
             text={textPopUp}
             closePopUp={closePopUp}
           />
-
-          <a href="/tasks" className={styles.goBackButton}>
+          <a href="/tasks" className={stylesModal.goBackButton}>
             Go back
           </a>
         </div>

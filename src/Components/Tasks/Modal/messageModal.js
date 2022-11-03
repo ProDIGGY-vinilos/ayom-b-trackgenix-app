@@ -1,4 +1,4 @@
-import styles from '../tasks.module.css';
+import styles from './tasks.module.css';
 
 function MessagePopUp(props) {
   if (!props.show) {
@@ -63,7 +63,7 @@ function MessagePopUp(props) {
       );
     }
     default: {
-      break;
+      return null;
     }
   }
 }

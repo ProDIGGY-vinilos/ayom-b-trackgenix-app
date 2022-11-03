@@ -5,26 +5,32 @@ import PopUp from './Modal/taskModal';
 import styles from './tasks.module.css';
 
 const ListTask = ({ listTask, deleteTask }) => {
-  const [showPopUp, setPopUp] = useState(false);
+  const [showPopUp, setShowPopUp] = useState(false);
 
   const openPopUp = () => {
-    setPopUp(true);
+    setShowPopUp(true);
   };
 
   const closePopUp = () => {
-    setPopUp(false);
+    setShowPopUp(false);
   };
 
-  const deleteTaskFunction = () => {
-    deleteTask(listTask._id);
-    fetch(`${process.env.REACT_APP_API_URL}/tasks/${listTask._id}`, {
+  const deleteTaskFunction = async () => {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${listTask._id}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json'
       },
       body: JSON.stringify(listTask)
     });
+    if (response.status == 204) {
+      deleteTask(listTask._id);
+    } else if ([400, 404, 500].includes(response.status)) {
+      const data = await response.json();
+      alert(data.message);
+    }
   };
+
   const onSubmit = (list) => {
     <Form editList={list} saveTasks={list} />;
   };
@@ -56,4 +62,5 @@ const ListTask = ({ listTask, deleteTask }) => {
     </tr>
   );
 };
+
 export default ListTask;

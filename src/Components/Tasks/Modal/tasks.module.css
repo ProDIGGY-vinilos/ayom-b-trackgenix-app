@@ -1,0 +1,83 @@
+.popUp {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.popUpContent {
+    width: 350px;
+    height: 200px;
+    background-color: #D9D9D9;
+    border-radius: 8px;
+    margin: auto;
+    margin-top: 100px;
+    text-align: center;
+}
+
+.popUpHeader {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-color: #AACE9B;
+    color: #373867;
+}
+
+.popUp h3 {
+    padding: 20px;
+}
+
+.popUp p {
+    margin: 25px;
+}
+
+.editButton {
+    background-color: #49A37B;
+    border-radius: 8px;
+}
+
+.editButton:hover {
+    background-color: #115f3c;
+}
+
+.deleteButton {
+    background-color: #F13312;
+    border-radius: 8px;
+}
+
+.deleteButton:hover {
+    background-color: #9e210b;
+}
+
+.cancelButton {
+    background-color: #49A37B;
+    border-radius: 8px;
+}
+
+.cancelButton:hover {
+    background-color: #115f3c;
+}
+
+.goBackButton {
+    margin: 0px 10px;
+    padding: 10px;
+    color: #373867;
+    background-color: #F13312;
+    border-radius: 8px;
+    border: #9e210b solid 2px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: small;
+}
+
+.goBackButton:visited {
+    text-decoration: none;
+    color: #373867;
+    font-weight: bold;
+}
+
+.goBackButton:hover {
+    background-color: #9e210b;
+    border-color: #F13312;
+}
