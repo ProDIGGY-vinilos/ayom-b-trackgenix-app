@@ -1,26 +1,26 @@
 import styles from './modal.module.css';
 
-function Modal(props) {
-  if (!props.openModal) {
+function Modal({ openModal, closeModal, id, title, warningText }) {
+  if (!openModal) {
     return null;
   }
 
   const cancelAction = () => {
-    props.closeModal();
+    closeModal();
   };
 
   const deleteAction = () => {
-    props.deleteAction(props.id);
-    props.closeModal();
+    deleteAction(id);
+    closeModal();
   };
   return (
     <div className={styles.moduleContainer}>
       <div className={styles.modal}>
         <div className={styles.modalHeader}>
-          <h3>{props.title}</h3>
+          <h3>{title}</h3>
         </div>
         <div className={styles.modalBody}>
-          <p>{props.warningText}</p>
+          <p>{warningText}</p>
         </div>
         <div className={styles.btns}>
           <button onClick={cancelAction} className={styles.close}>

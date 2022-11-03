@@ -6,19 +6,21 @@ import Modal from './modal/modal';
 
 function Employees() {
   const [showModal, setShowModal] = useState(false);
-  const [employees, saveEmployees] = useState([]);
+  const [employees, setEmployees] = useState([]);
 
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/employees`)
-      .then((response) => response.json())
-      .then((response) => {
-        saveEmployees(response.data);
-      });
+  useEffect(async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`);
+      const data = await response.json();
+      setEmployees(data.data);
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   const deleteEmployee = async (id) => {
     await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, { method: 'DELETE' });
-    saveEmployees(employees.filter((e) => e._id != id));
+    setEmployees(employees.filter((e) => e._id !== id));
   };
 
   const closeModal = () => {

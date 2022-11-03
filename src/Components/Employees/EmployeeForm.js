@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './employees.module.css';
 import { useEffect, useState } from 'react';
-// import Modal from './modal/modal';
+
 const path = window.location.pathname.split('/');
 let employeeId = path[path.length - 1];
 
-const FormAddEmployee = () => {
+const EmployeeForm = () => {
   const [userInput, setUserInput] = useState({
     name: '',
     lastName: '',
@@ -28,9 +28,7 @@ const FormAddEmployee = () => {
         });
         return;
       } catch (err) {
-        setTimeout(() => {
-          alert(err.message);
-        }, 10);
+        alert(err.message);
       }
     }
   }, []);
@@ -43,8 +41,9 @@ const FormAddEmployee = () => {
     }));
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    console.log('asdasd');
 
     const requestOptions = {
       method: employeeId === 'employee-form' ? 'POST' : 'PUT',
@@ -55,15 +54,14 @@ const FormAddEmployee = () => {
     };
     let url = employeeId === 'employee-form' ? '' : '/' + employeeId;
 
-    fetch(`${process.env.REACT_APP_API_URL}/employees${url}`, requestOptions).then((response) => {
-      if (response.status !== 200 || response.status !== 201) {
-        return response.json().then(({ message }) => {
-          throw new Error(message);
-        });
-      }
-      return response.json();
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/employees${url}`,
+      requestOptions
+    );
+    const data = await response.json();
+    alert(data.message);
   };
+
   return (
     <form className={styles.addform} onSubmit={onSubmit}>
       <div className={styles.formcontrol}>
@@ -116,11 +114,18 @@ const FormAddEmployee = () => {
           onChange={handleChange}
         />
       </div>
-      <button type="submit" value="Save Employee" className={styles.btn}>
+      <button
+        type="submit"
+        value="Save Employee"
+        className={styles.btn}
+        onClick={(e) => {
+          onSubmit(e);
+        }}
+      >
         Confirm
       </button>
     </form>
   );
 };
 
-export default FormAddEmployee;
+export default EmployeeForm;
