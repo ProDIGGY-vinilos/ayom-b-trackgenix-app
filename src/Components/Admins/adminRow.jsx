@@ -32,7 +32,7 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
       <td>{listAdmin.email}</td>
       <td>{listAdmin.password}</td>
       <td>
-        <a href={`admins-form/${listAdmin._id}`}>
+        <a href={`admin-form/${listAdmin._id}`}>
           <button type="button">
             <img src={`../assets/images/iconEdit.svg`} />
           </button>

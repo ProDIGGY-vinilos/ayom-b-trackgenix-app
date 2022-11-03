@@ -12,7 +12,7 @@ function Form() {
   useEffect(async () => {
     const path = window.location.pathname.split('/');
     const adminId = path[path.length - 1];
-    if (adminId !== 'admins-form') {
+    if (adminId !== 'admin-form') {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`);
         const data = await response.json();
@@ -24,9 +24,7 @@ function Form() {
         });
         return;
       } catch (err) {
-        setTimeout(() => {
-          alert(err.message);
-        }, 10);
+        alert(err.message);
       }
     }
   }, []);
@@ -35,45 +33,37 @@ function Form() {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const path = window.location.pathname.split('/');
     const adminId = path[path.length - 1];
-    if (adminId !== 'admins-form') {
-      const options = {
+    if (adminId !== 'admin-form') {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-type': 'application/json'
         },
         body: JSON.stringify(inputValue)
-      };
-      const url = `${process.env.REACT_APP_API_URL}/admins/${adminId}`;
-      fetch(url, options).then(async (response) => {
-        if (response.status !== 200 && response.status !== 201) {
-          const { message } = await response.json();
-          alert(message);
-        } else {
-          alert('Admin was successfully edited');
-          return response.json();
-        }
       });
+      const data = await response.json();
+      if (response.status !== 200 && response.status !== 201) {
+        alert(data.message);
+      } else {
+        alert('Admin was successfully edited');
+      }
     } else {
-      const options = {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-type': 'application/json'
         },
         body: JSON.stringify(inputValue)
-      };
-      const url = `${process.env.REACT_APP_API_URL}/admins`;
-      fetch(url, options).then(async (response) => {
-        if (response.status !== 200 && response.status !== 201) {
-          const { message } = await response.json();
-          alert(message);
-        } else {
-          alert('Admin was created successfully');
-          return response.json();
-        }
       });
+      const data = await response.json();
+      if (response.status !== 200 && response.status !== 201) {
+        alert(data.message);
+      } else {
+        alert('Admin was successfully edited');
+      }
     }
   };
   return (

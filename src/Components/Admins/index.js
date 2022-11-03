@@ -6,11 +6,13 @@ function Admins() {
   const [admins, saveAdmins] = useState([]);
 
   useEffect(async () => {
-    await fetch(`${process.env.REACT_APP_API_URL}/admins`)
-      .then((response) => response.json())
-      .then((response) => {
-        saveAdmins(response.data);
-      });
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`);
+      const data = await response.json();
+      saveAdmins(data.data);
+    } catch (error) {
+      alert(error);
+    }
   }, []);
 
   const deleteAdmin = (id) => {
@@ -21,7 +23,7 @@ function Admins() {
     <div className={styles.container}>
       <div className={styles.adminHeader}>
         <h2>Admin</h2>
-        <a href={`admins-form`}>x</a>
+        <a href={`admin-form`}>x</a>
       </div>
       <Table list={admins} saveAdmins={saveAdmins} deleteItem={deleteAdmin} />
     </div>
