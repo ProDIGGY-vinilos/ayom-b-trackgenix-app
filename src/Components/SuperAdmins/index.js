@@ -3,20 +3,20 @@ import { useEffect, useState } from 'react';
 import ListSuperAdmin from './ListSuperAdmins/index';
 
 function SuperAdmins() {
-  const [superAdmins, saveSuperAdmins] = useState([]);
+  const [superAdmins, setSuperAdmins] = useState([]);
 
   useEffect(async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/superAdmins`);
       const data = await response.json();
-      saveSuperAdmins(data.data);
+      setSuperAdmins(data.data);
     } catch (error) {
       console.error(error);
     }
   }, []);
 
   const onDeleteSuperAdmin = (id) => {
-    saveSuperAdmins([...superAdmins.filter((sAdmin) => sAdmin._id !== id)]);
+    setSuperAdmins([...superAdmins.filter((sAdmin) => sAdmin._id !== id)]);
   };
 
   return (

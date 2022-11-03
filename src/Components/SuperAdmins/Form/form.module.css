@@ -1,34 +1,37 @@
-.container{
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-items: center;
     width: 100%;
 }
-.header{
+
+.header {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     width: 50%;
 }
-.inputDiv{
+
+.inputDiv {
     display: flex;
     margin: 10px;
     width: 50%;
-
 }
-.inputDiv label{
+
+.inputDiv label {
     margin-right: 20px;
 }
-.inputDiv input{
+
+.inputDiv input {
     width: 60%;
-    
 }
+
 .container a {
     font-size: 30px;
-
 }
+
 .container a:hover {
     cursor: pointer;
 }

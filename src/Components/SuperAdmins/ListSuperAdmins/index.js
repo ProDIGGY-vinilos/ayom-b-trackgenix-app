@@ -15,10 +15,17 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
   };
 
   const deleteSuperAdmin = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
-      method: 'DELETE'
-    });
-    onDeleteSuperAdmin(sAdmin._id);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
+        method: 'DELETE'
+      });
+      if (response.status === 204) {
+        alert(`Super Admin with id: ${sAdmin._id} has been deleted`);
+        onDeleteSuperAdmin(sAdmin._id);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
