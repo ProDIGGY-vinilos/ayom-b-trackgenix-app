@@ -7,7 +7,7 @@
 }
 
 table {
-  box-shadow: 5px 5px 5px gray;
+  box-shadow: 5px 5px 5px #808080;
   width: 80%;
   border-top-style: none;
   border-radius: 5px;
@@ -32,12 +32,12 @@ tr {
 
 a {
   text-decoration: none;
-  color: white;
+  color: #FFFFFF;
 }
 
 button {
   border: 1px;
   border-radius: 5px;
   background-color: #EA3354;
-  color: white;
+  color: #FFFFFF;
 }

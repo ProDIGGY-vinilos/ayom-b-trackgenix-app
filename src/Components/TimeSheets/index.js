@@ -5,7 +5,7 @@ import CreateButton from './Create Button';
 import ExpandModal from './Expand Modal';
 
 function TimeSheets() {
-  const [TimeSheets, setTimeSheets] = useState([]);
+  const [timeSheets, setTimeSheets] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [element, setElement] = useState('');
   const [modalData, setModalData] = useState({});
@@ -20,14 +20,15 @@ function TimeSheets() {
     }
   }, []);
 
-  const deleteTimesheet = async (id, Timesheets) => {
+  const deleteTimesheet = async (id, timeSheets) => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
       method: 'DELETE'
     });
     if (response.status === 204) {
-      setTimeSheets([...Timesheets.filter((timeSheetItem) => timeSheetItem._id !== id)]);
+      setTimeSheets([...timeSheets.filter((timeSheetItem) => timeSheetItem._id !== id)]);
+      alert('Used deleted');
     } else {
-      alert(response.message);
+      alert('Error Encountered');
     }
   };
 
@@ -50,7 +51,7 @@ function TimeSheets() {
             <th></th>
             <th></th>
           </tr>
-          {TimeSheets.map((TimeSheet) => {
+          {timeSheets.map((TimeSheet) => {
             return (
               <tr key={TimeSheet._id}>
                 <td key={TimeSheet._id}>{TimeSheet.description}</td>

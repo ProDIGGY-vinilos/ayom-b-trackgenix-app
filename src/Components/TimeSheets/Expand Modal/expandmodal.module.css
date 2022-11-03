@@ -17,9 +17,9 @@
     flex-direction: column;
     width: 500px;
     height: fit-content;
-    background-color: white;
+    background-color: #fff;
     border-radius: 5px;
-    border: solid 1px grey;
+    border: solid 1px #808080;
     margin: auto;
     margin-top: 200px;
 }

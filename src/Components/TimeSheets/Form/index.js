@@ -3,21 +3,26 @@ import styles from './form.module.css';
 import Select from '../Select/';
 
 const TimeSheetsForm = () => {
-  const [Projects, setProjects] = useState([]);
-  const [Employees, setEmployees] = useState([]);
-  const [Tasks, setTasks] = useState([]);
-  const [Description, setDescription] = useState('');
-  const [Date, setDate] = useState('');
-  const [Hours, setHours] = useState('');
-  const [ProjectId, setProjectId] = useState('');
-  const [EmployeeId, setEmployeeId] = useState('');
-  const [TaskId, setTaskId] = useState('');
-  const [timeSheet, setTimeSheet] = useState({});
-  const path = window.location.pathname.split('/');
-  let timeSheetId = path[path.length - 1];
-  let formSwitch;
+  const [projects, setProjects] = useState([]);
+  const [employees, setEmployees] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [description, setDescription] = useState('');
+  const [date, setDate] = useState('');
+  const [hours, setHours] = useState('');
+  const [projectId, setProjectId] = useState('');
+  const [employeeId, setEmployeeId] = useState('');
+  const [taskId, setTaskId] = useState('');
+  const [formSwitch, setFormSwitch] = useState(false);
+  const [timeSheetId, setTimeSheetId] = useState('');
 
-  timeSheetId.length == 24 ? (formSwitch = true) : (formSwitch = false);
+  const setStates = (timeSheet) => {
+    setDescription(timeSheet.description);
+    setDate(timeSheet.date);
+    setHours(timeSheet.hours);
+    setProjectId(timeSheet.project);
+    setEmployeeId(timeSheet.employee);
+    setTaskId(timeSheet.task);
+  };
 
   const projectsFetch = async () => {
     try {
@@ -25,17 +30,8 @@ const TimeSheetsForm = () => {
       const data = await response.json();
       setProjects(data.data);
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
-  };
-
-  const setStates = (timesheet) => {
-    setDescription(timesheet.description);
-    setDate(timesheet.date);
-    setHours(timesheet.hours);
-    setProjectId(timesheet.project);
-    setEmployeeId(timesheet.employee);
-    setTaskId(timesheet.task);
   };
 
   const tasksFetch = async () => {
@@ -44,7 +40,7 @@ const TimeSheetsForm = () => {
       const data = await response.json();
       setTasks(data.data);
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
@@ -54,7 +50,7 @@ const TimeSheetsForm = () => {
       const data = await response.json();
       setEmployees(data.data);
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
@@ -62,21 +58,29 @@ const TimeSheetsForm = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`);
       const data = await response.json();
-      setTimeSheet(data.data);
+      setStates(data.data);
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
   useEffect(() => {
+    const path = window.location.pathname.split('/');
+    const pathed = path[path.length - 1];
+    if (pathed.length === 24) {
+      setTimeSheetId(pathed);
+      setFormSwitch(true);
+    }
     projectsFetch();
     tasksFetch();
     employeesFetch();
-    if (formSwitch) {
-      timeSheetFetch(timeSheetId);
-      setStates(timeSheet);
-    }
   }, []);
+
+  useEffect(() => {
+    if (timeSheetId && projects.length && employees.length && tasks.length) {
+      timeSheetFetch(timeSheetId);
+    }
+  }, [projects, employees, tasks]);
 
   const createTimeSheet = async (Description, Date, Hours, ProjectId, TaskId, EmployeeId) => {
     const req = {
@@ -88,22 +92,27 @@ const TimeSheetsForm = () => {
       hours: Hours
     };
     if (formSwitch) {
-      await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${timeSheetId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${timeSheetId}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json'
         },
         body: JSON.stringify(req)
       });
+      const data = await response.json();
+      alert(data.message);
     } else {
-      await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json'
         },
         body: JSON.stringify(req)
       });
+      const data = await response.json();
+      alert(data.message);
     }
+    document.location.href = '/time-sheets';
   };
 
   return (
@@ -113,34 +122,38 @@ const TimeSheetsForm = () => {
         <div className={styles.formcontainer}>
           <div>
             <label>Date</label>
-            <input value={Date} onChange={(e) => setDate(e.target.value)} type="date"></input>
+            <input
+              value={date || undefined}
+              onChange={(e) => setDate(e.target.value)}
+              type="date"
+            ></input>
           </div>
           <div>
             <label>Hours</label>
             <input
-              value={Hours}
+              defaultValue={hours || undefined}
+              value={hours || undefined}
               onChange={(e) => setHours(e.target.value)}
               type="text"
-              placeholder="Hours"
             ></input>
           </div>
           <div>
             <label>Select Project</label>
-            <Select Data={Projects} setId={setProjectId} field="description" />
+            <Select Data={projects || undefined} setId={setProjectId} field="description" />
           </div>
           <div>
             <label>Select Employee</label>
-            <Select Data={Employees} setId={setEmployeeId} field="name" />
+            <Select Data={employees || undefined} setId={setEmployeeId} field="name" />
           </div>
           <div>
             <label>Select Task</label>
-            <Select Data={Tasks} setId={setTaskId} field="description" />
+            <Select Data={tasks || undefined} setId={setTaskId} field="description" />
           </div>
         </div>
         <div className={styles.textareacontainer}>
           <label>Description</label>
           <textarea
-            value={Description}
+            value={description || undefined}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Description"
           ></textarea>
@@ -148,7 +161,7 @@ const TimeSheetsForm = () => {
       </form>
       <div className={styles.buttons}>
         <button
-          onClick={() => createTimeSheet(Description, Date, Hours, ProjectId, TaskId, EmployeeId)}
+          onClick={() => createTimeSheet(description, date, hours, projectId, taskId, employeeId)}
         >
           Submit
         </button>
