@@ -13,6 +13,7 @@ import ProjectForm from '../Projects/Form/index';
 import TimeSheets from '../TimeSheets';
 import TimeSheetsForm from '../TimeSheets/Form';
 import Tasks from '../Tasks/index';
+import EmployeeForm from '../Employees/EmployeeForm';
 import TasksForm from '../Tasks/Form/index';
 
 function Layout() {
@@ -35,7 +36,7 @@ function Layout() {
       currentScreen = <Employees />;
       break;
     case 'employee-form':
-      currentScreen = <Employees />;
+      currentScreen = <EmployeeForm />;
       break;
     case 'projects':
       currentScreen = <Projects />;
