@@ -1,6 +1,43 @@
 .container {
   flex: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+table {
+  box-shadow: 5px 5px 5px #808080;
+  width: 80%;
+  border-top-style: none;
+  border-radius: 5px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+h2 {
+  width: 80%;
+  margin: 0px;
+  text-align: center;
+  background-color: #EA3354;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+tr {
+  border-style: solid;
+  border-bottom: 2px;
+  border-color: black;
+}
+
+a {
+  text-decoration: none;
+  color: #FFFFFF;
+}
+
+button {
+  border: 1px;
+  border-radius: 5px;
+  background-color: #EA3354;
+  color: #FFFFFF;
 }
