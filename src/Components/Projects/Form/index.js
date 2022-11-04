@@ -135,7 +135,7 @@ const index = () => {
           <input
             type="text"
             name="name"
-            defaultValue={isFetched ? projectBody.name : undefined}
+            value={isFetched && projectBody.name}
             onChange={(e) => onChangeValue('name', e.target.value)}
             required
           />
@@ -145,7 +145,7 @@ const index = () => {
           <input
             type="text"
             name="client name"
-            defaultValue={isFetched ? projectBody.clientName : undefined}
+            value={isFetched && projectBody.clientName}
             onChange={(e) => onChangeValue('clientName', e.target.value)}
             required
           />
@@ -157,7 +157,7 @@ const index = () => {
             cols="30"
             rows="10"
             className={styles.textarea}
-            defaultValue={isFetched ? projectBody.description : undefined}
+            value={isFetched && projectBody.description}
             onChange={(e) => onChangeValue('description', e.target.value)}
           ></textarea>
         </div>
@@ -166,7 +166,7 @@ const index = () => {
           <input
             type="date"
             name="start date"
-            defaultValue={isFetched ? projectBody.startDate : undefined}
+            value={isFetched && projectBody.startDate}
             onChange={(e) => onChangeValue('startDate', e.target.value)}
             required
           />
@@ -176,7 +176,7 @@ const index = () => {
           <input
             type="date"
             name="end date"
-            defaultValue={isFetched ? projectBody.endDate : undefined}
+            value={isFetched && projectBody.endDate}
             onChange={(e) => onChangeValue('endDate', e.target.value)}
             required
           />
