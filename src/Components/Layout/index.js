@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Header from '../Header/index';
 import Footer from '../Footer/index';
 import Admins from '../Admins/index';
@@ -24,7 +25,7 @@ function Layout() {
     case 'admin-form':
       currentScreen = <AdminForm />;
       break;
-    case '/super-admins':
+    case 'super-admins':
       currentScreen = <SuperAdmins />;
       break;
     case 'super-admin-form':
