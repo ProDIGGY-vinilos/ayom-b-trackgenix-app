@@ -43,7 +43,6 @@ const EmployeeForm = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log('asdasd');
 
     const requestOptions = {
       method: employeeId === 'employee-form' ? 'POST' : 'PUT',
