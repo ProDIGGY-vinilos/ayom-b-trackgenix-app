@@ -1,6 +1,116 @@
 .container {
   flex: 1;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+}
+
+.list > table{
+  margin: 25px;
+  border-radius: 5px 5px 0 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  border-collapse:collapse;
+}
+
+.list thead{
+background-color: #AACE9B;
+color: #ffffff;
+text-align: center;
+font-weight: bold;
+}
+
+.list td,th {
+  text-align: center;
+  padding: 12px 15px;
+}
+
+.list tbody tr {
+  align-items: center;
+  border-bottom: 1px solid #707070;
+}
+
+.list tbody tr:last-of-type {
+  align-items: center;
+  border-bottom: 2px solid  #AACE9B;
+}
+
+.list  tbody tr  td > button , a button {
+  align-items: center;
+  border-style: none;
+  background-color: rgba(0, 0, 0, 0.0);
+  margin: 5px;
+  padding: 10px;
+}
+
+.adminHeader{
+  display: flex;
   align-items: center;
 }
+
+.adminHeader a{
+  margin-left: 50px;
+  text-align: center;
+  background-color: #AACE9B;;
+  color: #373867;
+  border-style: none;
+  font-size: 35px;
+  font-weight: 800;
+  border-radius: 30px;
+  height: 60px;
+  width: 60px;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  background-color: white;
+  border-radius: 5px;
+  border: solid 1px grey;
+  margin: auto;
+}
+
+.fromInput{
+  display: flex;
+  flex-direction: column;
+}
+
+.formHeader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color:white;
+  width: 100%;
+  background-color: #373867;
+}
+
+.formHeader a button{
+  position:relative;
+  left: 160px;
+  font-weight: 800;
+  align-items: center;
+  color: white;
+  background-color: #373867 ;
+  border-style: none;
+  border: 5px;
+  border-radius: 5px;
+}
+
+.formButton > button{
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: 14px 36px;
+  background: #AACE9B;
+  color: white;
+  border: 5px;
+  border-radius: 5px;
+  margin: 15px;
+ }
+

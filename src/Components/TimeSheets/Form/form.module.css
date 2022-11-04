@@ -1,0 +1,76 @@
+* {
+    font-family: 'Open Sans', BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+}
+
+form {
+    box-shadow: 5px 5px 5px #808080;
+    border-top-style: none;
+    border-radius: 5px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 250px;
+    width: 80%;
+    padding-bottom: 5px;
+}
+
+label {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.formcontainer {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    justify-content: space-evenly;
+}
+
+.formcontainer > div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+.formcontainer > div > input {
+    height: 100%;
+}
+
+.textareacontainer {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: fit-content;
+    justify-content: flex-start;
+}
+
+textarea {
+    height: 100px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    width: 20%;
+}
+
+input[type=text], input[type=date], textarea, select , option{
+    border: 2px solid #808080;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 4px;
+    font-weight: 100;
+    font-size: 15px;
+}
