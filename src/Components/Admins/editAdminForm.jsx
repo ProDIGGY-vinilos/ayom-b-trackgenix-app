@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
 
 function Form() {
+  const path = window.location.pathname.split('/');
+  const adminId = path[path.length - 1];
+
   const [inputValue, setInputValue] = useState({
     name: '',
     lastName: '',
@@ -10,9 +13,8 @@ function Form() {
   });
 
   useEffect(async () => {
-    const path = window.location.pathname.split('/');
-    const adminId = path[path.length - 1];
     if (adminId !== 'admin-form') {
+      document.getElementById('fromHeader').innerHTML = 'EDIT ADMIN';
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`);
         const data = await response.json();
@@ -26,7 +28,7 @@ function Form() {
       } catch (err) {
         alert(err.message);
       }
-    }
+    } else document.getElementById('fromHeader').innerHTML = 'ADD ADMIN';
   }, []);
 
   const onChange = (e) => {
@@ -34,8 +36,6 @@ function Form() {
   };
 
   const onSubmit = async () => {
-    const path = window.location.pathname.split('/');
-    const adminId = path[path.length - 1];
     if (adminId !== 'admin-form') {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`, {
         method: 'PUT',
@@ -49,6 +49,7 @@ function Form() {
         alert(data.message);
       } else {
         alert('Admin was successfully edited');
+        window.location.pathname = `admins`;
       }
     } else {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/`, {
@@ -63,13 +64,14 @@ function Form() {
         alert(data.message);
       } else {
         alert('Admin was successfully edited');
+        window.location.pathname = `admins`;
       }
     }
   };
   return (
     <form className={styles.form}>
       <div className={styles.formHeader}>
-        <h3>EDIT ADMIN</h3>
+        <h3 id="fromHeader">Tittle</h3>
         <a href="/admins">
           <button type="button">X</button>
         </a>

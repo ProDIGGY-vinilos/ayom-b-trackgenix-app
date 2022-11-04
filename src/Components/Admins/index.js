@@ -23,7 +23,7 @@ function Admins() {
     <div className={styles.container}>
       <div className={styles.adminHeader}>
         <h2>Admin</h2>
-        <a href={`admin-form`}>x</a>
+        <a href={`admin-form`}>+</a>
       </div>
       <Table list={admins} saveAdmins={saveAdmins} deleteItem={deleteAdmin} />
     </div>
