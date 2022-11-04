@@ -9,7 +9,11 @@ function Tasks() {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`);
       const data = await response.json();
-      response.status == 200 ? saveTasks(data.data) : alert(data.message);
+      if (response.status == 200) {
+        saveTasks(data.data);
+      } else {
+        alert(data.message);
+      }
     } catch (error) {
       alert(error);
     }

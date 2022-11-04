@@ -40,7 +40,7 @@ const ListTask = ({ listTask, deleteTask }) => {
       <td>{listTask._id}</td>
       <td>{listTask.description}</td>
       <td>
-        <a href={`task-form?id=${listTask._id}`}>
+        <a href={`task-form/${listTask._id}`}>
           <button className={styles.editButton} onClick={() => onSubmit(listTask)}>
             Edit
           </button>

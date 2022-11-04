@@ -44,11 +44,11 @@ function Form() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const params = new URLSearchParams(window.location.search);
-    const taskId = params.get('id');
+    const path = window.location.pathname.split('/');
+    let taskId = path[path.length - 1];
     let options;
     let url;
-    if (taskId !== null) {
+    if (taskId !== 'task-form') {
       options = {
         method: 'PUT',
         headers: {
