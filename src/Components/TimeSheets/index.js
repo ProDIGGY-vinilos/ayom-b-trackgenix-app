@@ -81,7 +81,7 @@ function TimeSheets() {
                   </button>
                 </td>
                 <td key={TimeSheet._id}>
-                  {TimeSheet.employee.name}
+                  {TimeSheet.employee?.name}
                   <button
                     onClick={() => {
                       setShowModal(true);
