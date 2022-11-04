@@ -87,3 +87,7 @@ a {
   color: #fff;
   text-decoration: none !important;
 }
+
+.btnBack {
+  width: 80px;
+}

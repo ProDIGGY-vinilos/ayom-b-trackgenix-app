@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import Button from './Button';
 import Employee from './Employee';
-import Modal from './modal/modal';
 
 function Employees() {
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   const [employees, setEmployees] = useState([]);
+
+  const deleteItem = (id) => {
+    setEmployees(employees.filter((employee) => employee._id !== id));
+  };
 
   useEffect(async () => {
     try {
@@ -18,38 +21,19 @@ function Employees() {
     }
   }, []);
 
-  const deleteEmployee = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, { method: 'DELETE' });
-    setEmployees(employees.filter((e) => e._id !== id));
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
-  const openModal = () => {
-    setShowModal(true);
-  };
-
   return (
     <section className={styles.container}>
       <div className={styles.title}>
         <h2>Employees</h2>
         <Button color="green" text={'Add'} href={'/employee-form'} />
       </div>
-      {employees.map((employee) => (
-        <>
-          <Employee key={employee._id} employee={employee} onClickDelete={openModal} />
-          <Modal
-            openModal={showModal}
-            closeModal={closeModal}
-            deleteAction={deleteEmployee}
-            id={employee._id}
-            warningText={`Are you sure you want to remove Employee: ${employee.name}`}
-            title={'DELETE EMPLOYEE'}
-          />
-        </>
-      ))}
+      {employees.map((employee) => {
+        return (
+          <>
+            <Employee key={employee._id} employee={employee} onDeleteItem={deleteItem} />
+          </>
+        );
+      })}
     </section>
   );
 }

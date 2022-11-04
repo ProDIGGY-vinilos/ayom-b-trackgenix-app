@@ -1,6 +1,6 @@
 import styles from './modal.module.css';
 
-function Modal({ openModal, closeModal, id, title, warningText }) {
+function Modal({ openModal, closeModal, id, title, warningText, deleteAction }) {
   if (!openModal) {
     return null;
   }
@@ -9,7 +9,7 @@ function Modal({ openModal, closeModal, id, title, warningText }) {
     closeModal();
   };
 
-  const deleteAction = () => {
+  const confirmAction = () => {
     deleteAction(id);
     closeModal();
   };
@@ -26,7 +26,7 @@ function Modal({ openModal, closeModal, id, title, warningText }) {
           <button onClick={cancelAction} className={styles.close}>
             Cancel
           </button>
-          <button onClick={deleteAction} className={styles.delete}>
+          <button onClick={confirmAction} className={styles.delete}>
             Delete
           </button>
         </div>
