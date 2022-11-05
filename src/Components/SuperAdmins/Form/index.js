@@ -50,7 +50,7 @@ function Form() {
   const updateField = (e) => {
     setSuperAdmin({ ...superAdmin, [e.target.name]: e.target.value });
   };
-
+  //
   const validateFields = () => {
     for (const val in superAdmin) {
       if (superAdmin[`${val}`].trim().length !== 0) {
