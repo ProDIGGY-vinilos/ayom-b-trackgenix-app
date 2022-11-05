@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import Modal from '../Modal/modalSuperAdmin';
+import DeleteModal from '../Modal/deleteModal';
 import styles from '../super-admins.module.css';
 
 const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
@@ -41,7 +41,7 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
         </a>
       </td>
       <td className={styles.btn}>
-        <Modal
+        <DeleteModal
           openModal={showModal}
           closeModal={closeModal}
           deleteAction={deleteSuperAdmin}

@@ -14,6 +14,10 @@
     width: 50%;
 }
 
+.crossBtn{
+    color: black;
+}
+
 .inputDiv {
     display: flex;
     margin: 10px;

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import ConfirmModal from '../Modal/confirmModal';
+// import ConfirmModal from '../Modal/deleteModal';
 import styles from './form.module.css';
 
 function Form() {
@@ -10,6 +12,15 @@ function Form() {
     password: ''
   });
   const [title, setTitle] = useState([]);
+  const [showModal, setModal] = useState(false);
+
+  const openModal = () => {
+    setModal(true);
+  };
+
+  const closeModal = () => {
+    setModal(false);
+  };
 
   useEffect(async () => {
     const path = window.location.pathname.split('/');
@@ -38,6 +49,17 @@ function Form() {
 
   const updateField = (e) => {
     setSuperAdmin({ ...superAdmin, [e.target.name]: e.target.value });
+  };
+
+  const validateFields = () => {
+    for (const val in superAdmin) {
+      if (superAdmin[`${val}`].trim().length !== 0) {
+        openModal();
+        break;
+      } else {
+        document.location.href = '/super-admins';
+      }
+    }
   };
 
   const updateCreateSuperAdmin = async (method, url) => {
@@ -85,7 +107,15 @@ function Form() {
     <form className={styles.container}>
       <div className={styles.header}>
         <h3>{title}</h3>
-        <a href="/../super-admins">X</a>
+        <ConfirmModal
+          openModal={showModal}
+          closeModal={closeModal}
+          title={'Are you sure?'}
+          warningText={`You are going to go back to Super Admin Lists`}
+        />
+        <a className={styles.crossBtn} onClick={validateFields}>
+          X
+        </a>
       </div>
       <div className={styles.inputDiv}>
         <label className={styles.labelText}>Name</label>
