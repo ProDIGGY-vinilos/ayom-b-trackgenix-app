@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 800px;
+  max-width: 1000px;
   margin: 1px auto;
   overflow: auto;
   min-height: 300px;
@@ -14,8 +14,14 @@
   background-color: #f7f7f7a4;
 }
 
-.title {
+.titleform {
   display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 0;
+  background-color: #EA3354;
 }
 
 .btn {
@@ -57,14 +63,6 @@
   justify-content: space-between;
 }
 
-.addform {
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-  align-items: center;
-  margin-bottom: 40px;
-}
-
 .formcontrol {
   margin: 20px 0;
 }
@@ -81,6 +79,10 @@
   margin: 5px;
   padding: 3px 7px;
   font-size: 17px;
+  border: 2px solid #808080;
+  border-radius: 4px;
+  font-weight: 100;
+
 }
 
 a {
@@ -91,3 +93,11 @@ a {
 .btnBack {
   width: 80px;
 }
+/* display: flex;
+flex-direction: column;
+align-self: center;
+justify-items: center;
+align-items: center;
+
+margin-top: 100px;
+margin-bottom: 100px; */

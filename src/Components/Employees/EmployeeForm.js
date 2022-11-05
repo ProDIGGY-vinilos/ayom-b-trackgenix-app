@@ -64,7 +64,8 @@ const EmployeeForm = () => {
 
   return (
     <>
-      <form className={styles.addform} onSubmit={onSubmit}>
+      <form className={styles.container} onSubmit={onSubmit}>
+        <h3 className={styles.titleform}>Create Employee</h3>
         <div className={styles.formcontrol}>
           <label>Name</label>
           <input
