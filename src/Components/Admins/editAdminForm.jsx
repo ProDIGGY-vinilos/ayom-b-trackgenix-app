@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './admins.module.css';
 
 function Form() {
@@ -72,9 +73,7 @@ function Form() {
     <form className={styles.form}>
       <div className={styles.formHeader}>
         <h3 id="fromHeader">Tittle</h3>
-        <a href="/admins">
-          <button type="button">X</button>
-        </a>
+        <Link to="/admins">X</Link>
       </div>
       <div className={styles.fromInput}>
         <label>Name</label>
