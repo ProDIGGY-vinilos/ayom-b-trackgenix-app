@@ -14,7 +14,7 @@
   background-color: #f7f7f7a4;
 }
 
-.titleform {
+.titleForm {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -67,11 +67,11 @@
   margin: 20px 0;
 }
 
-.formcontrol label {
+.formControl label {
   display: block;
 }
 
-.formcontrol input {
+.formControl input {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -93,11 +93,3 @@ a {
 .btnBack {
   width: 80px;
 }
-/* display: flex;
-flex-direction: column;
-align-self: center;
-justify-items: center;
-align-items: center;
-
-margin-top: 100px;
-margin-bottom: 100px; */
