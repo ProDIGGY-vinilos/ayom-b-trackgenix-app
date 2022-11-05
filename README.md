@@ -3,8 +3,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### Description
+WEEK 01:
+    On this project we have two teams, the first one must develop the page, and the second one have to check that is all working properly and suggest changes.For this project we implement React Js.
 
-On this project we have two teams, the first one must develop the page, and the second one have to check that is all working properly and suggest changes.For this project we implement React Js.
 
 ### Install dependencies
 
