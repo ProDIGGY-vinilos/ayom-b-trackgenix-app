@@ -99,10 +99,10 @@ const index = () => {
       const data = await response.json();
 
       if (response.status === 200) {
-        alert(data.msg);
+        alert(data.message);
         document.location.href = '/projects';
       } else if ([404, 500].includes(response.status)) {
-        alert(data.msg);
+        alert(data.message);
       } else if (response.status === 400) {
         alert(data.message);
       }
