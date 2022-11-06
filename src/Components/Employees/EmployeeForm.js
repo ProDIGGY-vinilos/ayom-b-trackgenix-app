@@ -52,9 +52,6 @@ const EmployeeForm = () => {
       }
     };
     let url = !employeeId ? '' : '/' + employeeId;
-    console.log(requestOptions);
-    console.log(url);
-    console.log(employeeId);
     const response = await fetch(
       `${process.env.REACT_APP_API_URL}/employees${url}`,
       requestOptions
