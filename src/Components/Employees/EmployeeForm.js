@@ -62,8 +62,9 @@ const EmployeeForm = () => {
 
   return (
     <>
-      <form className={styles.addform} onSubmit={onSubmit}>
-        <div className={styles.formcontrol}>
+      <form className={styles.container} onSubmit={onSubmit}>
+        <h3 className={styles.titleForm}>Create Employee</h3>
+        <div className={styles.formControl}>
           <label>Name</label>
           <input
             name="name"
@@ -73,7 +74,7 @@ const EmployeeForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className={styles.formcontrol}>
+        <div className={styles.formControl}>
           <label>Last Name</label>
           <input
             name="lastName"
@@ -83,7 +84,7 @@ const EmployeeForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className={styles.formcontrol}>
+        <div className={styles.formControl}>
           <label>Email</label>
           <input
             name="email"
@@ -93,7 +94,7 @@ const EmployeeForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className={styles.formcontrol}>
+        <div className={styles.formControl}>
           <label>Phone Number</label>
           <input
             name="phone"
@@ -103,7 +104,7 @@ const EmployeeForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className={styles.formcontrol}>
+        <div className={styles.formControl}>
           <label>Password</label>
           <input
             name="password"
