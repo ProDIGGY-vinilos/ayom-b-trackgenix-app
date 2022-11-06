@@ -153,7 +153,7 @@ const TimeSheetsForm = (props) => {
             <Select
               defaultValue={projectDescription}
               switcher={formSwitch}
-              Data={projects || undefined}
+              data={projects || undefined}
               setId={setProjectId}
               field="description"
             />
@@ -163,7 +163,7 @@ const TimeSheetsForm = (props) => {
             <Select
               defaultValue={employeeName}
               switcher={formSwitch}
-              Data={employees || undefined}
+              data={employees || undefined}
               setId={setEmployeeId}
               field="name"
             />
@@ -173,7 +173,7 @@ const TimeSheetsForm = (props) => {
             <Select
               defaultValue={taskDescription}
               switcher={formSwitch}
-              Data={tasks || undefined}
+              data={tasks || undefined}
               setId={setTaskId}
               field="description"
             />
