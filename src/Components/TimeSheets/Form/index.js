@@ -101,6 +101,9 @@ const TimeSheetsForm = () => {
       });
       const data = await response.json();
       alert(data.message);
+      if (response.status === 200) {
+        document.location.href = '/time-sheets';
+      }
     } else {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
         method: 'POST',
@@ -111,8 +114,10 @@ const TimeSheetsForm = () => {
       });
       const data = await response.json();
       alert(data.message);
+      if (response.status === 201) {
+        document.location.href = '/time-sheets';
+      }
     }
-    document.location.href = '/time-sheets';
   };
 
   return (

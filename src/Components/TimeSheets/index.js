@@ -26,7 +26,7 @@ function TimeSheets() {
     });
     if (response.status === 204) {
       setTimeSheets([...timeSheets.filter((timeSheetItem) => timeSheetItem._id !== id)]);
-      alert('Used deleted');
+      alert('Timesheet deleted');
     } else {
       alert('Error Encountered');
     }
