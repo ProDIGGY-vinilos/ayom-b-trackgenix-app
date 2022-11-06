@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import FormEmployee from './FormEmployees/index';
 import Modal from '../Modal';
 import styles from './form.module.css';
 
-const index = () => {
-  const [idState, setIdState] = useState('');
+const index = (props) => {
+  const projectId = useParams().id;
   const [projectBody, setProjectBody] = useState({
     name: '',
     description: '',
@@ -34,10 +35,7 @@ const index = () => {
   };
 
   useEffect(async () => {
-    const path = window.location.pathname.split('/');
-    let projectId = path[path.length - 1];
-    setIdState(projectId);
-    if (projectId !== 'project-form') {
+    if (projectId) {
       try {
         setIsFetched(true);
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`);
@@ -88,8 +86,8 @@ const index = () => {
   };
 
   const onSubmit = async () => {
-    if (idState.length === 24) {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${idState}`, {
+    if (projectId) {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json'
@@ -100,7 +98,7 @@ const index = () => {
 
       if (response.status === 200) {
         alert(data.msg);
-        document.location.href = '/projects';
+        props.history.goBack();
       } else if ([404, 500].includes(response.status)) {
         alert(data.msg);
       } else if (response.status === 400) {
@@ -118,7 +116,7 @@ const index = () => {
 
       if (response.status === 201) {
         alert(data.message);
-        document.location.href = '/projects';
+        props.history.goBack();
       } else if (response.status === 400) {
         alert(data.message);
       }

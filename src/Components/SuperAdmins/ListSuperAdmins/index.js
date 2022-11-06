@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Modal from '../Modal/modalSuperAdmin';
 import styles from '../super-admins.module.css';
 
@@ -36,9 +37,9 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
       <td className={styles.info}>{sAdmin.email}</td>
       <td className={styles.info}>{sAdmin.password}</td>
       <td className={styles.btn}>
-        <a href={`super-admin-form/${sAdmin._id}`}>
+        <Link to={`super-admin-form/${sAdmin._id}`}>
           <button>edit</button>
-        </a>
+        </Link>
       </td>
       <td className={styles.btn}>
         <Modal

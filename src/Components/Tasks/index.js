@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './tasks.module.css';
 import List from './tasksList';
 
@@ -26,9 +27,9 @@ function Tasks() {
   return (
     <div className={styles.container}>
       <h2>Tasks</h2>
-      <a href="/task-form" className={styles.addButton}>
+      <Link to="/task-form" className={styles.addButton}>
         Add a new task
-      </a>
+      </Link>
       <List list={tasks} saveTasks={saveTasks} deleteItem={deleteTask} />
     </div>
   );

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Table from './adminTable';
 import styles from './admins.module.css';
 
@@ -23,7 +24,7 @@ function Admins() {
     <div className={styles.container}>
       <div className={styles.adminHeader}>
         <h2>Admin</h2>
-        <a href={`admin-form`}>+</a>
+        <Link to="/admin-form">+</Link>
       </div>
       <Table list={admins} saveAdmins={saveAdmins} deleteItem={deleteAdmin} />
     </div>

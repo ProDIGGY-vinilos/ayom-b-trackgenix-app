@@ -19,9 +19,9 @@ function Modal(props) {
       <div className={styles.modal}>
         <div className={styles.modalHeader}>
           <h3>{props.title}</h3>
-          <a onClick={cancelBtn} className={styles.cancelBtnX}>
+          <button onClick={cancelBtn} className={styles.cancelBtnX}>
             X
-          </a>
+          </button>
         </div>
         <div className={styles.modalBody}>
           <p>{props.warningText}</p>

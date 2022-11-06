@@ -1,8 +1,10 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import styles from './form.module.css';
 
-function Form() {
+function Form(props) {
+  const superAdminId = useParams().id;
   const [superAdmin, setSuperAdmin] = useState({
     name: '',
     lastName: '',
@@ -12,9 +14,7 @@ function Form() {
   const [title, setTitle] = useState([]);
 
   useEffect(async () => {
-    const path = window.location.pathname.split('/');
-    const superAdminId = path[path.length - 1];
-    if (superAdminId !== 'super-admin-form') {
+    if (superAdminId) {
       try {
         const response = await fetch(
           `${process.env.REACT_APP_API_URL}/superAdmins/${superAdminId}`
@@ -52,7 +52,7 @@ function Form() {
       const data = await response.json();
       alert(data.message);
       if (response.status === 200 || response.status === 201) {
-        document.location.href = '/super-admins';
+        props.history.goBack();
       }
     } catch (error) {
       alert(error.message);
@@ -61,10 +61,8 @@ function Form() {
 
   const onConfirm = (e) => {
     e.preventDefault();
-    const path = window.location.pathname.split('/');
-    const superAdminId = path[path.length - 1];
     let url = '';
-    if (superAdminId !== 'super-admin-form') {
+    if (superAdminId) {
       url = `${process.env.REACT_APP_API_URL}/superAdmins/${superAdminId}`;
       try {
         updateCreateSuperAdmin('PUT', url);
@@ -85,7 +83,7 @@ function Form() {
     <form className={styles.container}>
       <div className={styles.header}>
         <h3>{title}</h3>
-        <a href="/../super-admins">X</a>
+        <Link to="/super-admins">X</Link>
       </div>
       <div className={styles.inputDiv}>
         <label className={styles.labelText}>Name</label>
