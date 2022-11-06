@@ -35,7 +35,7 @@ const Employee = ({ employee, onDeleteItem }) => {
             title={'DELETE EMPLOYEE'}
           />
           <Button color="blue" text="Edit" href={`/employee-form/${employee._id}`} />
-          <Button color="red" text="Delete" onClick={openModal} />
+          <button onClick={openModal}>Delete</button>
         </td>
       </tr>
     </div>

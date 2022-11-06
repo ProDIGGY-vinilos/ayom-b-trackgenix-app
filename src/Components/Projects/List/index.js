@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Employee from './Employees';
 import styles from './list.module.css';
 import Modal from '../Modal';
@@ -23,7 +24,7 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
     });
     const data = await response.json();
 
-    if (response.status === 200) {
+    if (response.status === 204) {
       onDeleteItem(projectItem._id);
       alert(data.message);
     } else if ([404, 500].includes(response.status)) {
@@ -45,11 +46,9 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
           return <Employee key={employee._id} employee={employee} index={index} />;
         })}
         <td>
-          <button className={styles.btn}>
-            <a className={styles.btnText} href={`/project-form/${projectItem._id}`}>
-              Edit Project
-            </a>
-          </button>
+          <Link className={styles.btnText} to={`/project-form/${projectItem._id}`}>
+            <button className={styles.btn}>Edit Project</button>
+          </Link>
           <button className={`${styles.btnBlack} ${styles.btnText}`} onClick={openModal}>
             Delete Project
           </button>

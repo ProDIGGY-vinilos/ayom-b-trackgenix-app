@@ -1,5 +1,6 @@
-import styles from './super-admins.module.css';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styles from './super-admins.module.css';
 import ListSuperAdmin from './ListSuperAdmins/index';
 
 function SuperAdmins() {
@@ -23,28 +24,30 @@ function SuperAdmins() {
     <section className={styles.container}>
       <h2>Super Admins</h2>
       <table>
-        <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>LastName</th>
-          <th>Email</th>
-          <th>Password</th>
-          <th className={styles.btn}>Actions</th>
-          <th className={styles.btn}>Actions</th>
-        </tr>
-        {superAdmins.map((superAdmin) => {
-          return (
-            <ListSuperAdmin
-              key={superAdmin._id}
-              sAdmin={superAdmin}
-              onDeleteSuperAdmin={onDeleteSuperAdmin}
-            />
-          );
-        })}
+        <tbody>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>LastName</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th className={styles.btn}>Actions</th>
+            <th className={styles.btn}>Actions</th>
+          </tr>
+          {superAdmins.map((superAdmin) => {
+            return (
+              <ListSuperAdmin
+                key={superAdmin._id}
+                sAdmin={superAdmin}
+                onDeleteSuperAdmin={onDeleteSuperAdmin}
+              />
+            );
+          })}
+        </tbody>
       </table>
-      <a href="/super-admin-form">
+      <Link to="/super-admin-form">
         <button>+</button>
-      </a>
+      </Link>
     </section>
   );
 }

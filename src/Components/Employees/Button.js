@@ -1,10 +1,14 @@
+import { Link } from 'react-router-dom';
 import styles from './employees.module.css';
+
 const button = ({ color, text, onClick, href }) => {
   return (
     <>
-      <button onClick={onClick} style={{ backgroundColor: color }} className={styles.btn}>
-        <a href={href}>{text}</a>
-      </button>
+      <Link to={href}>
+        <button onClick={onClick} style={{ backgroundColor: color }} className={styles.btn}>
+          {text}
+        </button>
+      </Link>
     </>
   );
 };
