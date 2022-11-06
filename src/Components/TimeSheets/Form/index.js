@@ -14,6 +14,9 @@ const TimeSheetsForm = () => {
   const [taskId, setTaskId] = useState('');
   const [formSwitch, setFormSwitch] = useState(false);
   const [timeSheetId, setTimeSheetId] = useState('');
+  const [projectDescription, setProjectDescription] = useState('');
+  const [employeeName, setEmployeeName] = useState('');
+  const [taskDescription, settaskDescription] = useState('');
 
   const setStates = (timeSheet) => {
     setDescription(timeSheet.description);
@@ -22,6 +25,9 @@ const TimeSheetsForm = () => {
     setProjectId(timeSheet.project);
     setEmployeeId(timeSheet.employee);
     setTaskId(timeSheet.task);
+    setEmployeeName(timeSheet.employee.name);
+    setProjectDescription(timeSheet.project.description);
+    settaskDescription(timeSheet.task.description);
   };
 
   const projectsFetch = async () => {
@@ -128,7 +134,7 @@ const TimeSheetsForm = () => {
           <div>
             <label>Date</label>
             <input
-              value={date || undefined}
+              value={date.substring(0, 10) || undefined}
               onChange={(e) => setDate(e.target.value)}
               type="date"
             ></input>
@@ -144,15 +150,33 @@ const TimeSheetsForm = () => {
           </div>
           <div>
             <label>Select Project</label>
-            <Select Data={projects || undefined} setId={setProjectId} field="description" />
+            <Select
+              defaultValue={projectDescription}
+              switcher={formSwitch}
+              Data={projects || undefined}
+              setId={setProjectId}
+              field="description"
+            />
           </div>
           <div>
             <label>Select Employee</label>
-            <Select Data={employees || undefined} setId={setEmployeeId} field="name" />
+            <Select
+              defaultValue={employeeName}
+              switcher={formSwitch}
+              Data={employees || undefined}
+              setId={setEmployeeId}
+              field="name"
+            />
           </div>
           <div>
             <label>Select Task</label>
-            <Select Data={tasks || undefined} setId={setTaskId} field="description" />
+            <Select
+              defaultValue={taskDescription}
+              switcher={formSwitch}
+              Data={tasks || undefined}
+              setId={setTaskId}
+              field="description"
+            />
           </div>
         </div>
         <div className={styles.textareacontainer}>

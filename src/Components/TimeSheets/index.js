@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import styles from './time-sheets.module.css';
-import DeleteButton from './Delete Button';
 import CreateButton from './Create Button';
 import ExpandModal from './Expand Modal';
+import ConfirmModal from './Confirmation Modal';
 
 function TimeSheets() {
   const [timeSheets, setTimeSheets] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [showExpandModal, setShowExpandModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [element, setElement] = useState('');
   const [modalData, setModalData] = useState({});
+  const [timeSheetId, setTimeSheetId] = useState('');
 
   useEffect(async () => {
     try {
@@ -32,8 +34,17 @@ function TimeSheets() {
     }
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeExpandModal = () => {
+    setShowExpandModal(false);
+  };
+
+  const closeConfirmModal = () => {
+    setShowConfirmModal(false);
+  };
+
+  const handleDeleteClick = (id) => {
+    setShowConfirmModal(true);
+    setTimeSheetId(id);
   };
 
   return (
@@ -60,7 +71,7 @@ function TimeSheets() {
                   {TimeSheet.project.description}
                   <button
                     onClick={() => {
-                      setShowModal(true);
+                      setShowExpandModal(true);
                       setElement('Project');
                       setModalData(TimeSheet.project);
                     }}
@@ -72,7 +83,7 @@ function TimeSheets() {
                   {TimeSheet.task.description}
                   <button
                     onClick={() => {
-                      setShowModal(true);
+                      setShowExpandModal(true);
                       setElement('Task');
                       setModalData(TimeSheet.task);
                     }}
@@ -84,7 +95,7 @@ function TimeSheets() {
                   {TimeSheet.employee?.name}
                   <button
                     onClick={() => {
-                      setShowModal(true);
+                      setShowExpandModal(true);
                       setElement('Employee');
                       setModalData(TimeSheet.employee);
                     }}
@@ -99,11 +110,9 @@ function TimeSheets() {
                   </button>
                 </td>
                 <td key={TimeSheet._id}>
-                  <DeleteButton
-                    onDelete={deleteTimesheet}
-                    timeSheetId={TimeSheet._id}
-                    timeSheets={TimeSheets}
-                  />
+                  <button onClick={() => handleDeleteClick(TimeSheet._id)}>
+                    <a>Delete</a>
+                  </button>
                 </td>
               </tr>
             );
@@ -112,10 +121,17 @@ function TimeSheets() {
         <CreateButton />
       </section>
       <ExpandModal
-        openModal={showModal}
-        closeModal={closeModal}
+        openModal={showExpandModal}
+        closeModal={closeExpandModal}
         element={element}
         data={modalData}
+      />
+      <ConfirmModal
+        openModal={showConfirmModal}
+        closeModal={closeConfirmModal}
+        onDelete={deleteTimesheet}
+        timeSheetId={timeSheetId}
+        timeSheets={TimeSheets}
       />
     </>
   );
