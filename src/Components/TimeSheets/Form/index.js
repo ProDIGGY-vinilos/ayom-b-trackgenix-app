@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import styles from './form.module.css';
 import Select from '../Select/';
 
-const TimeSheetsForm = () => {
+const TimeSheetsForm = (props) => {
+  const pathed = useParams().id;
   const [projects, setProjects] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -65,9 +67,7 @@ const TimeSheetsForm = () => {
   };
 
   useEffect(() => {
-    const path = window.location.pathname.split('/');
-    const pathed = path[path.length - 1];
-    if (pathed.length === 24) {
+    if (pathed) {
       setTimeSheetId(pathed);
       setFormSwitch(true);
     }
@@ -112,7 +112,7 @@ const TimeSheetsForm = () => {
       const data = await response.json();
       alert(data.message);
     }
-    document.location.href = '/time-sheets';
+    props.history.goBack();
   };
 
   return (
@@ -165,9 +165,9 @@ const TimeSheetsForm = () => {
         >
           Submit
         </button>
-        <button>
-          <a href="/../time-sheets">Go Back</a>
-        </button>
+        <Link to="/time-sheets">
+          <button>Go Back</button>
+        </Link>
       </div>
     </div>
   );

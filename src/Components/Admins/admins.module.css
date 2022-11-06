@@ -36,7 +36,7 @@ font-weight: bold;
   border-bottom: 2px solid  #AACE9B;
 }
 
-.list  tbody tr  td > button , a button {
+.list tbody tr td > button, a button {
   align-items: center;
   border-style: none;
   background-color: rgba(0, 0, 0, 0.0);

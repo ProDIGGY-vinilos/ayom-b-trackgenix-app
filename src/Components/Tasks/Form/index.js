@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import MessagePopUp from '../Modal/messageModal';
 import styles from '../tasks.module.css';
 import stylesModal from '../Modal/tasks.module.css';
 
 function Form() {
+  const taskId = useParams().id;
+
   const [userInput, setNameValue] = useState({
     description: ''
   });
@@ -29,9 +32,7 @@ function Form() {
   };
 
   useEffect(async () => {
-    const params = new URLSearchParams(window.location.search);
-    const taskId = params.get('id');
-    if (taskId != null) {
+    if (taskId) {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`);
       const data = await response.json();
       setNameValue({ ...userInput, description: data.data.description });
@@ -44,11 +45,9 @@ function Form() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const path = window.location.pathname.split('/');
-    let taskId = path[path.length - 1];
     let options;
     let url;
-    if (taskId !== 'task-form') {
+    if (taskId) {
       options = {
         method: 'PUT',
         headers: {
@@ -107,9 +106,9 @@ function Form() {
             text={textPopUp}
             closePopUp={closePopUp}
           />
-          <a href="/tasks" className={stylesModal.goBackButton}>
+          <Link to="/tasks" className={stylesModal.goBackButton}>
             Go back
-          </a>
+          </Link>
         </div>
       </form>
     </div>

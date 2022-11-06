@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import styles from './admins.module.css';
 
-function Form() {
-  const path = window.location.pathname.split('/');
-  const adminId = path[path.length - 1];
+function Form(props) {
+  const adminId = useParams().id;
 
   const [inputValue, setInputValue] = useState({
     name: '',
@@ -13,7 +13,7 @@ function Form() {
   });
 
   useEffect(async () => {
-    if (adminId !== 'admin-form') {
+    if (adminId) {
       document.getElementById('fromHeader').innerHTML = 'EDIT ADMIN';
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`);
@@ -36,7 +36,7 @@ function Form() {
   };
 
   const onSubmit = async () => {
-    if (adminId !== 'admin-form') {
+    if (adminId) {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`, {
         method: 'PUT',
         headers: {
@@ -49,7 +49,7 @@ function Form() {
         alert(data.message);
       } else {
         alert('Admin was successfully edited');
-        window.location.pathname = `admins`;
+        props.history.goBack();
       }
     } else {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/`, {
@@ -64,7 +64,7 @@ function Form() {
         alert(data.message);
       } else {
         alert('Admin was successfully edited');
-        window.location.pathname = `admins`;
+        props.history.goBack();
       }
     }
   };
@@ -72,9 +72,7 @@ function Form() {
     <form className={styles.form}>
       <div className={styles.formHeader}>
         <h3 id="fromHeader">Tittle</h3>
-        <a href="/admins">
-          <button type="button">X</button>
-        </a>
+        <Link to="/admins">X</Link>
       </div>
       <div className={styles.fromInput}>
         <label>Name</label>

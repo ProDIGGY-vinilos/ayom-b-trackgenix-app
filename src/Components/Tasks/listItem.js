@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Form from './Form/index';
 import PopUp from './Modal/taskModal';
 import styles from './tasks.module.css';
@@ -40,11 +41,11 @@ const ListTask = ({ listTask, deleteTask }) => {
       <td>{listTask._id}</td>
       <td>{listTask.description}</td>
       <td>
-        <a href={`task-form/${listTask._id}`}>
+        <Link to={`task-form/${listTask._id}`}>
           <button className={styles.editButton} onClick={() => onSubmit(listTask)}>
             Edit
           </button>
-        </a>
+        </Link>
       </td>
       <td>
         <PopUp

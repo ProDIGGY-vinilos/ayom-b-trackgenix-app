@@ -1,5 +1,6 @@
-import styles from './projects.module.css';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import styles from './projects.module.css';
 import List from './List/index';
 
 function Projects() {
@@ -47,11 +48,9 @@ function Projects() {
       ) : (
         <p>There are not projects</p>
       )}
-      <button className={styles.btn}>
-        <a className={styles.btnText} href="/project-form">
-          Add New Project
-        </a>
-      </button>
+      <Link to="/project-form" className={styles.btnText}>
+        <button className={styles.btn}>Add New Project</button>
+      </Link>
     </section>
   );
 }
