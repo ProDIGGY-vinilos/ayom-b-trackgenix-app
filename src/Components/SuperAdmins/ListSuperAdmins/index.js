@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Modal from '../Modal/modalSuperAdmin';
+import Modal from '../../Shared/Modal';
 import styles from '../super-admins.module.css';
 
 const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
@@ -15,9 +15,9 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
     setModal(false);
   };
 
-  const deleteSuperAdmin = async (id) => {
+  const deleteSuperAdmin = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${sAdmin._id}`, {
         method: 'DELETE'
       });
       if (response.status === 204) {
@@ -45,10 +45,11 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
         <Modal
           openModal={showModal}
           closeModal={closeModal}
-          deleteAction={deleteSuperAdmin}
-          id={sAdmin._id}
-          title={'DELETE ADMIN'}
-          warningText={`Do you want to remove ${sAdmin.name}?`}
+          confirmAction={deleteSuperAdmin}
+          title={'DELETE SUPER ADMIN'}
+          warningText={`¿Are you sure you want to delete ${sAdmin.name}?`}
+          declineButtonText={'Cancel'}
+          confirmButtonText={'Confirm'}
         />
         <button onClick={openModal}>Delete</button>
       </td>
