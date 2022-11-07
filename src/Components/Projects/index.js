@@ -45,26 +45,27 @@ function Projects() {
     { heading: 'Name', value: 'name' },
     { heading: 'Description', value: 'description' },
     { heading: 'Client', value: 'clientName' },
-    { heading: 'Start Date', value: 'startDate' },
-    { heading: 'End Date', value: 'endDate' },
+    { heading: 'Start Date', value: 'startDate', type: 'date' },
+    { heading: 'End Date', value: 'endDate', type: 'date' },
+    {
+      heading: 'Employees',
+      value: 'employees',
+      array: 'employee',
+      nameValue: 'name',
+      lastNameValue: 'lastName',
+      roleValue: 'role',
+      rateValue: 'rate'
+    },
     { heading: 'Actions' }
   ];
 
-  /* const actions = {
-    refreshView: onDeleteItem,
-    oModal: openModal,
-    cModal: closeModal,
-    deleteDB: deleteItem
-  }; */
-
   return (
-    <section>
+    <section className={styles.container}>
       <h2>Projects</h2>
-      <Link to="/project-form" className={styles.btnText}>
-        <button className={styles.btn}>Add New Project</button>
+      <Table data={projects} columns={columns} deleteItem={deleteItem} edit="/project-form" />
+      <Link to="/project-form" className={styles.newProject}>
+        +
       </Link>
-      <button></button>
-      <Table data={projects} columns={columns} deleteItem={deleteItem} />
     </section>
   );
 

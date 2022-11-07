@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './time-sheets.module.css';
-import DeleteButton from './Delete Button';
+import Table from '../Shared/Table';
+/* import DeleteButton from './Delete Button';
 import CreateButton from './Create Button';
-import ExpandModal from './Expand Modal';
+import ExpandModal from './Expand Modal'; */
 
 function TimeSheets() {
   const [timeSheets, setTimeSheets] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  /* const [showModal, setShowModal] = useState(false);
   const [element, setElement] = useState('');
-  const [modalData, setModalData] = useState({});
+  const [modalData, setModalData] = useState({}); */
 
   useEffect(async () => {
     try {
@@ -20,6 +21,8 @@ function TimeSheets() {
       console.error(error);
     }
   }, []);
+
+  console.log(timeSheets);
 
   const deleteTimesheet = async (id) => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
@@ -33,11 +36,36 @@ function TimeSheets() {
     }
   };
 
-  const closeModal = () => {
+  /* const closeModal = () => {
     setShowModal(false);
-  };
+  }; */
+
+  const columns = [
+    { heading: 'Description', value: 'description' },
+    { heading: 'Date', value: 'date', type: 'date' },
+    { heading: 'Project', value: 'project', subValue: 'name' },
+    { heading: 'Task', value: 'task', subValue: 'description' },
+    { heading: 'Employee', value: 'employee', subValue: 'lastName' },
+    { heading: 'Hours', value: 'hours' },
+    { heading: 'Actions' }
+  ];
 
   return (
+    <section className={styles.container}>
+      <h2>Time Sheets</h2>
+      <Table
+        data={timeSheets}
+        columns={columns}
+        deleteItem={deleteTimesheet}
+        edit="/time-sheet-form"
+      />
+      <Link to="/time-sheet-form" className={styles.newTimeSheet}>
+        +
+      </Link>
+    </section>
+  );
+
+  /* return (
     <>
       <section className={styles.container}>
         <h2 className={styles.title}>TimeSheets</h2>
@@ -119,7 +147,7 @@ function TimeSheets() {
         data={modalData}
       />
     </>
-  );
+  ); */
 }
 
 export default TimeSheets;

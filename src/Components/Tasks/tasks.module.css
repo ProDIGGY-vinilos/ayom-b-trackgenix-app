@@ -1,11 +1,11 @@
 .container {
-  flex: 1;
+  margin: auto;
+  width: 80%;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   flex-direction: column;
   flex-wrap: wrap;
   align-content: center;
-  justify-content: center;
 }
 
 .listTable {
@@ -15,7 +15,7 @@
   border-spacing: 0;
 }
 
-.listTable thead{
+/* .listTable thead{
   background-color: #49A37B;
   color: #373867;
 }
@@ -23,7 +23,7 @@
 .listTable td,th {
   border: #373867 solid 1px;
   padding: 10px;
-}
+} */
 
 button {
   margin: 5px;
@@ -92,4 +92,17 @@ button {
 
 .buttonsDiv {
   margin: 10px 0;
+}
+
+.newTask{
+  margin: 10px 0px;
+  text-align: center;
+  background-color: #EA3354;;
+  color: #252525;
+  border-style: none;
+  font-size: 35px;
+  font-weight: 800;
+  border-radius: 30px;
+  height: 60px;
+  width: 60px;
 }

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Table from './adminTable';
+/* import Table from './adminTable'; */
 import styles from './admins.module.css';
+import Table from '../Shared/Table';
 
 function Admins() {
   const [admins, saveAdmins] = useState([]);
@@ -20,14 +21,35 @@ function Admins() {
     saveAdmins([...admins.filter((newListItem) => newListItem._id !== id)]);
   };
 
+  const removeAdmin = async (id) => {
+    await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
+    deleteAdmin(id);
+    alert('The administrator was successfully removed');
+  };
+
+  const columns = [
+    { heading: 'Id', value: '_id' },
+    { heading: 'Name', value: 'name' },
+    { heading: 'Last Name', value: 'lastName' },
+    { heading: 'Email', value: 'email' },
+    { heading: 'Password', value: 'password' },
+    { heading: 'Actions' }
+  ];
+
   return (
-    <div className={styles.container}>
-      <div className={styles.adminHeader}>
-        <h2>Admin</h2>
-        <Link to="/admin-form">+</Link>
-      </div>
-      <Table list={admins} saveAdmins={saveAdmins} deleteItem={deleteAdmin} />
-    </div>
+    <section className={styles.container}>
+      <h2>Admin</h2>
+      <Table data={admins} columns={columns} deleteItem={removeAdmin} edit="/admin-form" />
+      <Link to="/admin-form" className={styles.newAdmin}>
+        +
+      </Link>
+      {/* <Table list={admins} saveAdmins={saveAdmins} deleteItem={deleteAdmin} /> */}
+    </section>
   );
 }
 
