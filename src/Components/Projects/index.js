@@ -1,6 +1,7 @@
-import styles from './projects.module.css';
+/* import styles from './projects.module.css'; */
 import { useState, useEffect } from 'react';
-import List from './List/index';
+/* import List from './List/index'; */
+import Table from '../Shared/Table';
 
 function Projects() {
   const [projects, setProjects] = useState([]);
@@ -19,7 +20,50 @@ function Projects() {
     setProjects([...projects.filter((projectItem) => projectItem._id !== id)]);
   };
 
+  const deleteItem = async (id) => {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
+    const data = await response.json();
+
+    if (response.status === 200) {
+      onDeleteItem(id);
+      alert(data.msg);
+    } else if ([404, 500].includes(response.status)) {
+      alert(data.msg);
+    } else if (response.status === 400) {
+      alert(data.message);
+    }
+  };
+
+  const columns = [
+    { heading: 'Name', value: 'name' },
+    { heading: 'Description', value: 'description' },
+    { heading: 'Client', value: 'clientName' },
+    { heading: 'Start Date', value: 'startDate' },
+    { heading: 'End Date', value: 'endDate' },
+    { heading: 'Actions' }
+  ];
+
+  /* const actions = {
+    refreshView: onDeleteItem,
+    oModal: openModal,
+    cModal: closeModal,
+    deleteDB: deleteItem
+  }; */
+
   return (
+    <section>
+      <h2>Projects</h2>
+      <button></button>
+      <Table data={projects} columns={columns} deleteItem={deleteItem} />
+    </section>
+  );
+
+  /* return (
     <section className={styles.container}>
       <h2 className={styles.header}>Projects</h2>
       {projects.length ? (
@@ -53,7 +97,7 @@ function Projects() {
         </a>
       </button>
     </section>
-  );
+  ); */
 }
 
 export default Projects;

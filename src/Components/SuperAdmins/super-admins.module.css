@@ -7,7 +7,7 @@
   width: 100%;
 }
 
-table {
+/* table {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -24,7 +24,7 @@ tr {
   flex-direction: row;
   width: 100%;
 }
-
+ */
 .btn {
   width: 25%;
 }
