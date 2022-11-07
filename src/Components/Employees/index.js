@@ -2,11 +2,8 @@ import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import { Link } from 'react-router-dom';
 import Table from '../Shared/Table';
-/* import Button from './Button';
-import Employee from './Employee'; */
 
 function Employees() {
-  // const [showModal, setShowModal] = useState(false);
   const [employees, setEmployees] = useState([]);
 
   const deleteItem = (id) => {
@@ -47,21 +44,5 @@ function Employees() {
       </Link>
     </section>
   );
-
-  /* return (
-    <section className={styles.container}>
-      <div className={styles.title}>
-        <h2>Employees</h2>
-        <Button color="green" text={'Add'} href={'/employee-form'} />
-      </div>
-      {employees.map((employee) => {
-        return (
-          <>
-            <Employee key={employee._id} employee={employee} onDeleteItem={deleteItem} />
-          </>
-        );
-      })}
-    </section>
-  ); */
 }
 export default Employees;

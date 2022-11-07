@@ -81,26 +81,3 @@
     background-color: #9e210b;
     border-color: #F13312;
 }
-
-.container {
-    margin: auto;
-    width: 80%;
-    display: flex;
-    align-items: flex-end;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: center;
-}
-
-.newTask{
-    /* margin-left: 50px; */
-    text-align: center;
-    background-color: #AACE9B;;
-    color: #373867;
-    border-style: none;
-    font-size: 35px;
-    font-weight: 800;
-    border-radius: 30px;
-    height: 60px;
-    width: 60px;
-  }

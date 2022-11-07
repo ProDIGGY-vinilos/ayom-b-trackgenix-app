@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './super-admins.module.css';
 import Table from '../Shared/Table';
-/* import ListSuperAdmin from './ListSuperAdmins/index'; */
 
 function SuperAdmins() {
   const [superAdmins, setSuperAdmins] = useState([]);
@@ -56,40 +55,8 @@ function SuperAdmins() {
       <Link className={styles.newSuperAdmin} to="/super-admin-form">
         +
       </Link>
-      {/* <Table list={admins} saveAdmins={saveAdmins} deleteItem={deleteAdmin} /> */}
     </div>
   );
-
-  /* return (
-    <section className={styles.container}>
-      <h2>Super Admins</h2>
-      <table>
-        <tbody>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>LastName</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th className={styles.btn}>Actions</th>
-            <th className={styles.btn}>Actions</th>
-          </tr>
-          {superAdmins.map((superAdmin) => {
-            return (
-              <ListSuperAdmin
-                key={superAdmin._id}
-                sAdmin={superAdmin}
-                onDeleteSuperAdmin={onDeleteSuperAdmin}
-              />
-            );
-          })}
-        </tbody>
-      </table>
-      <Link to="/super-admin-form">
-        <button>+</button>
-      </Link>
-    </section>
-  ); */
 }
 
 export default SuperAdmins;

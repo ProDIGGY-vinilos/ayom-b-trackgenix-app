@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-/* import Table from './adminTable'; */
+
 import styles from './admins.module.css';
 import Table from '../Shared/Table';
 
@@ -48,7 +48,6 @@ function Admins() {
       <Link to="/admin-form" className={styles.newAdmin}>
         +
       </Link>
-      {/* <Table list={admins} saveAdmins={saveAdmins} deleteItem={deleteAdmin} /> */}
     </section>
   );
 }

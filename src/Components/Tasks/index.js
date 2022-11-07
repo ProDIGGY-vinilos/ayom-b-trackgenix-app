@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Table from '../Shared/Table';
 import styles from './tasks.module.css';
-/* import List from './tasksList'; */
 
 function Tasks() {
   const [tasks, saveTasks] = useState([]);
@@ -53,7 +52,6 @@ function Tasks() {
       <Link to="/task-form" className={styles.newTask}>
         +
       </Link>
-      {/* <List list={tasks} saveTasks={saveTasks} deleteItem={deleteTask} /> */}
     </div>
   );
 }

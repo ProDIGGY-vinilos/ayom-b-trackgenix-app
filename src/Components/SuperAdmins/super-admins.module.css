@@ -21,24 +21,6 @@
   width: 60px;
 }
 
-/* table {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-
-th, .info {
-  width: 100%;
-}
-
-tr {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-}
- */
 .btn {
   width: 25%;
 }
