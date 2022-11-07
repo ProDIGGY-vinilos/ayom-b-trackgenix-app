@@ -43,13 +43,11 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
       </td>
       <td className={styles.btn}>
         <Modal
-          openModal={showModal}
+          showModal={showModal}
           closeModal={closeModal}
           confirmAction={deleteSuperAdmin}
           title={'DELETE SUPER ADMIN'}
-          warningText={`¿Are you sure you want to delete ${sAdmin.name}?`}
-          declineButtonText={'Cancel'}
-          confirmButtonText={'Confirm'}
+          message={`Are you sure you want to delete ${sAdmin.name}?`}
         />
         <button onClick={openModal}>Delete</button>
       </td>

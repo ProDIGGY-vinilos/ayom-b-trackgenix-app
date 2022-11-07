@@ -1,15 +1,15 @@
 import styles from './modal.module.css';
 
 function Modal({
-  openModal,
+  showModal,
   closeModal,
   title,
-  warningText,
+  message,
   confirmAction,
-  declineButtonText,
-  confirmButtonText
+  declineButtonText = 'Cancel',
+  confirmButtonText = 'Confirm'
 }) {
-  if (!openModal) {
+  if (!showModal) {
     return null;
   }
 
@@ -21,12 +21,13 @@ function Modal({
     confirmAction();
     closeModal();
   };
+
   return (
     <div className={styles.moduleContainer}>
       <div className={styles.modal}>
         <h3>{title}</h3>
         <div className={styles.modalBody}>
-          <p>{warningText}</p>
+          <p>{message}</p>
         </div>
         <div className={styles.modalButtons}>
           <button onClick={declineButtonAction} className={styles.declineButton}>

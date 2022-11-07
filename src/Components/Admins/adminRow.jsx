@@ -39,13 +39,11 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
       </td>
       <td>
         <Modal
-          openModal={showModal}
+          showModal={showModal}
           closeModal={closeModal}
           confirmAction={removeAdmin}
           title={'DELETE ADMIN'}
-          warningText={`¿Are you sure you want to delete ${listAdmin.name}?`}
-          declineButtonText={'Cancel'}
-          confirmButtonText={'Confirm'}
+          message={`Are you sure you want to delete ${listAdmin.name}?`}
         />
         <button onClick={openModal}>
           <img src={`../assets/images/iconTrash.svg`} />

@@ -1,11 +1,15 @@
-.moduleContainer {
-    position: fixed;
+  .moduleContainer {
     left: 0;
     top: 0;
     right: 0;
     bottom: 0;
+    position: fixed;
     justify-content: center;
     align-items: center;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
     background-color: rgba(0,0,0,0.5);
   }
 
@@ -32,7 +36,7 @@
     justify-content: space-around;
   }
 
-  .modalButtons > button {
+  .confirmButton {
     width: 97px;
     left: 152px;
     top: 137px;
@@ -44,12 +48,20 @@
     font-size: 16px;
     line-height: 19px;
     color: white;
-  }
-
-  .confirmButton {
     background: #AACE9B;
   }
 
   .declineButton {
+    width: 97px;
+    left: 152px;
+    top: 137px;
+    border-radius: 20px;
+    align-items:center;
+    text-align: center;
+    border-style: none;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: white;
     background: #373867;
   }

@@ -49,13 +49,11 @@ const ListTask = ({ listTask, deleteTask }) => {
       </td>
       <td>
         <Modal
-          openModal={showPopUp}
+          showModal={showPopUp}
           closeModal={closePopUp}
           confirmAction={deleteTaskFunction}
           title={'DELETE TASK'}
-          warningText={`¿Are you sure you want to this task?`}
-          declineButtonText={'Cancel'}
-          confirmButtonText={'Confirm'}
+          message={`Are you sure you want to this task?`}
         />
         <button className={styles.deleteButton} onClick={openPopUp}>
           Delete

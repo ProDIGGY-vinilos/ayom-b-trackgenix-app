@@ -35,13 +35,11 @@ const Employee = ({ employee, onDeleteItem }) => {
         <td>{employee.phone}</td>
         <td>
           <Modal
-            openModal={showModal}
+            showModal={showModal}
             closeModal={closeModal}
             confirmAction={deleteEmployee}
             title={'DELETE EMPLOYEE'}
-            warningText={`¿Are you sure you want to delete ${employee.name}?`}
-            declineButtonText={'Cancel'}
-            confirmButtonText={'Confirm'}
+            message={`Are you sure you want to delete ${employee.name}?`}
           />
           <Button color="blue" text="Edit" href={`/employee-form/${employee._id}`} />
           <button onClick={openModal}>Delete</button>

@@ -55,13 +55,11 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
         </td>
       </tr>
       <Modal
-        openModal={showModal}
+        showModal={showModal}
         closeModal={closeModal}
         confirmAction={deleteItem}
         title={'DELETE PROJECT'}
-        warningText={`¿Are you sure you want to delete ${projectItem.name}?`}
-        declineButtonText={'Cancel'}
-        confirmButtonText={'Confirm'}
+        message={`Are you sure you want to delete ${projectItem.name}?`}
       />
     </>
   );
