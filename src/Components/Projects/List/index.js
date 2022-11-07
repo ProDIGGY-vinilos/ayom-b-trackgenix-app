@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Employee from './Employees';
 import styles from './list.module.css';
-import Modal from '../Modal';
+import Modal from '../../Shared/Modal';
 
 const ProjectList = ({ projectItem, onDeleteItem }) => {
   const [showModal, setShowModal] = useState(false);
@@ -55,12 +55,13 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
         </td>
       </tr>
       <Modal
-        show={showModal}
+        openModal={showModal}
         closeModal={closeModal}
-        onDelete={deleteItem}
-        id={projectItem._id}
-        title={'Delete Project?'}
-        text={`Are you sure you want to delete project "${projectItem.name}"?`}
+        confirmAction={deleteItem}
+        title={'DELETE PROJECT'}
+        warningText={`¿Are you sure you want to delete ${projectItem.name}?`}
+        declineButtonText={'Cancel'}
+        confirmButtonText={'Confirm'}
       />
     </>
   );
