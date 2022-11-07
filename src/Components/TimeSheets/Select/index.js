@@ -9,7 +9,7 @@ function Select({ defaultValue, switcher, data, setId, field }) {
   };
   if (switcher) {
     return (
-      <select onChange={(e) => setId(e.target.value)}>
+      <select onChange={(e) => handleChange(e)}>
         <option disabled={true} value="">
           {defaultValue}
         </option>
