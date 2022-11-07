@@ -22,7 +22,7 @@ function Employees() {
       const data = await response.json();
       setEmployees(data.data);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   }, []);
 

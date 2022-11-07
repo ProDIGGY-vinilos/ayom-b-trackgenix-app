@@ -1,5 +1,4 @@
 import React from 'react';
-import TableHeader from './TableHeader';
 import TableRow from './TableRow';
 import styles from './table.module.css';
 
@@ -9,7 +8,7 @@ const Table = ({ columns, data, deleteItem, edit }) => {
       <thead className={styles.tableHeader}>
         <tr>
           {columns.map((item, index) => {
-            return <TableHeader key={index} item={item} />;
+            return <th key={index}>{item.heading}</th>;
           })}
         </tr>
       </thead>

@@ -14,6 +14,10 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
     setShowModal(false);
   };
 
+  const deleteTitle = 'Delete Project?';
+
+  const deleteQuestion = 'Are you sure you want to delete this?';
+
   return (
     <>
       <tr>
@@ -40,9 +44,6 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
           }
 
           if (columnItem.array) {
-            console.log(item[columnItem.value]);
-            console.log(item[columnItem.value][0][columnItem.array][columnItem.arrayValue]);
-
             return (
               <td>
                 <p>
@@ -63,8 +64,8 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
         closeModal={closeModal}
         onDelete={deleteItem}
         id={item._id}
-        title={'Delete Project?'}
-        text={`Are you sure you want to delete this?`}
+        title={deleteTitle}
+        text={deleteQuestion}
       />
     </>
   );

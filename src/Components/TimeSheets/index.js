@@ -16,8 +16,6 @@ function TimeSheets() {
     }
   }, []);
 
-  console.log(timeSheets);
-
   const deleteTimesheet = async (id) => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
       method: 'DELETE'
