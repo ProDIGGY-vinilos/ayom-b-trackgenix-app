@@ -1,7 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import ConfirmModal from '../Modal/confirmModal';
-// import ConfirmModal from '../Modal/deleteModal';
 import styles from './form.module.css';
 
 function Form() {
@@ -111,7 +110,7 @@ function Form() {
           openModal={showModal}
           closeModal={closeModal}
           title={'Are you sure?'}
-          warningText={`You are going to go back to Super Admin Lists`}
+          warningText={`You are going to go back to Super Admin List`}
         />
         <a className={styles.crossBtn} onClick={validateFields}>
           X

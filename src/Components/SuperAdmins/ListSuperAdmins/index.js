@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import DeleteModal from '../Modal/deleteModal';
-import styles from '../super-admins.module.css';
+import styles from './listSuperAdmins.module.css';
 
 const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
   const [showModal, setModal] = useState(false);
@@ -29,7 +29,7 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
   };
 
   return (
-    <tr key={sAdmin._id}>
+    <tr key={sAdmin._id} className={styles.tableRow}>
       <td>{sAdmin._id}</td>
       <td className={styles.info}>{sAdmin.name}</td>
       <td className={styles.info}>{sAdmin.lastName}</td>
@@ -37,7 +37,7 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
       <td className={styles.info}>{sAdmin.password}</td>
       <td className={styles.btn}>
         <a href={`super-admin-form/${sAdmin._id}`}>
-          <button>edit</button>
+          <button className={styles.btnEdit}>edit</button>
         </a>
       </td>
       <td className={styles.btn}>
@@ -49,7 +49,9 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
           title={'DELETE ADMIN'}
           warningText={`Do you want to remove ${sAdmin.name}?`}
         />
-        <button onClick={openModal}>Delete</button>
+        <button onClick={openModal} className={styles.btnDelete}>
+          Delete
+        </button>
       </td>
     </tr>
   );
