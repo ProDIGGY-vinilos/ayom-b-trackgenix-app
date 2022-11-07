@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from '../Modal/modalSuperAdmin';
 import styles from '../super-admins.module.css';
+import PrimaryBtn from '../../Shared/Button/primaryBtn';
 
 const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
   const [showModal, setModal] = useState(false);
@@ -40,6 +41,7 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
         <Link to={`super-admin-form/${sAdmin._id}`}>
           <button>edit</button>
         </Link>
+        <PrimaryBtn href={`super-admin-form/${sAdmin._id}`} disabled={false} text="Bien" />
       </td>
       <td className={styles.btn}>
         <Modal
