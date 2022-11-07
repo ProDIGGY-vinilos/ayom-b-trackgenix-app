@@ -2,9 +2,21 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './projects.module.css';
 import List from './List/index';
+import Modal from '../Shared/Modal';
 
 function Projects() {
   const [projects, setProjects] = useState([]);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(async () => {
     try {
@@ -12,12 +24,18 @@ function Projects() {
       const data = await response.json();
       setProjects(data.data);
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   }, []);
 
   const onDeleteItem = (id) => {
     setProjects([...projects.filter((projectItem) => projectItem._id !== id)]);
+    setTypeModal('DELETE');
+    setTextModal('The project was successfully removed');
+    openModal();
   };
 
   return (
@@ -51,6 +69,13 @@ function Projects() {
       <Link to="/project-form" className={styles.btnText}>
         <button className={styles.btn}>Add New Project</button>
       </Link>
+      <Modal
+        type={typeModal}
+        isOpen={showModal}
+        message={textModal}
+        handleClose={closeModal}
+        goBack={'/projects'}
+      />
     </section>
   );
 }

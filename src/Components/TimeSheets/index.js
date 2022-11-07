@@ -4,12 +4,24 @@ import styles from './time-sheets.module.css';
 import DeleteButton from './Delete Button';
 import CreateButton from './Create Button';
 import ExpandModal from './Expand Modal';
+import Modal from '../Shared/Modal';
 
 function TimeSheets() {
   const [timeSheets, setTimeSheets] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [element, setElement] = useState('');
   const [modalData, setModalData] = useState({});
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showMessageModal, setShowMessageModal] = useState(false);
+
+  const openMessageModal = () => {
+    setShowMessageModal(true);
+  };
+
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
+  };
 
   useEffect(async () => {
     try {
@@ -17,7 +29,10 @@ function TimeSheets() {
       const data = await response.json();
       setTimeSheets(data.data);
     } catch (error) {
-      console.error(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openMessageModal();
+      return;
     }
   }, []);
 
@@ -27,9 +42,15 @@ function TimeSheets() {
     });
     if (response.status === 204) {
       setTimeSheets([...timeSheets.filter((timeSheetItem) => timeSheetItem._id !== id)]);
-      alert('Used deleted');
+      setTypeModal('DELETE');
+      setTextModal('The timesheet was successfully removed');
+      openMessageModal();
+      return;
     } else {
-      alert('Error Encountered');
+      setTypeModal('Error');
+      setTextModal('There was an error');
+      openMessageModal();
+      return;
     }
   };
 
@@ -117,6 +138,13 @@ function TimeSheets() {
         closeModal={closeModal}
         element={element}
         data={modalData}
+      />
+      <Modal
+        type={typeModal}
+        isOpen={showMessageModal}
+        message={textModal}
+        handleClose={closeMessageModal}
+        goBack={'/admins'}
       />
     </>
   );

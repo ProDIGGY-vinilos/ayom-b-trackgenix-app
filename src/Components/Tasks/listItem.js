@@ -3,10 +3,22 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Form from './Form/index';
 import PopUp from './Modal/taskModal';
+import Modal from '../Shared/Modal';
 import styles from './tasks.module.css';
 
 const ListTask = ({ listTask, deleteTask }) => {
   const [showPopUp, setShowPopUp] = useState(false);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   const openPopUp = () => {
     setShowPopUp(true);
@@ -28,7 +40,10 @@ const ListTask = ({ listTask, deleteTask }) => {
       deleteTask(listTask._id);
     } else if ([400, 404, 500].includes(response.status)) {
       const data = await response.json();
-      alert(data.message);
+      setTypeModal('Error');
+      setTextModal(data.message);
+      openModal();
+      return;
     }
   };
 
@@ -55,6 +70,13 @@ const ListTask = ({ listTask, deleteTask }) => {
           id={listTask._id}
           title={'Are you sure?'}
           text={`Deleting a task cannot be undone`}
+        />
+        <Modal
+          type={typeModal}
+          isOpen={showModal}
+          message={textModal}
+          handleClose={closeModal}
+          goBack={'/tasks'}
         />
         <button className={styles.deleteButton} onClick={openPopUp}>
           Delete

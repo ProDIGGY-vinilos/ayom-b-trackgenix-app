@@ -3,9 +3,21 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from '../Modal/modalSuperAdmin';
 import styles from '../super-admins.module.css';
+import MessageModal from '../../Shared/Modal';
 
 const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
   const [showModal, setModal] = useState(false);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showMessageModal, setShowMessageModal] = useState(false);
+
+  const openMessageModal = () => {
+    setShowMessageModal(true);
+  };
+
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
+  };
 
   const openModal = () => {
     setModal(true);
@@ -21,11 +33,13 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
         method: 'DELETE'
       });
       if (response.status === 204) {
-        alert(`Super Admin with id: ${sAdmin._id} has been deleted`);
         onDeleteSuperAdmin(sAdmin._id);
       }
     } catch (error) {
-      alert(error.message);
+      setTypeModal('Error');
+      setTextModal(error);
+      openMessageModal();
+      return;
     }
   };
 
@@ -52,6 +66,13 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
         />
         <button onClick={openModal}>Delete</button>
       </td>
+      <MessageModal
+        type={typeModal}
+        isOpen={showMessageModal}
+        message={textModal}
+        handleClose={closeMessageModal}
+        goBack={'/super-admins'}
+      />
     </tr>
   );
 };

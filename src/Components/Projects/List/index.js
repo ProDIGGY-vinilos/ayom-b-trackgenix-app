@@ -3,10 +3,21 @@ import { Link } from 'react-router-dom';
 import Employee from './Employees';
 import styles from './list.module.css';
 import Modal from '../Modal';
+import MessageModal from '../../Shared/Modal';
 
 const ProjectList = ({ projectItem, onDeleteItem }) => {
   const [showModal, setShowModal] = useState(false);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showMessageModal, setShowMessageModal] = useState(false);
 
+  const openMessageModal = () => {
+    setShowMessageModal(true);
+  };
+
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
+  };
   const openModal = () => {
     setShowModal(true);
   };
@@ -26,11 +37,16 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
 
     if (response.status === 200) {
       onDeleteItem(projectItem._id);
-      alert(data.msg);
     } else if ([404, 500].includes(response.status)) {
-      alert(data.msg);
+      setTypeModal('Error');
+      setTextModal(data.msg);
+      openMessageModal();
+      return;
     } else if (response.status === 400) {
-      alert(data.message);
+      setTypeModal('Error');
+      setTextModal(data.message);
+      openMessageModal();
+      return;
     }
   };
 
@@ -61,6 +77,13 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
         id={projectItem._id}
         title={'Delete Project?'}
         text={`Are you sure you want to delete project "${projectItem.name}"?`}
+      />
+      <MessageModal
+        type={typeModal}
+        isOpen={showMessageModal}
+        message={textModal}
+        handleClose={closeMessageModal}
+        goBack={'/projects'}
       />
     </>
   );

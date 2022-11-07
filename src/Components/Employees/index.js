@@ -2,13 +2,27 @@ import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import Button from './Button';
 import Employee from './Employee';
+import Modal from '../Shared/Modal';
 
 function Employees() {
-  // const [showModal, setShowModal] = useState(false);
   const [employees, setEmployees] = useState([]);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   const deleteItem = (id) => {
     setEmployees(employees.filter((employee) => employee._id !== id));
+    setTypeModal('DELETE');
+    setTextModal('The employee was successfully removed');
+    openModal();
   };
 
   useEffect(async () => {
@@ -17,7 +31,10 @@ function Employees() {
       const data = await response.json();
       setEmployees(data.data);
     } catch (error) {
-      console.log(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   }, []);
 
@@ -27,6 +44,13 @@ function Employees() {
         <h2>Employees</h2>
         <Button color="green" text={'Add'} href={'/employee-form'} />
       </div>
+      <Modal
+        type={typeModal}
+        isOpen={showModal}
+        message={textModal}
+        handleClose={closeModal}
+        goBack={'/employees'}
+      />
       {employees.map((employee) => {
         return (
           <>

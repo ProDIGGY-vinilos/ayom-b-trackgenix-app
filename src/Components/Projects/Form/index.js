@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FormEmployee from './FormEmployees/index';
-import Modal from '../Modal';
+import FormModal from '../Modal';
+import Modal from '../../Shared/Modal';
 import styles from './form.module.css';
 
-const index = (props) => {
+const index = () => {
   const projectId = useParams().id;
   const [projectBody, setProjectBody] = useState({
     name: '',
@@ -24,6 +25,9 @@ const index = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showSharedModal, setShowSharedModal] = useState(false);
 
   const openModal = (e) => {
     e.preventDefault();
@@ -32,6 +36,14 @@ const index = (props) => {
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const openSharedModal = () => {
+    setShowSharedModal(true);
+  };
+
+  const closeSharedModal = () => {
+    setShowSharedModal(false);
   };
 
   useEffect(async () => {
@@ -56,7 +68,10 @@ const index = (props) => {
         });
       } catch (error) {
         setIsFetched(false);
-        alert(error);
+        setTypeModal('Error');
+        setTextModal(error);
+        openSharedModal();
+        return;
       }
     } else {
       setIsFetched(false);
@@ -70,7 +85,10 @@ const index = (props) => {
       const data = await response.json();
       setEmployees(data.data);
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openSharedModal();
+      return;
     }
   }, []);
 
@@ -87,6 +105,7 @@ const index = (props) => {
 
   const onSubmit = async () => {
     if (projectId) {
+      setTypeModal('PUT');
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`, {
         method: 'PUT',
         headers: {
@@ -97,14 +116,22 @@ const index = (props) => {
       const data = await response.json();
 
       if (response.status === 200) {
-        alert(data.msg);
-        props.history.goBack();
+        setTextModal(data.msg);
+        openSharedModal();
+        return data;
       } else if ([404, 500].includes(response.status)) {
-        alert(data.msg);
+        setTypeModal('Error');
+        setTextModal(data.msg);
+        openSharedModal();
+        return;
       } else if (response.status === 400) {
-        alert(data.message);
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openSharedModal();
+        return;
       }
     } else {
+      setTypeModal('POST');
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
         method: 'POST',
         headers: {
@@ -115,10 +142,14 @@ const index = (props) => {
       const data = await response.json();
 
       if (response.status === 201) {
-        alert(data.message);
-        props.history.goBack();
+        setTextModal(data.message);
+        openSharedModal();
+        return data;
       } else if (response.status === 400) {
-        alert(data.message);
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openSharedModal();
+        return;
       }
     }
   };
@@ -199,6 +230,13 @@ const index = (props) => {
         </div>
       </form>
       <Modal
+        type={typeModal}
+        isOpen={showSharedModal}
+        message={textModal}
+        handleClose={closeSharedModal}
+        goBack={'/projects'}
+      />
+      <FormModal
         show={showModal}
         closeModal={closeModal}
         onAddUpdate={onSubmit}

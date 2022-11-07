@@ -2,9 +2,22 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Table from './adminTable';
 import styles from './admins.module.css';
+import Modal from '../Shared/Modal';
 
 function Admins() {
   const [admins, saveAdmins] = useState([]);
+
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(async () => {
     try {
@@ -12,12 +25,18 @@ function Admins() {
       const data = await response.json();
       saveAdmins(data.data);
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   }, []);
 
   const deleteAdmin = (id) => {
     saveAdmins([...admins.filter((newListItem) => newListItem._id !== id)]);
+    setTypeModal('DELETE');
+    setTextModal('The administrator was successfully removed');
+    openModal();
   };
 
   return (
@@ -27,6 +46,13 @@ function Admins() {
         <Link to="/admin-form">+</Link>
       </div>
       <Table list={admins} saveAdmins={saveAdmins} deleteItem={deleteAdmin} />
+      <Modal
+        type={typeModal}
+        isOpen={showModal}
+        message={textModal}
+        handleClose={closeModal}
+        goBack={'/admins'}
+      />
     </div>
   );
 }

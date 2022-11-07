@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import Modal from '../Shared/Modal';
 import styles from './admins.module.css';
 
-function Form(props) {
+function Form() {
   const adminId = useParams().id;
 
   const [inputValue, setInputValue] = useState({
@@ -11,6 +12,17 @@ function Form(props) {
     email: '',
     password: ''
   });
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(async () => {
     if (adminId) {
@@ -26,7 +38,10 @@ function Form(props) {
         });
         return;
       } catch (err) {
-        alert(err.message);
+        setTypeModal('Error');
+        setTextModal(err.message);
+        openModal();
+        return;
       }
     } else document.getElementById('fromHeader').innerHTML = 'ADD ADMIN';
   }, []);
@@ -46,10 +61,15 @@ function Form(props) {
       });
       const data = await response.json();
       if (response.status !== 200 && response.status !== 201) {
-        alert(data.message);
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openModal();
+        return;
       } else {
-        alert('Admin was successfully edited');
-        props.history.goBack();
+        setTypeModal('PUT');
+        setTextModal(data.message);
+        openModal();
+        return data;
       }
     } else {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/`, {
@@ -61,10 +81,15 @@ function Form(props) {
       });
       const data = await response.json();
       if (response.status !== 200 && response.status !== 201) {
-        alert(data.message);
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openModal();
+        return;
       } else {
-        alert('Admin was successfully edited');
-        props.history.goBack();
+        setTypeModal('POST');
+        setTextModal(data.message);
+        openModal();
+        return data;
       }
     }
   };
@@ -89,6 +114,15 @@ function Form(props) {
       <div className={styles.fromInput}>
         <label>Pasasword</label>
         <input type="text" name="password" value={inputValue.password} onChange={onChange} />
+      </div>
+      <div>
+        <Modal
+          type={typeModal}
+          isOpen={showModal}
+          message={textModal}
+          handleClose={closeModal}
+          goBack={'/admins'}
+        />
       </div>
       <div className={styles.formButton}>
         <button type="button" onClick={onSubmit}>
