@@ -1,4 +1,5 @@
 import styles from './tasks.module.css';
+import { Link } from 'react-router-dom';
 
 function MessagePopUp(props) {
   if (!props.show) {
@@ -38,9 +39,9 @@ function MessagePopUp(props) {
             <button onClick={errorAction} className={styles.cancelButton}>
               Add another one
             </button>
-            <a className={styles.goBackButton} href="../tasks">
+            <Link to="/tasks" className={styles.goBackButton}>
               Back to tasks
-            </a>
+            </Link>
           </div>
         </div>
       );
@@ -55,9 +56,9 @@ function MessagePopUp(props) {
             <div>
               <p>{props.text}</p>
             </div>
-            <a className={styles.goBackButton} href="../tasks">
+            <Link to="/tasks" className={styles.goBackButton}>
               Back to tasks
-            </a>
+            </Link>
           </div>
         </div>
       );

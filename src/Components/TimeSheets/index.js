@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './time-sheets.module.css';
 import DeleteButton from './Delete Button';
 import CreateButton from './Create Button';
@@ -94,9 +95,9 @@ function TimeSheets() {
                 </td>
                 <td key={TimeSheet._id}>{TimeSheet.hours}</td>
                 <td>
-                  <button>
-                    <a href={`/time-sheet-form/${TimeSheet._id}`}>Edit</a>
-                  </button>
+                  <Link to={`/time-sheet-form/${TimeSheet._id}`}>
+                    <button>Edit</button>
+                  </Link>
                 </td>
                 <td key={TimeSheet._id}>
                   <DeleteButton

@@ -1,12 +1,11 @@
 import React from 'react';
-import styles from './employees.module.css';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import styles from './employees.module.css';
 import Button from './Button';
 
-const path = window.location.pathname.split('/');
-let employeeId = path[path.length - 1];
-
 const EmployeeForm = () => {
+  const employeeId = useParams().id;
   const [userInput, setUserInput] = useState({
     name: '',
     lastName: '',
@@ -16,7 +15,7 @@ const EmployeeForm = () => {
   });
 
   useEffect(async () => {
-    if (employeeId !== 'employee-form') {
+    if (employeeId) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${employeeId}`);
         const data = await response.json();
@@ -46,14 +45,13 @@ const EmployeeForm = () => {
     e.preventDefault();
 
     const requestOptions = {
-      method: employeeId === 'employee-form' ? 'POST' : 'PUT',
+      method: !employeeId ? 'POST' : 'PUT',
       body: JSON.stringify(userInput),
       headers: {
         'Content-Type': 'application/json'
       }
     };
-    let url = employeeId === 'employee-form' ? '' : '/' + employeeId;
-
+    let url = !employeeId ? '' : '/' + employeeId;
     const response = await fetch(
       `${process.env.REACT_APP_API_URL}/employees${url}`,
       requestOptions
@@ -64,8 +62,9 @@ const EmployeeForm = () => {
 
   return (
     <>
-      <form className={styles.addform} onSubmit={onSubmit}>
-        <div className={styles.formcontrol}>
+      <form className={styles.container} onSubmit={onSubmit}>
+        <h3 className={styles.titleForm}>Create Employee</h3>
+        <div className={styles.formControl}>
           <label>Name</label>
           <input
             name="name"
@@ -75,7 +74,7 @@ const EmployeeForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className={styles.formcontrol}>
+        <div className={styles.formControl}>
           <label>Last Name</label>
           <input
             name="lastName"
@@ -85,7 +84,7 @@ const EmployeeForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className={styles.formcontrol}>
+        <div className={styles.formControl}>
           <label>Email</label>
           <input
             name="email"
@@ -95,7 +94,7 @@ const EmployeeForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className={styles.formcontrol}>
+        <div className={styles.formControl}>
           <label>Phone Number</label>
           <input
             name="phone"
@@ -105,7 +104,7 @@ const EmployeeForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className={styles.formcontrol}>
+        <div className={styles.formControl}>
           <label>Password</label>
           <input
             name="password"

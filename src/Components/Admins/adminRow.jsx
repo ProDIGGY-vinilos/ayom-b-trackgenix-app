@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Modal from './Modal/modalAdmin';
 
 const RowAdmin = ({ listAdmin, deleteAdmin }) => {
@@ -32,11 +33,9 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
       <td>{listAdmin.email}</td>
       <td>{listAdmin.password}</td>
       <td>
-        <a href={`admin-form/${listAdmin._id}`}>
-          <button type="button">
-            <img src={`../assets/images/iconEdit.svg`} />
-          </button>
-        </a>
+        <Link to={`admin-form/${listAdmin._id}`}>
+          <img src={`../assets/images/iconEdit.svg`} />
+        </Link>
       </td>
       <td>
         <Modal

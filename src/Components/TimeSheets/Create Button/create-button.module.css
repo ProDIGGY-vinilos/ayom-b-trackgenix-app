@@ -1,3 +1,9 @@
 .createButton {
+    margin: 10px;
     margin-top: 5px;
+    padding: 10px;
+    background: #AACE9B;
+    border-color: #AACE9B;
+    border-radius: 5px;
+    color: white;
 }

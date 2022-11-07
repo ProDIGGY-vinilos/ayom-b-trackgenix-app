@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react';
 /* import List from './List/index'; */
 import Table from '../Shared/Table';
+import { Link } from 'react-router-dom';
+import styles from './projects.module.css';
 
 function Projects() {
   const [projects, setProjects] = useState([]);
@@ -58,6 +60,9 @@ function Projects() {
   return (
     <section>
       <h2>Projects</h2>
+      <Link to="/project-form" className={styles.btnText}>
+        <button className={styles.btn}>Add New Project</button>
+      </Link>
       <button></button>
       <Table data={projects} columns={columns} deleteItem={deleteItem} />
     </section>
@@ -91,11 +96,9 @@ function Projects() {
       ) : (
         <p>There are not projects</p>
       )}
-      <button className={styles.btn}>
-        <a className={styles.btnText} href="/project-form">
-          Add New Project
-        </a>
-      </button>
+      <Link to="/project-form" className={styles.btnText}>
+        <button className={styles.btn}>Add New Project</button>
+      </Link>
     </section>
   ); */
 }
