@@ -101,7 +101,7 @@ const TimeSheetsForm = (props) => {
       });
       const data = await response.json();
       alert(data.message);
-      if (response.status === 200) {
+      if (response.status === 201) {
         props.history.goBack();
       }
     } else {
