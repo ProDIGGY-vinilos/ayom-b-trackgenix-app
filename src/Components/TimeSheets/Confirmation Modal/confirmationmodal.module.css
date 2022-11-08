@@ -1,0 +1,35 @@
+.title {
+    width: 100%;
+}
+
+.container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: fit-content;
+    background-color: #fff;
+    border-radius: 5px;
+    border: solid 1px #808080;
+    margin: auto;
+    margin-top: 200px;
+}
+
+.buttonsContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.closebutton {
+    align-self: flex-end;
+    justify-self: flex-end;
+}

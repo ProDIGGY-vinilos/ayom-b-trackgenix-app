@@ -20,6 +20,9 @@ const TimeSheetsForm = () => {
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
+  const [projectDescription, setProjectDescription] = useState('');
+  const [employeeName, setEmployeeName] = useState('');
+  const [taskDescription, settaskDescription] = useState('');
 
   const openModal = () => {
     setShowModal(true);
@@ -36,6 +39,9 @@ const TimeSheetsForm = () => {
     setProjectId(timeSheet.project);
     setEmployeeId(timeSheet.employee);
     setTaskId(timeSheet.task);
+    setEmployeeName(timeSheet.employee.name);
+    setProjectDescription(timeSheet.project.description);
+    settaskDescription(timeSheet.task.description);
   };
 
   const projectsFetch = async () => {
@@ -124,10 +130,17 @@ const TimeSheetsForm = () => {
         body: JSON.stringify(req)
       });
       const data = await response.json();
-      setTypeModal('Success');
-      setTextModal(data.message);
-      openModal();
-      return data;
+      if (response.status !== 200) {
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openModal();
+        return data;
+      } else {
+        setTypeModal('Success');
+        setTextModal(data.message);
+        openModal();
+        return data;
+      }
     } else {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
         method: 'POST',
@@ -137,10 +150,17 @@ const TimeSheetsForm = () => {
         body: JSON.stringify(req)
       });
       const data = await response.json();
-      setTypeModal('Success');
-      setTextModal(data.message);
-      openModal();
-      return data;
+      if (response.status !== 201) {
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openModal();
+        return data;
+      } else {
+        setTypeModal('Success');
+        setTextModal(data.message);
+        openModal();
+        return data;
+      }
     }
   };
 
@@ -152,7 +172,7 @@ const TimeSheetsForm = () => {
           <div>
             <label>Date</label>
             <input
-              value={date || undefined}
+              value={date.substring(0, 10) || undefined}
               onChange={(e) => setDate(e.target.value)}
               type="date"
             ></input>
@@ -168,15 +188,33 @@ const TimeSheetsForm = () => {
           </div>
           <div>
             <label>Select Project</label>
-            <Select Data={projects || undefined} setId={setProjectId} field="description" />
+            <Select
+              defaultValue={projectDescription}
+              switcher={formSwitch}
+              data={projects || undefined}
+              setId={setProjectId}
+              field="description"
+            />
           </div>
           <div>
             <label>Select Employee</label>
-            <Select Data={employees || undefined} setId={setEmployeeId} field="name" />
+            <Select
+              defaultValue={employeeName}
+              switcher={formSwitch}
+              data={employees || undefined}
+              setId={setEmployeeId}
+              field="name"
+            />
           </div>
           <div>
             <label>Select Task</label>
-            <Select Data={tasks || undefined} setId={setTaskId} field="description" />
+            <Select
+              defaultValue={taskDescription}
+              switcher={formSwitch}
+              data={tasks || undefined}
+              setId={setTaskId}
+              field="description"
+            />
           </div>
         </div>
         <div className={styles.textareacontainer}>
