@@ -96,7 +96,7 @@ const index = (props) => {
       });
       const data = await response.json();
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         alert(data.message);
         props.history.goBack();
       } else if ([400, 404, 500].includes(response.status)) {
