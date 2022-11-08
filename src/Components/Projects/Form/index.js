@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import FormEmployee from './FormEmployees/index';
 import Modal from '../Modal';
 import styles from './form.module.css';
+import InputField from '../../Shared/Input/input';
 
 const index = (props) => {
   const projectId = useParams().id;
@@ -127,23 +128,23 @@ const index = (props) => {
       {isFetched ? <h2>Edit Project</h2> : <h2>Add New Project</h2>}
       <form className={styles.formContainer} onSubmit={onSubmit}>
         <div className={styles.formDiv}>
-          <label>Project Name: </label>
-          <input
-            type="text"
+          <InputField
+            label="Pojec Name"
             name="name"
+            type="text"
+            placeholder="project name"
             value={isFetched ? projectBody.name : undefined}
             onChange={(e) => onChangeValue('name', e.target.value)}
-            required
           />
         </div>
         <div className={styles.formDiv}>
-          <label>Client Name</label>
-          <input
-            type="text"
+          <InputField
+            label="Client Name"
             name="client name"
+            type="text"
+            placeholder="client name"
             value={isFetched ? projectBody.clientName : undefined}
             onChange={(e) => onChangeValue('clientName', e.target.value)}
-            required
           />
         </div>
         <div className={styles.formFull}>

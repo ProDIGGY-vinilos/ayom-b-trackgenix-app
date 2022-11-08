@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './formemployee.module.css';
-
+import InputField from '../../../Shared/Input/input';
 const FormEmployee = ({ employees, employee, changeValue }) => {
   const roles = ['DEV', 'QA', 'PM', 'TL'];
 
@@ -37,12 +37,12 @@ const FormEmployee = ({ employees, employee, changeValue }) => {
         </select>
       </div>
       <div>
-        <label>Rate: </label>
-        <input
-          type="number"
+        <InputField
+          label="Rate"
           name="rate"
+          type="number"
           value={employee ? employee.rate : undefined}
-          onChange={(e) => changeValue('rate', e.target.value, true)}
+          onChange={(value) => changeValue('rate', value, true)}
         />
       </div>
     </div>

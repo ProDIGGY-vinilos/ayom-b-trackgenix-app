@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './employees.module.css';
 import Button from './Button';
-import InputField from '../Shared/input';
+import InputField from '../Shared/Input/input';
 
 const EmployeeForm = () => {
   const employeeId = useParams().id;

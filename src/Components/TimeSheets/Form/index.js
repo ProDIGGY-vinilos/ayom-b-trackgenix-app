@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from './form.module.css';
 import Select from '../Select/';
+import InputField from '../../Shared/Input/input';
 
 const TimeSheetsForm = (props) => {
   const pathed = useParams().id;
@@ -140,13 +141,12 @@ const TimeSheetsForm = (props) => {
             ></input>
           </div>
           <div>
-            <label>Hours</label>
-            <input
-              defaultValue={hours || undefined}
+            <InputField
+              label="Hours"
+              type="text"
               value={hours || undefined}
               onChange={(e) => setHours(e.target.value)}
-              type="text"
-            ></input>
+            />
           </div>
           <div>
             <label>Select Project</label>
