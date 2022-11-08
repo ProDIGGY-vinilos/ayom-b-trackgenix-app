@@ -1,7 +1,8 @@
 .container {
-  flex: 1;
+  margin: auto;
+  width: 80%;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   flex-direction: column;
   flex-wrap: wrap;
   align-content: center;
@@ -49,11 +50,11 @@ font-weight: bold;
   align-items: center;
 }
 
-.adminHeader a{
-  margin-left: 50px;
+.newAdmin{
+  margin: 10px 0px;
   text-align: center;
-  background-color: #AACE9B;;
-  color: #373867;
+  background-color: #EA3354;;
+  color: #252525;
   border-style: none;
   font-size: 35px;
   font-weight: 800;
