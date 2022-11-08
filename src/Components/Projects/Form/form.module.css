@@ -12,6 +12,7 @@
 
 .formContainer{
   width: 80%;
+  height: fit-content;
   margin: 15px;
   display: flex;
   flex-direction: row;
