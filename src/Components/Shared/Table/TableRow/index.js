@@ -14,7 +14,7 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
     setShowModal(false);
   };
 
-  const deleteTitle = 'Delete Project?';
+  const deleteTitle = 'DELETE';
 
   const deleteQuestion = 'Are you sure you want to delete this?';
 
