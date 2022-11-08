@@ -4,7 +4,7 @@ import FormEmployee from './FormEmployees/index';
 import Modal from '../Modal';
 import styles from './form.module.css';
 
-const index = (props) => {
+const Project = (props) => {
   const projectId = useParams().id;
   const [projectBody, setProjectBody] = useState({
     name: '',
@@ -126,7 +126,11 @@ const index = (props) => {
   return (
     <div className={styles.container}>
       {isLoading && <h3>Loading</h3>}
-      {isFetched ? <h2>Edit Project</h2> : <h2>Add New Project</h2>}
+      {isFetched ? (
+        <h2 className={styles.title}>Edit Project</h2>
+      ) : (
+        <h2 className={styles.title}>Add new project</h2>
+      )}
       <form className={styles.formContainer} onSubmit={onSubmit}>
         <div className={styles.formDiv}>
           <label>Project Name: </label>
@@ -213,4 +217,4 @@ const index = (props) => {
   );
 };
 
-export default index;
+export default Project;

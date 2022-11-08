@@ -122,11 +122,15 @@ const TimeSheetsForm = (props) => {
 
   return (
     <div className={styles.container}>
-      {formSwitch ? <h2>Edit time sheet</h2> : <h2>Add new time sheet</h2>}
-      <form>
+      {formSwitch ? (
+        <h2 className={styles.title}>Edit time sheet</h2>
+      ) : (
+        <h2 className={styles.title}>Add new time sheet</h2>
+      )}
+      <form className={styles.form}>
         <div className={styles.formcontainer}>
           <div>
-            <label>Date</label>
+            <label className={styles.formLabel}>Date</label>
             <input
               value={date.substring(0, 10) || undefined}
               onChange={(e) => setDate(e.target.value)}
@@ -134,7 +138,7 @@ const TimeSheetsForm = (props) => {
             ></input>
           </div>
           <div>
-            <label>Hours</label>
+            <label className={styles.formLabel}>Hours</label>
             <input
               defaultValue={hours || undefined}
               value={hours || undefined}

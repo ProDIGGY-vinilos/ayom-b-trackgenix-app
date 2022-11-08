@@ -1,0 +1,18 @@
+.info {
+    width: 100%;
+}
+
+.btnEdit {
+    color: #EA3354;
+    border: 1px solid #EA3354;
+}
+
+.btnDelete, .btnEdit {
+    padding: 10px;
+}
+
+.tableRow {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}

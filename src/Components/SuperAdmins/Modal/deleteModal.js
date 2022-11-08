@@ -23,15 +23,19 @@ function Modal(props) {
             X
           </button>
         </div>
-        <div className={styles.modalBody}>
-          <p>{props.warningText}</p>
+        <div className={styles.entireBody}>
+          <div className={styles.modalBody}>
+            <p>{props.warningText}</p>
+          </div>
+          <div className={styles.buttons}>
+            <button onClick={cancelBtn} className={styles.cancelBtn}>
+              Cancel
+            </button>
+            <button onClick={confirmBtn} className={styles.confirmBtn}>
+              Confirm
+            </button>
+          </div>
         </div>
-        <button onClick={cancelBtn} className={styles.cancelBtn}>
-          Cancel
-        </button>
-        <button onClick={confirmBtn} className={styles.confirmBtn}>
-          Confirm
-        </button>
       </div>
     </div>
   );

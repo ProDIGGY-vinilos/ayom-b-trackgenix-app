@@ -1,9 +1,17 @@
+.title{
+  margin: 0px;
+  width: 100%;
+  font-family: 'Open Sans', BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
 .container {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 80%;
+  margin: auto;
 }
 
 .header{
@@ -11,7 +19,7 @@
 }
 
 .formContainer{
-  width: 80%;
+  width: 100%;
   height: fit-content;
   margin: 15px;
   display: flex;
