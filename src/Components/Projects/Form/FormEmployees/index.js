@@ -1,22 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './formemployee.module.css';
 import Select from '../../../Shared/Select';
 
 const FormEmployee = ({ employees, employee, changeValue }) => {
   const roles = ['DEV', 'QA', 'PM', 'TL'];
-  const [defaultEmployeeValue, setdefaultEmployeeValue] = useState('');
-
-  useEffect(async () => {
-    const value = employees.filter((singleEmployee) => singleEmployee._id === employee.employee);
-    setdefaultEmployeeValue(value[0].lastName);
-  }, [employees, employee]);
 
   return (
     <div className={styles.employees}>
       <div>
         <Select
-          defaultValue={defaultEmployeeValue || undefined}
-          data={employees || undefined}
+          selectedValue={employee?.employee}
+          options={employees}
           changeValue={(value) => changeValue('employee', value, true)}
           field="lastName"
           label="Employees"

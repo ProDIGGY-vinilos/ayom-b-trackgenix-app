@@ -180,12 +180,12 @@ const index = (props) => {
           />
         </div>
         <h4 className={styles.formFull}>Employees: </h4>
-        {projectBody.employees.map((employee) => {
+        {projectBody.employees.map((employee, index) => {
           return (
             <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
               <FormEmployee
                 employees={employees || undefined}
-                employee={isFetched ? employee : undefined}
+                employee={employee}
                 changeValue={onChangeValue}
               />
             </div>
