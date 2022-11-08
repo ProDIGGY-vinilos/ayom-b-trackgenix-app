@@ -1,9 +1,11 @@
 .container {
-  flex: 1;
+  margin: auto;
+  width: 80%;
   display: flex;
+  align-items: flex-end;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
+  align-content: center;
 }
 
 .header{
@@ -60,4 +62,17 @@
 
 .borderBottom{
   border-bottom: 2px solid #000000;
+}
+
+.newProject{
+  margin: 10px 0px;
+  text-align: center;
+  background-color: #EA3354;;
+  color: #252525;
+  border-style: none;
+  font-size: 35px;
+  font-weight: 800;
+  border-radius: 30px;
+  height: 60px;
+  width: 60px;
 }

@@ -1,17 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './time-sheets.module.css';
-import CreateButton from './Create Button';
-import ExpandModal from './Expand Modal';
-import ConfirmModal from './Confirmation Modal';
+import Table from '../Shared/Table';
 
 function TimeSheets() {
   const [timeSheets, setTimeSheets] = useState([]);
-  const [showExpandModal, setShowExpandModal] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [element, setElement] = useState('');
-  const [modalData, setModalData] = useState({});
-  const [timeSheetId, setTimeSheetId] = useState('');
 
   useEffect(async () => {
     try {
@@ -35,106 +28,29 @@ function TimeSheets() {
     }
   };
 
-  const closeExpandModal = () => {
-    setShowExpandModal(false);
-  };
-
-  const closeConfirmModal = () => {
-    setShowConfirmModal(false);
-  };
-
-  const handleDeleteClick = (id) => {
-    setShowConfirmModal(true);
-    setTimeSheetId(id);
-  };
+  const columns = [
+    { heading: 'Description', value: 'description' },
+    { heading: 'Date', value: 'date', type: 'date' },
+    { heading: 'Project', value: 'project', subValue: 'name' },
+    { heading: 'Task', value: 'task', subValue: 'description' },
+    { heading: 'Employee', value: 'employee', subValue: 'lastName' },
+    { heading: 'Hours', value: 'hours' },
+    { heading: 'Actions' }
+  ];
 
   return (
-    <>
-      <section className={styles.container}>
-        <h2 className={styles.title}>timeSheets</h2>
-        <table>
-          <tr>
-            <th>Descritpion</th>
-            <th>Date</th>
-            <th>Project</th>
-            <th>Task</th>
-            <th>Employee</th>
-            <th>Hours</th>
-            <th></th>
-            <th></th>
-          </tr>
-          {timeSheets.map((timeSheet) => {
-            return (
-              <tr key={timeSheet._id}>
-                <td key={timeSheet._id}>{timeSheet.description}</td>
-                <td key={timeSheet._id}>{timeSheet.date}</td>
-                <td key={timeSheet._id}>
-                  {timeSheet.project.description}
-                  <button
-                    onClick={() => {
-                      setShowExpandModal(true);
-                      setElement('Project');
-                      setModalData(timeSheet.project);
-                    }}
-                  >
-                    +
-                  </button>
-                </td>
-                <td key={timeSheet._id}>
-                  {timeSheet.task.description}
-                  <button
-                    onClick={() => {
-                      setShowExpandModal(true);
-                      setElement('Task');
-                      setModalData(timeSheet.task);
-                    }}
-                  >
-                    +
-                  </button>
-                </td>
-                <td key={timeSheet._id}>
-                  {timeSheet.employee?.name}
-                  <button
-                    onClick={() => {
-                      setShowExpandModal(true);
-                      setElement('Employee');
-                      setModalData(timeSheet.employee);
-                    }}
-                  >
-                    +
-                  </button>
-                </td>
-                <td key={timeSheet._id}>{timeSheet.hours}</td>
-                <td>
-                  <Link to={`/time-sheet-form/${timeSheet._id}`}>
-                    <button>Edit</button>
-                  </Link>
-                </td>
-                <td key={timeSheet._id}>
-                  <button onClick={() => handleDeleteClick(timeSheet._id)}>
-                    <a>Delete</a>
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </table>
-        <CreateButton />
-      </section>
-      <ExpandModal
-        openModal={showExpandModal}
-        closeModal={closeExpandModal}
-        element={element}
-        data={modalData}
+    <section className={styles.container}>
+      <h2>Time Sheets</h2>
+      <Table
+        data={timeSheets}
+        columns={columns}
+        deleteItem={deleteTimeSheet}
+        edit="/time-sheet-form"
       />
-      <ConfirmModal
-        openModal={showConfirmModal}
-        closeModal={closeConfirmModal}
-        onDelete={deleteTimeSheet}
-        timeSheetId={timeSheetId}
-        timeSheets={timeSheets}
-      />
-    </>
+      <Link to="/time-sheet-form" className={styles.newTimeSheet}>
+        +
+      </Link>
+    </section>
   );
 }
 
