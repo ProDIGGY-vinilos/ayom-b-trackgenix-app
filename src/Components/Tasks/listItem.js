@@ -53,7 +53,7 @@ const ListTask = ({ listTask, deleteTask }) => {
           closeModal={closePopUp}
           confirmAction={deleteTaskFunction}
           title={'DELETE TASK'}
-          message={`Are you sure you want to this task?`}
+          message={`Are you sure you want to delete this task?`}
         />
         <button className={styles.deleteButton} onClick={openPopUp}>
           Delete
