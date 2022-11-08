@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Modal from '../Modal/modalSuperAdmin';
 import styles from '../super-admins.module.css';
 import PrimaryBtn from '../../Shared/Button/primaryBtn';
@@ -38,10 +37,12 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
       <td className={styles.info}>{sAdmin.email}</td>
       <td className={styles.info}>{sAdmin.password}</td>
       <td className={styles.btn}>
-        <Link to={`super-admin-form/${sAdmin._id}`}>
-          <button>edit</button>
-        </Link>
-        <PrimaryBtn href={`super-admin-form/${sAdmin._id}`} disabled={false} text="Bien" />
+        <PrimaryBtn
+          style={styles.btn}
+          href={`super-admin-form/${sAdmin._id}`}
+          disabled={false}
+          text="Edit"
+        />
       </td>
       <td className={styles.btn}>
         <Modal
@@ -52,7 +53,7 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
           title={'DELETE ADMIN'}
           warningText={`Do you want to remove ${sAdmin.name}?`}
         />
-        <button onClick={openModal}>Delete</button>
+        <PrimaryBtn style={styles.btn} onClick={openModal} disabled={false} text="Delete" />
       </td>
     </tr>
   );

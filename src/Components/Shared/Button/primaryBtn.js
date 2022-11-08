@@ -1,14 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const PrimaryBtn = (props) => {
+  let history = useHistory();
+  const onAction = () => {
+    if (props.href != undefined) {
+      history.push(`${props.href}`);
+    } else {
+      props.onClick();
+    }
+  };
   return (
-    <Link to={`${props.href}`}>
-      <button onClick={props.onClick} className={props.style} disabled={props.disabled}>
-        <i className={props.icon} />
-        {props.text}
-      </button>
-    </Link>
+    <button onClick={onAction} className={props.style} disabled={props.disabled}>
+      <i className={props.icon} />
+      {props.text}
+    </button>
   );
 };
 
