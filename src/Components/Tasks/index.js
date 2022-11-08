@@ -40,7 +40,7 @@ function Tasks() {
 
   const deleteTask = (id) => {
     saveTasks([...tasks.filter((newTasks) => newTasks._id !== id)]);
-    setTypeModal('DELETE');
+    setTypeModal('Success');
     setTextModal('The task was successfully removed');
     openModal();
   };

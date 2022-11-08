@@ -33,7 +33,7 @@ function Projects() {
 
   const onDeleteItem = (id) => {
     setProjects([...projects.filter((projectItem) => projectItem._id !== id)]);
-    setTypeModal('DELETE');
+    setTypeModal('Success');
     setTextModal('The project was successfully removed');
     openModal();
   };

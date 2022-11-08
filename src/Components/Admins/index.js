@@ -34,7 +34,7 @@ function Admins() {
 
   const deleteAdmin = (id) => {
     saveAdmins([...admins.filter((newListItem) => newListItem._id !== id)]);
-    setTypeModal('DELETE');
+    setTypeModal('Success');
     setTextModal('The administrator was successfully removed');
     openModal();
   };

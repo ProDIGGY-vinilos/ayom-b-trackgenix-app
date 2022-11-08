@@ -124,7 +124,7 @@ const TimeSheetsForm = () => {
         body: JSON.stringify(req)
       });
       const data = await response.json();
-      setTypeModal('PUT');
+      setTypeModal('Success');
       setTextModal(data.message);
       openModal();
       return data;
@@ -137,7 +137,7 @@ const TimeSheetsForm = () => {
         body: JSON.stringify(req)
       });
       const data = await response.json();
-      setTypeModal('POST');
+      setTypeModal('Success');
       setTextModal(data.message);
       openModal();
       return data;

@@ -33,7 +33,7 @@ function SuperAdmins() {
 
   const onDeleteSuperAdmin = (id) => {
     setSuperAdmins([...superAdmins.filter((sAdmin) => sAdmin._id !== id)]);
-    setTypeModal('DELETE');
+    setTypeModal('Success');
     setTextModal('The super administrator was successfully removed');
     openModal();
   };

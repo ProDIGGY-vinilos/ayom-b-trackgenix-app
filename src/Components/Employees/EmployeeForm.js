@@ -14,6 +14,7 @@ const EmployeeForm = () => {
     email: '',
     password: ''
   });
+
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -68,7 +69,7 @@ const EmployeeForm = () => {
           'Content-Type': 'application/json'
         }
       };
-      setTypeModal('PUT');
+      setTypeModal('Success');
     } else {
       requestOptions = {
         method: 'POST',
@@ -77,7 +78,7 @@ const EmployeeForm = () => {
           'Content-Type': 'application/json'
         }
       };
-      setTypeModal('POST');
+      setTypeModal('Success');
     }
 
     let url = !employeeId ? '' : '/' + employeeId;

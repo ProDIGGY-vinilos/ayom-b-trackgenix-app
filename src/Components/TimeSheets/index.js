@@ -42,7 +42,7 @@ function TimeSheets() {
     });
     if (response.status === 204) {
       setTimeSheets([...timeSheets.filter((timeSheetItem) => timeSheetItem._id !== id)]);
-      setTypeModal('DELETE');
+      setTypeModal('Success');
       setTextModal('The timesheet was successfully removed');
       openMessageModal();
       return;

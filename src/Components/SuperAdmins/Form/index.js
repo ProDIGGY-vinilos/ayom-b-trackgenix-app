@@ -56,7 +56,6 @@ function Form() {
   };
 
   const updateCreateSuperAdmin = async (method, url) => {
-    setTypeModal(method);
     try {
       const response = await fetch(url, {
         method: method,
@@ -67,6 +66,7 @@ function Form() {
       });
       const data = await response.json();
       if (response.status === 200 || response.status === 201) {
+        setTypeModal('Success');
         setTextModal(data.message);
         openModal();
         return data;

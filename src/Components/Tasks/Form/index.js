@@ -48,7 +48,7 @@ function Form() {
         body: JSON.stringify(userInput)
       };
       url = `${process.env.REACT_APP_API_URL}/tasks/${taskId}`;
-      setTypeModal('PUT');
+      setTypeModal('Success');
     } else {
       options = {
         method: 'POST',
@@ -58,7 +58,7 @@ function Form() {
         body: JSON.stringify(userInput)
       };
       url = `${process.env.REACT_APP_API_URL}/tasks`;
-      setTypeModal('POST');
+      setTypeModal('Success');
     }
     try {
       const response = await fetch(url, options);

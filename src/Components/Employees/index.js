@@ -20,7 +20,7 @@ function Employees() {
 
   const deleteItem = (id) => {
     setEmployees(employees.filter((employee) => employee._id !== id));
-    setTypeModal('DELETE');
+    setTypeModal('Success');
     setTextModal('The employee was successfully removed');
     openModal();
   };

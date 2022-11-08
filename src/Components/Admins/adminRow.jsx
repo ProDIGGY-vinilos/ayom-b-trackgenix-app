@@ -24,6 +24,7 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
     });
     deleteAdmin(listAdmin._id);
   };
+
   return (
     <tr>
       <td>{listAdmin._id}</td>

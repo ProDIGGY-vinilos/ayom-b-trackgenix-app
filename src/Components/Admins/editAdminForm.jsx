@@ -12,6 +12,7 @@ function Form() {
     email: '',
     password: ''
   });
+
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -66,7 +67,7 @@ function Form() {
         openModal();
         return;
       } else {
-        setTypeModal('PUT');
+        setTypeModal('Success');
         setTextModal(data.message);
         openModal();
         return data;
@@ -86,7 +87,7 @@ function Form() {
         openModal();
         return;
       } else {
-        setTypeModal('POST');
+        setTypeModal('Success');
         setTextModal(data.message);
         openModal();
         return data;

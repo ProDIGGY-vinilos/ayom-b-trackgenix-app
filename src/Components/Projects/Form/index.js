@@ -105,7 +105,7 @@ const index = () => {
 
   const onSubmit = async () => {
     if (projectId) {
-      setTypeModal('PUT');
+      setTypeModal('Success');
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`, {
         method: 'PUT',
         headers: {
@@ -131,7 +131,7 @@ const index = () => {
         return;
       }
     } else {
-      setTypeModal('POST');
+      setTypeModal('Success');
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
         method: 'POST',
         headers: {
