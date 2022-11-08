@@ -184,8 +184,7 @@ const index = (props) => {
           return (
             <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
               <FormEmployee
-                key={employee}
-                employees={employees}
+                employees={employees || undefined}
                 employee={isFetched ? employee : undefined}
                 changeValue={onChangeValue}
               />

@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './formemployee.module.css';
+import Select from '../../../Shared/Select';
 
 const FormEmployee = ({ employees, employee, changeValue }) => {
   const roles = ['DEV', 'QA', 'PM', 'TL'];
+  const [defaultEmployeeValue, setdefaultEmployeeValue] = useState('');
+
+  useEffect(async () => {
+    const value = employees.filter((singleEmployee) => singleEmployee._id === employee.employee);
+    setdefaultEmployeeValue(value[0].lastName);
+  }, [employees, employee]);
 
   return (
     <div className={styles.employees}>
       <div>
-        <label>Employee: </label>
+        <Select
+          defaultValue={defaultEmployeeValue || undefined}
+          data={employees || undefined}
+          changeValue={(value) => changeValue('employee', value, true)}
+          field="lastName"
+          label="Employees"
+        />
+        {/* <label>Employee: </label>
         <select onChange={(e) => changeValue('employee', e.target.value, true)}>
           <option value="" className={styles.displayNone} selected></option>
           {employees.map((singleEmployee) => {
@@ -21,7 +35,7 @@ const FormEmployee = ({ employees, employee, changeValue }) => {
               </option>
             );
           })}
-        </select>
+        </select> */}
       </div>
       <div>
         <label>Role: </label>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from './form.module.css';
-import Select from '../Select/';
+import Select from '../../Shared/Select';
 
 const TimeSheetsForm = (props) => {
   const pathed = useParams().id;
@@ -16,6 +16,9 @@ const TimeSheetsForm = (props) => {
   const [taskId, setTaskId] = useState('');
   const [formSwitch, setFormSwitch] = useState(false);
   const [timeSheetId, setTimeSheetId] = useState('');
+  const [projectDescription, setProjectDescription] = useState('');
+  const [employeeName, setEmployeeName] = useState('');
+  const [taskDescription, settaskDescription] = useState('');
 
   const setStates = (timeSheet) => {
     setDescription(timeSheet.description);
@@ -24,6 +27,9 @@ const TimeSheetsForm = (props) => {
     setProjectId(timeSheet.project);
     setEmployeeId(timeSheet.employee);
     setTaskId(timeSheet.task);
+    setEmployeeName(timeSheet.employee.name);
+    setProjectDescription(timeSheet.project.description);
+    settaskDescription(timeSheet.task.description);
   };
 
   const projectsFetch = async () => {
@@ -101,6 +107,9 @@ const TimeSheetsForm = (props) => {
       });
       const data = await response.json();
       alert(data.message);
+      if (response.status === 200) {
+        props.history.goBack();
+      }
     } else {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
         method: 'POST',
@@ -111,8 +120,10 @@ const TimeSheetsForm = (props) => {
       });
       const data = await response.json();
       alert(data.message);
+      if (response.status === 201) {
+        props.history.goBack();
+      }
     }
-    props.history.goBack();
   };
 
   return (
@@ -123,7 +134,7 @@ const TimeSheetsForm = (props) => {
           <div>
             <label>Date</label>
             <input
-              value={date || undefined}
+              value={date.substring(0, 10) || undefined}
               onChange={(e) => setDate(e.target.value)}
               type="date"
             ></input>
@@ -138,16 +149,34 @@ const TimeSheetsForm = (props) => {
             ></input>
           </div>
           <div>
-            <label>Select Project</label>
-            <Select Data={projects || undefined} setId={setProjectId} field="description" />
+            <Select
+              defaultValue={projectDescription || undefined}
+              data={projects || undefined}
+              changeValue={setProjectId}
+              field="description"
+              label="Select Project"
+              selector=""
+            />
           </div>
           <div>
-            <label>Select Employee</label>
-            <Select Data={employees || undefined} setId={setEmployeeId} field="name" />
+            <Select
+              defaultValue={employeeName || undefined}
+              data={employees || undefined}
+              changeValue={setEmployeeId}
+              field="name"
+              label="Select Employee"
+              selector=""
+            />
           </div>
           <div>
-            <label>Select Task</label>
-            <Select Data={tasks || undefined} setId={setTaskId} field="description" />
+            <Select
+              defaultValue={taskDescription || undefined}
+              data={tasks || undefined}
+              changeValue={setTaskId}
+              field="description"
+              label="Select Task"
+              selector=""
+            />
           </div>
         </div>
         <div className={styles.textareacontainer}>
