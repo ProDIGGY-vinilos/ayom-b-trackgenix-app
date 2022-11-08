@@ -3,7 +3,7 @@ import { useState } from 'react';
 import DeleteModal from '../Modal/deleteModal';
 import styles from './listSuperAdmins.module.css';
 
-const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
+const ListSuperAdmin = ({ superAdmin, onDeleteSuperAdmin }) => {
   const [showModal, setModal] = useState(false);
 
   const openModal = () => {
@@ -20,8 +20,8 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
         method: 'DELETE'
       });
       if (response.status === 204) {
-        alert(`Super Admin with id: ${sAdmin._id} has been deleted`);
-        onDeleteSuperAdmin(sAdmin._id);
+        alert(`Super Admin with id: ${superAdmin._id} has been deleted`);
+        onDeleteSuperAdmin(superAdmin._id);
       }
     } catch (error) {
       alert(error.message);
@@ -29,14 +29,14 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
   };
 
   return (
-    <tr key={sAdmin._id} className={styles.tableRow}>
-      <td>{sAdmin._id}</td>
-      <td className={styles.info}>{sAdmin.name}</td>
-      <td className={styles.info}>{sAdmin.lastName}</td>
-      <td className={styles.info}>{sAdmin.email}</td>
-      <td className={styles.info}>{sAdmin.password}</td>
+    <tr key={superAdmin._id} className={styles.tableRow}>
+      <td>{superAdmin._id}</td>
+      <td className={styles.info}>{superAdmin.name}</td>
+      <td className={styles.info}>{superAdmin.lastName}</td>
+      <td className={styles.info}>{superAdmin.email}</td>
+      <td className={styles.info}>{superAdmin.password}</td>
       <td className={styles.btn}>
-        <a href={`super-admin-form/${sAdmin._id}`}>
+        <a href={`super-admin-form/${superAdmin._id}`}>
           <button className={styles.btnEdit}>edit</button>
         </a>
       </td>
@@ -45,9 +45,9 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
           openModal={showModal}
           closeModal={closeModal}
           deleteAction={deleteSuperAdmin}
-          id={sAdmin._id}
+          id={superAdmin._id}
           title={'DELETE ADMIN'}
-          warningText={`Do you want to remove ${sAdmin.name}?`}
+          warningText={`Do you want to remove ${superAdmin.name}?`}
         />
         <button onClick={openModal} className={styles.btnDelete}>
           Delete

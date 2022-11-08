@@ -54,7 +54,7 @@ function Form() {
     for (const val in superAdmin) {
       if (superAdmin[`${val}`].trim().length !== 0) {
         openModal();
-        break;
+        return;
       } else {
         document.location.href = '/super-admins';
       }
