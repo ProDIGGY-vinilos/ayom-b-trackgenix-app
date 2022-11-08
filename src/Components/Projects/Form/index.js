@@ -101,8 +101,6 @@ const index = (props) => {
         props.history.goBack();
       } else if ([404, 500].includes(response.status)) {
         alert(data.message);
-      } else if (response.status === 400) {
-        alert(data.message);
       }
     } else {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
