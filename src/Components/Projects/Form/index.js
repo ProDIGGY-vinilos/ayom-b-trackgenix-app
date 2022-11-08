@@ -99,7 +99,7 @@ const index = (props) => {
       if (response.status === 201) {
         alert(data.message);
         props.history.goBack();
-      } else if ([404, 500].includes(response.status)) {
+      } else if ([400, 404, 500].includes(response.status)) {
         alert(data.message);
       }
     } else {

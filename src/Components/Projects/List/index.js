@@ -27,7 +27,7 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
     if (response.status === 204) {
       onDeleteItem(projectItem._id);
       alert(data.message);
-    } else if ([404, 500].includes(response.status)) {
+    } else if ([400, 404, 500].includes(response.status)) {
       alert(data.message);
     }
   };
