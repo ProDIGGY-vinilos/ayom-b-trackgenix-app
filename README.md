@@ -4,8 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Description
 WEEK 01:
-    On this project we have two teams, the first one must develop the page, and the second one have to check that is all working properly and suggest changes.For this project we implement React Js.
+    On this project, there are two teams. One is in charge of developing the page, and the other must check that everything is working properly and suggest changes if necessary. For this project we implement React Js.
 
+WEEK 02:
+    This week, first the team fixed problems related to last week PR's, then the team developed and implemented different shared components to improve and be consistent throughout the app. In order to make this possible, it was necessary to correct inconsistencies and bugs on the backend.
 
 ### Install dependencies
 
