@@ -16,13 +16,13 @@ function TimeSheets() {
     }
   }, []);
 
-  const deleteTimesheet = async (id) => {
+  const deleteTimeSheet = async (id) => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
       method: 'DELETE'
     });
     if (response.status === 204) {
       setTimeSheets([...timeSheets.filter((timeSheetItem) => timeSheetItem._id !== id)]);
-      alert('Used deleted');
+      alert('Timesheet deleted');
     } else {
       alert('Error Encountered');
     }
@@ -44,7 +44,7 @@ function TimeSheets() {
       <Table
         data={timeSheets}
         columns={columns}
-        deleteItem={deleteTimesheet}
+        deleteItem={deleteTimeSheet}
         edit="/time-sheet-form"
       />
       <Link to="/time-sheet-form" className={styles.newTimeSheet}>
