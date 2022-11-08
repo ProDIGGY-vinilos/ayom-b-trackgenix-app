@@ -38,7 +38,7 @@ function SuperAdmins() {
             return (
               <ListSuperAdmin
                 key={superAdmin._id}
-                sAdmin={superAdmin}
+                superAdmin={superAdmin}
                 onDeleteSuperAdmin={onDeleteSuperAdmin}
               />
             );
