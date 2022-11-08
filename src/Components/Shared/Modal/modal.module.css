@@ -1,67 +1,69 @@
   .moduleContainer {
+    position: fixed;
     left: 0;
     top: 0;
     right: 0;
     bottom: 0;
-    position: fixed;
     justify-content: center;
     align-items: center;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: #00000080;
   }
 
   .modal {
     width: 500px;
-    height: 200px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 10px 23px rgba(0, 0, 0, 0.12);
-    border: solid 1px grey;
+    height: fit-content;
     margin: auto;
+    text-align: center;
     margin-top: 200px;
-    color: #FF3E1D;
-    font-size: 20px;
-    line-height: 19px;
+    border-radius: 15px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 10px 23px rgba(0, 0, 0, 0.12);
   }
 
-  .modalBody {padding: 2px 16px;}
+  .modalHeader {
+    padding: 2px 16px;
+    background-color: #EA3354;
+    border-radius: 15px 15px 0px 0px;
+    color: #ffffff;
+    font-size: 22px;
+  }
+
+  .modalBody {
+    padding: 2px 16px;
+    font-size: 20px;
+    padding: 20px;
+  }
 
   .modalButtons {
     display: flex;
-    padding-top: 40px;
     flex-wrap: nowrap;
     justify-content: space-around;
   }
 
   .confirmButton {
-    width: 97px;
-    left: 152px;
-    top: 137px;
-    border-radius: 20px;
-    align-items:center;
-    text-align: center;
+    margin: 10px;
+    padding: 20px;
+    background: #EA3354;
     border-style: none;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 19px;
-    color: white;
-    background: #AACE9B;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  .confirmButton:hover{
+    cursor: pointer;
   }
 
   .declineButton {
-    width: 97px;
-    left: 152px;
-    top: 137px;
-    border-radius: 20px;
-    align-items:center;
-    text-align: center;
-    border-style: none;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 19px;
-    color: white;
-    background: #373867;
+    margin: 10px;
+    padding: 20px;
+    font-weight: bold;
+    background: #F0F4F9;
+    border: 2px solid gray;
+    border-radius: 5px;
+    color: #000000;
+  }
+
+  .declineButton:hover{
+    cursor: pointer;
   }

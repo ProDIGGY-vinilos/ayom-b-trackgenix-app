@@ -6,6 +6,7 @@ function Modal({
   title,
   message,
   confirmAction,
+  id,
   declineButtonText = 'Cancel',
   confirmButtonText = 'Confirm'
 }) {
@@ -18,16 +19,18 @@ function Modal({
   };
 
   const confirmButtonAction = () => {
-    confirmAction();
+    confirmAction(id);
     closeModal();
   };
 
   return (
     <div className={styles.moduleContainer}>
       <div className={styles.modal}>
-        <h3>{title}</h3>
+        <div className={styles.modalHeader}>
+          <h3>{title}</h3>
+        </div>
         <div className={styles.modalBody}>
-          <p>{message}</p>
+          <p className={styles.modalText}>{message}</p>
         </div>
         <div className={styles.modalButtons}>
           <button onClick={declineButtonAction} className={styles.declineButton}>

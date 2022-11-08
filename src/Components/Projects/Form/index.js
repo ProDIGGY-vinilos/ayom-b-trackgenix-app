@@ -97,11 +97,9 @@ const index = (props) => {
       const data = await response.json();
 
       if (response.status === 200) {
-        alert(data.msg);
+        alert(data.message);
         props.history.goBack();
-      } else if ([404, 500].includes(response.status)) {
-        alert(data.msg);
-      } else if (response.status === 400) {
+      } else if ([400, 404, 500].includes(response.status)) {
         alert(data.message);
       }
     } else {
