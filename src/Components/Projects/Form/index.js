@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FormEmployee from './FormEmployees/index';
 import Modal from '../Modal';
+import DatePicker from '../../Shared/Datepicker';
 import styles from './form.module.css';
 
 const index = (props) => {
@@ -95,13 +96,11 @@ const index = (props) => {
         body: JSON.stringify(projectBody)
       });
       const data = await response.json();
-
-      if (response.status === 200) {
-        alert(data.msg);
+      //CAMBIAR ESTADO  200 por 201
+      if (response.status === 201) {
+        alert(data.message);
         props.history.goBack();
       } else if ([404, 500].includes(response.status)) {
-        alert(data.msg);
-      } else if (response.status === 400) {
         alert(data.message);
       }
     } else {
@@ -160,23 +159,17 @@ const index = (props) => {
           ></textarea>
         </div>
         <div className={styles.formDiv}>
-          <label>Start Date</label>
-          <input
-            type="date"
-            name="start date"
-            value={isFetched ? projectBody.startDate : undefined}
-            onChange={(e) => onChangeValue('startDate', e.target.value)}
-            required
+          <DatePicker
+            label="Start Date"
+            inputValue={projectBody.startDate.substring(0, 10)}
+            changeValue={(value) => onChangeValue('startDate', value)}
           />
         </div>
         <div className={styles.formDiv}>
-          <label>End Date</label>
-          <input
-            type="date"
-            name="end date"
-            value={isFetched ? projectBody.endDate : undefined}
-            onChange={(e) => onChangeValue('endDate', e.target.value)}
-            required
+          <DatePicker
+            label="End Date"
+            inputValue={projectBody.endDate.substring(0, 10)}
+            changeValue={(value) => onChangeValue('endDate', value)}
           />
         </div>
         <h4 className={styles.formFull}>Employees: </h4>

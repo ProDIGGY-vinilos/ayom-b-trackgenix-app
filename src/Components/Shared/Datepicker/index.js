@@ -1,18 +1,14 @@
-function DatePicker(state) {
-  state = {
-    fecha: new Date()
-  };
-
-  const onChange = (fecha) => {
-    this.setState({ fecha: fecha });
+const DatePicker = ({ changeValue, inputValue, label }) => {
+  const HandleChange = (e) => {
+    changeValue(e.target.value);
   };
 
   return (
-    <div className="Contenedor">
-      <div className="Center"></div>
-      <DatePicker selecter={state.fecha} onChange={onChange}></DatePicker>
-    </div>
+    <>
+      <label>{label}</label>
+      <input type="date" value={inputValue} onChange={(e) => HandleChange(e)}></input>
+    </>
   );
-}
+};
 
 export default DatePicker;
