@@ -1,3 +1,8 @@
 .displayNone {
     display: none;
 }
+
+.selectContainer {
+    display: flex;
+    flex-direction: column;
+}

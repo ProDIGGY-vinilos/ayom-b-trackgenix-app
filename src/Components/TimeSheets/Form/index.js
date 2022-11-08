@@ -14,22 +14,16 @@ const TimeSheetsForm = (props) => {
   const [projectId, setProjectId] = useState('');
   const [employeeId, setEmployeeId] = useState('');
   const [taskId, setTaskId] = useState('');
-  const [formSwitch, setFormSwitch] = useState(false);
   const [timeSheetId, setTimeSheetId] = useState('');
-  const [projectDescription, setProjectDescription] = useState('');
-  const [employeeName, setEmployeeName] = useState('');
-  const [taskDescription, settaskDescription] = useState('');
+  const [formSwitch, setFormSwitch] = useState(false);
 
   const setStates = (timeSheet) => {
     setDescription(timeSheet.description);
     setDate(timeSheet.date);
     setHours(timeSheet.hours);
-    setProjectId(timeSheet.project);
-    setEmployeeId(timeSheet.employee);
-    setTaskId(timeSheet.task);
-    setEmployeeName(timeSheet.employee.name);
-    setProjectDescription(timeSheet.project.description);
-    settaskDescription(timeSheet.task.description);
+    setProjectId(timeSheet.project._id);
+    setEmployeeId(timeSheet.employee._id);
+    setTaskId(timeSheet.task._id);
   };
 
   const projectsFetch = async () => {
@@ -150,32 +144,29 @@ const TimeSheetsForm = (props) => {
           </div>
           <div>
             <Select
-              defaultValue={projectDescription || undefined}
-              data={projects || undefined}
+              selectedValue={projectId || undefined}
+              options={projects || undefined}
               changeValue={setProjectId}
               field="description"
               label="Select Project"
-              selector=""
             />
           </div>
           <div>
             <Select
-              defaultValue={employeeName || undefined}
-              data={employees || undefined}
+              selectedValue={employeeId || undefined}
+              options={employees || undefined}
               changeValue={setEmployeeId}
               field="name"
               label="Select Employee"
-              selector=""
             />
           </div>
           <div>
             <Select
-              defaultValue={taskDescription || undefined}
-              data={tasks || undefined}
+              selectedValue={taskId || undefined}
+              options={tasks || undefined}
               changeValue={setTaskId}
               field="description"
               label="Select Task"
-              selector=""
             />
           </div>
         </div>
