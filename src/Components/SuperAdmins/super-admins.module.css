@@ -25,7 +25,9 @@ tr {
   width: 100%;
 }
 
-.btn {
-  width: 75%;
-  color: black;
+.addBtn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1%;
+  width: 80%;
 }

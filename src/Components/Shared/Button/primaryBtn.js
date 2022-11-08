@@ -1,8 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import styles from './primaryBtn.module.css';
 
 const PrimaryBtn = (props) => {
   let history = useHistory();
+
   const onAction = () => {
     if (props.href != undefined) {
       history.push(`${props.href}`);
@@ -11,7 +13,7 @@ const PrimaryBtn = (props) => {
     }
   };
   return (
-    <button onClick={onAction} className={props.style} disabled={props.disabled}>
+    <button onClick={onAction} className={styles[props.style]} disabled={props.disabled}>
       <i className={props.icon} />
       {props.text}
     </button>

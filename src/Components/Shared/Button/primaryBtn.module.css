@@ -1,0 +1,37 @@
+.rectangular {
+    margin: 4px 2px;
+    padding: 10px 20px;
+    text-align: center;
+    background-color: #EA3354;
+    border: 2px solid #EA3354;
+    color: white;
+    border-radius: 10%;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.4s;
+}
+
+.rectangular:hover {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+
+.rounded {
+    margin: 5px 5px;
+    padding: 10px 20px;
+    text-align: center;
+    background-color: #EA3354;
+    border: 2px solid #EA3354;
+    color: white;
+    border-radius: 100%;
+    text-decoration: none;
+    font-size: 25px;
+    transition-duration: 0.4s;
+}
+
+.rounded:hover {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
