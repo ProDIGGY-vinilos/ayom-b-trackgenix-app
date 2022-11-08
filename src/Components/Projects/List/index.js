@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Employee from './Employees';
 import styles from './list.module.css';
 import Modal from '../Modal';
@@ -45,11 +46,9 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
           return <Employee key={employee._id} employee={employee} index={index} />;
         })}
         <td>
-          <button className={styles.btn}>
-            <a className={styles.btnText} href={`/project-form/${projectItem._id}`}>
-              Edit Project
-            </a>
-          </button>
+          <Link className={styles.btnText} to={`/project-form/${projectItem._id}`}>
+            <button className={styles.btn}>Edit Project</button>
+          </Link>
           <button className={`${styles.btnBlack} ${styles.btnText}`} onClick={openModal}>
             Delete Project
           </button>

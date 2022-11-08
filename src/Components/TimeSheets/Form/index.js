@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import styles from './form.module.css';
 import Select from '../Select/';
 
-const TimeSheetsForm = () => {
+const TimeSheetsForm = (props) => {
+  const pathed = useParams().id;
   const [projects, setProjects] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -14,6 +16,9 @@ const TimeSheetsForm = () => {
   const [taskId, setTaskId] = useState('');
   const [formSwitch, setFormSwitch] = useState(false);
   const [timeSheetId, setTimeSheetId] = useState('');
+  const [projectDescription, setProjectDescription] = useState('');
+  const [employeeName, setEmployeeName] = useState('');
+  const [taskDescription, settaskDescription] = useState('');
 
   const setStates = (timeSheet) => {
     setDescription(timeSheet.description);
@@ -22,6 +27,9 @@ const TimeSheetsForm = () => {
     setProjectId(timeSheet.project);
     setEmployeeId(timeSheet.employee);
     setTaskId(timeSheet.task);
+    setEmployeeName(timeSheet.employee.name);
+    setProjectDescription(timeSheet.project.description);
+    settaskDescription(timeSheet.task.description);
   };
 
   const projectsFetch = async () => {
@@ -65,9 +73,7 @@ const TimeSheetsForm = () => {
   };
 
   useEffect(() => {
-    const path = window.location.pathname.split('/');
-    const pathed = path[path.length - 1];
-    if (pathed.length === 24) {
+    if (pathed) {
       setTimeSheetId(pathed);
       setFormSwitch(true);
     }
@@ -101,6 +107,9 @@ const TimeSheetsForm = () => {
       });
       const data = await response.json();
       alert(data.message);
+      if (response.status === 200) {
+        props.history.goBack();
+      }
     } else {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
         method: 'POST',
@@ -111,8 +120,10 @@ const TimeSheetsForm = () => {
       });
       const data = await response.json();
       alert(data.message);
+      if (response.status === 201) {
+        props.history.goBack();
+      }
     }
-    document.location.href = '/time-sheets';
   };
 
   return (
@@ -123,7 +134,7 @@ const TimeSheetsForm = () => {
           <div>
             <label>Date</label>
             <input
-              value={date || undefined}
+              value={date.substring(0, 10) || undefined}
               onChange={(e) => setDate(e.target.value)}
               type="date"
             ></input>
@@ -139,15 +150,33 @@ const TimeSheetsForm = () => {
           </div>
           <div>
             <label>Select Project</label>
-            <Select Data={projects || undefined} setId={setProjectId} field="description" />
+            <Select
+              defaultValue={projectDescription}
+              switcher={formSwitch}
+              data={projects || undefined}
+              setId={setProjectId}
+              field="description"
+            />
           </div>
           <div>
             <label>Select Employee</label>
-            <Select Data={employees || undefined} setId={setEmployeeId} field="name" />
+            <Select
+              defaultValue={employeeName}
+              switcher={formSwitch}
+              data={employees || undefined}
+              setId={setEmployeeId}
+              field="name"
+            />
           </div>
           <div>
             <label>Select Task</label>
-            <Select Data={tasks || undefined} setId={setTaskId} field="description" />
+            <Select
+              defaultValue={taskDescription}
+              switcher={formSwitch}
+              data={tasks || undefined}
+              setId={setTaskId}
+              field="description"
+            />
           </div>
         </div>
         <div className={styles.textareacontainer}>
@@ -165,9 +194,9 @@ const TimeSheetsForm = () => {
         >
           Submit
         </button>
-        <button>
-          <a href="/../time-sheets">Go Back</a>
-        </button>
+        <Link to="/time-sheets">
+          <button>Go Back</button>
+        </Link>
       </div>
     </div>
   );

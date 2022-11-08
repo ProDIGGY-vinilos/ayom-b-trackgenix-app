@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './time-sheets.module.css';
-import DeleteButton from './Delete Button';
 import CreateButton from './Create Button';
 import ExpandModal from './Expand Modal';
+import ConfirmModal from './Confirmation Modal';
 
 function TimeSheets() {
   const [timeSheets, setTimeSheets] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [showExpandModal, setShowExpandModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [element, setElement] = useState('');
   const [modalData, setModalData] = useState({});
+  const [timeSheetId, setTimeSheetId] = useState('');
 
   useEffect(async () => {
     try {
@@ -20,26 +23,35 @@ function TimeSheets() {
     }
   }, []);
 
-  const deleteTimesheet = async (id) => {
+  const deleteTimeSheet = async (id) => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
       method: 'DELETE'
     });
     if (response.status === 204) {
       setTimeSheets([...timeSheets.filter((timeSheetItem) => timeSheetItem._id !== id)]);
-      alert('Used deleted');
+      alert('Timesheet deleted');
     } else {
       alert('Error Encountered');
     }
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeExpandModal = () => {
+    setShowExpandModal(false);
+  };
+
+  const closeConfirmModal = () => {
+    setShowConfirmModal(false);
+  };
+
+  const handleDeleteClick = (id) => {
+    setShowConfirmModal(true);
+    setTimeSheetId(id);
   };
 
   return (
     <>
       <section className={styles.container}>
-        <h2 className={styles.title}>TimeSheets</h2>
+        <h2 className={styles.title}>timeSheets</h2>
         <table>
           <tr>
             <th>Descritpion</th>
@@ -51,59 +63,57 @@ function TimeSheets() {
             <th></th>
             <th></th>
           </tr>
-          {timeSheets.map((TimeSheet) => {
+          {timeSheets.map((timeSheet) => {
             return (
-              <tr key={TimeSheet._id}>
-                <td key={TimeSheet._id}>{TimeSheet.description}</td>
-                <td key={TimeSheet._id}>{TimeSheet.date}</td>
-                <td key={TimeSheet._id}>
-                  {TimeSheet.project.description}
+              <tr key={timeSheet._id}>
+                <td key={timeSheet._id}>{timeSheet.description}</td>
+                <td key={timeSheet._id}>{timeSheet.date}</td>
+                <td key={timeSheet._id}>
+                  {timeSheet.project.description}
                   <button
                     onClick={() => {
-                      setShowModal(true);
+                      setShowExpandModal(true);
                       setElement('Project');
-                      setModalData(TimeSheet.project);
+                      setModalData(timeSheet.project);
                     }}
                   >
                     +
                   </button>
                 </td>
-                <td key={TimeSheet._id}>
-                  {TimeSheet.task.description}
+                <td key={timeSheet._id}>
+                  {timeSheet.task.description}
                   <button
                     onClick={() => {
-                      setShowModal(true);
+                      setShowExpandModal(true);
                       setElement('Task');
-                      setModalData(TimeSheet.task);
+                      setModalData(timeSheet.task);
                     }}
                   >
                     +
                   </button>
                 </td>
-                <td key={TimeSheet._id}>
-                  {TimeSheet.employee?.name}
+                <td key={timeSheet._id}>
+                  {timeSheet.employee?.name}
                   <button
                     onClick={() => {
-                      setShowModal(true);
+                      setShowExpandModal(true);
                       setElement('Employee');
-                      setModalData(TimeSheet.employee);
+                      setModalData(timeSheet.employee);
                     }}
                   >
                     +
                   </button>
                 </td>
-                <td key={TimeSheet._id}>{TimeSheet.hours}</td>
+                <td key={timeSheet._id}>{timeSheet.hours}</td>
                 <td>
-                  <button>
-                    <a href={`/time-sheet-form/${TimeSheet._id}`}>Edit</a>
-                  </button>
+                  <Link to={`/time-sheet-form/${timeSheet._id}`}>
+                    <button>Edit</button>
+                  </Link>
                 </td>
-                <td key={TimeSheet._id}>
-                  <DeleteButton
-                    onDelete={deleteTimesheet}
-                    timeSheetId={TimeSheet._id}
-                    timeSheets={TimeSheets}
-                  />
+                <td key={timeSheet._id}>
+                  <button onClick={() => handleDeleteClick(timeSheet._id)}>
+                    <a>Delete</a>
+                  </button>
                 </td>
               </tr>
             );
@@ -112,10 +122,17 @@ function TimeSheets() {
         <CreateButton />
       </section>
       <ExpandModal
-        openModal={showModal}
-        closeModal={closeModal}
+        openModal={showExpandModal}
+        closeModal={closeExpandModal}
         element={element}
         data={modalData}
+      />
+      <ConfirmModal
+        openModal={showConfirmModal}
+        closeModal={closeConfirmModal}
+        onDelete={deleteTimeSheet}
+        timeSheetId={timeSheetId}
+        timeSheets={timeSheets}
       />
     </>
   );
