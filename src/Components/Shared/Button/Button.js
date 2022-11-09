@@ -12,6 +12,7 @@ const Button = (props) => {
       props.onClick();
     }
   };
+
   return (
     <button onClick={onAction} className={styles[props.style]} disabled={props.disabled}>
       <i className={props.icon} />

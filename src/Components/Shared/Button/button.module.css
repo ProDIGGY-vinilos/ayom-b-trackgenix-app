@@ -4,7 +4,7 @@
     text-align: center;
     background-color: #EA3354;
     border: 2px solid #EA3354;
-    color: white;
+    color: #ffffff;
     border-radius: 10%;
     text-decoration: none;
     font-size: 16px;
@@ -13,8 +13,8 @@
 
 .squaredPrimary:hover {
     cursor: pointer;
-    background-color: white;
-    color: black;
+    background-color: #ffffff;
+    color: #000000;
 }
 
 .roundedPrimary {
@@ -25,7 +25,7 @@
     text-align: center;
     background-color: #EA3354;
     border: 2px solid #EA3354;
-    color: white;
+    color: #ffffff;
     border-radius: 100%;
     text-decoration: none;
     font-size: 25px;
@@ -34,8 +34,8 @@
 
 .roundedPrimary:hover {
     cursor: pointer;
-    background-color: white;
-    color: black;
+    background-color: #ffffff;
+    color: #000000;
 }
 
 .squaredSecondary {
@@ -44,9 +44,9 @@
     margin: 4px 2px;
     padding: 10px 20px;
     text-align: center;
-    background-color: white;
+    background-color: #ffffff;
     border: 2px solid #EA3354;
-    color: black;
+    color: #000000;
     border-radius: 10%;
     text-decoration: none;
     font-size: 16px;
@@ -56,16 +56,16 @@
 .squaredSecondary:hover {
     cursor: pointer;
     background-color: #EA3354;
-    color: white;
+    color: #ffffff;
 }
 
 .roundedSecondary {
     margin: 5px 5px;
     padding: 10px 20px;
     text-align: center;
-    background-color: white;
+    background-color: #ffffff;
     border: 2px solid #EA3354;
-    color: black;
+    color: #000000;
     border-radius: 100%;
     text-decoration: none;
     font-size: 25px;
@@ -75,5 +75,5 @@
 .roundedSecondary:hover {
     cursor: pointer;
     background-color: #EA3354;
-    color: white;
+    color: #ffffff;
 }
