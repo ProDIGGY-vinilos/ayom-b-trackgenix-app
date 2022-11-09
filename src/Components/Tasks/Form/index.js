@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import MessagePopUp from '../Modal/messageModal';
+import MessageModal from '../../Shared/Modal/MessageModal';
 import styles from '../tasks.module.css';
 import stylesModal from '../Modal/tasks.module.css';
 
@@ -11,24 +11,16 @@ function Form() {
     description: ''
   });
 
-  const [showPopUp, setShowPopup] = useState(false);
-  const [statusPopUp, setStatusPopUp] = useState();
-  const [textPopUp, setTextPopUp] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
 
-  const openPopUp = () => {
-    setShowPopup(true);
+  const openModal = () => {
+    setShowModal(true);
   };
 
-  const closePopUp = () => {
-    setShowPopup(false);
-  };
-
-  const setStatus = (status) => {
-    setStatusPopUp(status);
-  };
-
-  const setTextFunction = (text) => {
-    setTextPopUp(text);
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   useEffect(async () => {
@@ -56,7 +48,7 @@ function Form() {
         body: JSON.stringify(userInput)
       };
       url = `${process.env.REACT_APP_API_URL}/tasks/${taskId}`;
-      setStatus('PUT');
+      setTypeModal('Success');
     } else {
       options = {
         method: 'POST',
@@ -66,22 +58,25 @@ function Form() {
         body: JSON.stringify(userInput)
       };
       url = `${process.env.REACT_APP_API_URL}/tasks`;
-      setStatus('POST');
+      setTypeModal('Success');
     }
     try {
       const response = await fetch(url, options);
       const data = await response.json();
       if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
-        setStatus('Error');
-        setTextFunction(data.message);
-        openPopUp();
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openModal();
         return;
       }
-      setTextFunction(data.message);
-      openPopUp();
+      setTextModal(data.message);
+      openModal();
       return data;
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   };
   return (
@@ -100,11 +95,12 @@ function Form() {
           <button className={styles.addButton} type="submit">
             Save
           </button>
-          <MessagePopUp
-            show={showPopUp}
-            status={statusPopUp}
-            text={textPopUp}
-            closePopUp={closePopUp}
+          <MessageModal
+            type={typeModal}
+            isOpen={showModal}
+            message={textModal}
+            handleClose={closeModal}
+            goBack={'/tasks'}
           />
           <Link to="/tasks" className={stylesModal.goBackButton}>
             Go back

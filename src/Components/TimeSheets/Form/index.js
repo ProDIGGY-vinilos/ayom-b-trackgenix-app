@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from './form.module.css';
+import MessageModal from '../../Shared/Modal/MessageModal';
 import Select from '../../Shared/Select';
 
-const TimeSheetsForm = (props) => {
+const TimeSheetsForm = () => {
   const pathed = useParams().id;
   const [projects, setProjects] = useState([]);
   const [employees, setEmployees] = useState([]);
@@ -15,7 +16,18 @@ const TimeSheetsForm = (props) => {
   const [employeeId, setEmployeeId] = useState('');
   const [taskId, setTaskId] = useState('');
   const [timeSheetId, setTimeSheetId] = useState('');
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showModal, setShowModal] = useState(false);
   const [formSwitch, setFormSwitch] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   const setStates = (timeSheet) => {
     setDescription(timeSheet.description);
@@ -32,7 +44,10 @@ const TimeSheetsForm = (props) => {
       const data = await response.json();
       setProjects(data.data);
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   };
 
@@ -42,7 +57,10 @@ const TimeSheetsForm = (props) => {
       const data = await response.json();
       setTasks(data.data);
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   };
 
@@ -52,7 +70,10 @@ const TimeSheetsForm = (props) => {
       const data = await response.json();
       setEmployees(data.data);
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   };
 
@@ -62,7 +83,10 @@ const TimeSheetsForm = (props) => {
       const data = await response.json();
       setStates(data.data);
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   };
 
@@ -100,9 +124,16 @@ const TimeSheetsForm = (props) => {
         body: JSON.stringify(req)
       });
       const data = await response.json();
-      alert(data.message);
-      if (response.status === 201) {
-        props.history.goBack();
+      if (response.status !== 201) {
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openModal();
+        return data;
+      } else {
+        setTypeModal('Success');
+        setTextModal(data.message);
+        openModal();
+        return data;
       }
     } else {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
@@ -113,9 +144,16 @@ const TimeSheetsForm = (props) => {
         body: JSON.stringify(req)
       });
       const data = await response.json();
-      alert(data.message);
-      if (response.status === 201) {
-        props.history.goBack();
+      if (response.status !== 201) {
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openModal();
+        return data;
+      } else {
+        setTypeModal('Success');
+        setTextModal(data.message);
+        openModal();
+        return data;
       }
     }
   };
@@ -193,6 +231,13 @@ const TimeSheetsForm = (props) => {
           <button>Go Back</button>
         </Link>
       </div>
+      <MessageModal
+        type={typeModal}
+        isOpen={showModal}
+        message={textModal}
+        handleClose={closeModal}
+        goBack={'/time-sheets'}
+      />
     </div>
   );
 };

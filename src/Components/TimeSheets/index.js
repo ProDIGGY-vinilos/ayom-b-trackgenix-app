@@ -1,10 +1,22 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './time-sheets.module.css';
+import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 
 function TimeSheets() {
   const [timeSheets, setTimeSheets] = useState([]);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showMessageModal, setShowMessageModal] = useState(false);
+
+  const openMessageModal = () => {
+    setShowMessageModal(true);
+  };
+
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
+  };
 
   useEffect(async () => {
     try {
@@ -12,7 +24,10 @@ function TimeSheets() {
       const data = await response.json();
       setTimeSheets(data.data);
     } catch (error) {
-      console.error(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openMessageModal();
+      return;
     }
   }, []);
 
@@ -22,9 +37,15 @@ function TimeSheets() {
     });
     if (response.status === 204) {
       setTimeSheets([...timeSheets.filter((timeSheetItem) => timeSheetItem._id !== id)]);
-      alert('Timesheet deleted');
+      setTypeModal('Success');
+      setTextModal('The timesheet was successfully removed');
+      openMessageModal();
+      return;
     } else {
-      alert('Error Encountered');
+      setTypeModal('Error');
+      setTextModal('There was an error');
+      openMessageModal();
+      return;
     }
   };
 
@@ -46,6 +67,13 @@ function TimeSheets() {
         columns={columns}
         deleteItem={deleteTimeSheet}
         edit="/time-sheet-form"
+      />
+      <MessageModal
+        type={typeModal}
+        isOpen={showMessageModal}
+        message={textModal}
+        handleClose={closeMessageModal}
+        goBack={'/time-sheets'}
       />
       <Link to="/time-sheet-form" className={styles.newTimeSheet}>
         +

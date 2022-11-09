@@ -1,6 +1,7 @@
+import React from 'react';
 import styles from './modal.module.css';
 
-function Modal({
+const Modal = ({
   showModal,
   closeModal,
   title,
@@ -9,7 +10,7 @@ function Modal({
   id,
   declineButtonText = 'Cancel',
   confirmButtonText = 'Confirm'
-}) {
+}) => {
   if (!showModal) {
     return null;
   }
@@ -43,6 +44,6 @@ function Modal({
       </div>
     </div>
   );
-}
+};
 
 export default Modal;
