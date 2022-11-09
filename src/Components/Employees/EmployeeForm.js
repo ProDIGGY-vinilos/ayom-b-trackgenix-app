@@ -165,6 +165,7 @@ const EmployeeForm = () => {
             isOpen={showModal}
             message={textModal}
             handleClose={closeModal}
+            goBack={'/employees'}
           />
         </div>
         <div className={styles.divBtn}>

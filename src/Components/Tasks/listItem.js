@@ -75,6 +75,7 @@ const ListTask = ({ listTask, deleteTask }) => {
           isOpen={showMessageModal}
           message={textModal}
           handleClose={closeMessageModal}
+          goBack={'/tasks'}
         />
         <button className={styles.deleteButton} onClick={openModal}>
           Delete

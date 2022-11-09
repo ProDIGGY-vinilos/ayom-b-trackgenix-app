@@ -80,6 +80,7 @@ function SuperAdmins() {
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
+        goBack={'/super-admins'}
       />
     </div>
   );

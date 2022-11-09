@@ -100,6 +100,7 @@ function Form() {
             isOpen={showModal}
             message={textModal}
             handleClose={closeModal}
+            goBack={'/tasks'}
           />
           <Link to="/tasks" className={stylesModal.goBackButton}>
             Go back

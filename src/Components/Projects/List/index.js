@@ -77,6 +77,7 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
         isOpen={showMessageModal}
         message={textModal}
         handleClose={closeMessageModal}
+        goBack={'/projects'}
       />
     </>
   );

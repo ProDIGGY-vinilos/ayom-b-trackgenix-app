@@ -236,6 +236,7 @@ const TimeSheetsForm = () => {
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
+        goBack={'/time-sheets'}
       />
     </div>
   );

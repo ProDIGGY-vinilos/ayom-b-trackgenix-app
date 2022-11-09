@@ -73,6 +73,7 @@ function TimeSheets() {
         isOpen={showMessageModal}
         message={textModal}
         handleClose={closeMessageModal}
+        goBack={'/time-sheets'}
       />
       <Link to="/time-sheet-form" className={styles.newTimeSheet}>
         +

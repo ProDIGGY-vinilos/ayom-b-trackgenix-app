@@ -122,6 +122,7 @@ function Form() {
           isOpen={showModal}
           message={textModal}
           handleClose={closeModal}
+          goBack={'/admins'}
         />
       </div>
       <div className={styles.formButton}>

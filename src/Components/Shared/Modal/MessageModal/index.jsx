@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './modal.module.css';
 
-const MessageModal = ({ type, isOpen, message, handleClose }) => {
+const MessageModal = ({ type, isOpen, message, handleClose, goBack }) => {
   if (!isOpen) {
     return null;
   }
@@ -16,9 +17,17 @@ const MessageModal = ({ type, isOpen, message, handleClose }) => {
           </button>
         </div>
         <p className={styles.modalText}>{message}</p>
-        <button onClick={handleClose} className={styles.acceptButton}>
-          {'Accept'}
-        </button>
+        {type !== 'Error' ? (
+          <Link to={goBack}>
+            <button onClick={handleClose} className={styles.acceptButton}>
+              {'Accept'}
+            </button>
+          </Link>
+        ) : (
+          <button onClick={handleClose} className={styles.acceptButton}>
+            {'Accept'}
+          </button>
+        )}
       </div>
     </div>
   );

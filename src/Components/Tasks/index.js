@@ -82,6 +82,7 @@ function Tasks() {
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
+        goBack={'/tasks'}
       />
     </div>
   );

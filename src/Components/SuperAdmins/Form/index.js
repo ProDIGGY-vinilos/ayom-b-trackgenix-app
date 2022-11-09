@@ -153,6 +153,7 @@ function Form() {
         isOpen={showMessageModal}
         message={textModal}
         handleClose={closeMessageModal}
+        goBack={'/super-admins'}
       />
     </form>
   );

@@ -85,6 +85,7 @@ const Projects = () => {
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
+        goBack={'/projects'}
       />
     </section>
   );

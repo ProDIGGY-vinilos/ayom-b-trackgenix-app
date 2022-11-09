@@ -71,6 +71,7 @@ const Admins = () => {
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
+        goBack={'/admins'}
       />
     </section>
   );

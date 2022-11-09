@@ -74,6 +74,7 @@ const ListSuperAdmin = ({ superAdmin, onDeleteSuperAdmin }) => {
         isOpen={showMessageModal}
         message={textModal}
         handleClose={closeMessageModal}
+        goBack={'/super-admins'}
       />
     </tr>
   );
