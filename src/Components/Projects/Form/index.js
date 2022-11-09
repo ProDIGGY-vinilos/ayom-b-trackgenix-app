@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FormEmployee from './FormEmployees/index';
+import DatePicker from '../../Shared/Datepicker';
 import FormModal from '../Modal';
 import MessageModal from '../../Shared/Modal/MessageModal';
 import styles from './form.module.css';
@@ -114,8 +115,7 @@ const Project = () => {
         body: JSON.stringify(projectBody)
       });
       const data = await response.json();
-
-      if (response.status === 200) {
+      if (response.status === 201) {
         setTextModal(data.message);
         openSharedModal();
         return data;
@@ -190,23 +190,17 @@ const Project = () => {
           ></textarea>
         </div>
         <div className={styles.formDiv}>
-          <label>Start Date</label>
-          <input
-            type="date"
-            name="start date"
-            value={isFetched ? projectBody.startDate : undefined}
-            onChange={(e) => onChangeValue('startDate', e.target.value)}
-            required
+          <DatePicker
+            label="Start Date"
+            inputValue={projectBody.startDate.substring(0, 10)}
+            changeValue={(value) => onChangeValue('startDate', value)}
           />
         </div>
         <div className={styles.formDiv}>
-          <label>End Date</label>
-          <input
-            type="date"
-            name="end date"
-            value={isFetched ? projectBody.endDate : undefined}
-            onChange={(e) => onChangeValue('endDate', e.target.value)}
-            required
+          <DatePicker
+            label="End Date"
+            inputValue={projectBody.endDate.substring(0, 10)}
+            changeValue={(value) => onChangeValue('endDate', value)}
           />
         </div>
         <h4 className={styles.formFull}>Employees: </h4>
