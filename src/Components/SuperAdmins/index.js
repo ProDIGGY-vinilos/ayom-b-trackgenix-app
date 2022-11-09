@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './super-admins.module.css';
 import Table from '../Shared/Table';
 
-function SuperAdmins() {
+const SuperAdmins = () => {
   const [superAdmins, setSuperAdmins] = useState([]);
 
   useEffect(async () => {
@@ -57,6 +57,6 @@ function SuperAdmins() {
       </Link>
     </div>
   );
-}
+};
 
 export default SuperAdmins;

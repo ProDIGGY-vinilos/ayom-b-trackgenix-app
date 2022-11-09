@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styles from './header.module.css';
 
-function Header() {
+const Header = () => {
   return (
     <header>
       <div className={styles.container}>
@@ -54,6 +54,6 @@ function Header() {
       </nav>
     </header>
   );
-}
+};
 
 export default Header;

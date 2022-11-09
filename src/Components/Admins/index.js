@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './admins.module.css';
 import Table from '../Shared/Table';
 
-function Admins() {
+const Admins = () => {
   const [admins, saveAdmins] = useState([]);
 
   useEffect(async () => {
@@ -49,6 +49,6 @@ function Admins() {
       </Link>
     </section>
   );
-}
+};
 
 export default Admins;

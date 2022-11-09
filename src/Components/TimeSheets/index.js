@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './time-sheets.module.css';
 import Table from '../Shared/Table';
 
-function TimeSheets() {
+const TimeSheets = () => {
   const [timeSheets, setTimeSheets] = useState([]);
 
   useEffect(async () => {
@@ -52,6 +52,6 @@ function TimeSheets() {
       </Link>
     </section>
   );
-}
+};
 
 export default TimeSheets;

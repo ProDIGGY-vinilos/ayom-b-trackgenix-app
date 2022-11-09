@@ -4,7 +4,7 @@ import MessagePopUp from '../Modal/messageModal';
 import styles from '../tasks.module.css';
 import stylesModal from '../Modal/tasks.module.css';
 
-function Form() {
+const Form = () => {
   const taskId = useParams().id;
 
   const [userInput, setNameValue] = useState({
@@ -113,6 +113,6 @@ function Form() {
       </form>
     </div>
   );
-}
+};
 
 export default Form;

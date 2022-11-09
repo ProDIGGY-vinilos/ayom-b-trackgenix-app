@@ -4,7 +4,7 @@ import ConfirmModal from '../Modal/confirmModal';
 import { useParams } from 'react-router-dom';
 import styles from './form.module.css';
 
-function Form(props) {
+const Form = (props) => {
   const superAdminId = useParams().id;
   const [superAdmin, setSuperAdmin] = useState({
     name: '',
@@ -49,7 +49,7 @@ function Form(props) {
   const updateField = (e) => {
     setSuperAdmin({ ...superAdmin, [e.target.name]: e.target.value });
   };
-  //
+
   const validateFields = () => {
     for (const val in superAdmin) {
       if (superAdmin[`${val}`].trim().length !== 0) {
@@ -135,6 +135,6 @@ function Form(props) {
       </div>
     </form>
   );
-}
+};
 
 export default Form;

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Table from '../Shared/Table';
 import styles from './tasks.module.css';
 
-function Tasks() {
+const Tasks = () => {
   const [tasks, saveTasks] = useState([]);
 
   useEffect(async () => {
@@ -55,6 +55,6 @@ function Tasks() {
       </Link>
     </div>
   );
-}
+};
 
 export default Tasks;

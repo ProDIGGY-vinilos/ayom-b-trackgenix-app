@@ -1,6 +1,6 @@
 import styles from './confirmationmodal.module.css';
 
-function Modal(props) {
+const Modal = (props) => {
   const handleClick = () => {
     props.onDelete(props.timeSheetId, props.timeSheets);
     props.closeModal();
@@ -25,6 +25,6 @@ function Modal(props) {
       </div>
     </div>
   );
-}
+};
 
 export default Modal;

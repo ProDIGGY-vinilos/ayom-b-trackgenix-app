@@ -1,7 +1,7 @@
 import styles from './tasks.module.css';
 import { Link } from 'react-router-dom';
 
-function MessagePopUp(props) {
+const MessagePopUp = (props) => {
   if (!props.show) {
     return null;
   }
@@ -67,6 +67,6 @@ function MessagePopUp(props) {
       return null;
     }
   }
-}
+};
 
 export default MessagePopUp;

@@ -3,7 +3,7 @@ import styles from './employees.module.css';
 import { Link } from 'react-router-dom';
 import Table from '../Shared/Table';
 
-function Employees() {
+const Employees = () => {
   const [employees, setEmployees] = useState([]);
 
   const deleteItem = (id) => {
@@ -44,5 +44,5 @@ function Employees() {
       </Link>
     </section>
   );
-}
+};
 export default Employees;
