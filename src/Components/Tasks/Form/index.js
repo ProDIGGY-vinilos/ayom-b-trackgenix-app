@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Modal from '../../Shared/Modal';
+import MessageModal from '../../Shared/Modal/MessageModal';
 import styles from '../tasks.module.css';
 import stylesModal from '../Modal/tasks.module.css';
 
@@ -95,15 +95,12 @@ function Form() {
           <button className={styles.addButton} type="submit">
             Save
           </button>
-          <Modal
+          <MessageModal
             type={typeModal}
             isOpen={showModal}
             message={textModal}
             handleClose={closeModal}
-            goBack="/tasks"
-          >
-            {}
-          </Modal>
+          />
           <Link to="/tasks" className={stylesModal.goBackButton}>
             Go back
           </Link>

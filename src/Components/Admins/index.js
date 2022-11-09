@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Table from './adminTable';
 import styles from './admins.module.css';
-import Modal from '../Shared/Modal';
+import MessageModal from '../Shared/Modal/MessageModal';
+import Table from '../Shared/Table';
 
-function Admins() {
+const Admins = () => {
   const [admins, saveAdmins] = useState([]);
 
   const [typeModal, setTypeModal] = useState();
@@ -25,6 +25,7 @@ function Admins() {
       const data = await response.json();
       saveAdmins(data.data);
     } catch (error) {
+      console.log('Se muere aca', error);
       setTypeModal('Error');
       setTextModal(error);
       openModal();
@@ -39,22 +40,40 @@ function Admins() {
     openModal();
   };
 
+  const removeAdmin = async (id) => {
+    await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
+    deleteAdmin(id);
+  };
+
+  const columns = [
+    { heading: 'Id', value: '_id' },
+    { heading: 'Name', value: 'name' },
+    { heading: 'Last Name', value: 'lastName' },
+    { heading: 'Email', value: 'email' },
+    { heading: 'Password', value: 'password' },
+    { heading: 'Actions' }
+  ];
+
   return (
-    <div className={styles.container}>
-      <div className={styles.adminHeader}>
-        <h2>Admin</h2>
-        <Link to="/admin-form">+</Link>
-      </div>
-      <Table list={admins} saveAdmins={saveAdmins} deleteItem={deleteAdmin} />
-      <Modal
+    <section className={styles.container}>
+      <h2>Admin</h2>
+      <Table data={admins} columns={columns} deleteItem={removeAdmin} edit="/admin-form" />
+      <Link to="/admin-form" className={styles.newAdmin}>
+        +
+      </Link>
+      <MessageModal
         type={typeModal}
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
-        goBack={'/admins'}
       />
-    </div>
+    </section>
   );
-}
+};
 
 export default Admins;

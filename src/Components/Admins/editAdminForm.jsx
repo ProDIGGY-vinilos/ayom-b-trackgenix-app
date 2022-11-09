@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Modal from '../Shared/Modal';
+import MessageModal from '../Shared/Modal/MessageModal';
 import styles from './admins.module.css';
 
 function Form() {
@@ -117,12 +117,11 @@ function Form() {
         <input type="text" name="password" value={inputValue.password} onChange={onChange} />
       </div>
       <div>
-        <Modal
+        <MessageModal
           type={typeModal}
           isOpen={showModal}
           message={textModal}
           handleClose={closeModal}
-          goBack={'/admins'}
         />
       </div>
       <div className={styles.formButton}>

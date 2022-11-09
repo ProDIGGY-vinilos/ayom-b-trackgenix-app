@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from './form.module.css';
 import Select from '../Select/';
-import Modal from '../../Shared/Modal';
+import MessageModal from '../../Shared/Modal/MessageModal';
 
 const TimeSheetsForm = () => {
   const pathed = useParams().id;
@@ -236,12 +236,11 @@ const TimeSheetsForm = () => {
           <button>Go Back</button>
         </Link>
       </div>
-      <Modal
+      <MessageModal
         type={typeModal}
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
-        goBack={'/time-sheets'}
       />
     </div>
   );

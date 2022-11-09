@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FormEmployee from './FormEmployees/index';
 import FormModal from '../Modal';
-import Modal from '../../Shared/Modal';
+import MessageModal from '../../Shared/Modal/MessageModal';
 import styles from './form.module.css';
 
 const index = () => {
@@ -116,15 +116,10 @@ const index = () => {
       const data = await response.json();
 
       if (response.status === 200) {
-        setTextModal(data.msg);
+        setTextModal(data.message);
         openSharedModal();
         return data;
-      } else if ([404, 500].includes(response.status)) {
-        setTypeModal('Error');
-        setTextModal(data.msg);
-        openSharedModal();
-        return;
-      } else if (response.status === 400) {
+      } else if ([400, 404, 500].includes(response.status)) {
         setTypeModal('Error');
         setTextModal(data.message);
         openSharedModal();
@@ -229,7 +224,7 @@ const index = () => {
           </button>
         </div>
       </form>
-      <Modal
+      <MessageModal
         type={typeModal}
         isOpen={showSharedModal}
         message={textModal}

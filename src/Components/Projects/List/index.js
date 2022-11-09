@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Employee from './Employees';
 import styles from './list.module.css';
-import Modal from '../Modal';
-import MessageModal from '../../Shared/Modal';
+import MessageModal from '../../Shared/Modal/MessageModal';
+import Modal from '../../Shared/Modal/ActionModal';
 
 const ProjectList = ({ projectItem, onDeleteItem }) => {
   const [showModal, setShowModal] = useState(false);
@@ -35,14 +35,9 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
     });
     const data = await response.json();
 
-    if (response.status === 200) {
+    if (response.status === 204) {
       onDeleteItem(projectItem._id);
-    } else if ([404, 500].includes(response.status)) {
-      setTypeModal('Error');
-      setTextModal(data.msg);
-      openMessageModal();
-      return;
-    } else if (response.status === 400) {
+    } else if ([400, 404, 500].includes(response.status)) {
       setTypeModal('Error');
       setTextModal(data.message);
       openMessageModal();
@@ -71,19 +66,17 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
         </td>
       </tr>
       <Modal
-        show={showModal}
+        showModal={showModal}
         closeModal={closeModal}
-        onDelete={deleteItem}
-        id={projectItem._id}
-        title={'Delete Project?'}
-        text={`Are you sure you want to delete project "${projectItem.name}"?`}
+        confirmAction={deleteItem}
+        title={'DELETE PROJECT'}
+        message={`Are you sure you want to delete ${projectItem.name}?`}
       />
       <MessageModal
         type={typeModal}
         isOpen={showMessageModal}
         message={textModal}
         handleClose={closeMessageModal}
-        goBack={'/projects'}
       />
     </>
   );

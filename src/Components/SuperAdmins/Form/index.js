@@ -1,8 +1,8 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styles from './form.module.css';
-import Modal from '../../Shared/Modal';
+import MessageModal from '../../Shared/Modal/MessageModal';
 
 function Form() {
   const superAdminId = useParams().id;
@@ -15,14 +15,14 @@ function Form() {
   const [title, setTitle] = useState([]);
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
-  const [showModal, setShowModal] = useState(false);
+  const [showMessageModal, setShowMessageModal] = useState(false);
 
-  const openModal = () => {
-    setShowModal(true);
+  const openMessageModal = () => {
+    setShowMessageModal(true);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
   };
 
   useEffect(async () => {
@@ -43,7 +43,7 @@ function Form() {
       } catch (error) {
         setTypeModal('Error');
         setTextModal(error);
-        openModal();
+        openMessageModal();
         return;
       }
     } else {
@@ -53,6 +53,17 @@ function Form() {
 
   const updateField = (e) => {
     setSuperAdmin({ ...superAdmin, [e.target.name]: e.target.value });
+  };
+
+  const validateFields = () => {
+    for (const val in superAdmin) {
+      if (superAdmin[`${val}`].trim().length !== 0) {
+        openMessageModal();
+        return;
+      } else {
+        document.location.href = '/super-admins';
+      }
+    }
   };
 
   const updateCreateSuperAdmin = async (method, url) => {
@@ -68,18 +79,18 @@ function Form() {
       if (response.status === 200 || response.status === 201) {
         setTypeModal('Success');
         setTextModal(data.message);
-        openModal();
+        openMessageModal();
         return data;
       } else {
         setTypeModal('Error');
         setTextModal(data.message);
-        openModal();
+        openMessageModal();
         return;
       }
     } catch (error) {
       setTypeModal('Error');
       setTextModal(error);
-      openModal();
+      openMessageModal();
       return;
     }
   };
@@ -94,7 +105,7 @@ function Form() {
       } catch (error) {
         setTypeModal('Error');
         setTextModal(error);
-        openModal();
+        openMessageModal();
         return;
       }
     } else {
@@ -104,7 +115,7 @@ function Form() {
       } catch (error) {
         setTypeModal('Error');
         setTextModal(error);
-        openModal();
+        openMessageModal();
         return;
       }
     }
@@ -114,7 +125,9 @@ function Form() {
     <form className={styles.container}>
       <div className={styles.header}>
         <h3>{title}</h3>
-        <Link to="/super-admins">X</Link>
+        <a className={styles.crossBtn} onClick={validateFields}>
+          X
+        </a>
       </div>
       <div className={styles.inputDiv}>
         <label className={styles.labelText}>Name</label>
@@ -135,12 +148,11 @@ function Form() {
       <div>
         <button onClick={onConfirm}>Confirm</button>
       </div>
-      <Modal
+      <MessageModal
         type={typeModal}
-        isOpen={showModal}
+        isOpen={showMessageModal}
         message={textModal}
-        handleClose={closeModal}
-        goBack={'/super-admins'}
+        handleClose={closeMessageModal}
       />
     </form>
   );

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './super-admins.module.css';
-import ListSuperAdmin from './ListSuperAdmins/index';
-import Modal from '../Shared/Modal';
+import MessageModal from '../Shared/Modal/MessageModal';
+import Table from '../Shared/Table';
 
 function SuperAdmins() {
   const [superAdmins, setSuperAdmins] = useState([]);
@@ -38,42 +38,50 @@ function SuperAdmins() {
     openModal();
   };
 
+  const deleteSuperAdmin = async (id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
+        method: 'DELETE'
+      });
+      if (response.status === 204) {
+        onDeleteSuperAdmin(id);
+      }
+    } catch (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
+    }
+  };
+
+  const columns = [
+    { heading: 'Id', value: '_id' },
+    { heading: 'Name', value: 'name' },
+    { heading: 'Last Name', value: 'lastName' },
+    { heading: 'Email', value: 'email' },
+    { heading: 'Password', value: 'password' },
+    { heading: 'Actions' }
+  ];
+
   return (
-    <section className={styles.container}>
-      <h2>Super Admins</h2>
-      <table>
-        <tbody>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>LastName</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th className={styles.btn}>Actions</th>
-            <th className={styles.btn}>Actions</th>
-          </tr>
-          {superAdmins.map((superAdmin) => {
-            return (
-              <ListSuperAdmin
-                key={superAdmin._id}
-                sAdmin={superAdmin}
-                onDeleteSuperAdmin={onDeleteSuperAdmin}
-              />
-            );
-          })}
-        </tbody>
-      </table>
-      <Link to="/super-admin-form">
-        <button>+</button>
+    <div className={styles.container}>
+      <h2>Super Admin</h2>
+      <Table
+        data={superAdmins}
+        columns={columns}
+        deleteItem={deleteSuperAdmin}
+        edit="/super-admin-form"
+      />
+      <Link className={styles.newSuperAdmin} to="/super-admin-form">
+        +
       </Link>
-      <Modal
+      <MessageModal
         type={typeModal}
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
-        goBack={'/super-admins'}
       />
-    </section>
+    </div>
   );
 }
 

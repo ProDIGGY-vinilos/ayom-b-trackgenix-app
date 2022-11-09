@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
-import Button from './Button';
-import Employee from './Employee';
-import Modal from '../Shared/Modal';
+import MessageModal from '../Shared/Modal/MessageModal';
+import { Link } from 'react-router-dom';
+import Table from '../Shared/Table';
 
 function Employees() {
   const [employees, setEmployees] = useState([]);
@@ -25,6 +25,11 @@ function Employees() {
     openModal();
   };
 
+  const deleteEmployee = async (id) => {
+    await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, { method: 'DELETE' });
+    deleteItem(id);
+  };
+
   useEffect(async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`);
@@ -38,26 +43,28 @@ function Employees() {
     }
   }, []);
 
+  const columns = [
+    { heading: 'Id', value: '_id' },
+    { heading: 'Name', value: 'name' },
+    { heading: 'Last Name', value: 'lastName' },
+    { heading: 'Email', value: 'email' },
+    { heading: 'Password', value: 'password' },
+    { heading: 'Actions' }
+  ];
+
   return (
     <section className={styles.container}>
-      <div className={styles.title}>
-        <h2>Employees</h2>
-        <Button color="green" text={'Add'} href={'/employee-form'} />
-      </div>
-      <Modal
+      <h2>Employee</h2>
+      <Table data={employees} columns={columns} deleteItem={deleteEmployee} edit="/employee-form" />
+      <Link to="/employee-form" className={styles.newEmployee}>
+        +
+      </Link>
+      <MessageModal
         type={typeModal}
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
-        goBack={'/employees'}
       />
-      {employees.map((employee) => {
-        return (
-          <>
-            <Employee key={employee._id} employee={employee} onDeleteItem={deleteItem} />
-          </>
-        );
-      })}
     </section>
   );
 }

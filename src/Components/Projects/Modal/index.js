@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './modal.module.css';
 
-function FormModal({ title, text, show, closeModal, onDelete, onAddUpdate }) {
+function Modal({ title, text, show, closeModal, onDelete, onAddUpdate, id }) {
   if (!show) {
     return null;
   }
@@ -11,7 +11,7 @@ function FormModal({ title, text, show, closeModal, onDelete, onAddUpdate }) {
   };
 
   const onConfirmDelete = () => {
-    onDelete();
+    onDelete(id);
     closeModal();
   };
 
@@ -47,4 +47,4 @@ function FormModal({ title, text, show, closeModal, onDelete, onAddUpdate }) {
   );
 }
 
-export default FormModal;
+export default Modal;

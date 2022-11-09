@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Modal from '../Shared/Modal';
+import MessageModal from '../Shared/Modal/MessageModal';
 import styles from './employees.module.css';
 import Button from './Button';
 
@@ -160,12 +160,11 @@ const EmployeeForm = () => {
           />
         </div>
         <div>
-          <Modal
+          <MessageModal
             type={typeModal}
             isOpen={showModal}
             message={textModal}
             handleClose={closeModal}
-            goBack={'/employees'}
           />
         </div>
         <div className={styles.divBtn}>

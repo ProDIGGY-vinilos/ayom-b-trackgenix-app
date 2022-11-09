@@ -1,11 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Modal from '../Modal/modalSuperAdmin';
+import Modal from '../../Shared/Modal/ActionModal';
 import styles from '../super-admins.module.css';
-import MessageModal from '../../Shared/Modal';
+import MessageModal from '../../Shared/Modal/MessageModal';
 
-const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
+const ListSuperAdmin = ({ superAdmin, onDeleteSuperAdmin }) => {
   const [showModal, setModal] = useState(false);
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
@@ -27,13 +26,16 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
     setModal(false);
   };
 
-  const deleteSuperAdmin = async (id) => {
+  const deleteSuperAdmin = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
-        method: 'DELETE'
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/superAdmins/${superAdmin._id}`,
+        {
+          method: 'DELETE'
+        }
+      );
       if (response.status === 204) {
-        onDeleteSuperAdmin(sAdmin._id);
+        onDeleteSuperAdmin(superAdmin._id);
       }
     } catch (error) {
       setTypeModal('Error');
@@ -44,34 +46,34 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
   };
 
   return (
-    <tr key={sAdmin._id}>
-      <td>{sAdmin._id}</td>
-      <td className={styles.info}>{sAdmin.name}</td>
-      <td className={styles.info}>{sAdmin.lastName}</td>
-      <td className={styles.info}>{sAdmin.email}</td>
-      <td className={styles.info}>{sAdmin.password}</td>
+    <tr key={superAdmin._id} className={styles.tableRow}>
+      <td>{superAdmin._id}</td>
+      <td className={styles.info}>{superAdmin.name}</td>
+      <td className={styles.info}>{superAdmin.lastName}</td>
+      <td className={styles.info}>{superAdmin.email}</td>
+      <td className={styles.info}>{superAdmin.password}</td>
       <td className={styles.btn}>
-        <Link to={`super-admin-form/${sAdmin._id}`}>
-          <button>edit</button>
-        </Link>
+        <a href={`super-admin-form/${superAdmin._id}`}>
+          <button className={styles.btnEdit}>edit</button>
+        </a>
       </td>
       <td className={styles.btn}>
         <Modal
-          openModal={showModal}
+          showModal={showModal}
           closeModal={closeModal}
-          deleteAction={deleteSuperAdmin}
-          id={sAdmin._id}
-          title={'DELETE ADMIN'}
-          warningText={`Do you want to remove ${sAdmin.name}?`}
+          confirmAction={deleteSuperAdmin}
+          title={'DELETE SUPER ADMIN'}
+          message={`Are you sure you want to delete ${superAdmin.name}?`}
         />
-        <button onClick={openModal}>Delete</button>
+        <button onClick={openModal} className={styles.btnDelete}>
+          Delete
+        </button>
       </td>
       <MessageModal
         type={typeModal}
         isOpen={showMessageModal}
         message={textModal}
         handleClose={closeMessageModal}
-        goBack={'/super-admins'}
       />
     </tr>
   );

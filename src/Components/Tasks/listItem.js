@@ -2,15 +2,23 @@ import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Form from './Form/index';
-import PopUp from './Modal/taskModal';
-import Modal from '../Shared/Modal';
+import Modal from '../Shared/Modal/ActionModal';
+import MessageModal from '../Shared/Modal/MessageModal';
 import styles from './tasks.module.css';
 
 const ListTask = ({ listTask, deleteTask }) => {
-  const [showPopUp, setShowPopUp] = useState(false);
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
+  const [showMessageModal, setShowMessageModal] = useState(false);
+
+  const openMessageModal = () => {
+    setShowMessageModal(true);
+  };
+
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
+  };
 
   const openModal = () => {
     setShowModal(true);
@@ -18,14 +26,6 @@ const ListTask = ({ listTask, deleteTask }) => {
 
   const closeModal = () => {
     setShowModal(false);
-  };
-
-  const openPopUp = () => {
-    setShowPopUp(true);
-  };
-
-  const closePopUp = () => {
-    setShowPopUp(false);
   };
 
   const deleteTaskFunction = async () => {
@@ -42,7 +42,7 @@ const ListTask = ({ listTask, deleteTask }) => {
       const data = await response.json();
       setTypeModal('Error');
       setTextModal(data.message);
-      openModal();
+      openMessageModal();
       return;
     }
   };
@@ -63,22 +63,20 @@ const ListTask = ({ listTask, deleteTask }) => {
         </Link>
       </td>
       <td>
-        <PopUp
-          show={showPopUp}
-          closePopUp={closePopUp}
-          cancelAction={deleteTaskFunction}
-          id={listTask._id}
-          title={'Are you sure?'}
-          text={`Deleting a task cannot be undone`}
-        />
         <Modal
-          type={typeModal}
-          isOpen={showModal}
-          message={textModal}
-          handleClose={closeModal}
-          goBack={'/tasks'}
+          showModal={showModal}
+          closeModal={closeModal}
+          confirmAction={deleteTaskFunction}
+          title={'DELETE TASK'}
+          message={`Are you sure you want to delete this task?`}
         />
-        <button className={styles.deleteButton} onClick={openPopUp}>
+        <MessageModal
+          type={typeModal}
+          isOpen={showMessageModal}
+          message={textModal}
+          handleClose={closeMessageModal}
+        />
+        <button className={styles.deleteButton} onClick={openModal}>
           Delete
         </button>
       </td>
