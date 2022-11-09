@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal from '../../../Projects/Modal';
+import Modal from '../../../Shared/Modal';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -30,6 +30,14 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
                     <Link to={`${edit}/${item._id}`}>Edit</Link>
                   </button>
                   <button onClick={openModal}>Delete</button>
+                  <Modal
+                    showModal={showModal}
+                    closeModal={closeModal}
+                    confirmAction={deleteItem}
+                    title={deleteTitle}
+                    message={deleteQuestion}
+                    id={item._id}
+                  />
                 </td>
               </>
             );
@@ -59,14 +67,6 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
           return <td key={index}>{item[columnItem.value]}</td>;
         })}
       </tr>
-      <Modal
-        show={showModal}
-        closeModal={closeModal}
-        onDelete={deleteItem}
-        id={item._id}
-        title={deleteTitle}
-        text={deleteQuestion}
-      />
     </>
   );
 };

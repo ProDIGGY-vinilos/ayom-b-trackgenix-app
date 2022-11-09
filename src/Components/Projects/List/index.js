@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Employee from './Employees';
 import styles from './list.module.css';
-import Modal from '../Modal';
+import Modal from '../../Shared/Modal';
 
 const ProjectList = ({ projectItem, onDeleteItem }) => {
   const [showModal, setShowModal] = useState(false);
@@ -28,7 +28,7 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
       onDeleteItem(projectItem._id);
       alert(data.message);
     } else if ([400, 404, 500].includes(response.status)) {
-      alert(data.message);
+      alert(data.msg);
     }
   };
 
@@ -53,12 +53,11 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
         </td>
       </tr>
       <Modal
-        show={showModal}
+        showModal={showModal}
         closeModal={closeModal}
-        onDelete={deleteItem}
-        id={projectItem._id}
-        title={'Delete Project?'}
-        text={`Are you sure you want to delete project "${projectItem.name}"?`}
+        confirmAction={deleteItem}
+        title={'DELETE PROJECT'}
+        message={`Are you sure you want to delete ${projectItem.name}?`}
       />
     </>
   );

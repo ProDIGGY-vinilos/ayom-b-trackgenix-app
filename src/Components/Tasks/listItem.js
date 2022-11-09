@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Form from './Form/index';
-import PopUp from './Modal/taskModal';
+import Modal from '../Shared/Modal';
 import styles from './tasks.module.css';
 
 const ListTask = ({ listTask, deleteTask }) => {
@@ -48,13 +48,12 @@ const ListTask = ({ listTask, deleteTask }) => {
         </Link>
       </td>
       <td>
-        <PopUp
-          show={showPopUp}
-          closePopUp={closePopUp}
-          cancelAction={deleteTaskFunction}
-          id={listTask._id}
-          title={'Are you sure?'}
-          text={`Deleting a task cannot be undone`}
+        <Modal
+          showModal={showPopUp}
+          closeModal={closePopUp}
+          confirmAction={deleteTaskFunction}
+          title={'DELETE TASK'}
+          message={`Are you sure you want to delete this task?`}
         />
         <button className={styles.deleteButton} onClick={openPopUp}>
           Delete

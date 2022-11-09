@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from './Button';
-import Modal from './modal/modal';
+import Modal from '../Shared/Modal';
 import { useState } from 'react';
 
 const Employee = ({ employee, onDeleteItem }) => {
@@ -13,9 +13,17 @@ const Employee = ({ employee, onDeleteItem }) => {
     setShowModal(true);
   };
 
-  const deleteEmployee = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, { method: 'DELETE' });
-    onDeleteItem(id);
+  const deleteEmployee = async () => {
+    onDeleteItem(employee._id);
+    await fetch(`${process.env.REACT_APP_API_URL}/employees/${employee._id}`),
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(employee)
+      };
+    alert('The administrator was successfully removed');
   };
 
   return (
@@ -27,12 +35,11 @@ const Employee = ({ employee, onDeleteItem }) => {
         <td>{employee.phone}</td>
         <td>
           <Modal
-            openModal={showModal}
+            showModal={showModal}
             closeModal={closeModal}
-            deleteAction={deleteEmployee}
-            id={employee._id}
-            warningText={`Are you sure you want to remove Employee: ${employee.name}`}
+            confirmAction={deleteEmployee}
             title={'DELETE EMPLOYEE'}
+            message={`Are you sure you want to delete ${employee.name}?`}
           />
           <Button color="blue" text="Edit" href={`/employee-form/${employee._id}`} />
           <button onClick={openModal}>Delete</button>
