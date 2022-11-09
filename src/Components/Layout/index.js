@@ -27,40 +27,22 @@ function Layout() {
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>
-        <Route path="/admins/*">
-          <Redirect to="/home" />
-        </Route>
-        <Route path="/admins" component={Admins} />
+        <Route exact path="/admins" component={Admins} />
         <Route exact path="/admin-form" component={AdminForm} />
         <Route path="/admin-form/:id" component={AdminForm} />
-        <Route path="/super-adminds/*">
-          <Redirect to="/home" />
-        </Route>
-        <Route path="/super-admins" component={SuperAdmins} />
+        <Route exact path="/super-admins" component={SuperAdmins} />
         <Route exact path="/super-admin-form" component={SuperAdminForm} />
         <Route path="/super-admin-form/:id" component={SuperAdminForm} />
-        <Route path="/employees/*">
-          <Redirect to="/home" />
-        </Route>
-        <Route path="/employees" component={Employees} />
+        <Route exact path="/employees" component={Employees} />
         <Route exact path="/employee-form" component={EmployeeForm} />
         <Route path="/employee-form/:id" component={EmployeeForm} />
-        <Route path="/projects/*">
-          <Redirect to="/home" />
-        </Route>
-        <Route path="/projects" component={Projects} />
+        <Route exact path="/projects" component={Projects} />
         <Route exact path="/project-form" component={ProjectForm} />
         <Route path="/project-form/:id" component={ProjectForm} />
-        <Route path="/time-sheets/*">
-          <Redirect to="/home" />
-        </Route>
-        <Route path="/time-sheets" component={TimeSheets} />
+        <Route exact path="/time-sheets" component={TimeSheets} />
         <Route exact path="/time-sheet-form" component={TimeSheetsForm} />
         <Route path="/time-sheet-form/:id" component={TimeSheetsForm} />
-        <Route path="/tasks/*">
-          <Redirect to="/home" />
-        </Route>
-        <Route path="/tasks" component={Tasks} />
+        <Route exact path="/tasks" component={Tasks} />
         <Route exact path="/task-form" component={TasksForm} />
         <Route path="/task-form/:id" component={TasksForm} />
         <Route path="*">
