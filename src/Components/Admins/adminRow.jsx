@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Modal from './Modal/modalAdmin';
+import Modal from '../Shared/Modal';
 
 const RowAdmin = ({ listAdmin, deleteAdmin }) => {
   const [showModal, setModal] = useState(false);
@@ -39,12 +39,11 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
       </td>
       <td>
         <Modal
-          openModal={showModal}
+          showModal={showModal}
           closeModal={closeModal}
-          deleteAction={removeAdmin}
-          id={listAdmin._id}
+          confirmAction={removeAdmin}
           title={'DELETE ADMIN'}
-          warningText={`Do you want to remove ${listAdmin.name}?`}
+          message={`Are you sure you want to delete ${listAdmin.name}?`}
         />
         <button onClick={openModal}>
           <img src={`../assets/images/iconTrash.svg`} />

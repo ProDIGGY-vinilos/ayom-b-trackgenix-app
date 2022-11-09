@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import DeleteModal from '../Modal/deleteModal';
-import styles from './listSuperAdmins.module.css';
+import Modal from '../../Shared/Modal';
+import styles from '../super-admins.module.css';
 
 const ListSuperAdmin = ({ superAdmin, onDeleteSuperAdmin }) => {
   const [showModal, setModal] = useState(false);
@@ -14,11 +14,14 @@ const ListSuperAdmin = ({ superAdmin, onDeleteSuperAdmin }) => {
     setModal(false);
   };
 
-  const deleteSuperAdmin = async (id) => {
+  const deleteSuperAdmin = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
-        method: 'DELETE'
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/superAdmins/${superAdmin._id}`,
+        {
+          method: 'DELETE'
+        }
+      );
       if (response.status === 204) {
         alert(`Super Admin with id: ${superAdmin._id} has been deleted`);
         onDeleteSuperAdmin(superAdmin._id);
@@ -41,13 +44,12 @@ const ListSuperAdmin = ({ superAdmin, onDeleteSuperAdmin }) => {
         </a>
       </td>
       <td className={styles.btn}>
-        <DeleteModal
-          openModal={showModal}
+        <Modal
+          showModal={showModal}
           closeModal={closeModal}
-          deleteAction={deleteSuperAdmin}
-          id={superAdmin._id}
-          title={'DELETE ADMIN'}
-          warningText={`Do you want to remove ${superAdmin.name}?`}
+          confirmAction={deleteSuperAdmin}
+          title={'DELETE SUPER ADMIN'}
+          message={`Are you sure you want to delete ${superAdmin.name}?`}
         />
         <button onClick={openModal} className={styles.btnDelete}>
           Delete

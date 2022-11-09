@@ -33,6 +33,7 @@ function Tasks() {
     });
     if (response.status == 204) {
       deleteTask(id);
+      alert('Task delete successfully');
     } else if ([400, 404, 500].includes(response.status)) {
       const data = await response.json();
       alert(data.message);
