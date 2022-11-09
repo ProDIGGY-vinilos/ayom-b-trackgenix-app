@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Modal from './Modal/modalAdmin';
+import Modal from '../Shared/Modal/ActionModal';
+import Button from '../Shared/Button/Button';
 
 const RowAdmin = ({ listAdmin, deleteAdmin }) => {
   const [showModal, setModal] = useState(false);
@@ -15,7 +15,6 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
   };
 
   const removeAdmin = async () => {
-    deleteAdmin(listAdmin._id);
     await fetch(`${process.env.REACT_APP_API_URL}/admins/${listAdmin._id}`, {
       method: 'DELETE',
       headers: {
@@ -23,8 +22,9 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
       },
       body: JSON.stringify(listAdmin)
     });
-    alert('The administrator was successfully removed');
+    deleteAdmin(listAdmin._id);
   };
+
   return (
     <tr>
       <td>{listAdmin._id}</td>
@@ -33,22 +33,22 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
       <td>{listAdmin.email}</td>
       <td>{listAdmin.password}</td>
       <td>
-        <Link to={`admin-form/${listAdmin._id}`}>
-          <img src={`../assets/images/iconEdit.svg`} />
-        </Link>
+        <Button
+          href={`admin-form/${listAdmin._id}`}
+          style="squaredSecondary"
+          disabled={false}
+          text="Edit"
+        />
       </td>
       <td>
         <Modal
-          openModal={showModal}
+          showModal={showModal}
           closeModal={closeModal}
-          deleteAction={removeAdmin}
-          id={listAdmin._id}
+          confirmAction={removeAdmin}
           title={'DELETE ADMIN'}
-          warningText={`Do you want to remove ${listAdmin.name}?`}
+          message={`Are you sure you want to delete ${listAdmin.name}?`}
         />
-        <button onClick={openModal}>
-          <img src={`../assets/images/iconTrash.svg`} />
-        </button>
+        <Button onClick={openModal} style="squaredPrimary" disabled={false} text="Delete" />
       </td>
     </tr>
   );

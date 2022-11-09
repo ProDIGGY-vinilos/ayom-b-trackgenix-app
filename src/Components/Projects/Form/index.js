@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FormEmployee from './FormEmployees/index';
-import Modal from '../Modal';
+import FormModal from '../Modal';
+import MessageModal from '../../Shared/Modal/MessageModal';
 import styles from './form.module.css';
+import Button from '../../Shared/Button/Button';
 
-const index = (props) => {
+const Project = () => {
   const projectId = useParams().id;
   const [projectBody, setProjectBody] = useState({
     name: '',
@@ -24,6 +26,9 @@ const index = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showSharedModal, setShowSharedModal] = useState(false);
 
   const openModal = (e) => {
     e.preventDefault();
@@ -32,6 +37,14 @@ const index = (props) => {
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const openSharedModal = () => {
+    setShowSharedModal(true);
+  };
+
+  const closeSharedModal = () => {
+    setShowSharedModal(false);
   };
 
   useEffect(async () => {
@@ -56,7 +69,10 @@ const index = (props) => {
         });
       } catch (error) {
         setIsFetched(false);
-        alert(error);
+        setTypeModal('Error');
+        setTextModal(error);
+        openSharedModal();
+        return;
       }
     } else {
       setIsFetched(false);
@@ -70,7 +86,10 @@ const index = (props) => {
       const data = await response.json();
       setEmployees(data.data);
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openSharedModal();
+      return;
     }
   }, []);
 
@@ -87,6 +106,7 @@ const index = (props) => {
 
   const onSubmit = async () => {
     if (projectId) {
+      setTypeModal('Success');
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`, {
         method: 'PUT',
         headers: {
@@ -97,14 +117,17 @@ const index = (props) => {
       const data = await response.json();
 
       if (response.status === 200) {
-        alert(data.msg);
-        props.history.goBack();
-      } else if ([404, 500].includes(response.status)) {
-        alert(data.msg);
-      } else if (response.status === 400) {
-        alert(data.message);
+        setTextModal(data.message);
+        openSharedModal();
+        return data;
+      } else if ([400, 404, 500].includes(response.status)) {
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openSharedModal();
+        return;
       }
     } else {
+      setTypeModal('Success');
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
         method: 'POST',
         headers: {
@@ -115,10 +138,14 @@ const index = (props) => {
       const data = await response.json();
 
       if (response.status === 201) {
-        alert(data.message);
-        props.history.goBack();
+        setTextModal(data.message);
+        openSharedModal();
+        return data;
       } else if (response.status === 400) {
-        alert(data.message);
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openSharedModal();
+        return;
       }
     }
   };
@@ -126,7 +153,12 @@ const index = (props) => {
   return (
     <div className={styles.container}>
       {isLoading && <h3>Loading</h3>}
-      {isFetched ? <h2>Edit Project</h2> : <h2>Add New Project</h2>}
+      {isFetched ? (
+        <h2 className={styles.title}>Edit Project</h2>
+      ) : (
+        <h2 className={styles.title}>Add new project</h2>
+      )}
+      <Button href="/projects" style="roundedSecondary" disabled={false} text="X" />
       <form className={styles.formContainer} onSubmit={onSubmit}>
         <div className={styles.formDiv}>
           <label>Project Name: </label>
@@ -180,25 +212,27 @@ const index = (props) => {
           />
         </div>
         <h4 className={styles.formFull}>Employees: </h4>
-        {projectBody.employees.map((employee) => {
+        {projectBody.employees.map((employee, index) => {
           return (
             <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
               <FormEmployee
-                key={employee}
-                employees={employees}
-                employee={isFetched ? employee : undefined}
+                employees={employees || undefined}
+                employee={employee}
                 changeValue={onChangeValue}
               />
             </div>
           );
         })}
-        <div>
-          <button className={styles.btn} onClick={openModal}>
-            Submit
-          </button>
-        </div>
+        <Button onClick={openModal} style="squaredPrimary" disabled={false} text="Save" />
       </form>
-      <Modal
+      <MessageModal
+        type={typeModal}
+        isOpen={showSharedModal}
+        message={textModal}
+        handleClose={closeSharedModal}
+        goBack={'/projects'}
+      />
+      <FormModal
         show={showModal}
         closeModal={closeModal}
         onAddUpdate={onSubmit}
@@ -214,4 +248,4 @@ const index = (props) => {
   );
 };
 
-export default index;
+export default Project;

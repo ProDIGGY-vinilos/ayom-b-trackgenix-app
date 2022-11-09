@@ -1,10 +1,22 @@
 import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
-import ListSuperAdmin from './ListSuperAdmins/index';
+import MessageModal from '../Shared/Modal/MessageModal';
+import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
 
 function SuperAdmins() {
   const [superAdmins, setSuperAdmins] = useState([]);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(async () => {
     try {
@@ -12,43 +24,62 @@ function SuperAdmins() {
       const data = await response.json();
       setSuperAdmins(data.data);
     } catch (error) {
-      console.error(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   }, []);
 
   const onDeleteSuperAdmin = (id) => {
     setSuperAdmins([...superAdmins.filter((sAdmin) => sAdmin._id !== id)]);
+    setTypeModal('Success');
+    setTextModal('The super administrator was successfully removed');
+    openModal();
   };
 
+  const deleteSuperAdmin = async (id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
+        method: 'DELETE'
+      });
+      if (response.status === 204) {
+        onDeleteSuperAdmin(id);
+      }
+    } catch (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
+    }
+  };
+
+  const columns = [
+    { heading: 'Id', value: '_id' },
+    { heading: 'Name', value: 'name' },
+    { heading: 'Last Name', value: 'lastName' },
+    { heading: 'Email', value: 'email' },
+    { heading: 'Password', value: 'password' },
+    { heading: 'Actions' }
+  ];
+
   return (
-    <section className={styles.container}>
-      <h2>Super Admins</h2>
-      <table>
-        <tbody>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>LastName</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th className={styles.btn}>Actions</th>
-            <th className={styles.btn}>Actions</th>
-          </tr>
-          {superAdmins.map((superAdmin) => {
-            return (
-              <ListSuperAdmin
-                key={superAdmin._id}
-                sAdmin={superAdmin}
-                onDeleteSuperAdmin={onDeleteSuperAdmin}
-              />
-            );
-          })}
-        </tbody>
-      </table>
-      <div className={styles.addBtn}>
-        <Button href={'/super-admin-form'} style="roundedPrimary" disabled={false} text="+" />
-      </div>
-    </section>
+    <div className={styles.container}>
+      <h2>Super Admin</h2>
+      <Table
+        data={superAdmins}
+        columns={columns}
+        deleteItem={deleteSuperAdmin}
+        edit="/super-admin-form"
+      />
+      <Button href="/super-admin-form" style="roundedPrimary" disabled={false} text="+" />
+      <MessageModal
+        type={typeModal}
+        isOpen={showModal}
+        message={textModal}
+        handleClose={closeModal}
+      />
+    </div>
   );
 }
 

@@ -1,0 +1,17 @@
+.displayNone {
+    display: none;
+}
+
+.selectContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.select , .option{
+    border: 2px solid #808080;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 4px;
+    font-weight: 100;
+    font-size: 15px;
+}

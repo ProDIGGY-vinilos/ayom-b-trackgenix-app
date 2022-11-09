@@ -1,9 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styles from './form.module.css';
+import MessageModal from '../../Shared/Modal/MessageModal';
+import Button from '../../Shared/Button/Button';
 
-function Form(props) {
+function Form() {
   const superAdminId = useParams().id;
   const [superAdmin, setSuperAdmin] = useState({
     name: '',
@@ -12,6 +14,17 @@ function Form(props) {
     password: ''
   });
   const [title, setTitle] = useState([]);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showMessageModal, setShowMessageModal] = useState(false);
+
+  const openMessageModal = () => {
+    setShowMessageModal(true);
+  };
+
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
+  };
 
   useEffect(async () => {
     if (superAdminId) {
@@ -29,7 +42,10 @@ function Form(props) {
         setTitle('Super admin edit');
         return;
       } catch (error) {
-        alert(error.message);
+        setTypeModal('Error');
+        setTextModal(error);
+        openMessageModal();
+        return;
       }
     } else {
       setTitle('Super admin create');
@@ -38,6 +54,17 @@ function Form(props) {
 
   const updateField = (e) => {
     setSuperAdmin({ ...superAdmin, [e.target.name]: e.target.value });
+  };
+
+  const validateFields = () => {
+    for (const val in superAdmin) {
+      if (superAdmin[`${val}`].trim().length !== 0) {
+        openMessageModal();
+        return;
+      } else {
+        document.location.href = '/super-admins';
+      }
+    }
   };
 
   const updateCreateSuperAdmin = async (method, url) => {
@@ -50,31 +77,46 @@ function Form(props) {
         body: JSON.stringify(superAdmin)
       });
       const data = await response.json();
-      alert(data.message);
       if (response.status === 200 || response.status === 201) {
-        props.history.goBack();
+        setTypeModal('Success');
+        setTextModal(data.message);
+        openMessageModal();
+        return data;
+      } else {
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openMessageModal();
+        return;
       }
     } catch (error) {
-      alert(error.message);
+      setTypeModal('Error');
+      setTextModal(error);
+      openMessageModal();
+      return;
     }
   };
 
-  const onConfirm = (e) => {
-    e.preventDefault();
+  const onConfirm = async () => {
     let url = '';
     if (superAdminId) {
       url = `${process.env.REACT_APP_API_URL}/superAdmins/${superAdminId}`;
       try {
         updateCreateSuperAdmin('PUT', url);
       } catch (error) {
-        alert(error.message);
+        setTypeModal('Error');
+        setTextModal(error);
+        openMessageModal();
+        return;
       }
     } else {
       url = `${process.env.REACT_APP_API_URL}/superAdmins`;
       try {
         updateCreateSuperAdmin('POST', url);
       } catch (error) {
-        alert(error);
+        setTypeModal('Error');
+        setTextModal(error);
+        openMessageModal();
+        return;
       }
     }
     return;
@@ -83,7 +125,7 @@ function Form(props) {
     <form className={styles.container}>
       <div className={styles.header}>
         <h3>{title}</h3>
-        <Link to="/super-admins">X</Link>
+        <Button onClick={validateFields} style="roundedSecondary" disabled={false} text="X" />
       </div>
       <div className={styles.inputDiv}>
         <label className={styles.labelText}>Name</label>
@@ -101,9 +143,14 @@ function Form(props) {
         <label className={styles.labelText}>Password</label>
         <input type="text" name="password" value={superAdmin.password} onChange={updateField} />
       </div>
-      <div>
-        <button onClick={onConfirm}>Confirm</button>
-      </div>
+      <Button onClick={onConfirm} style="squaredPrimary" disabled={false} text="Save" />
+      <MessageModal
+        type={typeModal}
+        isOpen={showMessageModal}
+        message={textModal}
+        handleClose={closeMessageModal}
+        goBack={'/super-admins'}
+      />
     </form>
   );
 }

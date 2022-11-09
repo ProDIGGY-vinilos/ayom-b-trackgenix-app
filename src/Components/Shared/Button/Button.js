@@ -2,21 +2,21 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './button.module.css';
 
-const Button = (props) => {
+const Button = ({ style, href, text, icon, onClick, disabled }) => {
   const history = useHistory();
 
   const onAction = () => {
-    if (props.href !== undefined) {
-      history.push(`${props.href}`);
+    if (href !== undefined) {
+      history.push(`${href}`);
     } else {
-      props.onClick();
+      onClick();
     }
   };
 
   return (
-    <button onClick={onAction} className={styles[props.style]} disabled={props.disabled}>
-      <i className={props.icon} />
-      {props.text}
+    <button type="button" onClick={onAction} className={styles[style]} disabled={disabled}>
+      <i className={icon} />
+      {text}
     </button>
   );
 };
