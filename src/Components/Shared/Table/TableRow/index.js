@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal from '../../../Shared/Modal';
+import Modal from '../../Modal/ActionModal';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from './Button';
-import Modal from '../Shared/Modal';
+import Modal from '../Shared/Modal/ActionModal';
 import { useState } from 'react';
 
 const Employee = ({ employee, onDeleteItem }) => {
@@ -26,7 +26,6 @@ const Employee = ({ employee, onDeleteItem }) => {
         },
         body: JSON.stringify(employee)
       };
-    alert('The administrator was successfully removed');
   };
 
   return (

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import MessageModal from '../Shared/Modal/MessageModal';
 import styles from './employees.module.css';
 import Button from './Button';
 
@@ -13,6 +14,18 @@ const EmployeeForm = () => {
     email: '',
     password: ''
   });
+
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(async () => {
     if (employeeId) {
@@ -28,7 +41,10 @@ const EmployeeForm = () => {
         });
         return;
       } catch (err) {
-        alert(err.message);
+        setTypeModal('Error');
+        setTextModal(err.message);
+        openModal();
+        return;
       }
     }
   }, []);
@@ -43,21 +59,50 @@ const EmployeeForm = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    let requestOptions;
 
-    const requestOptions = {
-      method: !employeeId ? 'POST' : 'PUT',
-      body: JSON.stringify(userInput),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
+    if (employeeId) {
+      requestOptions = {
+        method: 'PUT',
+        body: JSON.stringify(userInput),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      setTypeModal('Success');
+    } else {
+      requestOptions = {
+        method: 'POST',
+        body: JSON.stringify(userInput),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      setTypeModal('Success');
+    }
+
     let url = !employeeId ? '' : '/' + employeeId;
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/employees${url}`,
-      requestOptions
-    );
-    const data = await response.json();
-    alert(data.message);
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/employees${url}`,
+        requestOptions
+      );
+      const data = await response.json();
+      if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openModal();
+        return;
+      }
+      setTextModal(data.message);
+      openModal();
+      return data;
+    } catch (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
+    }
   };
 
   return (
@@ -112,6 +157,15 @@ const EmployeeForm = () => {
             placeholder="password"
             value={userInput.password}
             onChange={handleChange}
+          />
+        </div>
+        <div>
+          <MessageModal
+            type={typeModal}
+            isOpen={showModal}
+            message={textModal}
+            handleClose={closeModal}
+            goBack={'/employees'}
           />
         </div>
         <div className={styles.divBtn}>

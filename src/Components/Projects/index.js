@@ -2,9 +2,21 @@ import { useState, useEffect } from 'react';
 import Table from '../Shared/Table';
 import { Link } from 'react-router-dom';
 import styles from './projects.module.css';
+import MessageModal from '../Shared/Modal/MessageModal';
 
-function Projects() {
+const Projects = () => {
   const [projects, setProjects] = useState([]);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(async () => {
     try {
@@ -12,12 +24,18 @@ function Projects() {
       const data = await response.json();
       setProjects(data.data);
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   }, []);
 
   const onDeleteItem = (id) => {
     setProjects([...projects.filter((projectItem) => projectItem._id !== id)]);
+    setTypeModal('Success');
+    setTextModal('The project was successfully removed');
+    openModal();
   };
 
   const deleteItem = async (id) => {
@@ -27,15 +45,13 @@ function Projects() {
         'Content-type': 'application/json'
       }
     });
-    const data = await response.json();
 
-    if (response.status === 200) {
+    if (response.status === 204) {
       onDeleteItem(id);
-      alert(data.msg);
-    } else if ([404, 500].includes(response.status)) {
-      alert(data.msg);
-    } else if (response.status === 400) {
-      alert(data.message);
+    } else if ([400, 404, 500].includes(response.status)) {
+      setTypeModal('Error');
+      setTextModal('There was an error');
+      openModal();
     }
   };
 
@@ -64,8 +80,15 @@ function Projects() {
       <Link to="/project-form" className={styles.newProject}>
         +
       </Link>
+      <MessageModal
+        type={typeModal}
+        isOpen={showModal}
+        message={textModal}
+        handleClose={closeModal}
+        goBack={'/projects'}
+      />
     </section>
   );
-}
+};
 
 export default Projects;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Modal from '../Shared/Modal';
+import Modal from '../Shared/Modal/ActionModal';
 
 const RowAdmin = ({ listAdmin, deleteAdmin }) => {
   const [showModal, setModal] = useState(false);
@@ -15,7 +15,6 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
   };
 
   const removeAdmin = async () => {
-    deleteAdmin(listAdmin._id);
     await fetch(`${process.env.REACT_APP_API_URL}/admins/${listAdmin._id}`, {
       method: 'DELETE',
       headers: {
@@ -23,8 +22,9 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
       },
       body: JSON.stringify(listAdmin)
     });
-    alert('The administrator was successfully removed');
+    deleteAdmin(listAdmin._id);
   };
+
   return (
     <tr>
       <td>{listAdmin._id}</td>

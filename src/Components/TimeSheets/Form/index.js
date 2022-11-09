@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from './form.module.css';
-import Select from '../Select/';
+import Select from '../Select';
 import DatePicker from '../../Shared/Datepicker';
+import MessageModal from '../../Shared/Modal/MessageModal';
 
-const TimeSheetsForm = (props) => {
+const TimeSheetsForm = () => {
   const pathed = useParams().id;
   const [projects, setProjects] = useState([]);
   const [employees, setEmployees] = useState([]);
@@ -15,22 +16,27 @@ const TimeSheetsForm = (props) => {
   const [projectId, setProjectId] = useState('');
   const [employeeId, setEmployeeId] = useState('');
   const [taskId, setTaskId] = useState('');
-  const [formSwitch, setFormSwitch] = useState(false);
   const [timeSheetId, setTimeSheetId] = useState('');
-  const [projectDescription, setProjectDescription] = useState('');
-  const [employeeName, setEmployeeName] = useState('');
-  const [taskDescription, settaskDescription] = useState('');
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+  const [formSwitch, setFormSwitch] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   const setStates = (timeSheet) => {
     setDescription(timeSheet.description);
     setDate(timeSheet.date);
     setHours(timeSheet.hours);
-    setProjectId(timeSheet.project);
-    setEmployeeId(timeSheet.employee);
-    setTaskId(timeSheet.task);
-    setEmployeeName(timeSheet.employee.name);
-    setProjectDescription(timeSheet.project.description);
-    settaskDescription(timeSheet.task.description);
+    setProjectId(timeSheet.project._id);
+    setEmployeeId(timeSheet.employee._id);
+    setTaskId(timeSheet.task._id);
   };
 
   const projectsFetch = async () => {
@@ -39,7 +45,10 @@ const TimeSheetsForm = (props) => {
       const data = await response.json();
       setProjects(data.data);
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   };
 
@@ -49,7 +58,10 @@ const TimeSheetsForm = (props) => {
       const data = await response.json();
       setTasks(data.data);
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   };
 
@@ -59,7 +71,10 @@ const TimeSheetsForm = (props) => {
       const data = await response.json();
       setEmployees(data.data);
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   };
 
@@ -69,7 +84,10 @@ const TimeSheetsForm = (props) => {
       const data = await response.json();
       setStates(data.data);
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   };
 
@@ -107,9 +125,16 @@ const TimeSheetsForm = (props) => {
         body: JSON.stringify(req)
       });
       const data = await response.json();
-      alert(data.message);
-      if (response.status === 200) {
-        props.history.goBack();
+      if (response.status !== 201) {
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openModal();
+        return data;
+      } else {
+        setTypeModal('Success');
+        setTextModal(data.message);
+        openModal();
+        return data;
       }
     } else {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
@@ -120,23 +145,34 @@ const TimeSheetsForm = (props) => {
         body: JSON.stringify(req)
       });
       const data = await response.json();
-      alert(data.message);
-      if (response.status === 201) {
-        props.history.goBack();
+      if (response.status !== 201) {
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openModal();
+        return data;
+      } else {
+        setTypeModal('Success');
+        setTextModal(data.message);
+        openModal();
+        return data;
       }
     }
   };
 
   return (
     <div className={styles.container}>
-      {formSwitch ? <h2>Edit time sheet</h2> : <h2>Add new time sheet</h2>}
-      <form>
+      {formSwitch ? (
+        <h2 className={styles.title}>Edit time sheet</h2>
+      ) : (
+        <h2 className={styles.title}>Add new time sheet</h2>
+      )}
+      <form className={styles.form}>
         <div className={styles.formcontainer}>
           <div>
             <DatePicker label="Date" inputValue={date.substring(0, 10)} changeValue={setDate} />
           </div>
           <div>
-            <label>Hours</label>
+            <label className={styles.formLabel}>Hours</label>
             <input
               defaultValue={hours || undefined}
               value={hours || undefined}
@@ -145,33 +181,30 @@ const TimeSheetsForm = (props) => {
             ></input>
           </div>
           <div>
-            <label>Select Project</label>
             <Select
-              defaultValue={projectDescription}
-              switcher={formSwitch}
-              data={projects || undefined}
-              setId={setProjectId}
+              selectedValue={projectId || undefined}
+              options={projects || undefined}
+              changeValue={setProjectId}
               field="description"
+              label="Select Project"
             />
           </div>
           <div>
-            <label>Select Employee</label>
             <Select
-              defaultValue={employeeName}
-              switcher={formSwitch}
-              data={employees || undefined}
-              setId={setEmployeeId}
+              selectedValue={employeeId || undefined}
+              options={employees || undefined}
+              changeValue={setEmployeeId}
               field="name"
+              label="Select Employee"
             />
           </div>
           <div>
-            <label>Select Task</label>
             <Select
-              defaultValue={taskDescription}
-              switcher={formSwitch}
-              data={tasks || undefined}
-              setId={setTaskId}
+              selectedValue={taskId || undefined}
+              options={tasks || undefined}
+              changeValue={setTaskId}
               field="description"
+              label="Select Task"
             />
           </div>
         </div>
@@ -194,6 +227,13 @@ const TimeSheetsForm = (props) => {
           <button>Go Back</button>
         </Link>
       </div>
+      <MessageModal
+        type={typeModal}
+        isOpen={showModal}
+        message={textModal}
+        handleClose={closeModal}
+        goBack={'/time-sheets'}
+      />
     </div>
   );
 };

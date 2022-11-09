@@ -1,4 +1,4 @@
-const DatePicker = ({ changeValue, inputValue, label }) => {
+const DatePicker = ({ changeValue, inputValue, label, inputName }) => {
   const HandleChange = (e) => {
     changeValue(e.target.value);
   };
@@ -6,7 +6,12 @@ const DatePicker = ({ changeValue, inputValue, label }) => {
   return (
     <>
       <label>{label}</label>
-      <input type="date" value={inputValue} onChange={(e) => HandleChange(e)}></input>
+      <input
+        name={inputName}
+        type="date"
+        value={inputValue}
+        onChange={(e) => HandleChange(e)}
+      ></input>
     </>
   );
 };
