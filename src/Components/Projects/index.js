@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styles from './projects.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 
-function Projects() {
+const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
@@ -88,6 +88,6 @@ function Projects() {
       />
     </section>
   );
-}
+};
 
 export default Projects;

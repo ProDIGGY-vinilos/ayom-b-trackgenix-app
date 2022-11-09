@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from './form.module.css';
-import Select from '../Select/';
 import MessageModal from '../../Shared/Modal/MessageModal';
+import Select from '../../Shared/Select';
 
 const TimeSheetsForm = () => {
   const pathed = useParams().id;
@@ -15,14 +15,11 @@ const TimeSheetsForm = () => {
   const [projectId, setProjectId] = useState('');
   const [employeeId, setEmployeeId] = useState('');
   const [taskId, setTaskId] = useState('');
-  const [formSwitch, setFormSwitch] = useState(false);
   const [timeSheetId, setTimeSheetId] = useState('');
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
-  const [projectDescription, setProjectDescription] = useState('');
-  const [employeeName, setEmployeeName] = useState('');
-  const [taskDescription, settaskDescription] = useState('');
+  const [formSwitch, setFormSwitch] = useState(false);
 
   const openModal = () => {
     setShowModal(true);
@@ -36,12 +33,9 @@ const TimeSheetsForm = () => {
     setDescription(timeSheet.description);
     setDate(timeSheet.date);
     setHours(timeSheet.hours);
-    setProjectId(timeSheet.project);
-    setEmployeeId(timeSheet.employee);
-    setTaskId(timeSheet.task);
-    setEmployeeName(timeSheet.employee.name);
-    setProjectDescription(timeSheet.project.description);
-    settaskDescription(timeSheet.task.description);
+    setProjectId(timeSheet.project._id);
+    setEmployeeId(timeSheet.employee._id);
+    setTaskId(timeSheet.task._id);
   };
 
   const projectsFetch = async () => {
@@ -130,7 +124,7 @@ const TimeSheetsForm = () => {
         body: JSON.stringify(req)
       });
       const data = await response.json();
-      if (response.status !== 200) {
+      if (response.status !== 201) {
         setTypeModal('Error');
         setTextModal(data.message);
         openModal();
@@ -166,11 +160,15 @@ const TimeSheetsForm = () => {
 
   return (
     <div className={styles.container}>
-      {formSwitch ? <h2>Edit time sheet</h2> : <h2>Add new time sheet</h2>}
-      <form>
+      {formSwitch ? (
+        <h2 className={styles.title}>Edit time sheet</h2>
+      ) : (
+        <h2 className={styles.title}>Add new time sheet</h2>
+      )}
+      <form className={styles.form}>
         <div className={styles.formcontainer}>
           <div>
-            <label>Date</label>
+            <label className={styles.formLabel}>Date</label>
             <input
               value={date.substring(0, 10) || undefined}
               onChange={(e) => setDate(e.target.value)}
@@ -178,7 +176,7 @@ const TimeSheetsForm = () => {
             ></input>
           </div>
           <div>
-            <label>Hours</label>
+            <label className={styles.formLabel}>Hours</label>
             <input
               defaultValue={hours || undefined}
               value={hours || undefined}
@@ -187,33 +185,30 @@ const TimeSheetsForm = () => {
             ></input>
           </div>
           <div>
-            <label>Select Project</label>
             <Select
-              defaultValue={projectDescription}
-              switcher={formSwitch}
-              data={projects || undefined}
-              setId={setProjectId}
+              selectedValue={projectId || undefined}
+              options={projects || undefined}
+              changeValue={setProjectId}
               field="description"
+              label="Select Project"
             />
           </div>
           <div>
-            <label>Select Employee</label>
             <Select
-              defaultValue={employeeName}
-              switcher={formSwitch}
-              data={employees || undefined}
-              setId={setEmployeeId}
+              selectedValue={employeeId || undefined}
+              options={employees || undefined}
+              changeValue={setEmployeeId}
               field="name"
+              label="Select Employee"
             />
           </div>
           <div>
-            <label>Select Task</label>
             <Select
-              defaultValue={taskDescription}
-              switcher={formSwitch}
-              data={tasks || undefined}
-              setId={setTaskId}
+              selectedValue={taskId || undefined}
+              options={tasks || undefined}
+              changeValue={setTaskId}
               field="description"
+              label="Select Task"
             />
           </div>
         </div>
