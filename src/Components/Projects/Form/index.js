@@ -96,7 +96,6 @@ const index = (props) => {
         body: JSON.stringify(projectBody)
       });
       const data = await response.json();
-      //CAMBIAR ESTADO  200 por 201
       if (response.status === 201) {
         alert(data.message);
         props.history.goBack();

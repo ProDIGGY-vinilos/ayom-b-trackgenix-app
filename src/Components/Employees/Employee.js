@@ -13,6 +13,9 @@ const Employee = ({ employee, onDeleteItem }) => {
     setShowModal(true);
   };
 
+  const deleteTitle = 'DELETE';
+  const deleteQuestion = `Are you sure you want to delete ${employee.name}?`;
+
   const deleteEmployee = async () => {
     onDeleteItem(employee._id);
     await fetch(`${process.env.REACT_APP_API_URL}/employees/${employee._id}`),
@@ -38,8 +41,8 @@ const Employee = ({ employee, onDeleteItem }) => {
             showModal={showModal}
             closeModal={closeModal}
             confirmAction={deleteEmployee}
-            title={'DELETE EMPLOYEE'}
-            message={`Are you sure you want to delete ${employee.name}?`}
+            title={deleteTitle}
+            message={deleteQuestion}
           />
           <Button color="blue" text="Edit" href={`/employee-form/${employee._id}`} />
           <button onClick={openModal}>Delete</button>

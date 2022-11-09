@@ -15,6 +15,9 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
     setShowModal(false);
   };
 
+  const deleteTitle = 'DELETE';
+  const deleteQuestion = `Are you sure you want to delete ${projectItem.name}?`;
+
   const deleteItem = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${projectItem._id}`, {
       method: 'DELETE',
@@ -23,14 +26,11 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
       }
     });
     const data = await response.json();
-
-    if (response.status === 200) {
+    if (response.status === 204) {
       onDeleteItem(projectItem._id);
-      alert(data.msg);
-    } else if ([404, 500].includes(response.status)) {
-      alert(data.msg);
-    } else if (response.status === 400) {
       alert(data.message);
+    } else if ([400, 404, 500].includes(response.status)) {
+      alert(data.msg);
     }
   };
 
@@ -58,8 +58,8 @@ const ProjectList = ({ projectItem, onDeleteItem }) => {
         showModal={showModal}
         closeModal={closeModal}
         confirmAction={deleteItem}
-        title={'DELETE PROJECT'}
-        message={`Are you sure you want to delete ${projectItem.name}?`}
+        title={deleteTitle}
+        message={deleteQuestion}
       />
     </>
   );
