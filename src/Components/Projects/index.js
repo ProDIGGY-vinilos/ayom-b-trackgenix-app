@@ -3,7 +3,7 @@ import Table from '../Shared/Table';
 import { Link } from 'react-router-dom';
 import styles from './projects.module.css';
 
-function Projects() {
+const Projects = () => {
   const [projects, setProjects] = useState([]);
 
   useEffect(async () => {
@@ -66,6 +66,6 @@ function Projects() {
       </Link>
     </section>
   );
-}
+};
 
 export default Projects;
