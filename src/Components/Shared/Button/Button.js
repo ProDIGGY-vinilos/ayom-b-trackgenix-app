@@ -1,11 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import styles from './secondaryBtn.module.css';
+import styles from './button.module.css';
 
-const SecondaryBtn = (props) => {
-  let history = useHistory();
+const Button = (props) => {
+  const history = useHistory();
+
   const onAction = () => {
-    if (props.href != undefined) {
+    if (props.href !== undefined) {
       history.push(`${props.href}`);
     } else {
       props.onClick();
@@ -19,4 +20,4 @@ const SecondaryBtn = (props) => {
   );
 };
 
-export default SecondaryBtn;
+export default Button;

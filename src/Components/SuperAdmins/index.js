@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
 import ListSuperAdmin from './ListSuperAdmins/index';
-import PrimaryBtn from '../Shared/Button/primaryBtn';
+import Button from '../Shared/Button/Button';
 
 function SuperAdmins() {
   const [superAdmins, setSuperAdmins] = useState([]);
@@ -46,7 +46,7 @@ function SuperAdmins() {
         </tbody>
       </table>
       <div className={styles.addBtn}>
-        <PrimaryBtn href={'/super-admin-form'} style="rounded" disabled={false} text="+" />
+        <Button href={'/super-admin-form'} style="roundedPrimary" disabled={false} text="+" />
       </div>
     </section>
   );

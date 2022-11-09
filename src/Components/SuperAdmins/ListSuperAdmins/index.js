@@ -2,8 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import Modal from '../Modal/modalSuperAdmin';
 import styles from '../super-admins.module.css';
-import PrimaryBtn from '../../Shared/Button/primaryBtn';
-import SecondaryBtn from '../../Shared/Button/secondaryBtn';
+import Button from '../../Shared/Button/Button';
 
 const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
   const [showModal, setModal] = useState(false);
@@ -38,9 +37,9 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
       <td className={styles.info}>{sAdmin.email}</td>
       <td className={styles.info}>{sAdmin.password}</td>
       <td className={styles.btn}>
-        <SecondaryBtn
+        <Button
           href={`super-admin-form/${sAdmin._id}`}
-          style="rectangular"
+          style="squaredSecondary"
           disabled={false}
           text="Edit"
         />
@@ -54,7 +53,7 @@ const ListSuperAdmin = ({ sAdmin, onDeleteSuperAdmin }) => {
           title={'DELETE ADMIN'}
           warningText={`Do you want to remove ${sAdmin.name}?`}
         />
-        <PrimaryBtn onClick={openModal} style="rectangular" disabled={false} text="Delete" />
+        <Button onClick={openModal} style="squaredPrimary" disabled={false} text="Delete" />
       </td>
     </tr>
   );

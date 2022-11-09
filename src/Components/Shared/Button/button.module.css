@@ -1,0 +1,79 @@
+.squaredPrimary {
+    margin: 4px 2px;
+    padding: 10px 20px;
+    text-align: center;
+    background-color: #EA3354;
+    border: 2px solid #EA3354;
+    color: white;
+    border-radius: 10%;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.4s;
+}
+
+.squaredPrimary:hover {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+
+.roundedPrimary {
+    display: flex;
+    justify-content: flex-end;
+    margin: 5px 5px;
+    padding: 10px 20px;
+    text-align: center;
+    background-color: #EA3354;
+    border: 2px solid #EA3354;
+    color: white;
+    border-radius: 100%;
+    text-decoration: none;
+    font-size: 25px;
+    transition-duration: 0.4s;
+}
+
+.roundedPrimary:hover {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+
+.squaredSecondary {
+    display: flex;
+    justify-content: flex-end;
+    margin: 4px 2px;
+    padding: 10px 20px;
+    text-align: center;
+    background-color: white;
+    border: 2px solid #EA3354;
+    color: black;
+    border-radius: 10%;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.4s;
+}
+
+.squaredSecondary:hover {
+    cursor: pointer;
+    background-color: #EA3354;
+    color: white;
+}
+
+.roundedSecondary {
+    margin: 5px 5px;
+    padding: 10px 20px;
+    text-align: center;
+    background-color: white;
+    border: 2px solid #EA3354;
+    color: black;
+    border-radius: 100%;
+    text-decoration: none;
+    font-size: 25px;
+    transition-duration: 0.4s;
+}
+
+.roundedSecondary:hover {
+    cursor: pointer;
+    background-color: #EA3354;
+    color: white;
+}
