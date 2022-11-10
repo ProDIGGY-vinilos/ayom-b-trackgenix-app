@@ -92,7 +92,6 @@ function Form() {
             value={userInput.description}
             onChange={updateInput}
           />
-          <label>Description: </label>
         </div>
         <div className={styles.buttonsDiv}>
           <button className={styles.addButton} type="submit">
