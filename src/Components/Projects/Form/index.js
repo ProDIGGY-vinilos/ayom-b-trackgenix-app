@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FormEmployee from './FormEmployees/index';
-import Modal from '../Modal';
+import DatePicker from '../../Shared/Datepicker';
+import FormModal from '../Modal';
+import MessageModal from '../../Shared/Modal/MessageModal';
 import styles from './form.module.css';
 import InputField from '../../Shared/Input/input';
 
-const Project = (props) => {
+const Project = () => {
   const projectId = useParams().id;
   const [projectBody, setProjectBody] = useState({
     name: '',
@@ -25,6 +27,9 @@ const Project = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showSharedModal, setShowSharedModal] = useState(false);
 
   const openModal = (e) => {
     e.preventDefault();
@@ -33,6 +38,14 @@ const Project = (props) => {
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const openSharedModal = () => {
+    setShowSharedModal(true);
+  };
+
+  const closeSharedModal = () => {
+    setShowSharedModal(false);
   };
 
   useEffect(async () => {
@@ -57,7 +70,10 @@ const Project = (props) => {
         });
       } catch (error) {
         setIsFetched(false);
-        alert(error);
+        setTypeModal('Error');
+        setTextModal(error);
+        openSharedModal();
+        return;
       }
     } else {
       setIsFetched(false);
@@ -71,7 +87,10 @@ const Project = (props) => {
       const data = await response.json();
       setEmployees(data.data);
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openSharedModal();
+      return;
     }
   }, []);
 
@@ -88,6 +107,7 @@ const Project = (props) => {
 
   const onSubmit = async () => {
     if (projectId) {
+      setTypeModal('Success');
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`, {
         method: 'PUT',
         headers: {
@@ -96,14 +116,18 @@ const Project = (props) => {
         body: JSON.stringify(projectBody)
       });
       const data = await response.json();
-
       if (response.status === 201) {
-        alert(data.message);
-        props.history.goBack();
+        setTextModal(data.message);
+        openSharedModal();
+        return data;
       } else if ([400, 404, 500].includes(response.status)) {
-        alert(data.message);
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openSharedModal();
+        return;
       }
     } else {
+      setTypeModal('Success');
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
         method: 'POST',
         headers: {
@@ -114,10 +138,14 @@ const Project = (props) => {
       const data = await response.json();
 
       if (response.status === 201) {
-        alert(data.message);
-        props.history.goBack();
+        setTextModal(data.message);
+        openSharedModal();
+        return data;
       } else if (response.status === 400) {
-        alert(data.message);
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openSharedModal();
+        return;
       }
     }
   };
@@ -163,23 +191,17 @@ const Project = (props) => {
           ></textarea>
         </div>
         <div className={styles.formDiv}>
-          <label>Start Date</label>
-          <input
-            type="date"
-            name="start date"
-            value={isFetched ? projectBody.startDate : undefined}
-            onChange={(e) => onChangeValue('startDate', e.target.value)}
-            required
+          <DatePicker
+            label="Start Date"
+            inputValue={projectBody.startDate.substring(0, 10)}
+            changeValue={(value) => onChangeValue('startDate', value)}
           />
         </div>
         <div className={styles.formDiv}>
-          <label>End Date</label>
-          <input
-            type="date"
-            name="end date"
-            value={isFetched ? projectBody.endDate : undefined}
-            onChange={(e) => onChangeValue('endDate', e.target.value)}
-            required
+          <DatePicker
+            label="End Date"
+            inputValue={projectBody.endDate.substring(0, 10)}
+            changeValue={(value) => onChangeValue('endDate', value)}
           />
         </div>
         <h4 className={styles.formFull}>Employees: </h4>
@@ -200,7 +222,14 @@ const Project = (props) => {
           </button>
         </div>
       </form>
-      <Modal
+      <MessageModal
+        type={typeModal}
+        isOpen={showSharedModal}
+        message={textModal}
+        handleClose={closeSharedModal}
+        goBack={'/projects'}
+      />
+      <FormModal
         show={showModal}
         closeModal={closeModal}
         onAddUpdate={onSubmit}

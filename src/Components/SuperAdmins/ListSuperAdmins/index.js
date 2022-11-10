@@ -1,10 +1,22 @@
 import React from 'react';
 import { useState } from 'react';
-import Modal from '../../Shared/Modal';
+import Modal from '../../Shared/Modal/ActionModal';
 import styles from '../super-admins.module.css';
+import MessageModal from '../../Shared/Modal/MessageModal';
 
 const ListSuperAdmin = ({ superAdmin, onDeleteSuperAdmin }) => {
   const [showModal, setModal] = useState(false);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showMessageModal, setShowMessageModal] = useState(false);
+
+  const openMessageModal = () => {
+    setShowMessageModal(true);
+  };
+
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
+  };
 
   const openModal = () => {
     setModal(true);
@@ -23,11 +35,13 @@ const ListSuperAdmin = ({ superAdmin, onDeleteSuperAdmin }) => {
         }
       );
       if (response.status === 204) {
-        alert(`Super Admin with id: ${superAdmin._id} has been deleted`);
         onDeleteSuperAdmin(superAdmin._id);
       }
     } catch (error) {
-      alert(error.message);
+      setTypeModal('Error');
+      setTextModal(error);
+      openMessageModal();
+      return;
     }
   };
 
@@ -55,6 +69,13 @@ const ListSuperAdmin = ({ superAdmin, onDeleteSuperAdmin }) => {
           Delete
         </button>
       </td>
+      <MessageModal
+        type={typeModal}
+        isOpen={showMessageModal}
+        message={textModal}
+        handleClose={closeMessageModal}
+        goBack={'/super-admins'}
+      />
     </tr>
   );
 };

@@ -1,10 +1,23 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './admins.module.css';
+import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 
-function Admins() {
+const Admins = () => {
   const [admins, saveAdmins] = useState([]);
+
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(async () => {
     try {
@@ -12,12 +25,19 @@ function Admins() {
       const data = await response.json();
       saveAdmins(data.data);
     } catch (error) {
-      alert(error);
+      console.log('Se muere aca', error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   }, []);
 
   const deleteAdmin = (id) => {
     saveAdmins([...admins.filter((newListItem) => newListItem._id !== id)]);
+    setTypeModal('Success');
+    setTextModal('The administrator was successfully removed');
+    openModal();
   };
 
   const removeAdmin = async (id) => {
@@ -28,7 +48,6 @@ function Admins() {
       }
     });
     deleteAdmin(id);
-    alert('The administrator was successfully removed');
   };
 
   const columns = [
@@ -47,8 +66,15 @@ function Admins() {
       <Link to="/admin-form" className={styles.newAdmin}>
         +
       </Link>
+      <MessageModal
+        type={typeModal}
+        isOpen={showModal}
+        message={textModal}
+        handleClose={closeModal}
+        goBack={'/admins'}
+      />
     </section>
   );
-}
+};
 
 export default Admins;

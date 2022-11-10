@@ -1,10 +1,22 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './super-admins.module.css';
+import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 
 function SuperAdmins() {
   const [superAdmins, setSuperAdmins] = useState([]);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(async () => {
     try {
@@ -12,12 +24,18 @@ function SuperAdmins() {
       const data = await response.json();
       setSuperAdmins(data.data);
     } catch (error) {
-      console.error(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   }, []);
 
   const onDeleteSuperAdmin = (id) => {
     setSuperAdmins([...superAdmins.filter((sAdmin) => sAdmin._id !== id)]);
+    setTypeModal('Success');
+    setTextModal('The super administrator was successfully removed');
+    openModal();
   };
 
   const deleteSuperAdmin = async (id) => {
@@ -26,11 +44,13 @@ function SuperAdmins() {
         method: 'DELETE'
       });
       if (response.status === 204) {
-        alert(`Super Admin with id: ${id} has been deleted`);
         onDeleteSuperAdmin(id);
       }
     } catch (error) {
-      alert(error.message);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   };
 
@@ -55,6 +75,13 @@ function SuperAdmins() {
       <Link className={styles.newSuperAdmin} to="/super-admin-form">
         +
       </Link>
+      <MessageModal
+        type={typeModal}
+        isOpen={showModal}
+        message={textModal}
+        handleClose={closeModal}
+        goBack={'/super-admins'}
+      />
     </div>
   );
 }

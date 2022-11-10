@@ -1,11 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import ConfirmModal from '../Modal/confirmModal';
 import { useParams } from 'react-router-dom';
 import styles from './form.module.css';
 import InputField from '../../Shared/Input/input';
+import MessageModal from '../../Shared/Modal/MessageModal';
 
-function Form(props) {
+function Form() {
   const superAdminId = useParams().id;
   const [superAdmin, setSuperAdmin] = useState({
     name: '',
@@ -14,14 +14,16 @@ function Form(props) {
     password: ''
   });
   const [title, setTitle] = useState([]);
-  const [showModal, setModal] = useState(false);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showMessageModal, setShowMessageModal] = useState(false);
 
-  const openModal = () => {
-    setModal(true);
+  const openMessageModal = () => {
+    setShowMessageModal(true);
   };
 
-  const closeModal = () => {
-    setModal(false);
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
   };
 
   useEffect(async () => {
@@ -40,7 +42,10 @@ function Form(props) {
         setTitle('Super admin edit');
         return;
       } catch (error) {
-        alert(error.message);
+        setTypeModal('Error');
+        setTextModal(error);
+        openMessageModal();
+        return;
       }
     } else {
       setTitle('Super admin create');
@@ -50,11 +55,11 @@ function Form(props) {
   const updateField = (e) => {
     setSuperAdmin({ ...superAdmin, [e.target.name]: e.target.value });
   };
-  //
+
   const validateFields = () => {
     for (const val in superAdmin) {
       if (superAdmin[`${val}`].trim().length !== 0) {
-        openModal();
+        openMessageModal();
         return;
       } else {
         document.location.href = '/super-admins';
@@ -72,12 +77,22 @@ function Form(props) {
         body: JSON.stringify(superAdmin)
       });
       const data = await response.json();
-      alert(data.message);
       if (response.status === 200 || response.status === 201) {
-        props.history.goBack();
+        setTypeModal('Success');
+        setTextModal(data.message);
+        openMessageModal();
+        return data;
+      } else {
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openMessageModal();
+        return;
       }
     } catch (error) {
-      alert(error.message);
+      setTypeModal('Error');
+      setTextModal(error);
+      openMessageModal();
+      return;
     }
   };
 
@@ -89,14 +104,20 @@ function Form(props) {
       try {
         updateCreateSuperAdmin('PUT', url);
       } catch (error) {
-        alert(error.message);
+        setTypeModal('Error');
+        setTextModal(error);
+        openMessageModal();
+        return;
       }
     } else {
       url = `${process.env.REACT_APP_API_URL}/superAdmins`;
       try {
         updateCreateSuperAdmin('POST', url);
       } catch (error) {
-        alert(error);
+        setTypeModal('Error');
+        setTextModal(error);
+        openMessageModal();
+        return;
       }
     }
     return;
@@ -105,12 +126,6 @@ function Form(props) {
     <form className={styles.container}>
       <div className={styles.header}>
         <h3>{title}</h3>
-        <ConfirmModal
-          openModal={showModal}
-          closeModal={closeModal}
-          title={'Are you sure?'}
-          warningText={`You are going to go back to Super Admin List`}
-        />
         <a className={styles.crossBtn} onClick={validateFields}>
           X
         </a>
@@ -158,6 +173,13 @@ function Form(props) {
       <div>
         <button onClick={onConfirm}>Confirm</button>
       </div>
+      <MessageModal
+        type={typeModal}
+        isOpen={showMessageModal}
+        message={textModal}
+        handleClose={closeMessageModal}
+        goBack={'/super-admins'}
+      />
     </form>
   );
 }
