@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from './form.module.css';
-import Select from '../Select';
+import Select from '../../Shared/Select';
+import InputField from '../../Shared/Input/input';
 import DatePicker from '../../Shared/Datepicker';
 import MessageModal from '../../Shared/Modal/MessageModal';
 
@@ -172,13 +173,13 @@ const TimeSheetsForm = () => {
             <DatePicker label="Date" inputValue={date.substring(0, 10)} changeValue={setDate} />
           </div>
           <div>
-            <label className={styles.formLabel}>Hours</label>
-            <input
+            <InputField
+              label="Hours"
+              type="text"
               defaultValue={hours || undefined}
               value={hours || undefined}
               onChange={(e) => setHours(e.target.value)}
-              type="text"
-            ></input>
+            />
           </div>
           <div>
             <Select

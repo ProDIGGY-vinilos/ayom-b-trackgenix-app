@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './form.module.css';
+import InputField from '../../Shared/Input/input';
 import MessageModal from '../../Shared/Modal/MessageModal';
 
 function Form() {
@@ -130,20 +131,44 @@ function Form() {
         </a>
       </div>
       <div className={styles.inputDiv}>
-        <label className={styles.labelText}>Name</label>
-        <input type="text" name="name" value={superAdmin.name} onChange={updateField} />
+        <InputField
+          label="Name"
+          name="name"
+          type="text"
+          placeholder="name"
+          value={superAdmin.name}
+          onChange={updateField}
+        />
       </div>
       <div className={styles.inputDiv}>
-        <label className={styles.labelText}>LastName</label>
-        <input type="text" name="lastName" value={superAdmin.lastName} onChange={updateField} />
+        <InputField
+          label="Last Name"
+          name="lastName"
+          type="text"
+          placeholder="last name"
+          value={superAdmin.lastName}
+          onChange={updateField}
+        />
       </div>
       <div className={styles.inputDiv}>
-        <label className={styles.labelText}>Email</label>
-        <input type="text" name="email" value={superAdmin.email} onChange={updateField} />
+        <InputField
+          label="Email"
+          name="email"
+          type="email"
+          placeholder="email"
+          value={superAdmin.email}
+          onChange={updateField}
+        />
       </div>
       <div className={styles.inputDiv}>
-        <label className={styles.labelText}>Password</label>
-        <input type="text" name="password" value={superAdmin.password} onChange={updateField} />
+        <InputField
+          label="Password"
+          name="passwword"
+          type="password"
+          placeholder="password"
+          value={superAdmin.password}
+          onChange={updateField}
+        />
       </div>
       <div>
         <button onClick={onConfirm}>Confirm</button>

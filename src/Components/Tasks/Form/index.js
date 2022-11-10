@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import MessageModal from '../../Shared/Modal/MessageModal';
 import styles from '../tasks.module.css';
 import stylesModal from '../Modal/tasks.module.css';
+import InputField from '../../Shared/Input/input';
 
 function Form() {
   const taskId = useParams().id;
@@ -83,10 +84,11 @@ function Form() {
     <div className={styles.container}>
       <form className={styles.addItem} onSubmit={onSubmit}>
         <div>
-          <label>Description: </label>
-          <input
-            type="text"
+          <InputField
+            label="Description"
             name="description"
+            type="text"
+            placeholder="description"
             value={userInput.description}
             onChange={updateInput}
           />

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import MessageModal from '../Shared/Modal/MessageModal';
 import styles from './admins.module.css';
+import InputField from '../Shared/Input/input';
 
 function Form() {
   const adminId = useParams().id;
@@ -101,20 +102,40 @@ function Form() {
         <Link to="/admins">X</Link>
       </div>
       <div className={styles.fromInput}>
-        <label>Name</label>
-        <input type="text" name="name" value={inputValue.name} onChange={onChange} />
+        <InputField
+          label="Name"
+          name="name"
+          type="text"
+          value={inputValue.name}
+          onChange={onChange}
+        />
       </div>
       <div className={styles.fromInput}>
-        <label>LastName</label>
-        <input type="text" name="lastName" value={inputValue.lastName} onChange={onChange} />
+        <InputField
+          label="Last Name"
+          name="lastName"
+          type="text"
+          value={inputValue.lastName}
+          onChange={onChange}
+        />
       </div>
       <div className={styles.fromInput}>
-        <label>Email</label>
-        <input type="text" name="email" value={inputValue.email} onChange={onChange} />
+        <InputField
+          label="Email"
+          name="email"
+          type="email"
+          value={inputValue.email}
+          onChange={onChange}
+        />
       </div>
       <div className={styles.fromInput}>
-        <label>Pasasword</label>
-        <input type="text" name="password" value={inputValue.password} onChange={onChange} />
+        <InputField
+          label="Password"
+          name="password"
+          type="password"
+          value={inputValue.password}
+          onChange={onChange}
+        />
       </div>
       <div>
         <MessageModal
