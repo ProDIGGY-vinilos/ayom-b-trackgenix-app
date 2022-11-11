@@ -61,7 +61,7 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
 
           if (columnItem.array) {
             return (
-              <td>
+              <td key={index}>
                 <p>
                   Name: {item[columnItem.value][0][columnItem.array][columnItem.nameValue]}{' '}
                   {item[columnItem.value][0][columnItem.array][columnItem.lastNameValue]}

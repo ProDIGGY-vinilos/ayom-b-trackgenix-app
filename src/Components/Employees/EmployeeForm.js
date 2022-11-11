@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import MessageModal from '../Shared/Modal/MessageModal';
 import styles from './employees.module.css';
 import Button from '../Shared/Button/Button';
+import InputField from '../Shared/Input/input';
 
 const EmployeeForm = () => {
   const employeeId = useParams().id;
@@ -51,10 +52,7 @@ const EmployeeForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserInput((prev) => ({
-      ...prev,
-      [name]: value
-    }));
+    setUserInput({ ...userInput, [name]: value });
   };
 
   const onSubmit = async (e) => {
@@ -111,8 +109,8 @@ const EmployeeForm = () => {
         <h3 className={styles.titleForm}>Create Employee</h3>
         <Button href="/employees" style="roundedSecondary" disabled={false} text="X" />
         <div className={styles.formControl}>
-          <label>Name</label>
-          <input
+          <InputField
+            label="Name"
             name="name"
             type="text"
             placeholder="name"
@@ -121,8 +119,8 @@ const EmployeeForm = () => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Last Name</label>
-          <input
+          <InputField
+            label="Last Name"
             name="lastName"
             type="text"
             placeholder="last name"
@@ -131,8 +129,8 @@ const EmployeeForm = () => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Email</label>
-          <input
+          <InputField
+            label="Email"
             name="email"
             type="mail"
             placeholder="email"
@@ -141,8 +139,8 @@ const EmployeeForm = () => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Phone Number</label>
-          <input
+          <InputField
+            label="Phone Number"
             name="phone"
             type="number"
             placeholder="phone"
@@ -151,8 +149,8 @@ const EmployeeForm = () => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Password</label>
-          <input
+          <InputField
+            label="Password"
             name="password"
             type="password"
             placeholder="password"
