@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function Select({ defaultValue, switcher, data, setId, field }) {
+const Select = ({ defaultValue, switcher, data, setId, field }) => {
   const [selected, setSelected] = useState('');
 
   const handleChange = (e) => {
@@ -37,6 +37,6 @@ function Select({ defaultValue, switcher, data, setId, field }) {
       })}
     </select>
   );
-}
+};
 
 export default Select;

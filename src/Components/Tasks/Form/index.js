@@ -5,7 +5,7 @@ import styles from '../tasks.module.css';
 import Button from '../../Shared/Button/Button';
 import InputField from '../../Shared/Input/input';
 
-function Form() {
+const Form = () => {
   const taskId = useParams().id;
 
   const [userInput, setNameValue] = useState({
@@ -106,6 +106,6 @@ function Form() {
       </form>
     </div>
   );
-}
+};
 
 export default Form;

@@ -1,6 +1,6 @@
 import styles from './tasks.module.css';
 
-function PopUp(props) {
+const PopUp = (props) => {
   if (!props.show) {
     return null;
   }
@@ -29,6 +29,6 @@ function PopUp(props) {
       </div>
     </div>
   );
-}
+};
 
 export default PopUp;

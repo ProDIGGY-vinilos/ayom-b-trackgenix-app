@@ -4,7 +4,7 @@ import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
 
-function SuperAdmins() {
+const SuperAdmins = () => {
   const [superAdmins, setSuperAdmins] = useState([]);
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
@@ -81,6 +81,6 @@ function SuperAdmins() {
       />
     </div>
   );
-}
+};
 
 export default SuperAdmins;

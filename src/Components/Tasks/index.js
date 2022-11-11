@@ -4,7 +4,7 @@ import styles from './tasks.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 import Button from '../Shared/Button/Button';
 
-function Tasks() {
+const Tasks = () => {
   const [tasks, saveTasks] = useState([]);
 
   const [typeModal, setTypeModal] = useState();
@@ -83,6 +83,6 @@ function Tasks() {
       />
     </div>
   );
-}
+};
 
 export default Tasks;

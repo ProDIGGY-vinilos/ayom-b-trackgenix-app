@@ -1,6 +1,6 @@
 import styles from './expandmodal.module.css';
 
-function Modal(props) {
+const Modal = (props) => {
   if (!props.openModal) {
     return null;
   }
@@ -54,6 +54,6 @@ function Modal(props) {
         </div>
       );
   }
-}
+};
 
 export default Modal;

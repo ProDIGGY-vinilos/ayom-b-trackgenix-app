@@ -4,7 +4,7 @@ import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
 
-function Employees() {
+const Employees = () => {
   const [employees, setEmployees] = useState([]);
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
@@ -66,5 +66,5 @@ function Employees() {
       />
     </section>
   );
-}
+};
 export default Employees;

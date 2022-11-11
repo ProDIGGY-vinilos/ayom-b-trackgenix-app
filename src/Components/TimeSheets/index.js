@@ -4,7 +4,7 @@ import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
 
-function TimeSheets() {
+const TimeSheets = () => {
   const [timeSheets, setTimeSheets] = useState([]);
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
@@ -78,6 +78,6 @@ function TimeSheets() {
       <Button href="/time-sheet-form" style="roundedPrimary" disabled={false} text="+" />
     </section>
   );
-}
+};
 
 export default TimeSheets;

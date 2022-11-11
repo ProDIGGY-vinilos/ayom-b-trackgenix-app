@@ -1,6 +1,6 @@
 import styles from './modal.module.css';
 
-function Modal({ openModal, closeModal, id, title, warningText, deleteAction }) {
+const Modal = ({ openModal, closeModal, id, title, warningText, deleteAction }) => {
   if (!openModal) {
     return null;
   }
@@ -33,6 +33,6 @@ function Modal({ openModal, closeModal, id, title, warningText, deleteAction }) 
       </div>
     </div>
   );
-}
+};
 
 export default Modal;

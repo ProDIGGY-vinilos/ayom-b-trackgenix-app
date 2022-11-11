@@ -6,7 +6,7 @@ import InputField from '../../Shared/Input/input';
 import MessageModal from '../../Shared/Modal/MessageModal';
 import Button from '../../Shared/Button/Button';
 
-function Form() {
+const Form = () => {
   const superAdminId = useParams().id;
   const [superAdmin, setSuperAdmin] = useState({
     name: '',
@@ -178,6 +178,6 @@ function Form() {
       />
     </form>
   );
-}
+};
 
 export default Form;

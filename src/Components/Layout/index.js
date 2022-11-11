@@ -18,7 +18,7 @@ import Tasks from '../Tasks/index';
 import EmployeeForm from '../Employees/EmployeeForm';
 import TasksForm from '../Tasks/Form/index';
 
-function Layout() {
+const Layout = () => {
   return (
     <div className={styles.container}>
       <Header />
@@ -52,6 +52,6 @@ function Layout() {
       <Footer />
     </div>
   );
-}
+};
 
 export default Layout;
