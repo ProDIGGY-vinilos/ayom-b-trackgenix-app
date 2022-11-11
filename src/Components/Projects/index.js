@@ -68,12 +68,7 @@ const Projects = () => {
     { heading: 'Actions' }
   ];
   if (error) {
-    return (
-      <section className={styles.container}>
-        <h2>Pojects</h2>
-        <h3>{error}</h3>
-      </section>
-    );
+    return setTypeModal('Error'), setTextModal('There was an error'), openModal();
   }
 
   return (

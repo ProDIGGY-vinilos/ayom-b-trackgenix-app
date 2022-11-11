@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
 import timeSheetsReducer from './timeSheets/reducer';
-import ProjectsReducer from './projects/reducer';
+import projectsReducer from './projects/reducer';
 
 const rootReducer = combineReducers({
   timeSheets: timeSheetsReducer,
-  Projects: ProjectsReducer
+  Projects: projectsReducer
 });
 
 export default rootReducer;
