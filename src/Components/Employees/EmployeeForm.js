@@ -1,8 +1,10 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import MessageModal from '../Shared/Modal/MessageModal';
 import styles from './employees.module.css';
 import Button from './Button';
+import InputField from '../Shared/Input/input';
 
 const EmployeeForm = () => {
   const employeeId = useParams().id;
@@ -13,6 +15,18 @@ const EmployeeForm = () => {
     email: '',
     password: ''
   });
+
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(async () => {
     if (employeeId) {
@@ -28,36 +42,65 @@ const EmployeeForm = () => {
         });
         return;
       } catch (err) {
-        alert(err.message);
+        setTypeModal('Error');
+        setTextModal(err.message);
+        openModal();
+        return;
       }
     }
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserInput((prev) => ({
-      ...prev,
-      [name]: value
-    }));
+    setUserInput({ ...userInput, [name]: value });
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    let requestOptions;
 
-    const requestOptions = {
-      method: !employeeId ? 'POST' : 'PUT',
-      body: JSON.stringify(userInput),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
+    if (employeeId) {
+      requestOptions = {
+        method: 'PUT',
+        body: JSON.stringify(userInput),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      setTypeModal('Success');
+    } else {
+      requestOptions = {
+        method: 'POST',
+        body: JSON.stringify(userInput),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      setTypeModal('Success');
+    }
+
     let url = !employeeId ? '' : '/' + employeeId;
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/employees${url}`,
-      requestOptions
-    );
-    const data = await response.json();
-    alert(data.message);
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/employees${url}`,
+        requestOptions
+      );
+      const data = await response.json();
+      if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openModal();
+        return;
+      }
+      setTextModal(data.message);
+      openModal();
+      return data;
+    } catch (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
+    }
   };
 
   return (
@@ -65,8 +108,8 @@ const EmployeeForm = () => {
       <form className={styles.container} onSubmit={onSubmit}>
         <h3 className={styles.titleForm}>Create Employee</h3>
         <div className={styles.formControl}>
-          <label>Name</label>
-          <input
+          <InputField
+            label="Name"
             name="name"
             type="text"
             placeholder="name"
@@ -75,8 +118,8 @@ const EmployeeForm = () => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Last Name</label>
-          <input
+          <InputField
+            label="Last Name"
             name="lastName"
             type="text"
             placeholder="last name"
@@ -85,8 +128,8 @@ const EmployeeForm = () => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Email</label>
-          <input
+          <InputField
+            label="Email"
             name="email"
             type="mail"
             placeholder="email"
@@ -95,8 +138,8 @@ const EmployeeForm = () => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Phone Number</label>
-          <input
+          <InputField
+            label="Phone Number"
             name="phone"
             type="number"
             placeholder="phone"
@@ -105,13 +148,22 @@ const EmployeeForm = () => {
           />
         </div>
         <div className={styles.formControl}>
-          <label>Password</label>
-          <input
+          <InputField
+            label="Password"
             name="password"
             type="password"
             placeholder="password"
             value={userInput.password}
             onChange={handleChange}
+          />
+        </div>
+        <div>
+          <MessageModal
+            type={typeModal}
+            isOpen={showModal}
+            message={textModal}
+            handleClose={closeModal}
+            goBack={'/employees'}
           />
         </div>
         <div className={styles.divBtn}>

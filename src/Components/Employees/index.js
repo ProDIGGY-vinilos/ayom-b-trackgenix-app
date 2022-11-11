@@ -1,19 +1,33 @@
 import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
+import MessageModal from '../Shared/Modal/MessageModal';
 import { Link } from 'react-router-dom';
 import Table from '../Shared/Table';
 
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   const deleteItem = (id) => {
     setEmployees(employees.filter((employee) => employee._id !== id));
+    setTypeModal('Success');
+    setTextModal('The employee was successfully removed');
+    openModal();
   };
 
   const deleteEmployee = async (id) => {
     await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, { method: 'DELETE' });
     deleteItem(id);
-    alert(`Employee ${id} deleted`);
   };
 
   useEffect(async () => {
@@ -22,7 +36,10 @@ const Employees = () => {
       const data = await response.json();
       setEmployees(data.data);
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   }, []);
 
@@ -42,6 +59,13 @@ const Employees = () => {
       <Link to="/employee-form" className={styles.newEmployee}>
         +
       </Link>
+      <MessageModal
+        type={typeModal}
+        isOpen={showModal}
+        message={textModal}
+        handleClose={closeModal}
+        goBack={'/employees'}
+      />
     </section>
   );
 };

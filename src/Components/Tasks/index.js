@@ -2,9 +2,22 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Table from '../Shared/Table';
 import styles from './tasks.module.css';
+import MessageModal from '../Shared/Modal/MessageModal';
 
 const Tasks = () => {
   const [tasks, saveTasks] = useState([]);
+
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(async () => {
     try {
@@ -13,15 +26,24 @@ const Tasks = () => {
       if (response.status == 200) {
         saveTasks(data.data);
       } else {
-        alert(data.message);
+        setTypeModal('Error');
+        setTextModal(data.message);
+        openModal();
+        return;
       }
     } catch (error) {
-      alert(error);
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      return;
     }
   }, []);
 
   const deleteTask = (id) => {
     saveTasks([...tasks.filter((newTasks) => newTasks._id !== id)]);
+    setTypeModal('Success');
+    setTextModal('The task was successfully removed');
+    openModal();
   };
 
   const deleteTaskFunction = async (id) => {
@@ -33,10 +55,12 @@ const Tasks = () => {
     });
     if (response.status == 204) {
       deleteTask(id);
-      alert('Task delete successfully');
     } else if ([400, 404, 500].includes(response.status)) {
       const data = await response.json();
-      alert(data.message);
+      setTypeModal('Error');
+      setTextModal(data.message);
+      openModal();
+      return;
     }
   };
 
@@ -53,6 +77,13 @@ const Tasks = () => {
       <Link to="/task-form" className={styles.newTask}>
         +
       </Link>
+      <MessageModal
+        type={typeModal}
+        isOpen={showModal}
+        message={textModal}
+        handleClose={closeModal}
+        goBack={'/tasks'}
+      />
     </div>
   );
 };
