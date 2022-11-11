@@ -25,7 +25,6 @@ const Admins = () => {
       const data = await response.json();
       saveAdmins(data.data);
     } catch (error) {
-      console.log('Se muere aca', error);
       setTypeModal('Error');
       setTextModal(error);
       openModal();

@@ -1,50 +1,36 @@
-import { useEffect /* , useState */ } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTimeSheets } from '../../redux/timeSheets/thunks';
 import styles from './time-sheets.module.css';
-/* import MessageModal from '../Shared/Modal/MessageModal'; */
+import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
 
 const TimeSheets = () => {
-  /* const [timeSheets, setTimeSheets] = useState([]); */
-  /*  const [typeModal, setTypeModal] = useState();
-  const [textModal, setTextModal] = useState(); */
-  /* const [showMessageModal, setShowMessageModal] = useState(false); */
+  const [typeModal, setTypeModal] = useState();
+  const [textModal, setTextModal] = useState();
+  const [showMessageModal, setShowMessageModal] = useState(false);
 
   const { list: timeSheetsList, isLoading, error } = useSelector((state) => state.timeSheets);
   const dispatch = useDispatch();
-  /* const openMessageModal = () => {
+  const openMessageModal = () => {
     setShowMessageModal(true);
   };
 
   const closeMessageModal = () => {
     setShowMessageModal(false);
-  }; */
+  };
 
   useEffect(() => {
     dispatch(getTimeSheets());
   }, []);
 
-  /* useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet`);
-      const data = await response.json();
-      setTimeSheets(data.data);
-    } catch (error) {
-      setTypeModal('Error');
-      setTextModal(error);
-      openMessageModal();
-      return;
-    }
-  }, []); */
-
-  /* const deleteTimeSheet = async (id) => {
+  const deleteTimeSheet = async (id) => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
       method: 'DELETE'
     });
     if (response.status === 204) {
-      setTimeSheets([...timeSheetsList.filter((timeSheetItem) => timeSheetItem._id !== id)]);
+      dispatch(getTimeSheets());
       setTypeModal('Success');
       setTextModal('The timesheet was successfully removed');
       openMessageModal();
@@ -55,7 +41,7 @@ const TimeSheets = () => {
       openMessageModal();
       return;
     }
-  }; */
+  };
 
   const columns = [
     { heading: 'Description', value: 'description' },
@@ -86,16 +72,16 @@ const TimeSheets = () => {
           <Table
             data={timeSheetsList}
             columns={columns}
-            /* deleteItem={deleteTimeSheet} */
+            deleteItem={deleteTimeSheet}
             edit="/time-sheet-form"
           />
-          {/* <MessageModal
+          <MessageModal
             type={typeModal}
             isOpen={showMessageModal}
             message={textModal}
             handleClose={closeMessageModal}
             goBack={'/time-sheets'}
-          /> */}
+          />
           <Button href="/time-sheet-form" style="roundedPrimary" disabled={false} text="+" />
         </>
       )}
