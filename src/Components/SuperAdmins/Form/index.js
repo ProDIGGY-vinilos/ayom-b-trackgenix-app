@@ -161,7 +161,7 @@ const Form = () => {
       <div className={styles.inputDiv}>
         <InputField
           label="Password"
-          name="passwword"
+          name="password"
           type="password"
           placeholder="password"
           value={superAdmin.password}
