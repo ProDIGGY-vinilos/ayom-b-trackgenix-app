@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './modal.module.css';
+import Button from '../../Button/Button';
 
 const Modal = ({
   showModal,
@@ -34,12 +35,18 @@ const Modal = ({
           <p className={styles.modalText}>{message}</p>
         </div>
         <div className={styles.modalButtons}>
-          <button onClick={declineButtonAction} className={styles.declineButton}>
-            {declineButtonText}
-          </button>
-          <button onClick={confirmButtonAction} className={styles.confirmButton}>
-            {confirmButtonText}
-          </button>
+          <Button
+            onClick={declineButtonAction}
+            style="squaredSecondary"
+            disabled={false}
+            text={declineButtonText}
+          />
+          <Button
+            onClick={confirmButtonAction}
+            style="squaredPrimary"
+            disabled={false}
+            text={confirmButtonText}
+          />
         </div>
       </div>
     </div>

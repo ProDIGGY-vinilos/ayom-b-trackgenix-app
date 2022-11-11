@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import styles from './admins.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
+import Button from '../Shared/Button/Button';
 
 const Admins = () => {
   const [admins, saveAdmins] = useState([]);
@@ -63,9 +63,7 @@ const Admins = () => {
     <section className={styles.container}>
       <h2>Admin</h2>
       <Table data={admins} columns={columns} deleteItem={removeAdmin} edit="/admin-form" />
-      <Link to="/admin-form" className={styles.newAdmin}>
-        +
-      </Link>
+      <Button href={`/admin-form`} style="roundedPrimary" disabled={false} text="+" />
       <MessageModal
         type={typeModal}
         isOpen={showModal}

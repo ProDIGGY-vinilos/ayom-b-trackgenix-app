@@ -1,0 +1,79 @@
+.squaredPrimary {
+    margin: 4px 2px;
+    padding: 10px 20px;
+    text-align: center;
+    background-color: #EA3354;
+    border: 2px solid #EA3354;
+    color: #ffffff;
+    border-radius: 10%;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.4s;
+}
+
+.squaredPrimary:hover {
+    cursor: pointer;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.roundedPrimary {
+    display: flex;
+    justify-content: flex-end;
+    margin: 5px 5px;
+    padding: 10px 20px;
+    text-align: center;
+    background-color: #EA3354;
+    border: 2px solid #EA3354;
+    color: #ffffff;
+    border-radius: 100%;
+    text-decoration: none;
+    font-size: 25px;
+    transition-duration: 0.4s;
+}
+
+.roundedPrimary:hover {
+    cursor: pointer;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.squaredSecondary {
+    display: flex;
+    justify-content: flex-end;
+    margin: 4px 2px;
+    padding: 10px 20px;
+    text-align: center;
+    background-color: #ffffff;
+    border: 2px solid #EA3354;
+    color: #000000;
+    border-radius: 10%;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.4s;
+}
+
+.squaredSecondary:hover {
+    cursor: pointer;
+    background-color: #EA3354;
+    color: #ffffff;
+}
+
+.roundedSecondary {
+    margin: 5px 5px;
+    padding: 10px 16px;
+    text-align: center;
+    background-color: #ffffff;
+    border: 2px solid #EA3354;
+    color: #000000;
+    border-radius: 30%;
+    text-decoration: none;
+    font-size: 25px;
+    transition-duration: 0.4s;
+}
+
+.roundedSecondary:hover {
+    cursor: pointer;
+    background-color: #EA3354;
+    color: #ffffff;
+}

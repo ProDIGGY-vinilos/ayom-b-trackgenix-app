@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from '../../Modal/ActionModal';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Button from '../../Button/Button';
 
 const TableRow = ({ item, columns, deleteItem, edit }) => {
   const [showModal, setShowModal] = useState(false);
@@ -26,10 +26,18 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
             return (
               <>
                 <td>
-                  <button>
-                    <Link to={`${edit}/${item._id}`}>Edit</Link>
-                  </button>
-                  <button onClick={openModal}>Delete</button>
+                  <Button
+                    href={`${edit}/${item._id}`}
+                    style="squaredSecondary"
+                    disabled={false}
+                    text="Edit"
+                  />
+                  <Button
+                    onClick={openModal}
+                    style="squaredPrimary"
+                    disabled={false}
+                    text="Delete"
+                  />
                   <Modal
                     showModal={showModal}
                     closeModal={closeModal}

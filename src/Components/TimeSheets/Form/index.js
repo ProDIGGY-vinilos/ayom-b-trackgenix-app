@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styles from './form.module.css';
 import Select from '../../Shared/Select';
 import InputField from '../../Shared/Input/input';
 import DatePicker from '../../Shared/Datepicker';
 import MessageModal from '../../Shared/Modal/MessageModal';
+import Button from '../../Shared/Button/Button';
 
 const TimeSheetsForm = () => {
   const pathed = useParams().id;
@@ -167,6 +168,7 @@ const TimeSheetsForm = () => {
       ) : (
         <h2 className={styles.title}>Add new time sheet</h2>
       )}
+      <Button href="/time-sheets" style="roundedSecondary" disabled={false} text="X" />
       <form className={styles.form}>
         <div className={styles.formcontainer}>
           <div>
@@ -218,16 +220,12 @@ const TimeSheetsForm = () => {
           ></textarea>
         </div>
       </form>
-      <div className={styles.buttons}>
-        <button
-          onClick={() => createTimeSheet(description, date, hours, projectId, taskId, employeeId)}
-        >
-          Submit
-        </button>
-        <Link to="/time-sheets">
-          <button>Go Back</button>
-        </Link>
-      </div>
+      <Button
+        onClick={() => createTimeSheet(description, date, hours, projectId, taskId, employeeId)}
+        style="squaredPrimary"
+        disabled={false}
+        text="Save"
+      />
       <MessageModal
         type={typeModal}
         isOpen={showModal}

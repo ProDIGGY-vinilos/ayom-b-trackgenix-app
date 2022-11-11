@@ -5,6 +5,7 @@ import DatePicker from '../../Shared/Datepicker';
 import FormModal from '../Modal';
 import MessageModal from '../../Shared/Modal/MessageModal';
 import styles from './form.module.css';
+import Button from '../../Shared/Button/Button';
 import InputField from '../../Shared/Input/input';
 
 const Project = () => {
@@ -158,6 +159,7 @@ const Project = () => {
       ) : (
         <h2 className={styles.title}>Add new project</h2>
       )}
+      <Button href="/projects" style="roundedSecondary" disabled={false} text="X" />
       <form className={styles.formContainer} onSubmit={onSubmit}>
         <div className={styles.formDiv}>
           <InputField
@@ -216,11 +218,7 @@ const Project = () => {
             </div>
           );
         })}
-        <div>
-          <button className={styles.btn} onClick={openModal}>
-            Submit
-          </button>
-        </div>
+        <Button onClick={openModal} style="squaredPrimary" disabled={false} text="Save" />
       </form>
       <MessageModal
         type={typeModal}

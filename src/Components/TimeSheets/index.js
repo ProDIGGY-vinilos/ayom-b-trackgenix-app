@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import styles from './time-sheets.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
+import Button from '../Shared/Button/Button';
 
 function TimeSheets() {
   const [timeSheets, setTimeSheets] = useState([]);
@@ -75,9 +75,7 @@ function TimeSheets() {
         handleClose={closeMessageModal}
         goBack={'/time-sheets'}
       />
-      <Link to="/time-sheet-form" className={styles.newTimeSheet}>
-        +
-      </Link>
+      <Button href="/time-sheet-form" style="roundedPrimary" disabled={false} text="+" />
     </section>
   );
 }

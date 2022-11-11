@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MessageModal from '../Shared/Modal/MessageModal';
 import styles from './employees.module.css';
-import Button from './Button';
+import Button from '../Shared/Button/Button';
 import InputField from '../Shared/Input/input';
 
 const EmployeeForm = () => {
@@ -107,6 +107,7 @@ const EmployeeForm = () => {
     <>
       <form className={styles.container} onSubmit={onSubmit}>
         <h3 className={styles.titleForm}>Create Employee</h3>
+        <Button href="/employees" style="roundedSecondary" disabled={false} text="X" />
         <div className={styles.formControl}>
           <InputField
             label="Name"
@@ -166,20 +167,15 @@ const EmployeeForm = () => {
             goBack={'/employees'}
           />
         </div>
-        <div className={styles.divBtn}>
-          <button
-            type="submit"
-            value="Save Employee"
-            className={styles.btn}
-            onClick={(e) => {
-              onSubmit(e);
-            }}
-          >
-            Confirm
-          </button>
-        </div>
+        <Button
+          onClick={(e) => {
+            onSubmit(e);
+          }}
+          style="squaredPrimary"
+          disabled={false}
+          text="Save"
+        />
       </form>
-      <Button color="black" text={'back'} href={'/employees'} />
     </>
   );
 };

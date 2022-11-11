@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import MessageModal from '../Shared/Modal/MessageModal';
 import styles from './admins.module.css';
+import Button from '../Shared/Button/Button';
 import InputField from '../Shared/Input/input';
 
 function Form() {
@@ -99,7 +100,7 @@ function Form() {
     <form className={styles.form}>
       <div className={styles.formHeader}>
         <h3 id="fromHeader">Tittle</h3>
-        <Link to="/admins">X</Link>
+        <Button href="/admins" style="roundedSecondary" disabled={false} text="X" />
       </div>
       <div className={styles.fromInput}>
         <InputField
@@ -146,11 +147,7 @@ function Form() {
           goBack={'/admins'}
         />
       </div>
-      <div className={styles.formButton}>
-        <button type="button" onClick={onSubmit}>
-          Save
-        </button>
-      </div>
+      <Button onClick={onSubmit} style="squaredPrimary" disabled={false} text="Save" />
     </form>
   );
 }

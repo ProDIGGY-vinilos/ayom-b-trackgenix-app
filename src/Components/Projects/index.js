@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Table from '../Shared/Table';
-import { Link } from 'react-router-dom';
 import styles from './projects.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
+import Button from '../Shared/Button/Button';
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -77,9 +77,7 @@ const Projects = () => {
     <section className={styles.container}>
       <h2>Projects</h2>
       <Table data={projects} columns={columns} deleteItem={deleteItem} edit="/project-form" />
-      <Link to="/project-form" className={styles.newProject}>
-        +
-      </Link>
+      <Button href="/project-form" style="roundedPrimary" disabled={false} text="+" />
       <MessageModal
         type={typeModal}
         isOpen={showModal}

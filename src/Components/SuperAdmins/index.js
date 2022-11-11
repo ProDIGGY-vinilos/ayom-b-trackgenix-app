@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import styles from './super-admins.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
+import Button from '../Shared/Button/Button';
 
 function SuperAdmins() {
   const [superAdmins, setSuperAdmins] = useState([]);
@@ -72,15 +72,12 @@ function SuperAdmins() {
         deleteItem={deleteSuperAdmin}
         edit="/super-admin-form"
       />
-      <Link className={styles.newSuperAdmin} to="/super-admin-form">
-        +
-      </Link>
+      <Button href="/super-admin-form" style="roundedPrimary" disabled={false} text="+" />
       <MessageModal
         type={typeModal}
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
-        goBack={'/super-admins'}
       />
     </div>
   );

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
-import { Link } from 'react-router-dom';
 import Table from '../Shared/Table';
+import Button from '../Shared/Button/Button';
 
 function Employees() {
   const [employees, setEmployees] = useState([]);
@@ -56,9 +56,7 @@ function Employees() {
     <section className={styles.container}>
       <h2>Employee</h2>
       <Table data={employees} columns={columns} deleteItem={deleteEmployee} edit="/employee-form" />
-      <Link to="/employee-form" className={styles.newEmployee}>
-        +
-      </Link>
+      <Button href="/employee-form" style="roundedPrimary" disabled={false} text="+" />
       <MessageModal
         type={typeModal}
         isOpen={showModal}

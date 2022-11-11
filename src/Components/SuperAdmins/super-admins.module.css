@@ -21,6 +21,9 @@
   width: 60px;
 }
 
-.btn {
-  width: 25%;
+.addBtn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1%;
+  width: 80%;
 }

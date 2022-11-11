@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import MessageModal from '../../Shared/Modal/MessageModal';
 import styles from '../tasks.module.css';
-import stylesModal from '../Modal/tasks.module.css';
+import Button from '../../Shared/Button/Button';
 import InputField from '../../Shared/Input/input';
 
 function Form() {
@@ -36,8 +36,7 @@ function Form() {
     setNameValue({ ...userInput, description: e.target.value });
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async () => {
     let options;
     let url;
     if (taskId) {
@@ -83,6 +82,7 @@ function Form() {
   return (
     <div className={styles.container}>
       <form className={styles.addItem} onSubmit={onSubmit}>
+        <Button href="/tasks" style="roundedSecondary" diabled={false} text="X" />
         <div>
           <InputField
             label="Description"
@@ -94,9 +94,7 @@ function Form() {
           />
         </div>
         <div className={styles.buttonsDiv}>
-          <button className={styles.addButton} type="submit">
-            Save
-          </button>
+          <Button onClick={onSubmit} style="squaredPrimary" disabled={false} text="Save" />
           <MessageModal
             type={typeModal}
             isOpen={showModal}
@@ -104,9 +102,6 @@ function Form() {
             handleClose={closeModal}
             goBack={'/tasks'}
           />
-          <Link to="/tasks" className={stylesModal.goBackButton}>
-            Go back
-          </Link>
         </div>
       </form>
     </div>

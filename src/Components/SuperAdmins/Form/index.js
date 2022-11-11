@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import styles from './form.module.css';
 import InputField from '../../Shared/Input/input';
 import MessageModal from '../../Shared/Modal/MessageModal';
+import Button from '../../Shared/Button/Button';
 
 function Form() {
   const superAdminId = useParams().id;
@@ -96,8 +97,7 @@ function Form() {
     }
   };
 
-  const onConfirm = (e) => {
-    e.preventDefault();
+  const onConfirm = async () => {
     let url = '';
     if (superAdminId) {
       url = `${process.env.REACT_APP_API_URL}/superAdmins/${superAdminId}`;
@@ -126,9 +126,7 @@ function Form() {
     <form className={styles.container}>
       <div className={styles.header}>
         <h3>{title}</h3>
-        <a className={styles.crossBtn} onClick={validateFields}>
-          X
-        </a>
+        <Button onClick={validateFields} style="roundedSecondary" disabled={false} text="X" />
       </div>
       <div className={styles.inputDiv}>
         <InputField
@@ -170,9 +168,7 @@ function Form() {
           onChange={updateField}
         />
       </div>
-      <div>
-        <button onClick={onConfirm}>Confirm</button>
-      </div>
+      <Button onClick={onConfirm} style="squaredPrimary" disabled={false} text="Save" />
       <MessageModal
         type={typeModal}
         isOpen={showMessageModal}

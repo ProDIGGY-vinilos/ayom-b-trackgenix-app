@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Modal from '../Shared/Modal/ActionModal';
+import Button from '../Shared/Button/Button';
 
 const RowAdmin = ({ listAdmin, deleteAdmin }) => {
   const [showModal, setModal] = useState(false);
@@ -33,9 +33,12 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
       <td>{listAdmin.email}</td>
       <td>{listAdmin.password}</td>
       <td>
-        <Link to={`admin-form/${listAdmin._id}`}>
-          <img src={`../assets/images/iconEdit.svg`} />
-        </Link>
+        <Button
+          href={`admin-form/${listAdmin._id}`}
+          style="squaredSecondary"
+          disabled={false}
+          text="Edit"
+        />
       </td>
       <td>
         <Modal
@@ -45,9 +48,7 @@ const RowAdmin = ({ listAdmin, deleteAdmin }) => {
           title={'DELETE ADMIN'}
           message={`Are you sure you want to delete ${listAdmin.name}?`}
         />
-        <button onClick={openModal}>
-          <img src={`../assets/images/iconTrash.svg`} />
-        </button>
+        <Button onClick={openModal} style="squaredPrimary" disabled={false} text="Delete" />
       </td>
     </tr>
   );

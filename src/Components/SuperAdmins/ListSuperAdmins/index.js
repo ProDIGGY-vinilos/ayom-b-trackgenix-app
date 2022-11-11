@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Modal from '../../Shared/Modal/ActionModal';
 import styles from '../super-admins.module.css';
 import MessageModal from '../../Shared/Modal/MessageModal';
+import Button from '../../Shared/Button/Button';
 
 const ListSuperAdmin = ({ superAdmin, onDeleteSuperAdmin }) => {
   const [showModal, setModal] = useState(false);
@@ -53,9 +54,12 @@ const ListSuperAdmin = ({ superAdmin, onDeleteSuperAdmin }) => {
       <td className={styles.info}>{superAdmin.email}</td>
       <td className={styles.info}>{superAdmin.password}</td>
       <td className={styles.btn}>
-        <a href={`super-admin-form/${superAdmin._id}`}>
-          <button className={styles.btnEdit}>edit</button>
-        </a>
+        <Button
+          href={`super-admin-form/${superAdmin._id}`}
+          style="squaredSecondary"
+          disabled={false}
+          text="Edit"
+        />
       </td>
       <td className={styles.btn}>
         <Modal
@@ -65,16 +69,13 @@ const ListSuperAdmin = ({ superAdmin, onDeleteSuperAdmin }) => {
           title={'DELETE SUPER ADMIN'}
           message={`Are you sure you want to delete ${superAdmin.name}?`}
         />
-        <button onClick={openModal} className={styles.btnDelete}>
-          Delete
-        </button>
+        <Button onClick={openModal} style="squaredPrimary" disabled={false} text="Delete" />
       </td>
       <MessageModal
         type={typeModal}
         isOpen={showMessageModal}
         message={textModal}
         handleClose={closeMessageModal}
-        goBack={'/super-admins'}
       />
     </tr>
   );

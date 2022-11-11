@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Table from '../Shared/Table';
 import styles from './tasks.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
+import Button from '../Shared/Button/Button';
 
 function Tasks() {
   const [tasks, saveTasks] = useState([]);
@@ -74,15 +74,12 @@ function Tasks() {
     <div className={styles.container}>
       <h2>Tasks</h2>
       <Table data={tasks} columns={columns} deleteItem={deleteTaskFunction} edit="/task-form" />
-      <Link to="/task-form" className={styles.newTask}>
-        +
-      </Link>
+      <Button href="/task-form" style="roundedPrimary" disabled={false} text="+" />
       <MessageModal
         type={typeModal}
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
-        goBack={'/tasks'}
       />
     </div>
   );
