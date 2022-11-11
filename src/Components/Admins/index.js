@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getAdmins } from '../../redux/admins/thunks';
 
 const Admins = () => {
-  //const [admins, saveAdmins] = useState([]);
   const { list: adminList, isLoading, error } = useSelector((state) => state.admins);
   const dispatch = useDispatch();
 
@@ -25,20 +24,9 @@ const Admins = () => {
 
   useEffect(async () => {
     dispatch(getAdmins());
-    /* try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`);
-      const data = await response.json();
-      saveAdmins(data.data);
-    } catch (error) {
-      setTypeModal('Error');
-      setTextModal(error);
-      openModal();
-      return;
-    } */
   }, []);
 
-  const deleteAdmin = (/*id*/) => {
-    //saveAdmins([...admins.filter((newListItem) => newListItem._id !== id)]);
+  const deleteAdmin = () => {
     dispatch(getAdmins());
     setTypeModal('Success');
     setTextModal('The administrator was successfully removed');
