@@ -26,6 +26,10 @@ const Projects = () => {
     dispatch(getProjects());
   }, []);
 
+  useEffect(async () => {
+    openModalOnError(error);
+  }, [error]);
+
   const onDeleteItem = (id) => {
     setProjects([...projects.filter((projectItem) => projectItem._id !== id)]);
     setTypeModal('Success');
@@ -67,14 +71,22 @@ const Projects = () => {
     },
     { heading: 'Actions' }
   ];
-  if (error) {
-    return setTypeModal('Error'), setTextModal('There was an error'), openModal();
+
+  if (isLoading) {
+    return <h3>Loading...</h3>;
   }
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    }
+  };
 
   return (
     <section className={styles.container}>
-      {isLoading ? (
-        <h3>Loading...</h3>
+      {error ? (
+        <h3>ERROR</h3>
       ) : (
         <>
           <h2>Projects</h2>
@@ -85,15 +97,15 @@ const Projects = () => {
             edit="/project-form"
           />
           <Button href="/project-form" style="roundedPrimary" disabled={false} text="+" />
-          <MessageModal
-            type={typeModal}
-            isOpen={showModal}
-            message={textModal}
-            handleClose={closeModal}
-            goBack={'/projects'}
-          />
         </>
       )}
+      <MessageModal
+        type={typeModal}
+        isOpen={showModal}
+        message={textModal}
+        handleClose={closeModal}
+        goBack={'/projects'}
+      />
     </section>
   );
 };
