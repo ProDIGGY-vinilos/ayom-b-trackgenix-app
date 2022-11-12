@@ -16,15 +16,15 @@ function Form() {
   });
 
   const [typeModal, setTypeModal] = useState();
-  const [textModal, setTextModal] = useState();
-  const [showModal, setShowModal] = useState(false);
+  const [textMessageModal, setTextMessageModal] = useState();
+  const [showMessageModal, setShowMessageModal] = useState(false);
 
-  const openModal = () => {
-    setShowModal(true);
+  const openMessageModal = () => {
+    setShowMessageModal(true);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
   };
 
   useEffect(async () => {
@@ -42,8 +42,8 @@ function Form() {
         return;
       } catch (err) {
         setTypeModal('Error');
-        setTextModal(err.message);
-        openModal();
+        setTextMessageModal(err.message);
+        openMessageModal();
         return;
       }
     } else document.getElementById('fromHeader').innerHTML = 'ADD ADMIN';
@@ -65,13 +65,13 @@ function Form() {
       const data = await response.json();
       if (response.status !== 200 && response.status !== 201) {
         setTypeModal('Error');
-        setTextModal(data.message);
-        openModal();
+        setTextMessageModal(data.message);
+        openMessageModal();
         return;
       } else {
         setTypeModal('Success');
-        setTextModal(data.message);
-        openModal();
+        setTextMessageModal(data.message);
+        openMessageModal();
         return data;
       }
     } else {
@@ -85,13 +85,13 @@ function Form() {
       const data = await response.json();
       if (response.status !== 200 && response.status !== 201) {
         setTypeModal('Error');
-        setTextModal(data.message);
-        openModal();
+        setTextMessageModal(data.message);
+        openMessageModal();
         return;
       } else {
         setTypeModal('Success');
-        setTextModal(data.message);
-        openModal();
+        setTextMessageModal(data.message);
+        openMessageModal();
         return data;
       }
     }
@@ -141,9 +141,9 @@ function Form() {
       <div>
         <MessageModal
           type={typeModal}
-          isOpen={showModal}
-          message={textModal}
-          handleClose={closeModal}
+          isOpen={showMessageModal}
+          message={textMessageModal}
+          handleClose={closeMessageModal}
           goBack={'/admins'}
         />
       </div>
