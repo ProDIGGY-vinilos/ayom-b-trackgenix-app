@@ -55,8 +55,7 @@ const EmployeeForm = () => {
     setUserInput({ ...userInput, [name]: value });
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async () => {
     let requestOptions;
 
     if (employeeId) {
@@ -168,8 +167,8 @@ const EmployeeForm = () => {
           />
         </div>
         <Button
-          onClick={(e) => {
-            onSubmit(e);
+          onClick={() => {
+            onSubmit();
           }}
           style="squaredPrimary"
           disabled={false}

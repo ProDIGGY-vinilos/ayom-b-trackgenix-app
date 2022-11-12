@@ -32,8 +32,7 @@ const Project = () => {
   const [textModal, setTextModal] = useState();
   const [showSharedModal, setShowSharedModal] = useState(false);
 
-  const openModal = (e) => {
-    e.preventDefault();
+  const openModal = () => {
     setShowModal(true);
   };
 
