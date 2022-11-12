@@ -3,13 +3,16 @@ import Table from '../Shared/Table';
 import styles from './tasks.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 import Button from '../Shared/Button/Button';
+import { useSelector, useDispatch } from 'react-redux';
+import { getTasks } from '../../redux/tasks/thunks';
 
 const Tasks = () => {
-  const [tasks, saveTasks] = useState([]);
-
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
+
+  const { list: tasksList, isLoading, error } = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
 
   const openModal = () => {
     setShowModal(true);
@@ -19,28 +22,12 @@ const Tasks = () => {
     setShowModal(false);
   };
 
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`);
-      const data = await response.json();
-      if (response.status == 200) {
-        saveTasks(data.data);
-      } else {
-        setTypeModal('Error');
-        setTextModal(data.message);
-        openModal();
-        return;
-      }
-    } catch (error) {
-      setTypeModal('Error');
-      setTextModal(error);
-      openModal();
-      return;
-    }
+  useEffect(() => {
+    dispatch(getTasks());
   }, []);
 
-  const deleteTask = (id) => {
-    saveTasks([...tasks.filter((newTasks) => newTasks._id !== id)]);
+  const deleteTask = () => {
+    dispatch(getTasks());
     setTypeModal('Success');
     setTextModal('The task was successfully removed');
     openModal();
@@ -54,7 +41,7 @@ const Tasks = () => {
       }
     });
     if (response.status == 204) {
-      deleteTask(id);
+      deleteTask();
     } else if ([400, 404, 500].includes(response.status)) {
       const data = await response.json();
       setTypeModal('Error');
@@ -70,17 +57,37 @@ const Tasks = () => {
     { heading: 'Actions' }
   ];
 
+  if (error) {
+    return (
+      <section className={styles.container}>
+        <h2>Tasks</h2>
+        <h3>{error}</h3>
+      </section>
+    );
+  }
+
   return (
     <div className={styles.container}>
       <h2>Tasks</h2>
-      <Table data={tasks} columns={columns} deleteItem={deleteTaskFunction} edit="/task-form" />
-      <Button href="/task-form" style="roundedPrimary" disabled={false} text="+" />
-      <MessageModal
-        type={typeModal}
-        isOpen={showModal}
-        message={textModal}
-        handleClose={closeModal}
-      />
+      {isLoading ? (
+        <h3>Loading...</h3>
+      ) : (
+        <>
+          <Table
+            data={tasksList}
+            columns={columns}
+            deleteItem={deleteTaskFunction}
+            edit="/task-form"
+          />
+          <MessageModal
+            type={typeModal}
+            isOpen={showModal}
+            message={textModal}
+            handleClose={closeModal}
+          />
+          <Button href="/task-form" style="roundedPrimary" disabled={false} text="+" />
+        </>
+      )}
     </div>
   );
 };
