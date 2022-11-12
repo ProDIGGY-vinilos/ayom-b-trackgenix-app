@@ -58,12 +58,9 @@ const SuperAdmins = () => {
     { heading: 'Actions' }
   ];
   if (error) {
-    return (
-      <section className={styles.container}>
-        <h2>SuperAdmins</h2>
-        <h3>{error}</h3>
-      </section>
-    );
+    setTypeModal('Error');
+    setTextModal(error);
+    openModal();
   }
 
   return (
