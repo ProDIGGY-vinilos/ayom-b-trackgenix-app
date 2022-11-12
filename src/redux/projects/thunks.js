@@ -3,7 +3,7 @@ import { getProjectsError, getProjectsSuccess, getProjectsPending } from './acti
 export const getProjects = () => {
   return (dispatch) => {
     dispatch(getProjectsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/projects/error`)
+    fetch(`${process.env.REACT_APP_API_URL}/projects`)
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {

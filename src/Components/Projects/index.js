@@ -71,28 +71,23 @@ const Projects = () => {
     },
     { heading: 'Actions' }
   ];
-
   const openModalOnError = (error) => {
     if (error) {
-      setTypeModal('Error At Fetching');
+      setTypeModal('Error');
       setTextModal(error);
       openModal();
     }
   };
-
-  if (error) {
-    return (
-      <section className={styles.container}>
-        <h2>Projects</h2>
-        <h3>Projects Not Found</h3>
-      </section>
-    );
+  if (isLoading) {
+    return <h3>Loading...</h3>;
   }
-
   return (
     <section className={styles.container}>
-      {isLoading ? (
-        <h3>Loading...</h3>
+      {error ? (
+        <section className={styles.container}>
+          <h2>Projects</h2>
+          <h3>Projects not found</h3>
+        </section>
       ) : (
         <>
           <h2>Projects</h2>
@@ -103,15 +98,15 @@ const Projects = () => {
             edit="/project-form"
           />
           <Button href="/project-form" style="roundedPrimary" disabled={false} text="+" />
-          <MessageModal
-            type={typeModal}
-            isOpen={showModal}
-            message={textModal}
-            handleClose={closeModal}
-            goBack={'/home'}
-          />
         </>
       )}
+      <MessageModal
+        type={typeModal}
+        isOpen={showModal}
+        message={textModal}
+        handleClose={closeModal}
+        goBack={'/projects'}
+      />
     </section>
   );
 };
