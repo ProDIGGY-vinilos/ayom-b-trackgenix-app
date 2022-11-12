@@ -28,7 +28,7 @@ const FormEmployee = ({ employees, employee, changeValue }) => {
           name="rate"
           type="number"
           value={employee ? employee.rate : undefined}
-          onChange={(value) => changeValue('rate', value, true)}
+          onChange={(e) => changeValue('rate', e.target.value, true)}
         />
       </div>
     </div>
