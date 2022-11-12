@@ -26,6 +26,10 @@ const Admins = () => {
     dispatch(getAdmins());
   }, []);
 
+  useEffect(async () => {
+    openModalOnError(error);
+  }, [error]);
+
   const deleteAdmin = () => {
     dispatch(getAdmins());
     setTypeModal('Success');
@@ -56,9 +60,13 @@ const Admins = () => {
     return <h2>Loading...</h2>;
   }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    }
+  };
 
   return (
     <section className={styles.container}>
