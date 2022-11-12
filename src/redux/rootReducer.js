@@ -5,7 +5,7 @@ import projectsReducer from './projects/reducer';
 
 const rootReducer = combineReducers({
   timeSheets: timeSheetsReducer,
-  Projects: projectsReducer
+  projects: projectsReducer
 });
 
 export default rootReducer;

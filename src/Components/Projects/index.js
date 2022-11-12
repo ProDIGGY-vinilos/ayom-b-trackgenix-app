@@ -11,7 +11,7 @@ const Projects = () => {
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
-  const { list: projectList, isLoading, error } = useSelector((state) => state.Projects);
+  const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
 
   const openModal = () => {
