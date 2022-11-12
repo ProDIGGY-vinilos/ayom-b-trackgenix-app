@@ -1,4 +1,4 @@
-import { getEmployeesPending, getEmployeesFulfilled, getEmployeesRejected } from './actions';
+import { getEmployeesPending, getEmployeesSuccess, getEmployeesError } from './actions';
 
 const getEmployees = () => {
   return (dispatch) => {
@@ -6,10 +6,10 @@ const getEmployees = () => {
     fetch(`${process.env.REACT_APP_API_URL}/employees`)
       .then((response) => response.json())
       .then((response) => {
-        dispatch(getEmployeesFulfilled(response.data));
+        dispatch(getEmployeesSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(getEmployeesRejected(error.toString()));
+        dispatch(getEmployeesError(error.toString()));
       });
   };
 };

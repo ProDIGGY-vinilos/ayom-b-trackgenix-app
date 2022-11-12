@@ -1,4 +1,4 @@
-import { GET_EMPLOYEES_PENDING, GET_EMPLOYEES_FULFILLED, GET_EMPLOYEES_REJECTED } from './constant';
+import { GET_EMPLOYEES_PENDING, GET_EMPLOYEES_SUCCESS, GET_EMPLOYEES_ERROR } from './constant';
 
 const INITIAL_STATE = {
   list: [],
@@ -13,14 +13,14 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: true
       };
-    case GET_EMPLOYEES_FULFILLED:
+    case GET_EMPLOYEES_SUCCESS:
       return {
         ...state,
         isLoading: false,
         error: false,
         list: action.payload
       };
-    case GET_EMPLOYEES_REJECTED:
+    case GET_EMPLOYEES_ERROR:
       return {
         ...state,
         isLoading: false,

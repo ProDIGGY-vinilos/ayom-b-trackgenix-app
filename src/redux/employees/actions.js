@@ -1,4 +1,4 @@
-import { GET_EMPLOYEES_PENDING, GET_EMPLOYEES_FULFILLED, GET_EMPLOYEES_REJECTED } from './constant';
+import { GET_EMPLOYEES_PENDING, GET_EMPLOYEES_SUCCESS, GET_EMPLOYEES_ERROR } from './constant';
 
 export const getEmployeesPending = () => {
   return {
@@ -6,16 +6,16 @@ export const getEmployeesPending = () => {
   };
 };
 
-export const getEmployeesFulfilled = (payload) => {
+export const getEmployeesSuccess = (data) => {
   return {
-    type: GET_EMPLOYEES_FULFILLED,
-    payload
+    type: GET_EMPLOYEES_SUCCESS,
+    payload: data
   };
 };
 
-export const getEmployeesRejected = (error) => {
+export const getEmployeesError = (error) => {
   return {
-    type: GET_EMPLOYEES_REJECTED,
+    type: GET_EMPLOYEES_ERROR,
     payload: error
   };
 };

@@ -37,6 +37,18 @@ const Employees = () => {
     dispatch(getEmployees());
   }, []);
 
+  useEffect(async () => {
+    openModalOnError(error);
+  }, [error]);
+
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    }
+  };
+
   const columns = [
     { heading: 'Id', value: '_id' },
     { heading: 'Name', value: 'name' },
@@ -48,10 +60,6 @@ const Employees = () => {
 
   if (isLoading) {
     return <h2>Loading...</h2>;
-  }
-
-  if (error) {
-    return <h2>{error}</h2>;
   }
 
   return (
