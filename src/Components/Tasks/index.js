@@ -22,7 +22,7 @@ const Tasks = () => {
     setShowModal(false);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     dispatch(getTasks());
   }, []);
 
