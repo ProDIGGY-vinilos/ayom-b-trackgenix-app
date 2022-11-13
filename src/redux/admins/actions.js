@@ -7,7 +7,10 @@ import {
   POST_ADMINS_ERROR,
   PUT_ADMINS_PENDING,
   PUT_ADMINS_SUCCESS,
-  PUT_ADMINS_ERROR
+  PUT_ADMINS_ERROR,
+  DELETE_ADMIN_PENDING,
+  DELETE_ADMIN_SUCCESS,
+  DELETE_ADMIN_ERROR
 } from './constant';
 
 export const getAdminsPending = () => {
@@ -66,6 +69,25 @@ export const putAdminsSuccess = (data) => {
 export const putAdminsError = (error) => {
   return {
     type: PUT_ADMINS_ERROR,
+    payload: error
+  };
+};
+
+export const deleteAdminPending = () => {
+  return {
+    type: DELETE_ADMIN_PENDING
+  };
+};
+
+export const deleteAdminSuccess = () => {
+  return {
+    type: DELETE_ADMIN_SUCCESS
+  };
+};
+
+export const deleteAdminError = (error) => {
+  return {
+    type: DELETE_ADMIN_ERROR,
     payload: error
   };
 };

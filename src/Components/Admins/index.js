@@ -4,7 +4,7 @@ import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAdmins } from '../../redux/admins/thunks';
+import { getAdmins, deleteAdmin } from '../../redux/admins/thunks';
 
 const Admins = () => {
   const { list: adminList, isLoading, error } = useSelector((state) => state.admins);
@@ -30,21 +30,15 @@ const Admins = () => {
     openModalOnError(error);
   }, [error]);
 
-  const deleteAdmin = () => {
-    dispatch(getAdmins());
-    setTypeModal('Success');
-    setTextModal('The administrator was successfully removed');
-    openModal();
-  };
-
   const removeAdmin = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-type': 'application/json'
-      }
-    });
-    deleteAdmin(id);
+    dispatch(deleteAdmin(id));
+    if (error) {
+      openModalOnError(error);
+    } else {
+      setTypeModal('Success');
+      setTextModal('The administrator was successfully removed');
+      openModal();
+    }
   };
 
   const columns = [

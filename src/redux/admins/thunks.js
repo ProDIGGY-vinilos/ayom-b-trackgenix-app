@@ -7,7 +7,10 @@ import {
   postAdminsError,
   putAdminsPending,
   putAdminsSuccess,
-  putAdminsError
+  putAdminsError,
+  deleteAdminPending,
+  deleteAdminSuccess,
+  deleteAdminError
 } from './actions';
 
 export const getAdmins = () => {
@@ -82,6 +85,29 @@ export const putAdmins = (data, id) => {
       })
       .catch((err) => {
         dispatch(putAdminsError(err.toString()));
+      });
+  };
+};
+
+export const deleteAdmin = (id) => {
+  return (dispatch) => {
+    dispatch(deleteAdminPending);
+    fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.status !== 204) {
+          throw new Error("The administrator couldn't be removed");
+        } else {
+          dispatch(deleteAdminSuccess());
+        }
+      })
+      .catch((err) => {
+        dispatch(deleteAdminError(err.toString()));
       });
   };
 };
