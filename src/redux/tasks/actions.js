@@ -5,9 +5,14 @@ import {
   POST_TASKS_PENDING,
   POST_TASKS_SUCCESS,
   POST_TASKS_ERROR,
+  PUT_TASKS_PENDING,
+  PUT_TASKS_SUCCESS,
+  PUT_TASKS_ERROR,
   DELETE_TASKS_PENDING,
   DELETE_TASKS_SUCCESS,
-  DELETE_TASKS_ERROR
+  DELETE_TASKS_ERROR,
+  OPEN_TASKS_MODAL,
+  CLOSE_TASKS_MODAL
 } from './constant';
 
 export const getTasksPending = () => {
@@ -32,19 +37,41 @@ export const getTasksError = (error) => {
 
 export const postTasksPending = () => {
   return {
-    type: POST_TASKS_PENDING
+    type: POST_TASKS_PENDING,
+    error: '',
+    modal: true
   };
 };
 
 export const postTasksSuccess = () => {
   return {
-    type: POST_TASKS_SUCCESS
+    type: POST_TASKS_SUCCESS,
+    error: ''
   };
 };
 
 export const postTasksError = (error) => {
   return {
     type: POST_TASKS_ERROR,
+    payload: error
+  };
+};
+
+export const putTasksPending = () => {
+  return {
+    type: PUT_TASKS_PENDING
+  };
+};
+
+export const putTasksSuccess = () => {
+  return {
+    type: PUT_TASKS_SUCCESS
+  };
+};
+
+export const putTasksError = (error) => {
+  return {
+    type: PUT_TASKS_ERROR,
     payload: error
   };
 };
@@ -66,5 +93,17 @@ export const deleteTasksError = (error) => {
   return {
     type: DELETE_TASKS_ERROR,
     payload: error
+  };
+};
+
+export const openTasksModal = () => {
+  return {
+    type: OPEN_TASKS_MODAL
+  };
+};
+
+export const closeTasksModal = () => {
+  return {
+    type: CLOSE_TASKS_MODAL
   };
 };

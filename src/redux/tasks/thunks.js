@@ -5,9 +5,13 @@ import {
   postTasksPending,
   postTasksSuccess,
   postTasksError,
+  putTasksPending,
+  putTasksSuccess,
+  putTasksError,
   deleteTasksPending,
   deleteTasksSuccess,
-  deleteTasksError
+  deleteTasksError,
+  openTasksModal
 } from './actions';
 
 export const getTasks = () => {
@@ -39,7 +43,7 @@ export const postTask = (taskBody) => {
       body: JSON.stringify(taskBody)
     })
       .then((response) => {
-        if (response.status !== 201) {
+        if (response.status === 400) {
           response
             .json()
             .then((data) => {
@@ -47,13 +51,52 @@ export const postTask = (taskBody) => {
             })
             .catch((error) => {
               dispatch(postTasksError(error.toString()));
+              dispatch(openTasksModal());
             });
         } else {
-          dispatch(postTasksSuccess());
+          response
+            .json()
+            .then((data) => {
+              if (data.error) {
+                throw new Error(data.message);
+              } else {
+                dispatch(postTasksSuccess());
+                dispatch(openTasksModal());
+              }
+            })
+            .catch((error) => {
+              dispatch(postTasksError(error.toString()));
+              dispatch(openTasksModal());
+            });
         }
       })
       .catch((error) => {
         dispatch(postTasksError(error.toString()));
+        dispatch(openTasksModal());
+      });
+  };
+};
+
+export const putTask = (id, taskBody) => {
+  return (dispatch) => {
+    dispatch(putTasksPending());
+    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(taskBody)
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(putTasksSuccess());
+        }
+      })
+      .catch((error) => {
+        dispatch(putTasksError(error.toString()));
       });
   };
 };

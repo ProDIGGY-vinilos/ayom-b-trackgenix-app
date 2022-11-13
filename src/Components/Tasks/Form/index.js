@@ -5,7 +5,7 @@ import MessageModal from '../../Shared/Modal/MessageModal';
 import styles from '../tasks.module.css';
 import Button from '../../Shared/Button/Button';
 import InputField from '../../Shared/Input/input';
-import { postTask } from '../../../redux/tasks/thunks';
+import { postTask, putTask } from '../../../redux/tasks/thunks';
 
 const Form = () => {
   const taskId = useParams().id;
@@ -15,17 +15,27 @@ const Form = () => {
     description: ''
   });
 
-  const { error } = useSelector((state) => state.tasks);
-  const [showModal, setShowModal] = useState(false);
+  const { error, modal } = useSelector((state) => state.tasks);
+  /* const [showModal, setShowModal] = useState(false); */
   const [typeModal, setTypeModal] = useState();
-  const [textModal, setTextModal] = useState();
+  const [textMessageModal, setTextMessageModal] = useState();
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  /* const [textModal, setTextModal] = useState(); */
 
-  const openModal = () => {
+  /* const openModal = () => {
     setShowModal(true);
   };
 
   const closeModal = () => {
     setShowModal(false);
+  }; */
+
+  const openMessageModal = () => {
+    setShowMessageModal(true);
+  };
+
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
   };
 
   useEffect(async () => {
@@ -40,19 +50,64 @@ const Form = () => {
     setNameValue({ ...userInput, description: e.target.value });
   };
 
+  useEffect(() => {
+    if (error !== '') {
+      setTypeModal('Error');
+      setTextMessageModal(error);
+      openMessageModal();
+    } else if (modal) {
+      setTypeModal('Success');
+      setTextMessageModal('The Task was updated successfully');
+      openMessageModal();
+      return;
+    }
+  }, [modal, error]);
+
+  /* const checkModal = () => {
+    if (error) {
+      setTypeModal('Error');
+      setTextMessageModal(error);
+      openMessageModal();
+    } else if (error === '') {
+      setTypeModal('Success');
+      setTextMessageModal('The Task was updated successfully');
+      openMessageModal();
+      return;
+    }
+  }; */
+
   const onSubmit = async () => {
     if (taskId) {
-      console.log('Not made yet');
+      dispatch(putTask(taskId, userInput));
+      /* if (modal) {
+        checkModal();
+      } */
+
+      /* if (error) {
+        setTypeModal('Error');
+        setTextMessageModal(error);
+        openMessageModal();
+      } else {
+        setTypeModal('Success');
+        setTextMessageModal('The Task was updated successfully');
+        openMessageModal();
+        return;
+      } */
     } else {
       dispatch(postTask(userInput));
-      if (error !== '') {
+      /* if (modal) {
+        checkModal();
+      } */
+      /* if (error) {
         setTypeModal('Error');
-        setTextModal(error);
-        openModal();
+        setTextMessageModal(error);
+        openMessageModal();
       } else {
-        setTextModal('Created');
-        openModal();
-      }
+        setTypeModal('Success');
+        setTextMessageModal('The Task was added successfully');
+        openMessageModal();
+        return;
+      } */
     }
   };
 
@@ -117,9 +172,9 @@ const Form = () => {
           <Button onClick={onSubmit} style="squaredPrimary" disabled={false} text="Save" />
           <MessageModal
             type={typeModal}
-            isOpen={showModal}
-            message={textModal}
-            handleClose={closeModal}
+            isOpen={showMessageModal}
+            message={textMessageModal}
+            handleClose={closeMessageModal}
             goBack={'/tasks'}
           />
         </div>
