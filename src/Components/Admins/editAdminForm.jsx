@@ -4,8 +4,12 @@ import MessageModal from '../Shared/Modal/MessageModal';
 import styles from './admins.module.css';
 import Button from '../Shared/Button/Button';
 import InputField from '../Shared/Input/input';
+import { useSelector, useDispatch } from 'react-redux';
+import { postAdmins } from '../../redux/admins/thunks';
 
 function Form() {
+  const { error } = useSelector((state) => state.admins);
+  const dispatch = useDispatch();
   const adminId = useParams().id;
 
   const [inputValue, setInputValue] = useState({
@@ -30,22 +34,6 @@ function Form() {
   useEffect(async () => {
     if (adminId) {
       document.getElementById('fromHeader').innerHTML = 'EDIT ADMIN';
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`);
-        const data = await response.json();
-        setInputValue({
-          name: data.data.name,
-          lastName: data.data.lastName,
-          email: data.data.email,
-          password: data.data.password
-        });
-        return;
-      } catch (err) {
-        setTypeModal('Error');
-        setTextMessageModal(err.message);
-        openMessageModal();
-        return;
-      }
     } else document.getElementById('fromHeader').innerHTML = 'ADD ADMIN';
   }, []);
 
@@ -55,44 +43,18 @@ function Form() {
 
   const onSubmit = async () => {
     if (adminId) {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(inputValue)
-      });
-      const data = await response.json();
-      if (response.status !== 200 && response.status !== 201) {
-        setTypeModal('Error');
-        setTextMessageModal(data.message);
-        openMessageModal();
-        return;
-      } else {
-        setTypeModal('Success');
-        setTextMessageModal(data.message);
-        openMessageModal();
-        return data;
-      }
+      //PUT METHOD HERE
     } else {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(inputValue)
-      });
-      const data = await response.json();
-      if (response.status !== 200 && response.status !== 201) {
+      dispatch(postAdmins(inputValue));
+      if (error) {
         setTypeModal('Error');
-        setTextMessageModal(data.message);
+        setTextMessageModal(error);
         openMessageModal();
         return;
       } else {
         setTypeModal('Success');
-        setTextMessageModal(data.message);
+        setTextMessageModal('Administrator added successfully');
         openMessageModal();
-        return data;
       }
     }
   };
