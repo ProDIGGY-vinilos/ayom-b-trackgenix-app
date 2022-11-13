@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import MessageModal from '../../Shared/Modal/MessageModal';
 import styles from '../tasks.module.css';
 import Button from '../../Shared/Button/Button';
 import InputField from '../../Shared/Input/input';
+import { postTask } from '../../../redux/tasks/thunks';
 
 const Form = () => {
   const taskId = useParams().id;
+  const dispatch = useDispatch();
 
   const [userInput, setNameValue] = useState({
     description: ''
   });
 
+  const { error } = useSelector((state) => state.tasks);
   const [showModal, setShowModal] = useState(false);
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
@@ -37,6 +41,22 @@ const Form = () => {
   };
 
   const onSubmit = async () => {
+    if (taskId) {
+      console.log('Not made yet');
+    } else {
+      dispatch(postTask(userInput));
+      if (error !== '') {
+        setTypeModal('Error');
+        setTextModal(error);
+        openModal();
+      } else {
+        setTextModal('Created');
+        openModal();
+      }
+    }
+  };
+
+  /* const onSubmit = async () => {
     let options;
     let url;
     if (taskId) {
@@ -78,7 +98,7 @@ const Form = () => {
       openModal();
       return;
     }
-  };
+  }; */
   return (
     <div className={styles.container}>
       <form className={styles.addItem} onSubmit={onSubmit}>
@@ -90,7 +110,7 @@ const Form = () => {
             type="text"
             placeholder="description"
             value={userInput.description}
-            onChange={updateInput}
+            onChange={(e) => updateInput(e)}
           />
         </div>
         <div className={styles.buttonsDiv}>
