@@ -4,7 +4,7 @@ import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import getEmployees from '../../redux/employees/thunks';
+import { getEmployees } from '../../redux/employees/thunks';
 
 const Employees = () => {
   const [typeModal, setTypeModal] = useState();

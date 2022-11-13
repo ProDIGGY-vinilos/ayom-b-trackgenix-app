@@ -5,8 +5,13 @@ import MessageModal from '../Shared/Modal/MessageModal';
 import styles from './employees.module.css';
 import Button from '../Shared/Button/Button';
 import InputField from '../Shared/Input/input';
+import { useSelector, useDispatch } from 'react-redux';
+import { postEmployee } from '../../redux/employees/thunks';
 
 const EmployeeForm = () => {
+  const dispatch = useDispatch();
+  const error = useSelector((state) => state.employees.error);
+  const message = useSelector((state) => state.employees.message);
   const employeeId = useParams().id;
   const [userInput, setUserInput] = useState({
     name: '',
@@ -27,6 +32,21 @@ const EmployeeForm = () => {
   const closeModal = () => {
     setShowModal(false);
   };
+
+  useEffect(async () => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    }
+  }, [error]);
+
+  useEffect(async () => {
+    if (message) {
+      setTextModal(message);
+      openModal();
+    }
+  }, [message]);
 
   useEffect(async () => {
     if (employeeId) {
@@ -79,27 +99,7 @@ const EmployeeForm = () => {
     }
 
     let url = !employeeId ? '' : '/' + employeeId;
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/employees${url}`,
-        requestOptions
-      );
-      const data = await response.json();
-      if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
-        setTypeModal('Error');
-        setTextModal(data.message);
-        openModal();
-        return;
-      }
-      setTextModal(data.message);
-      openModal();
-      return data;
-    } catch (error) {
-      setTypeModal('Error');
-      setTextModal(error);
-      openModal();
-      return;
-    }
+    dispatch(postEmployee(url, requestOptions));
   };
 
   return (
