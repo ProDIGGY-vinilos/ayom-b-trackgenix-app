@@ -4,7 +4,10 @@ import {
   GET_ADMINS_ERROR,
   POST_ADMINS_PENDING,
   POST_ADMINS_SUCCESS,
-  POST_ADMINS_ERROR
+  POST_ADMINS_ERROR,
+  PUT_ADMINS_PENDING,
+  PUT_ADMINS_SUCCESS,
+  PUT_ADMINS_ERROR
 } from './constant';
 
 export const getAdminsPending = () => {
@@ -43,6 +46,26 @@ export const postAdminsSuccess = (data) => {
 export const postAdminsError = (error) => {
   return {
     type: POST_ADMINS_ERROR,
+    payload: error
+  };
+};
+
+export const putAdminsPending = () => {
+  return {
+    type: PUT_ADMINS_PENDING
+  };
+};
+
+export const putAdminsSuccess = (data) => {
+  return {
+    type: PUT_ADMINS_SUCCESS,
+    data
+  };
+};
+
+export const putAdminsError = (error) => {
+  return {
+    type: PUT_ADMINS_ERROR,
     payload: error
   };
 };

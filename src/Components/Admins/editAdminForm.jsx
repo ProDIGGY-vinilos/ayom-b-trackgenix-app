@@ -5,7 +5,7 @@ import styles from './admins.module.css';
 import Button from '../Shared/Button/Button';
 import InputField from '../Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
-import { postAdmins } from '../../redux/admins/thunks';
+import { postAdmins, putAdmins } from '../../redux/admins/thunks';
 
 function Form() {
   const { error } = useSelector((state) => state.admins);
@@ -43,7 +43,17 @@ function Form() {
 
   const onSubmit = async () => {
     if (adminId) {
-      //PUT METHOD HERE
+      dispatch(putAdmins(inputValue, adminId));
+      if (error) {
+        setTypeModal('Error');
+        setTextMessageModal(error);
+        openMessageModal();
+        return;
+      } else {
+        setTypeModal('Success');
+        setTextMessageModal('The administrator was edited successfully');
+        openMessageModal();
+      }
     } else {
       dispatch(postAdmins(inputValue));
       if (error) {
@@ -53,7 +63,7 @@ function Form() {
         return;
       } else {
         setTypeModal('Success');
-        setTextMessageModal('Administrator added successfully');
+        setTextMessageModal('The administrator was added successfully');
         openMessageModal();
       }
     }

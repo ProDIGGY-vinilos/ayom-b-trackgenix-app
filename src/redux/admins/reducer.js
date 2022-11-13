@@ -4,7 +4,10 @@ import {
   GET_ADMINS_ERROR,
   POST_ADMINS_PENDING,
   POST_ADMINS_SUCCESS,
-  POST_ADMINS_ERROR
+  POST_ADMINS_ERROR,
+  PUT_ADMINS_PENDING,
+  PUT_ADMINS_SUCCESS,
+  PUT_ADMINS_ERROR
 } from './constant';
 
 const INITIAL_STATE = {
@@ -47,6 +50,25 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false
       };
     case POST_ADMINS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error,
+        list: []
+      };
+    case PUT_ADMINS_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case PUT_ADMINS_SUCCESS:
+      return {
+        ...state,
+        list: [...state.list, action.payload],
+        error: '',
+        isLoading: false
+      };
+    case PUT_ADMINS_ERROR:
       return {
         ...state,
         isLoading: false,
