@@ -27,7 +27,9 @@ const FormEmployee = ({ employees, employee, changeValue }) => {
           name="rate"
           value={employee?.rate}
           type="number"
+          placeholder="Rate"
           onChange={(e) => changeValue('rate', e.target.value, true)}
+          label="Rate"
         />
       </div>
     </div>
