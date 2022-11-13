@@ -57,11 +57,17 @@ const SuperAdmins = () => {
     { heading: 'Password', value: 'password' },
     { heading: 'Actions' }
   ];
-  if (error) {
-    setTypeModal('Error');
-    setTextModal(error);
-    openModal();
-  }
+  useEffect(async () => {
+    openModalOnError(error);
+  }, [error]);
+
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    }
+  };
 
   return (
     <div className={styles.container}>
