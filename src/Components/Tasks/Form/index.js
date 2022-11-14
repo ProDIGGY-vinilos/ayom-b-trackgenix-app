@@ -16,19 +16,9 @@ const Form = () => {
   });
 
   const { error, modal } = useSelector((state) => state.tasks);
-  /* const [showModal, setShowModal] = useState(false); */
   const [typeModal, setTypeModal] = useState();
   const [textMessageModal, setTextMessageModal] = useState();
   const [showMessageModal, setShowMessageModal] = useState(false);
-  /* const [textModal, setTextModal] = useState(); */
-
-  /* const openModal = () => {
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-  }; */
 
   const openMessageModal = () => {
     setShowMessageModal(true);
@@ -57,103 +47,22 @@ const Form = () => {
       openMessageModal();
     } else if (modal) {
       setTypeModal('Success');
-      setTextMessageModal('The Task was updated successfully');
+      taskId
+        ? setTextMessageModal('The Task was updated successfully')
+        : setTextMessageModal('The Task was created successfully');
       openMessageModal();
       return;
     }
   }, [modal, error]);
 
-  /* const checkModal = () => {
-    if (error) {
-      setTypeModal('Error');
-      setTextMessageModal(error);
-      openMessageModal();
-    } else if (error === '') {
-      setTypeModal('Success');
-      setTextMessageModal('The Task was updated successfully');
-      openMessageModal();
-      return;
-    }
-  }; */
-
   const onSubmit = async () => {
     if (taskId) {
       dispatch(putTask(taskId, userInput));
-      /* if (modal) {
-        checkModal();
-      } */
-
-      /* if (error) {
-        setTypeModal('Error');
-        setTextMessageModal(error);
-        openMessageModal();
-      } else {
-        setTypeModal('Success');
-        setTextMessageModal('The Task was updated successfully');
-        openMessageModal();
-        return;
-      } */
     } else {
       dispatch(postTask(userInput));
-      /* if (modal) {
-        checkModal();
-      } */
-      /* if (error) {
-        setTypeModal('Error');
-        setTextMessageModal(error);
-        openMessageModal();
-      } else {
-        setTypeModal('Success');
-        setTextMessageModal('The Task was added successfully');
-        openMessageModal();
-        return;
-      } */
     }
   };
 
-  /* const onSubmit = async () => {
-    let options;
-    let url;
-    if (taskId) {
-      options = {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userInput)
-      };
-      url = `${process.env.REACT_APP_API_URL}/tasks/${taskId}`;
-      setTypeModal('Success');
-    } else {
-      options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userInput)
-      };
-      url = `${process.env.REACT_APP_API_URL}/tasks`;
-      setTypeModal('Success');
-    }
-    try {
-      const response = await fetch(url, options);
-      const data = await response.json();
-      if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
-        setTypeModal('Error');
-        setTextModal(data.message);
-        openModal();
-        return;
-      }
-      setTextModal(data.message);
-      openModal();
-      return data;
-    } catch (error) {
-      setTypeModal('Error');
-      setTextModal(error);
-      openModal();
-      return;
-    }
-  }; */
   return (
     <div className={styles.container}>
       <form className={styles.addItem} onSubmit={onSubmit}>

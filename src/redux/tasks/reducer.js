@@ -96,8 +96,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-        error: action.payload,
-        list: []
+        error: action.payload
       };
     case OPEN_TASKS_MODAL:
       return {

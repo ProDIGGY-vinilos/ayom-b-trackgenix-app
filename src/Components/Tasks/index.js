@@ -4,7 +4,7 @@ import styles from './tasks.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 import Button from '../Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTasks, deleteTask } from '../../redux/tasks/thunks';
+import { getTasks, deleteTask2 } from '../../redux/tasks/thunks';
 
 const Tasks = () => {
   const [typeModal, setTypeModal] = useState();
@@ -28,7 +28,7 @@ const Tasks = () => {
 
   const deleteTaskFunction = async (id) => {
     const newTasksList = [...tasksList.filter((task) => task._id !== id)];
-    dispatch(deleteTask(id, newTasksList));
+    dispatch(deleteTask2(id, newTasksList));
     if (error) {
       setTypeModal('Error');
       setTextModal(error);
@@ -45,14 +45,17 @@ const Tasks = () => {
     { heading: 'Actions' }
   ];
 
-  if (error) {
-    return (
-      <section className={styles.container}>
-        <h2>Tasks</h2>
-        <h3>{error}</h3>
-      </section>
-    );
-  }
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    }
+  };
+
+  useEffect(() => {
+    openModalOnError(error);
+  }, [error]);
 
   return (
     <div className={styles.container}>

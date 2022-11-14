@@ -42,32 +42,13 @@ export const postTask = (taskBody) => {
       },
       body: JSON.stringify(taskBody)
     })
-      .then((response) => {
-        if (response.status === 400) {
-          response
-            .json()
-            .then((data) => {
-              throw new Error(data.message);
-            })
-            .catch((error) => {
-              dispatch(postTasksError(error.toString()));
-              dispatch(openTasksModal());
-            });
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
         } else {
-          response
-            .json()
-            .then((data) => {
-              if (data.error) {
-                throw new Error(data.message);
-              } else {
-                dispatch(postTasksSuccess());
-                dispatch(openTasksModal());
-              }
-            })
-            .catch((error) => {
-              dispatch(postTasksError(error.toString()));
-              dispatch(openTasksModal());
-            });
+          dispatch(postTasksSuccess());
+          dispatch(openTasksModal());
         }
       })
       .catch((error) => {
@@ -93,10 +74,12 @@ export const putTask = (id, taskBody) => {
           throw new Error(data.message);
         } else {
           dispatch(putTasksSuccess());
+          dispatch(openTasksModal());
         }
       })
       .catch((error) => {
         dispatch(putTasksError(error.toString()));
+        dispatch(openTasksModal());
       });
   };
 };
@@ -108,7 +91,6 @@ export const deleteTask = (id, taskList) => {
       method: 'DELETE'
     })
       .then((response) => {
-        console.log(response.status);
         if (response.status !== 204) {
           response
             .json()
@@ -123,6 +105,27 @@ export const deleteTask = (id, taskList) => {
         }
       })
       .catch((error) => {
+        dispatch(deleteTasksError(error.toString()));
+      });
+  };
+};
+
+export const deleteTask2 = (id, taskList) => {
+  return (dispatch) => {
+    dispatch(deleteTasksPending());
+    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
+      method: 'DELETE'
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(deleteTasksSuccess(taskList));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
         dispatch(deleteTasksError(error.toString()));
       });
   };
