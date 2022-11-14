@@ -55,7 +55,6 @@ export const postAdmins = (data) => {
         }
       })
       .catch((err) => {
-        console.log(err.toString());
         dispatch(postAdminsError(err.toString()));
       });
   };
