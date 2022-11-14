@@ -8,7 +8,7 @@ import styles from './form.module.css';
 import Button from '../../Shared/Button/Button';
 import InputField from '../../Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
-import { postProject } from '../../../redux/projects/thunks';
+import { postProject, putProject } from '../../../redux/projects/thunks';
 
 const Project = () => {
   let formTtitle = 'Tittle';
@@ -54,31 +54,24 @@ const Project = () => {
 
   useEffect(async () => {
     if (projectId) {
-      try {
-        setIsFetched(true);
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`);
-        const data = await response.json();
-        setProjectBody({
-          name: data.data.name,
-          description: data.data.description,
-          startDate: data.data.startDate.substring(0, 10),
-          endDate: data.data.endDate.substring(0, 10),
-          clientName: data.data.clientName,
-          employees: [
-            {
-              employee: data.data.employees[0].employee._id,
-              role: data.data.employees[0].role,
-              rate: data.data.employees[0].rate
-            }
-          ]
-        });
-      } catch (error) {
-        setIsFetched(false);
-        setTypeModal('Error');
-        setTextModal(error);
-        openSharedModal();
-        return;
-      }
+      setIsFetched(true);
+      const newProjectList = [
+        ...projectList.filter((projectItem) => projectItem._id === projectId)
+      ];
+      setProjectBody({
+        name: newProjectList[0].name,
+        description: newProjectList[0].description,
+        startDate: newProjectList[0].startDate.substring(0, 10),
+        endDate: newProjectList[0].endDate.substring(0, 10),
+        clientName: newProjectList[0].clientName,
+        employees: [
+          {
+            employee: newProjectList[0].employees[0].employee._id,
+            role: newProjectList[0].employees[0].role,
+            rate: newProjectList[0].employees[0].rate
+          }
+        ]
+      });
     } else {
       setIsFetched(false);
     }
@@ -123,24 +116,9 @@ const Project = () => {
     console.log(projectList);
     if (projectId) {
       setTypeModal('Success');
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(projectBody)
-      });
-      const data = await response.json();
-      if (response.status === 201) {
-        setTextModal(data.message);
-        openSharedModal();
-        return data;
-      } else if ([400, 404, 500].includes(response.status)) {
-        setTypeModal('Error');
-        setTextModal(data.message);
-        openSharedModal();
-        return;
-      }
+      setTextModal('Project edited successfully');
+      dispatch(putProject(projectId, projectBody));
+      openSharedModal();
     } else {
       setTypeModal('Success');
       setTextModal('Project created successfully');

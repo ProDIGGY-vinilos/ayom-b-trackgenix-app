@@ -7,7 +7,10 @@ import {
   POST_PROJECT_ERROR,
   DELETE_PROJECT_PENDING,
   DELETE_PROJECT_ERROR,
-  DELETE_PROJECT_SUCCESS
+  DELETE_PROJECT_SUCCESS,
+  PUT_PROJECT_PENDING,
+  PUT_PROJECT_ERROR,
+  PUT_PROJECT_SUCCESS
 } from './constant';
 
 export const getProjectsPending = () => {
@@ -50,6 +53,25 @@ export const postProjectError = (error) => {
   };
 };
 
+export const putProjectPending = () => {
+  return {
+    type: PUT_PROJECT_PENDING
+  };
+};
+
+export const putProjectSuccess = (data) => {
+  return {
+    type: PUT_PROJECT_SUCCESS,
+    payload: data
+  };
+};
+
+export const putProjectError = (error) => {
+  return {
+    type: PUT_PROJECT_ERROR,
+    payload: error
+  };
+};
 export const deleteProjectPending = () => {
   return {
     type: DELETE_PROJECT_PENDING
