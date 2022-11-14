@@ -4,12 +4,11 @@ import styles from './projects.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 import Button from '../Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProjects } from '../../redux/projects/thunks';
+import { getProjects, deleteProject } from '../../redux/projects/thunks';
 
 const Projects = () => {
-  const [projects, setProjects] = useState([]);
-  const [typeModal, setTypeModal] = useState();
-  const [textModal, setTextModal] = useState();
+  const [typeModal, setTypeModal] = useState('');
+  const [textModal, setTextModal] = useState('');
   const [showModal, setShowModal] = useState(false);
   const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
@@ -22,34 +21,23 @@ const Projects = () => {
     setShowModal(false);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(getProjects());
   }, []);
 
-  useEffect(async () => {
+  useEffect(() => {
     openModalOnError(error);
   }, [error]);
 
-  const onDeleteItem = (id) => {
-    setProjects([...projects.filter((projectItem) => projectItem._id !== id)]);
-    setTypeModal('Success');
-    setTextModal('The project was successfully removed');
-    openModal();
-  };
-
   const deleteItem = async (id) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-type': 'application/json'
-      }
-    });
-
-    if (response.status === 204) {
-      onDeleteItem(id);
-    } else if ([400, 404, 500].includes(response.status)) {
+    const newProjectList = [...projectList.filter((projectItem) => projectItem._id !== id)];
+    dispatch(deleteProject(id, newProjectList));
+    if (error) {
       setTypeModal('Error');
-      setTextModal('There was an error');
+      setTextModal(error);
+      openModal();
+    } else {
+      setTextModal(`Project with id:${id} was deleted`);
       openModal();
     }
   };
@@ -105,7 +93,6 @@ const Projects = () => {
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
-        goBack={'/projects'}
       />
     </section>
   );

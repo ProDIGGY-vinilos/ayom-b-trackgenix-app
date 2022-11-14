@@ -4,7 +4,10 @@ import {
   getProjectsPending,
   postProjectError,
   postProjectSuccess,
-  postProjectPending
+  postProjectPending,
+  deleteProjectError,
+  deleteProjectSuccess,
+  deleteProjectPending
 } from './actions';
 
 export const getProjects = () => {
@@ -44,8 +47,33 @@ export const postProject = (projectBody) => {
         }
       })
       .catch((error) => {
-        console.log(error);
         dispatch(postProjectError(error.toString()));
+      });
+  };
+};
+
+export const deleteProject = (id, projectsList) => {
+  return (dispatch) => {
+    dispatch(deleteProjectPending());
+    fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+      method: 'DELETE'
+    })
+      .then((response) => {
+        if (response.status !== 204) {
+          response
+            .json()
+            .then((data) => {
+              throw new Error(data.message);
+            })
+            .catch((error) => {
+              dispatch(deleteProjectError(error.toString()));
+            });
+        } else {
+          return dispatch(deleteProjectSuccess(projectsList));
+        }
+      })
+      .catch((error) => {
+        dispatch(deleteProjectError(error.toString()));
       });
   };
 };

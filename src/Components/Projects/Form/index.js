@@ -35,6 +35,7 @@ const Project = () => {
   const [showSharedModal, setShowSharedModal] = useState(false);
   const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
+
   const openModal = () => {
     setShowModal(true);
   };
@@ -142,6 +143,7 @@ const Project = () => {
       }
     } else {
       setTypeModal('Success');
+      setTextModal('Project created successfully');
       dispatch(postProject(projectBody));
       openSharedModal();
     }

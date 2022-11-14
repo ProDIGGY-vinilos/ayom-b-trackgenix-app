@@ -4,7 +4,10 @@ import {
   GET_PROJECTS_ERROR,
   POST_PROJECT_PENDING,
   POST_PROJECT_SUCCESS,
-  POST_PROJECT_ERROR
+  POST_PROJECT_ERROR,
+  DELETE_PROJECT_PENDING,
+  DELETE_PROJECT_ERROR,
+  DELETE_PROJECT_SUCCESS
 } from './constant';
 
 export const getProjectsPending = () => {
@@ -43,6 +46,26 @@ export const postProjectSuccess = (data) => {
 export const postProjectError = (error) => {
   return {
     type: POST_PROJECT_ERROR,
+    payload: error
+  };
+};
+
+export const deleteProjectPending = () => {
+  return {
+    type: DELETE_PROJECT_PENDING
+  };
+};
+
+export const deleteProjectSuccess = (data) => {
+  return {
+    type: DELETE_PROJECT_SUCCESS,
+    payload: data
+  };
+};
+
+export const deleteProjectError = (error) => {
+  return {
+    type: DELETE_PROJECT_ERROR,
     payload: error
   };
 };
