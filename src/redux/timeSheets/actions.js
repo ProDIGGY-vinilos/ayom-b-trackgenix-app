@@ -79,9 +79,10 @@ export const deleteTimeSheetsPending = () => {
   };
 };
 
-export const deleteTimeSheetsSuccess = () => {
+export const deleteTimeSheetsSuccess = (payload) => {
   return {
-    type: DELETE_TIMESHEETS_SUCCESS
+    type: DELETE_TIMESHEETS_SUCCESS,
+    payload
   };
 };
 

@@ -7,8 +7,8 @@ import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
 
 const TimeSheets = () => {
-  const [typeModal, setTypeModal] = useState();
-  const [textModal, setTextModal] = useState();
+  const [typeModal, setTypeModal] = useState('');
+  const [textModal, setTextModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
 
   const { list: timeSheetsList, isLoading, error } = useSelector((state) => state.timeSheets);
@@ -21,7 +21,7 @@ const TimeSheets = () => {
     setShowMessageModal(false);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(getTimeSheets());
   }, []);
 
@@ -29,7 +29,7 @@ const TimeSheets = () => {
     openModalOnError(error);
   }, [error]);
 
-  const deleteTimeSheet = async (id) => {
+  const deleteTimeSheet = (id) => {
     dispatch(deleteTimeSheets(id));
     if (error) {
       openModalOnError(error);
@@ -76,7 +76,6 @@ const TimeSheets = () => {
             isOpen={showMessageModal}
             message={textModal}
             handleClose={closeMessageModal}
-            goBack={'/time-sheets'}
           />
           <Button href="/time-sheet-form" style="roundedPrimary" disabled={false} text="+" />
         </>

@@ -33,7 +33,7 @@ export const getTimeSheets = () => {
 
 export const postTimeSheets = (data) => {
   return (dispatch) => {
-    dispatch(postTimeSheetsPending);
+    dispatch(postTimeSheetsPending());
     fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
       method: 'POST',
       headers: {
@@ -64,7 +64,7 @@ export const postTimeSheets = (data) => {
 
 export const putTimeSheets = (data, id) => {
   return (dispatch) => {
-    dispatch(putTimeSheetsPending);
+    dispatch(putTimeSheetsPending());
     fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
       method: 'PUT',
       headers: {
@@ -95,19 +95,18 @@ export const putTimeSheets = (data, id) => {
 
 export const deleteTimeSheets = (id) => {
   return (dispatch) => {
-    dispatch(deleteTimeSheetsPending);
+    dispatch(deleteTimeSheetsPending());
     fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json'
       }
     })
-      .then((response) => response.json())
       .then((response) => {
         if (response.status !== 204) {
           throw new Error("Couldn't remove TimeSheet");
         } else {
-          dispatch(deleteTimeSheetsSuccess());
+          dispatch(deleteTimeSheetsSuccess(id));
         }
       })
       .catch((err) => {
