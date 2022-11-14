@@ -84,7 +84,7 @@ export const putTask = (id, taskBody) => {
   };
 };
 
-export const deleteTask = (id, taskList) => {
+export const deleteTask = (id) => {
   return (dispatch) => {
     dispatch(deleteTasksPending());
     fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
@@ -101,7 +101,9 @@ export const deleteTask = (id, taskList) => {
               dispatch(deleteTasksError(error.toString()));
             });
         } else {
-          return dispatch(deleteTasksSuccess(taskList));
+          console.log(response);
+          dispatch(deleteTasksPending());
+          dispatch(deleteTasksSuccess(id));
         }
       })
       .catch((error) => {

@@ -27,7 +27,8 @@ const reducer = (state = INITIAL_STATE, action) => {
     case GET_TASKS_PENDING:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        error: ''
       };
     case GET_TASKS_SUCCESS:
       return {
@@ -47,7 +48,9 @@ const reducer = (state = INITIAL_STATE, action) => {
     case POST_TASKS_PENDING:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        error: 'Loading...',
+        modal: true
       };
     case POST_TASKS_SUCCESS:
       return {
@@ -83,14 +86,15 @@ const reducer = (state = INITIAL_STATE, action) => {
     case DELETE_TASKS_PENDING:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        error: 'Loading...'
       };
     case DELETE_TASKS_SUCCESS:
       return {
         ...state,
         isLoading: false,
         error: '',
-        list: action.payload
+        list: [...state.list.filter((task) => task._id !== action.payload)]
       };
     case DELETE_TASKS_ERROR:
       return {

@@ -26,10 +26,8 @@ const Tasks = () => {
     dispatch(getTasks());
   }, []);
 
-  const deleteTaskFunction = async (id) => {
-    const newTasksList = [...tasksList.filter((task) => task._id !== id)];
-    dispatch(deleteTask(id, newTasksList));
-    if (error) {
+  useEffect(() => {
+    if (error !== '') {
       setTypeModal('Error');
       setTextModal(error);
       openModal();
@@ -37,6 +35,10 @@ const Tasks = () => {
       setTextModal('Deleted');
       openModal();
     }
+  }, [error]);
+
+  const deleteTaskFunction = async (id) => {
+    dispatch(deleteTask(id));
   };
 
   const columns = [

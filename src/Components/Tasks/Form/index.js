@@ -10,13 +10,14 @@ import { postTask, putTask } from '../../../redux/tasks/thunks';
 const Form = () => {
   const taskId = useParams().id;
   const dispatch = useDispatch();
+  const dataTask = useSelector((state) => state.tasks.list.filter((task) => task._id === taskId));
 
   const [userInput, setNameValue] = useState({
     description: ''
   });
 
-  const { error, modal } = useSelector((state) => state.tasks);
-  const [typeModal, setTypeModal] = useState();
+  const { error } = useSelector((state) => state.tasks);
+  const [typeModal, setTypeModal] = useState('');
   const [textMessageModal, setTextMessageModal] = useState();
   const [showMessageModal, setShowMessageModal] = useState(false);
 
@@ -30,9 +31,13 @@ const Form = () => {
 
   useEffect(async () => {
     if (taskId) {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`);
-      const data = await response.json();
-      setNameValue({ ...userInput, description: data.data.description });
+      if (dataTask.length) {
+        setNameValue({ description: dataTask[0].description });
+      } else {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`);
+        const data = await response.json();
+        setNameValue({ description: data.data.description });
+      }
     }
   }, []);
 
@@ -41,19 +46,21 @@ const Form = () => {
   };
 
   useEffect(() => {
-    if (error !== '') {
-      setTypeModal('Error');
-      setTextMessageModal(error);
-      openMessageModal();
-    } else if (modal) {
-      setTypeModal('Success');
-      taskId
-        ? setTextMessageModal('The Task was updated successfully')
-        : setTextMessageModal('The Task was created successfully');
-      openMessageModal();
-      return;
+    if (typeModal !== '') {
+      if (error !== '') {
+        setTypeModal('Error');
+        setTextMessageModal(error);
+        openMessageModal();
+      } else {
+        setTypeModal('Success');
+        taskId
+          ? setTextMessageModal('The Task was updated successfully')
+          : setTextMessageModal('The Task was created successfully');
+        openMessageModal();
+        return;
+      }
     }
-  }, [modal, error]);
+  }, [typeModal]);
 
   const onSubmit = async () => {
     if (taskId) {

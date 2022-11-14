@@ -37,16 +37,13 @@ export const getTasksError = (error) => {
 
 export const postTasksPending = () => {
   return {
-    type: POST_TASKS_PENDING,
-    error: '',
-    modal: true
+    type: POST_TASKS_PENDING
   };
 };
 
 export const postTasksSuccess = () => {
   return {
-    type: POST_TASKS_SUCCESS,
-    error: ''
+    type: POST_TASKS_SUCCESS
   };
 };
 
