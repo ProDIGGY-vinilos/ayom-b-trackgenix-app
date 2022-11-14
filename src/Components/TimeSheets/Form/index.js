@@ -6,6 +6,8 @@ import InputField from '../../Shared/Input/input';
 import DatePicker from '../../Shared/Datepicker';
 import MessageModal from '../../Shared/Modal/MessageModal';
 import Button from '../../Shared/Button/Button';
+import { useSelector, useDispatch } from 'react-redux';
+import { postTimeSheets, putTimeSheets } from '../../../redux/timeSheets/thunks';
 
 const TimeSheetsForm = () => {
   const pathed = useParams().id;
@@ -23,6 +25,8 @@ const TimeSheetsForm = () => {
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
   const [formSwitch, setFormSwitch] = useState(false);
+  const { error } = useSelector((state) => state.timeSheets);
+  const dispatch = useDispatch();
 
   const openModal = () => {
     setShowModal(true);
@@ -93,7 +97,7 @@ const TimeSheetsForm = () => {
     }
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     if (pathed) {
       setTimeSheetId(pathed);
       setFormSwitch(true);
@@ -103,7 +107,7 @@ const TimeSheetsForm = () => {
     employeesFetch();
   }, []);
 
-  useEffect(() => {
+  useEffect(async () => {
     if (timeSheetId && projects.length && employees.length && tasks.length) {
       timeSheetFetch(timeSheetId);
     }
@@ -119,45 +123,48 @@ const TimeSheetsForm = () => {
       hours: Hours
     };
     if (formSwitch) {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${timeSheetId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(req)
-      });
-      const data = await response.json();
-      if (response.status !== 201) {
+      dispatch(putTimeSheets(req, pathed));
+      if (error) {
         setTypeModal('Error');
-        setTextModal(data.message);
+        setTextModal(error);
         openModal();
-        return data;
+        return;
       } else {
         setTypeModal('Success');
-        setTextModal(data.message);
+        setTextModal('TimeSheet edited successfully');
         openModal();
-        return data;
       }
     } else {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(req)
-      });
-      const data = await response.json();
-      if (response.status !== 201) {
+      dispatch(postTimeSheets(req));
+      if (error) {
         setTypeModal('Error');
-        setTextModal(data.message);
+        setTextModal(error);
         openModal();
-        return data;
+        return;
       } else {
         setTypeModal('Success');
-        setTextModal(data.message);
+        setTextModal('TimeSheet added successfully');
         openModal();
-        return data;
       }
+      // const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-type': 'application/json'
+      //   },
+      //   body: JSON.stringify(req)
+      // });
+      // const data = await response.json();
+      // if (response.status !== 201) {
+      //   setTypeModal('Error');
+      //   setTextModal(data.message);
+      //   openModal();
+      //   return data;
+      // } else {
+      //   setTypeModal('Success');
+      //   setTextModal(data.message);
+      //   openModal();
+      //   return data;
+      // }
     }
   };
 

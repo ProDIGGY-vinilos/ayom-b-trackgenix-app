@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTimeSheets } from '../../redux/timeSheets/thunks';
+import { getTimeSheets, deleteTimeSheets } from '../../redux/timeSheets/thunks';
 import styles from './time-sheets.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
@@ -21,25 +21,22 @@ const TimeSheets = () => {
     setShowMessageModal(false);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     dispatch(getTimeSheets());
   }, []);
 
+  useEffect(async () => {
+    openModalOnError(error);
+  }, [error]);
+
   const deleteTimeSheet = async (id) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
-      method: 'DELETE'
-    });
-    if (response.status === 204) {
-      dispatch(getTimeSheets());
-      setTypeModal('Success');
-      setTextModal('The timesheet was successfully removed');
-      openMessageModal();
-      return;
+    dispatch(deleteTimeSheets(id));
+    if (error) {
+      openModalOnError(error);
     } else {
-      setTypeModal('Error');
-      setTextModal('There was an error');
+      setTypeModal('Success');
+      setTextModal('TimeSheet was successfully removed');
       openMessageModal();
-      return;
     }
   };
 
@@ -53,14 +50,13 @@ const TimeSheets = () => {
     { heading: 'Actions' }
   ];
 
-  if (error) {
-    return (
-      <section className={styles.container}>
-        <h2>Time Sheets</h2>
-        <h3>{error}</h3>
-      </section>
-    );
-  }
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openMessageModal();
+    }
+  };
 
   return (
     <section className={styles.container}>
