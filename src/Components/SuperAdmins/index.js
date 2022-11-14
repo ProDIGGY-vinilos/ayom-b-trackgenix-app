@@ -4,7 +4,7 @@ import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import getSuperAdmins from '../../redux/superAdmins/thunks';
+import { getSuperAdmins } from '../../redux/superAdmins/thunks';
 
 const SuperAdmins = () => {
   const [typeModal, setTypeModal] = useState();
@@ -22,7 +22,7 @@ const SuperAdmins = () => {
     setShowModal(false);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(getSuperAdmins());
   }, []);
 

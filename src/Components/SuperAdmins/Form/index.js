@@ -1,12 +1,16 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './form.module.css';
 import InputField from '../../Shared/Input/input';
 import MessageModal from '../../Shared/Modal/MessageModal';
 import Button from '../../Shared/Button/Button';
+import { postSuperAdmins } from '../../../redux/superAdmins/thunks';
 
 const Form = () => {
+  const dispatch = useDispatch();
+  const { error, success } = useSelector((state) => state.superAdmins);
   const superAdminId = useParams().id;
   const [superAdmin, setSuperAdmin] = useState({
     name: '',
@@ -69,31 +73,30 @@ const Form = () => {
   };
 
   const updateCreateSuperAdmin = async (method, url) => {
-    try {
-      const response = await fetch(url, {
-        method: method,
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(superAdmin)
-      });
-      const data = await response.json();
-      if (response.status === 200 || response.status === 201) {
-        setTypeModal('Success');
-        setTextModal(data.message);
-        openMessageModal();
-        return data;
-      } else {
-        setTypeModal('Error');
-        setTextModal(data.message);
-        openMessageModal();
-        return;
-      }
-    } catch (error) {
+    dispatch(postSuperAdmins(url, superAdmin, method));
+  };
+
+  useEffect(async () => {
+    openModalOnSuccess(success);
+  }, [success]);
+
+  const openModalOnSuccess = (success) => {
+    if (success) {
+      setTypeModal('Success');
+      setTextModal('TimeSheet edited successfully');
+      openMessageModal();
+    }
+  };
+
+  useEffect(async () => {
+    openModalOnError(error);
+  }, [error]);
+
+  const openModalOnError = (error) => {
+    if (error) {
       setTypeModal('Error');
       setTextModal(error);
       openMessageModal();
-      return;
     }
   };
 
@@ -179,5 +182,4 @@ const Form = () => {
     </form>
   );
 };
-
 export default Form;
