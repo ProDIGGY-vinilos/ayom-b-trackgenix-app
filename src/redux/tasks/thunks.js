@@ -109,24 +109,3 @@ export const deleteTask = (id, taskList) => {
       });
   };
 };
-
-export const deleteTask2 = (id, taskList) => {
-  return (dispatch) => {
-    dispatch(deleteTasksPending());
-    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-      method: 'DELETE'
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          throw new Error(data.message);
-        } else {
-          dispatch(deleteTasksSuccess(taskList));
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        dispatch(deleteTasksError(error.toString()));
-      });
-  };
-};

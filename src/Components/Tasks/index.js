@@ -4,7 +4,7 @@ import styles from './tasks.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 import Button from '../Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTasks, deleteTask2 } from '../../redux/tasks/thunks';
+import { getTasks, deleteTask } from '../../redux/tasks/thunks';
 
 const Tasks = () => {
   const [typeModal, setTypeModal] = useState();
@@ -28,7 +28,7 @@ const Tasks = () => {
 
   const deleteTaskFunction = async (id) => {
     const newTasksList = [...tasksList.filter((task) => task._id !== id)];
-    dispatch(deleteTask2(id, newTasksList));
+    dispatch(deleteTask(id, newTasksList));
     if (error) {
       setTypeModal('Error');
       setTextModal(error);
