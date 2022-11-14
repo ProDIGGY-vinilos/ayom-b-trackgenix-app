@@ -10,8 +10,8 @@ const Admins = () => {
   const { list: adminList, isLoading, error } = useSelector((state) => state.admins);
   const dispatch = useDispatch();
 
-  const [typeModal, setTypeModal] = useState();
-  const [textModal, setTextModal] = useState();
+  const [typeModal, setTypeModal] = useState('');
+  const [textModal, setTextModal] = useState('');
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
@@ -22,15 +22,15 @@ const Admins = () => {
     setShowModal(false);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(getAdmins());
   }, []);
 
-  useEffect(async () => {
+  useEffect(() => {
     openModalOnError(error);
   }, [error]);
 
-  const removeAdmin = async (id) => {
+  const removeAdmin = (id) => {
     dispatch(deleteAdmin(id));
     if (error) {
       openModalOnError(error);

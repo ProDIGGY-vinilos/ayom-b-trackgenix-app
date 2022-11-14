@@ -8,10 +8,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postAdmins, putAdmins } from '../../redux/admins/thunks';
 
 function Form() {
-  const { error } = useSelector((state) => state.admins);
   const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.admins);
   const adminId = useParams().id;
-
+  const adminData = useSelector((state) =>
+    state.admins.list.find((admin) => admin._id === adminId)
+  );
   const [inputValue, setInputValue] = useState({
     name: '',
     lastName: '',
@@ -34,8 +36,26 @@ function Form() {
   useEffect(async () => {
     if (adminId) {
       document.getElementById('fromHeader').innerHTML = 'EDIT ADMIN';
+      setInputValue({
+        name: adminData.name,
+        lastName: adminData.lastName,
+        email: adminData.email,
+        password: adminData.password
+      });
     } else document.getElementById('fromHeader').innerHTML = 'ADD ADMIN';
   }, []);
+
+  useEffect(() => {
+    openModalOnError(error);
+  }, [error]);
+
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextMessageModal(error);
+      openMessageModal();
+    }
+  };
 
   const onChange = (e) => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
@@ -44,24 +64,14 @@ function Form() {
   const onSubmit = async () => {
     if (adminId) {
       dispatch(putAdmins(inputValue, adminId));
-      if (error) {
-        setTypeModal('Error');
-        setTextMessageModal(error);
-        openMessageModal();
-        return;
-      } else {
+      if (!error) {
         setTypeModal('Success');
         setTextMessageModal('The administrator was edited successfully');
         openMessageModal();
       }
     } else {
       dispatch(postAdmins(inputValue));
-      if (error) {
-        setTypeModal('Error');
-        setTextMessageModal(error);
-        openMessageModal();
-        return;
-      } else {
+      if (!error) {
         setTypeModal('Success');
         setTextMessageModal('The administrator was added successfully');
         openMessageModal();

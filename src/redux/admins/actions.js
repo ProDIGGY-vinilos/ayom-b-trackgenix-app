@@ -29,7 +29,7 @@ export const getAdminsSuccess = (payload) => {
 export const getAdminsError = (error) => {
   return {
     type: GET_ADMINS_ERROR,
-    error
+    payload: error
   };
 };
 
@@ -49,7 +49,7 @@ export const postAdminsSuccess = (data) => {
 export const postAdminsError = (error) => {
   return {
     type: POST_ADMINS_ERROR,
-    payload: error
+    error
   };
 };
 

@@ -33,7 +33,7 @@ export const getAdmins = () => {
 
 export const postAdmins = (data) => {
   return (dispatch) => {
-    dispatch(postAdminsPending);
+    dispatch(postAdminsPending());
     fetch(`${process.env.REACT_APP_API_URL}/admins/`, {
       method: 'POST',
       headers: {
@@ -55,6 +55,7 @@ export const postAdmins = (data) => {
         }
       })
       .catch((err) => {
+        console.log(err.toString());
         dispatch(postAdminsError(err.toString()));
       });
   };
@@ -62,7 +63,7 @@ export const postAdmins = (data) => {
 
 export const putAdmins = (data, id) => {
   return (dispatch) => {
-    dispatch(putAdminsPending);
+    dispatch(putAdminsPending());
     fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
       method: 'PUT',
       headers: {
@@ -91,17 +92,18 @@ export const putAdmins = (data, id) => {
 
 export const deleteAdmin = (id) => {
   return (dispatch) => {
-    dispatch(deleteAdminPending);
+    dispatch(deleteAdminPending());
     fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json'
       }
     })
-      .then((response) => response.json())
       .then((response) => {
         if (response.status !== 204) {
-          throw new Error("The administrator couldn't be removed");
+          response.json().then((data) => {
+            throw new Error(data.message);
+          });
         } else {
           dispatch(deleteAdminSuccess());
         }
