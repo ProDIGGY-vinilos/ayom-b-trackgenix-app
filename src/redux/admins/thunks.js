@@ -101,11 +101,16 @@ export const deleteAdmin = (id) => {
     })
       .then((response) => {
         if (response.status !== 204) {
-          response.json().then((data) => {
-            throw new Error(data.message);
-          });
+          response
+            .json()
+            .then((data) => {
+              throw new Error(data.message);
+            })
+            .catch((err) => {
+              dispatch(deleteAdminError(err.toString()));
+            });
         } else {
-          dispatch(deleteAdminSuccess());
+          dispatch(deleteAdminSuccess(id));
         }
       })
       .catch((err) => {

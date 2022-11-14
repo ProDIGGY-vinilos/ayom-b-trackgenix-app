@@ -79,9 +79,10 @@ export const deleteAdminPending = () => {
   };
 };
 
-export const deleteAdminSuccess = () => {
+export const deleteAdminSuccess = (payload) => {
   return {
-    type: DELETE_ADMIN_SUCCESS
+    type: DELETE_ADMIN_SUCCESS,
+    payload
   };
 };
 

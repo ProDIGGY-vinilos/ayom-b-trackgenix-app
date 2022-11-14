@@ -25,6 +25,10 @@ function Form() {
   const [textMessageModal, setTextMessageModal] = useState();
   const [showMessageModal, setShowMessageModal] = useState(false);
 
+  useEffect(() => {
+    openModalOnError(error);
+  }, [error]);
+
   const openMessageModal = () => {
     setShowMessageModal(true);
   };
@@ -36,18 +40,27 @@ function Form() {
   useEffect(async () => {
     if (adminId) {
       document.getElementById('fromHeader').innerHTML = 'EDIT ADMIN';
-      setInputValue({
-        name: adminData.name,
-        lastName: adminData.lastName,
-        email: adminData.email,
-        password: adminData.password
-      });
+      if (adminData === undefined) {
+        fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`)
+          .then((response) => response.json())
+          .then((response) => {
+            setInputValue({
+              name: response.data.name,
+              lastName: response.data.lastName,
+              email: response.data.email,
+              password: response.data.password
+            });
+          });
+      } else {
+        setInputValue({
+          name: adminData.name,
+          lastName: adminData.lastName,
+          email: adminData.email,
+          password: adminData.password
+        });
+      }
     } else document.getElementById('fromHeader').innerHTML = 'ADD ADMIN';
   }, []);
-
-  useEffect(() => {
-    openModalOnError(error);
-  }, [error]);
 
   const openModalOnError = (error) => {
     if (error) {
@@ -78,6 +91,7 @@ function Form() {
       }
     }
   };
+
   return (
     <form className={styles.form}>
       <div className={styles.formHeader}>

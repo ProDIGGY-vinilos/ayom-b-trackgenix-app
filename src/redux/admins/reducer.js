@@ -86,7 +86,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case DELETE_ADMIN_SUCCESS:
       return {
         ...state,
-        list: [action.payload],
+        list: [...state.list.filter((task) => task._id !== action.payload)],
         error: '',
         isLoading: false
       };
