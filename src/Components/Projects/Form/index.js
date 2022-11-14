@@ -7,8 +7,11 @@ import MessageModal from '../../Shared/Modal/MessageModal';
 import styles from './form.module.css';
 import Button from '../../Shared/Button/Button';
 import InputField from '../../Shared/Input/input';
+import { useSelector, useDispatch } from 'react-redux';
+import { postProject } from '../../../redux/projects/thunks';
 
 const Project = () => {
+  let formTtitle = 'Tittle';
   const projectId = useParams().id;
   const [projectBody, setProjectBody] = useState({
     name: '',
@@ -27,13 +30,12 @@ const Project = () => {
   const [employees, setEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showSharedModal, setShowSharedModal] = useState(false);
-
-  const openModal = (e) => {
-    e.preventDefault();
+  const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
+  const dispatch = useDispatch();
+  const openModal = () => {
     setShowModal(true);
   };
 
@@ -79,7 +81,6 @@ const Project = () => {
     } else {
       setIsFetched(false);
     }
-    setIsLoading(false);
   }, []);
 
   useEffect(async () => {
@@ -95,6 +96,17 @@ const Project = () => {
     }
   }, []);
 
+  useEffect(async () => {
+    openModalOnError(error);
+  }, [error]);
+
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openSharedModal();
+    }
+  };
   const onChangeValue = (key, value, keyArray = false) => {
     if (keyArray) {
       setProjectBody({
@@ -107,6 +119,7 @@ const Project = () => {
   };
 
   const onSubmit = async () => {
+    console.log(projectList);
     if (projectId) {
       setTypeModal('Success');
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`, {
@@ -129,36 +142,23 @@ const Project = () => {
       }
     } else {
       setTypeModal('Success');
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(projectBody)
-      });
-      const data = await response.json();
-
-      if (response.status === 201) {
-        setTextModal(data.message);
-        openSharedModal();
-        return data;
-      } else if (response.status === 400) {
-        setTypeModal('Error');
-        setTextModal(data.message);
-        openSharedModal();
-        return;
-      }
+      dispatch(postProject(projectBody));
+      openSharedModal();
     }
   };
 
+  if (isLoading) {
+    return <h3>Loading...</h3>;
+  }
+
   return (
     <div className={styles.container}>
-      {isLoading && <h3>Loading</h3>}
       {isFetched ? (
         <h2 className={styles.title}>Edit Project</h2>
       ) : (
         <h2 className={styles.title}>Add new project</h2>
       )}
+      <h2 className={styles.title}>{formTtitle}</h2>
       <Button href="/projects" style="roundedSecondary" disabled={false} text="X" />
       <form className={styles.formContainer} onSubmit={onSubmit}>
         <div className={styles.formDiv}>
