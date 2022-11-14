@@ -10,15 +10,12 @@ import {
   PUT_TASKS_ERROR,
   DELETE_TASKS_PENDING,
   DELETE_TASKS_SUCCESS,
-  DELETE_TASKS_ERROR,
-  OPEN_TASKS_MODAL,
-  CLOSE_TASKS_MODAL
+  DELETE_TASKS_ERROR
 } from './constant';
 
 const INITIAL_STATE = {
   list: [],
   isLoading: false,
-  modal: false,
   error: ''
 };
 
@@ -35,8 +32,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: '',
-        list: action.payload,
-        modal: false
+        list: action.payload
       };
     case GET_TASKS_ERROR:
       return {
@@ -49,22 +45,20 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: true,
-        error: 'Loading...',
-        modal: true
+        error: ''
       };
     case POST_TASKS_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        modal: true,
+        list: [...state.list, action.payload],
         error: ''
       };
     case POST_TASKS_ERROR:
       return {
         ...state,
         isLoading: false,
-        error: action.payload,
-        modal: true
+        error: action.payload
       };
     case PUT_TASKS_PENDING:
       return {
@@ -75,6 +69,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
+        list: [...state.list, action.payload],
         error: ''
       };
     case PUT_TASKS_ERROR:
@@ -87,7 +82,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: true,
-        error: 'Loading...'
+        error: ''
       };
     case DELETE_TASKS_SUCCESS:
       return {
@@ -101,17 +96,6 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: action.payload
-      };
-    case OPEN_TASKS_MODAL:
-      return {
-        ...state,
-        isLoading: false,
-        modal: true
-      };
-    case CLOSE_TASKS_MODAL:
-      return {
-        ...state,
-        isLoading: false
       };
     default:
       return {

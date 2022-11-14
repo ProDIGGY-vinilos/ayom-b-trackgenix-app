@@ -7,9 +7,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getTasks, deleteTask } from '../../redux/tasks/thunks';
 
 const Tasks = () => {
-  const [typeModal, setTypeModal] = useState();
-  const [textModal, setTextModal] = useState();
+  const [typeModal, setTypeModal] = useState('');
+  const [textModal, setTextModal] = useState('');
   const [showModal, setShowModal] = useState(false);
+
+  const data = useSelector((state) => state.tasks.list);
 
   const { list: tasksList, isLoading, error } = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
@@ -22,23 +24,26 @@ const Tasks = () => {
     setShowModal(false);
   };
 
-  useEffect(async () => {
-    dispatch(getTasks());
+  useEffect(() => {
+    if (!data.length) {
+      console.log('hice un fetch');
+      dispatch(getTasks());
+    }
   }, []);
 
   useEffect(() => {
-    if (error !== '') {
-      setTypeModal('Error');
-      setTextModal(error);
-      openModal();
-    } else {
-      setTextModal('Deleted');
-      openModal();
-    }
+    openModalOnError(error);
   }, [error]);
 
   const deleteTaskFunction = async (id) => {
     dispatch(deleteTask(id));
+    if (error) {
+      openModalOnError(error);
+    } else {
+      setTypeModal('Success');
+      setTextModal('The administrator was successfully removed');
+      openModal();
+    }
   };
 
   const columns = [

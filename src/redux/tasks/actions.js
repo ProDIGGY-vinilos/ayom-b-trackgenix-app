@@ -10,9 +10,7 @@ import {
   PUT_TASKS_ERROR,
   DELETE_TASKS_PENDING,
   DELETE_TASKS_SUCCESS,
-  DELETE_TASKS_ERROR,
-  OPEN_TASKS_MODAL,
-  CLOSE_TASKS_MODAL
+  DELETE_TASKS_ERROR
 } from './constant';
 
 export const getTasksPending = () => {
@@ -41,9 +39,10 @@ export const postTasksPending = () => {
   };
 };
 
-export const postTasksSuccess = () => {
+export const postTasksSuccess = (payload) => {
   return {
-    type: POST_TASKS_SUCCESS
+    type: POST_TASKS_SUCCESS,
+    payload
   };
 };
 
@@ -60,9 +59,10 @@ export const putTasksPending = () => {
   };
 };
 
-export const putTasksSuccess = () => {
+export const putTasksSuccess = (payload) => {
   return {
-    type: PUT_TASKS_SUCCESS
+    type: PUT_TASKS_SUCCESS,
+    payload
   };
 };
 
@@ -90,17 +90,5 @@ export const deleteTasksError = (error) => {
   return {
     type: DELETE_TASKS_ERROR,
     payload: error
-  };
-};
-
-export const openTasksModal = () => {
-  return {
-    type: OPEN_TASKS_MODAL
-  };
-};
-
-export const closeTasksModal = () => {
-  return {
-    type: CLOSE_TASKS_MODAL
   };
 };

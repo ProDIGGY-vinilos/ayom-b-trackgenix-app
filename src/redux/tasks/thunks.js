@@ -10,8 +10,7 @@ import {
   putTasksError,
   deleteTasksPending,
   deleteTasksSuccess,
-  deleteTasksError,
-  openTasksModal
+  deleteTasksError
 } from './actions';
 
 export const getTasks = () => {
@@ -47,13 +46,11 @@ export const postTask = (taskBody) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(postTasksSuccess());
-          dispatch(openTasksModal());
+          dispatch(postTasksSuccess(data.data));
         }
       })
       .catch((error) => {
         dispatch(postTasksError(error.toString()));
-        dispatch(openTasksModal());
       });
   };
 };
@@ -73,13 +70,11 @@ export const putTask = (id, taskBody) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(putTasksSuccess());
-          dispatch(openTasksModal());
+          dispatch(putTasksSuccess(data.data));
         }
       })
       .catch((error) => {
         dispatch(putTasksError(error.toString()));
-        dispatch(openTasksModal());
       });
   };
 };
@@ -102,7 +97,6 @@ export const deleteTask = (id) => {
             });
         } else {
           console.log(response);
-          dispatch(deleteTasksPending());
           dispatch(deleteTasksSuccess(id));
         }
       })

@@ -18,7 +18,7 @@ const Form = () => {
 
   const { error } = useSelector((state) => state.tasks);
   const [typeModal, setTypeModal] = useState('');
-  const [textMessageModal, setTextMessageModal] = useState();
+  const [textMessageModal, setTextMessageModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
 
   const openMessageModal = () => {
@@ -41,11 +41,15 @@ const Form = () => {
     }
   }, []);
 
+  useEffect(() => {
+    openModalOnError(error);
+  }, [error]);
+
   const updateInput = async (e) => {
     setNameValue({ ...userInput, description: e.target.value });
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (typeModal !== '') {
       if (error !== '') {
         setTypeModal('Error');
@@ -61,12 +65,26 @@ const Form = () => {
       }
     }
   }, [typeModal]);
-
+ */
   const onSubmit = async () => {
     if (taskId) {
       dispatch(putTask(taskId, userInput));
+      setTypeModal('Success');
+      setTextMessageModal('The Task was updated successfully');
+      openMessageModal();
     } else {
       dispatch(postTask(userInput));
+      setTypeModal('Success');
+      setTextMessageModal('The Task was created successfully');
+      openMessageModal();
+    }
+  };
+
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextMessageModal(error);
+      openMessageModal();
     }
   };
 
