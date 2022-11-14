@@ -4,7 +4,10 @@ import {
   GET_EMPLOYEES_ERROR,
   POST_EMPLOYEES_PENDING,
   POST_EMPLOYEES_SUCCESS,
-  POST_EMPLOYEES_ERROR
+  POST_EMPLOYEES_ERROR,
+  DELETE_EMPLOYEES_PENDING,
+  DELETE_EMPLOYEES_SUCCESS,
+  DELETE_EMPLOYEES_ERROR
 } from './constant';
 
 const INITIAL_STATE = {
@@ -53,7 +56,27 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: action.payload,
-        list: []
+        list: [...state.list]
+      };
+    case DELETE_EMPLOYEES_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case DELETE_EMPLOYEES_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: false,
+        list: [...state.list.filter((element) => element._id !== action.payload)],
+        message: action.payload.message
+      };
+    case DELETE_EMPLOYEES_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+        list: [...state.list]
       };
     default:
       return state;

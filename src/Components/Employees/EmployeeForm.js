@@ -10,8 +10,7 @@ import { postEmployee } from '../../redux/employees/thunks';
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
-  const error = useSelector((state) => state.employees.error);
-  const message = useSelector((state) => state.employees.message);
+  const { error, message } = useSelector((state) => state.employees);
   const employeeId = useParams().id;
   const [userInput, setUserInput] = useState({
     name: '',
@@ -21,8 +20,8 @@ const EmployeeForm = () => {
     password: ''
   });
 
-  const [typeModal, setTypeModal] = useState();
-  const [textModal, setTextModal] = useState();
+  const [typeModal, setTypeModal] = useState('');
+  const [textModal, setTextModal] = useState('');
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
@@ -33,7 +32,7 @@ const EmployeeForm = () => {
     setShowModal(false);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     if (error) {
       setTypeModal('Error');
       setTextModal(error);
@@ -41,7 +40,7 @@ const EmployeeForm = () => {
     }
   }, [error]);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (message) {
       setTextModal(message);
       openModal();
