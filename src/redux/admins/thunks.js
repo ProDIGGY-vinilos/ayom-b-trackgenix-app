@@ -18,11 +18,11 @@ export const getAdmins = () => {
     dispatch(getAdminsPending());
     fetch(`${process.env.REACT_APP_API_URL}/admins`)
       .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
         } else {
-          dispatch(getAdminsSuccess(response.data));
+          dispatch(getAdminsSuccess(data.data));
         }
       })
       .catch((err) => {
@@ -47,11 +47,11 @@ export const postAdmins = (data) => {
       })
     })
       .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
         } else {
-          dispatch(postAdminsSuccess(response.data));
+          dispatch(postAdminsSuccess(data.data));
         }
       })
       .catch((err) => {
@@ -76,11 +76,11 @@ export const putAdmins = (data, id) => {
       })
     })
       .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
         } else {
-          dispatch(putAdminsSuccess(response.data));
+          dispatch(putAdminsSuccess(data.data));
         }
       })
       .catch((err) => {
