@@ -5,6 +5,9 @@ import {
   POST_EMPLOYEES_PENDING,
   POST_EMPLOYEES_SUCCESS,
   POST_EMPLOYEES_ERROR,
+  PUT_EMPLOYEES_PENDING,
+  PUT_EMPLOYEES_SUCCESS,
+  PUT_EMPLOYEES_ERROR,
   DELETE_EMPLOYEES_PENDING,
   DELETE_EMPLOYEES_SUCCESS,
   DELETE_EMPLOYEES_ERROR
@@ -52,6 +55,26 @@ const reducer = (state = INITIAL_STATE, action) => {
         message: action.payload.message
       };
     case POST_EMPLOYEES_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+        list: [...state.list]
+      };
+    case PUT_EMPLOYEES_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case PUT_EMPLOYEES_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: false,
+        list: [...state.list, action.payload.data],
+        message: action.payload.message
+      };
+    case PUT_EMPLOYEES_ERROR:
       return {
         ...state,
         isLoading: false,

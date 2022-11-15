@@ -6,12 +6,15 @@ import styles from './employees.module.css';
 import Button from '../Shared/Button/Button';
 import InputField from '../Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
-import { postEmployee } from '../../redux/employees/thunks';
+import { postEmployee, putEmployee } from '../../redux/employees/thunks';
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
   const { error, message } = useSelector((state) => state.employees);
   const employeeId = useParams().id;
+  const employee = useSelector((state) =>
+    state.employees.list.find((employee) => employee._id === employeeId)
+  );
   const [userInput, setUserInput] = useState({
     name: '',
     lastName: '',
@@ -47,25 +50,16 @@ const EmployeeForm = () => {
     }
   }, [message]);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (employeeId) {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${employeeId}`);
-        const data = await response.json();
-        setUserInput({
-          name: data.data.name,
-          lastName: data.data.lastName,
-          email: data.data.email,
-          phone: data.data.phone,
-          password: data.data.password
-        });
-        return;
-      } catch (err) {
-        setTypeModal('Error');
-        setTextModal(err.message);
-        openModal();
-        return;
-      }
+      setUserInput({
+        name: employee.name,
+        lastName: employee.lastName,
+        email: employee.email,
+        phone: employee.phone,
+        password: employee.password
+      });
+      return;
     }
   }, []);
 
@@ -97,8 +91,11 @@ const EmployeeForm = () => {
       setTypeModal('Success');
     }
 
-    let url = !employeeId ? '' : '/' + employeeId;
-    dispatch(postEmployee(url, requestOptions));
+    if (employeeId) {
+      dispatch(putEmployee(`/${employeeId}`, requestOptions));
+    } else {
+      dispatch(postEmployee('', requestOptions));
+    }
   };
 
   return (

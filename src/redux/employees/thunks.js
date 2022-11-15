@@ -28,11 +28,25 @@ export const getEmployees = () => {
   };
 };
 
-/* export const getEmployee = (id, data) => {
-
-} */
-
 export const postEmployee = (url, payload) => {
+  return (dispatch) => {
+    dispatch(postEmployeesPending());
+    fetch(`${process.env.REACT_APP_API_URL}/employees${url}`, payload)
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else {
+          dispatch(postEmployeesSuccess(response));
+        }
+      })
+      .catch((error) => {
+        dispatch(postEmployeesError(error.toString()));
+      });
+  };
+};
+
+export const putEmployee = (url, payload) => {
   return (dispatch) => {
     dispatch(postEmployeesPending());
     fetch(`${process.env.REACT_APP_API_URL}/employees${url}`, payload)

@@ -5,6 +5,9 @@ import {
   POST_EMPLOYEES_PENDING,
   POST_EMPLOYEES_SUCCESS,
   POST_EMPLOYEES_ERROR,
+  PUT_EMPLOYEES_PENDING,
+  PUT_EMPLOYEES_SUCCESS,
+  PUT_EMPLOYEES_ERROR,
   DELETE_EMPLOYEES_PENDING,
   DELETE_EMPLOYEES_SUCCESS,
   DELETE_EMPLOYEES_ERROR
@@ -46,6 +49,26 @@ export const postEmployeesSuccess = (data) => {
 export const postEmployeesError = (error) => {
   return {
     type: POST_EMPLOYEES_ERROR,
+    payload: error
+  };
+};
+
+export const putEmployeesPending = () => {
+  return {
+    type: PUT_EMPLOYEES_PENDING
+  };
+};
+
+export const putEmployeesSuccess = (data) => {
+  return {
+    type: PUT_EMPLOYEES_SUCCESS,
+    payload: data
+  };
+};
+
+export const putEmployeesError = (error) => {
+  return {
+    type: PUT_EMPLOYEES_ERROR,
     payload: error
   };
 };
