@@ -76,24 +76,20 @@ export const putProject = (id, projectBody) => {
   };
 };
 
-export const deleteProject = (id, projectsList) => {
+export const deleteProject = (id) => {
   return (dispatch) => {
     dispatch(deleteProjectPending());
     fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'aplication/json'
+      }
     })
       .then((response) => {
         if (response.status !== 204) {
-          response
-            .json()
-            .then((data) => {
-              throw new Error(data.message);
-            })
-            .catch((error) => {
-              dispatch(deleteProjectError(error.toString()));
-            });
+          throw new Error('Project cannot be deleted');
         } else {
-          return dispatch(deleteProjectSuccess(projectsList));
+          dispatch(deleteProjectSuccess(id));
         }
       })
       .catch((error) => {

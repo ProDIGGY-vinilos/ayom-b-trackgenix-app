@@ -78,10 +78,10 @@ export const deleteProjectPending = () => {
   };
 };
 
-export const deleteProjectSuccess = (data) => {
+export const deleteProjectSuccess = (payload) => {
   return {
     type: DELETE_PROJECT_SUCCESS,
-    payload: data
+    payload
   };
 };
 

@@ -30,8 +30,7 @@ const Projects = () => {
   }, [error]);
 
   const deleteItem = async (id) => {
-    const newProjectList = [...projectList.filter((projectItem) => projectItem._id !== id)];
-    dispatch(deleteProject(id, newProjectList));
+    dispatch(deleteProject(id));
     if (error) {
       setTypeModal('Error');
       setTextModal(error);

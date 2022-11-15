@@ -70,7 +70,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case DELETE_PROJECT_SUCCESS:
       return {
         ...state,
-        list: action.payload,
+        list: [...state.list.filter((project) => project._id !== action.payload)],
         isLoading: false,
         error: ''
       };
