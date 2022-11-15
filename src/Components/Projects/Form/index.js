@@ -32,8 +32,7 @@ const Project = () => {
   const [textModal, setTextModal] = useState();
   const [showSharedModal, setShowSharedModal] = useState(false);
 
-  const openModal = (e) => {
-    e.preventDefault();
+  const openModal = () => {
     setShowModal(true);
   };
 
@@ -163,7 +162,7 @@ const Project = () => {
       <form className={styles.formContainer} onSubmit={onSubmit}>
         <div className={styles.formDiv}>
           <InputField
-            label="Pojec Name"
+            label="Project Name"
             name="name"
             type="text"
             placeholder="project name"

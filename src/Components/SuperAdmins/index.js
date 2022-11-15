@@ -3,12 +3,16 @@ import styles from './super-admins.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
+import { useSelector, useDispatch } from 'react-redux';
+import getSuperAdmins from '../../redux/superAdmins/thunks';
 
 const SuperAdmins = () => {
-  const [superAdmins, setSuperAdmins] = useState([]);
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
+
+  const { list: superAdminsList, isLoading, error } = useSelector((state) => state.superAdmins);
+  const dispatch = useDispatch();
 
   const openModal = () => {
     setShowModal(true);
@@ -19,20 +23,11 @@ const SuperAdmins = () => {
   };
 
   useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/superAdmins`);
-      const data = await response.json();
-      setSuperAdmins(data.data);
-    } catch (error) {
-      setTypeModal('Error');
-      setTextModal(error);
-      openModal();
-      return;
-    }
+    dispatch(getSuperAdmins());
   }, []);
 
-  const onDeleteSuperAdmin = (id) => {
-    setSuperAdmins([...superAdmins.filter((sAdmin) => sAdmin._id !== id)]);
+  const onDeleteSuperAdmin = () => {
+    dispatch(getSuperAdmins());
     setTypeModal('Success');
     setTextModal('The super administrator was successfully removed');
     openModal();
@@ -62,23 +57,41 @@ const SuperAdmins = () => {
     { heading: 'Password', value: 'password' },
     { heading: 'Actions' }
   ];
+  useEffect(async () => {
+    openModalOnError(error);
+  }, [error]);
+
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    }
+  };
 
   return (
     <div className={styles.container}>
       <h2>Super Admin</h2>
-      <Table
-        data={superAdmins}
-        columns={columns}
-        deleteItem={deleteSuperAdmin}
-        edit="/super-admin-form"
-      />
-      <Button href="/super-admin-form" style="roundedPrimary" disabled={false} text="+" />
-      <MessageModal
-        type={typeModal}
-        isOpen={showModal}
-        message={textModal}
-        handleClose={closeModal}
-      />
+      {isLoading ? (
+        <h3>Loading.. </h3>
+      ) : (
+        <>
+          <Table
+            data={superAdminsList}
+            columns={columns}
+            deleteItem={deleteSuperAdmin}
+            edit="/super-admin-form"
+          />
+          <Button href="/super-admin-form" style="roundedPrimary" disabled={false} text="+" />
+          <MessageModal
+            type={typeModal}
+            isOpen={showModal}
+            message={textModal}
+            handleClose={closeModal}
+          />
+        </>
+      )}
+      ;
     </div>
   );
 };

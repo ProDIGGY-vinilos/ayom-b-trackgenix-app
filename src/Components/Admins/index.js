@@ -3,9 +3,12 @@ import styles from './admins.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAdmins } from '../../redux/admins/thunks';
 
 const Admins = () => {
-  const [admins, saveAdmins] = useState([]);
+  const { list: adminList, isLoading, error } = useSelector((state) => state.admins);
+  const dispatch = useDispatch();
 
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
@@ -20,20 +23,15 @@ const Admins = () => {
   };
 
   useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`);
-      const data = await response.json();
-      saveAdmins(data.data);
-    } catch (error) {
-      setTypeModal('Error');
-      setTextModal(error);
-      openModal();
-      return;
-    }
+    dispatch(getAdmins());
   }, []);
 
-  const deleteAdmin = (id) => {
-    saveAdmins([...admins.filter((newListItem) => newListItem._id !== id)]);
+  useEffect(async () => {
+    openModalOnError(error);
+  }, [error]);
+
+  const deleteAdmin = () => {
+    dispatch(getAdmins());
     setTypeModal('Success');
     setTextModal('The administrator was successfully removed');
     openModal();
@@ -58,10 +56,22 @@ const Admins = () => {
     { heading: 'Actions' }
   ];
 
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    }
+  };
+
   return (
     <section className={styles.container}>
       <h2>Admin</h2>
-      <Table data={admins} columns={columns} deleteItem={removeAdmin} edit="/admin-form" />
+      <Table data={adminList} columns={columns} deleteItem={removeAdmin} edit="/admin-form" />
       <Button href={`/admin-form`} style="roundedPrimary" disabled={false} text="+" />
       <MessageModal
         type={typeModal}

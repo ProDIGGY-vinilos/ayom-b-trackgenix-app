@@ -24,11 +24,12 @@ const FormEmployee = ({ employees, employee, changeValue }) => {
       />
       <div>
         <InputField
-          label="Rate"
           name="rate"
+          value={employee?.rate}
           type="number"
-          value={employee ? employee.rate : undefined}
-          onChange={(value) => changeValue('rate', value, true)}
+          placeholder="Rate"
+          onChange={(e) => changeValue('rate', e.target.value, true)}
+          label="Rate"
         />
       </div>
     </div>

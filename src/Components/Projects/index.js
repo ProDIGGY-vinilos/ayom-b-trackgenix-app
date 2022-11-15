@@ -3,12 +3,16 @@ import Table from '../Shared/Table';
 import styles from './projects.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 import Button from '../Shared/Button/Button';
+import { useSelector, useDispatch } from 'react-redux';
+import { getProjects } from '../../redux/projects/thunks';
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
+  const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
+  const dispatch = useDispatch();
 
   const openModal = () => {
     setShowModal(true);
@@ -19,17 +23,12 @@ const Projects = () => {
   };
 
   useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`);
-      const data = await response.json();
-      setProjects(data.data);
-    } catch (error) {
-      setTypeModal('Error');
-      setTextModal(error);
-      openModal();
-      return;
-    }
+    dispatch(getProjects());
   }, []);
+
+  useEffect(async () => {
+    openModalOnError(error);
+  }, [error]);
 
   const onDeleteItem = (id) => {
     setProjects([...projects.filter((projectItem) => projectItem._id !== id)]);
@@ -72,12 +71,35 @@ const Projects = () => {
     },
     { heading: 'Actions' }
   ];
-
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    }
+  };
+  if (isLoading) {
+    return <h3>Loading...</h3>;
+  }
   return (
     <section className={styles.container}>
-      <h2>Projects</h2>
-      <Table data={projects} columns={columns} deleteItem={deleteItem} edit="/project-form" />
-      <Button href="/project-form" style="roundedPrimary" disabled={false} text="+" />
+      {error ? (
+        <section className={styles.container}>
+          <h2>Projects</h2>
+          <h3>Projects not found</h3>
+        </section>
+      ) : (
+        <>
+          <h2>Projects</h2>
+          <Table
+            data={projectList}
+            columns={columns}
+            deleteItem={deleteItem}
+            edit="/project-form"
+          />
+          <Button href="/project-form" style="roundedPrimary" disabled={false} text="+" />
+        </>
+      )}
       <MessageModal
         type={typeModal}
         isOpen={showModal}
