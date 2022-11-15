@@ -96,22 +96,21 @@ const Project = () => {
   }, []);
 
   useEffect(() => {
-    openModalOnError(error);
+    setErrorMessage(error);
   }, [error]);
 
-  const openModalOnError = (error) => {
+  const setErrorMessage = (error) => {
     if (error) {
       setTypeModal('Error');
       setTextModal(error);
-      openSharedModal();
     }
   };
 
   useEffect(() => {
-    openModalOnSuccess(modalMessage);
+    setSuccessMessage(modalMessage);
   }, [modalMessage]);
 
-  const openModalOnSuccess = (modalMessage) => {
+  const setSuccessMessage = (modalMessage) => {
     setTypeModal('Success');
     setTextModal(modalMessage);
   };

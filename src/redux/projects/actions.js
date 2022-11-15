@@ -33,6 +33,26 @@ export const getProjectsError = (error) => {
   };
 };
 
+export const deleteProjectPending = () => {
+  return {
+    type: DELETE_PROJECT_PENDING
+  };
+};
+
+export const deleteProjectSuccess = (payload) => {
+  return {
+    type: DELETE_PROJECT_SUCCESS,
+    payload
+  };
+};
+
+export const deleteProjectError = (error) => {
+  return {
+    type: DELETE_PROJECT_ERROR,
+    payload: error
+  };
+};
+
 export const postProjectPending = () => {
   return {
     type: POST_PROJECT_PENDING
@@ -69,25 +89,6 @@ export const putProjectSuccess = (data) => {
 export const putProjectError = (error) => {
   return {
     type: PUT_PROJECT_ERROR,
-    payload: error
-  };
-};
-export const deleteProjectPending = () => {
-  return {
-    type: DELETE_PROJECT_PENDING
-  };
-};
-
-export const deleteProjectSuccess = (payload) => {
-  return {
-    type: DELETE_PROJECT_SUCCESS,
-    payload
-  };
-};
-
-export const deleteProjectError = (error) => {
-  return {
-    type: DELETE_PROJECT_ERROR,
     payload: error
   };
 };

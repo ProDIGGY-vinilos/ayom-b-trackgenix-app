@@ -28,6 +28,28 @@ export const getProjects = () => {
   };
 };
 
+export const deleteProject = (id) => {
+  return (dispatch) => {
+    dispatch(deleteProjectPending());
+    fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'aplication/json'
+      }
+    })
+      .then((response) => {
+        if (response.status !== 204) {
+          throw new Error('Project cannot be deleted');
+        } else {
+          dispatch(deleteProjectSuccess(id));
+        }
+      })
+      .catch((error) => {
+        dispatch(deleteProjectError(error.toString()));
+      });
+  };
+};
+
 export const postProject = (projectBody) => {
   return (dispatch) => {
     dispatch(postProjectPending());
@@ -72,28 +94,6 @@ export const putProject = (id, projectBody) => {
       })
       .catch((error) => {
         dispatch(postProjectError(error.toString()));
-      });
-  };
-};
-
-export const deleteProject = (id) => {
-  return (dispatch) => {
-    dispatch(deleteProjectPending());
-    fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-type': 'aplication/json'
-      }
-    })
-      .then((response) => {
-        if (response.status !== 204) {
-          throw new Error('Project cannot be deleted');
-        } else {
-          dispatch(deleteProjectSuccess(id));
-        }
-      })
-      .catch((error) => {
-        dispatch(deleteProjectError(error.toString()));
       });
   };
 };

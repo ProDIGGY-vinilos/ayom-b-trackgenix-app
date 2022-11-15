@@ -29,16 +29,18 @@ const Projects = () => {
     openModalOnError(error);
   }, [error]);
 
-  const deleteItem = async (id) => {
-    dispatch(deleteProject(id));
+  const openModalOnError = (error) => {
     if (error) {
       setTypeModal('Error');
       setTextModal(error);
-      openModal();
-    } else {
-      setTextModal(`Project with id:${id} was deleted`);
-      openModal();
     }
+  };
+
+  const deleteItem = async (id) => {
+    dispatch(deleteProject(id));
+    setTypeModal('Success');
+    setTextModal(`Project with id:${id} was deleted`);
+    openModal();
   };
 
   const columns = [
@@ -58,13 +60,7 @@ const Projects = () => {
     },
     { heading: 'Actions' }
   ];
-  const openModalOnError = (error) => {
-    if (error) {
-      setTypeModal('Error');
-      setTextModal(error);
-      openModal();
-    }
-  };
+
   if (isLoading) {
     return <h3>Loading...</h3>;
   }
