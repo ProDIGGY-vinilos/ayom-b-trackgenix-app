@@ -3,12 +3,15 @@ import styles from './employees.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
+import { useSelector, useDispatch } from 'react-redux';
+import getEmployees from '../../redux/employees/thunks';
 
 const Employees = () => {
-  const [employees, setEmployees] = useState([]);
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
+  const { list: employeesList, isLoading, error } = useSelector((state) => state.employees);
 
   const openModal = () => {
     setShowModal(true);
@@ -18,8 +21,8 @@ const Employees = () => {
     setShowModal(false);
   };
 
-  const deleteItem = (id) => {
-    setEmployees(employees.filter((employee) => employee._id !== id));
+  const deleteItem = () => {
+    dispatch(getEmployees());
     setTypeModal('Success');
     setTextModal('The employee was successfully removed');
     openModal();
@@ -31,17 +34,20 @@ const Employees = () => {
   };
 
   useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`);
-      const data = await response.json();
-      setEmployees(data.data);
-    } catch (error) {
+    dispatch(getEmployees());
+  }, []);
+
+  useEffect(async () => {
+    openModalOnError(error);
+  }, [error]);
+
+  const openModalOnError = (error) => {
+    if (error) {
       setTypeModal('Error');
       setTextModal(error);
       openModal();
-      return;
     }
-  }, []);
+  };
 
   const columns = [
     { heading: 'Id', value: '_id' },
@@ -52,10 +58,19 @@ const Employees = () => {
     { heading: 'Actions' }
   ];
 
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
   return (
     <section className={styles.container}>
       <h2>Employee</h2>
-      <Table data={employees} columns={columns} deleteItem={deleteEmployee} edit="/employee-form" />
+      <Table
+        data={employeesList}
+        columns={columns}
+        deleteItem={deleteEmployee}
+        edit="/employee-form"
+      />
       <Button href="/employee-form" style="roundedPrimary" disabled={false} text="+" />
       <MessageModal
         type={typeModal}

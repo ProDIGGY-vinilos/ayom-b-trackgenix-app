@@ -149,7 +149,7 @@ const Project = () => {
       <form className={styles.formContainer} onSubmit={onSubmit}>
         <div className={styles.formDiv}>
           <InputField
-            label="Pojec Name"
+            label="Project Name"
             name="name"
             type="text"
             placeholder="project name"
