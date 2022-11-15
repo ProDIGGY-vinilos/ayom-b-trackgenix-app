@@ -96,7 +96,6 @@ export const deleteTask = (id) => {
               dispatch(deleteTasksError(error.toString()));
             });
         } else {
-          console.log(response);
           dispatch(deleteTasksSuccess(id));
         }
       })

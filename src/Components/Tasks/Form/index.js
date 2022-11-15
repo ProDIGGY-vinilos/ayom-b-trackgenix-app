@@ -49,23 +49,6 @@ const Form = () => {
     setNameValue({ ...userInput, description: e.target.value });
   };
 
-  /* useEffect(() => {
-    if (typeModal !== '') {
-      if (error !== '') {
-        setTypeModal('Error');
-        setTextMessageModal(error);
-        openMessageModal();
-      } else {
-        setTypeModal('Success');
-        taskId
-          ? setTextMessageModal('The Task was updated successfully')
-          : setTextMessageModal('The Task was created successfully');
-        openMessageModal();
-        return;
-      }
-    }
-  }, [typeModal]);
- */
   const onSubmit = async () => {
     if (taskId) {
       dispatch(putTask(taskId, userInput));

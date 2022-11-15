@@ -25,8 +25,7 @@ const Tasks = () => {
   };
 
   useEffect(() => {
-    if (!data.length) {
-      console.log('hice un fetch');
+    if (!data.length || data.length === 1) {
       dispatch(getTasks());
     }
   }, []);
@@ -41,7 +40,7 @@ const Tasks = () => {
       openModalOnError(error);
     } else {
       setTypeModal('Success');
-      setTextModal('The administrator was successfully removed');
+      setTextModal('The Task was removed successfully');
       openModal();
     }
   };

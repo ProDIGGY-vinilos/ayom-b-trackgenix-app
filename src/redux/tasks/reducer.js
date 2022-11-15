@@ -38,8 +38,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-        error: action.payload,
-        list: []
+        error: action.payload
       };
     case POST_TASKS_PENDING:
       return {
@@ -63,7 +62,8 @@ const reducer = (state = INITIAL_STATE, action) => {
     case PUT_TASKS_PENDING:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        error: ''
       };
     case PUT_TASKS_SUCCESS:
       return {
