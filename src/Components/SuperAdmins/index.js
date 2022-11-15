@@ -4,7 +4,7 @@ import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getSuperAdmins } from '../../redux/superAdmins/thunks';
+import { getSuperAdmins, deleteSuperAdmins } from '../../redux/superAdmins/thunks';
 
 const SuperAdmins = () => {
   const [typeModal, setTypeModal] = useState();
@@ -26,26 +26,18 @@ const SuperAdmins = () => {
     dispatch(getSuperAdmins());
   }, []);
 
-  const onDeleteSuperAdmin = () => {
-    dispatch(getSuperAdmins());
-    setTypeModal('Success');
-    setTextModal('The super administrator was successfully removed');
-    openModal();
-  };
+  useEffect(() => {
+    openModalOnError(error);
+  }, [error]);
 
-  const deleteSuperAdmin = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
-        method: 'DELETE'
-      });
-      if (response.status === 204) {
-        onDeleteSuperAdmin(id);
-      }
-    } catch (error) {
-      setTypeModal('Error');
-      setTextModal(error);
+  const onDeleteSuperAdmins = (id) => {
+    dispatch(deleteSuperAdmins(id));
+    if (error) {
+      openModalOnError(error);
+    } else {
+      setTypeModal('Success');
+      setTextModal('The super administrator was successfully removed');
       openModal();
-      return;
     }
   };
 
@@ -79,7 +71,7 @@ const SuperAdmins = () => {
           <Table
             data={superAdminsList}
             columns={columns}
-            deleteItem={deleteSuperAdmin}
+            deleteItem={onDeleteSuperAdmins}
             edit="/super-admin-form"
           />
           <Button href="/super-admin-form" style="roundedPrimary" disabled={false} text="+" />
