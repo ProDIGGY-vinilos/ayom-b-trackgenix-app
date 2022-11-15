@@ -6,11 +6,11 @@ import styles from './form.module.css';
 import InputField from '../../Shared/Input/input';
 import MessageModal from '../../Shared/Modal/MessageModal';
 import Button from '../../Shared/Button/Button';
-import { postSuperAdmins } from '../../../redux/superAdmins/thunks';
+import { postSuperAdmins, putSuperAdmins } from '../../../redux/superAdmins/thunks';
 
 const Form = () => {
   const dispatch = useDispatch();
-  const { error, success } = useSelector((state) => state.superAdmins);
+  const { error } = useSelector((state) => state.superAdmins);
   const superAdminId = useParams().id;
   const [superAdmin, setSuperAdmin] = useState({
     name: '',
@@ -19,8 +19,8 @@ const Form = () => {
     password: ''
   });
   const [title, setTitle] = useState([]);
-  const [typeModal, setTypeModal] = useState();
-  const [textModal, setTextModal] = useState();
+  const [typeModal, setTypeModal] = useState('');
+  const [textModal, setTextModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
 
   const openMessageModal = () => {
@@ -72,25 +72,23 @@ const Form = () => {
     }
   };
 
-  const updateCreateSuperAdmin = async (method, url) => {
-    dispatch(postSuperAdmins(url, superAdmin, method));
-  };
+  useEffect(() => {
+    openModalOnError(error);
+  }, [error]);
 
-  useEffect(async () => {
-    openModalOnSuccess(success);
-  }, [success]);
-
-  const openModalOnSuccess = (success) => {
-    if (success) {
+  const updateCreateSuperAdmin = async (url) => {
+    if (superAdminId) {
+      dispatch(putSuperAdmins(url, superAdmin));
       setTypeModal('Success');
-      setTextModal('TimeSheet edited successfully');
+      setTextModal('SuperAdmin updated successfully');
+      openMessageModal();
+    } else {
+      dispatch(postSuperAdmins(url, superAdmin));
+      setTypeModal('Success');
+      setTextModal('SuperAdmin created successfully');
       openMessageModal();
     }
   };
-
-  useEffect(async () => {
-    openModalOnError(error);
-  }, [error]);
 
   const openModalOnError = (error) => {
     if (error) {
@@ -104,27 +102,13 @@ const Form = () => {
     let url = '';
     if (superAdminId) {
       url = `${process.env.REACT_APP_API_URL}/superAdmins/${superAdminId}`;
-      try {
-        updateCreateSuperAdmin('PUT', url);
-      } catch (error) {
-        setTypeModal('Error');
-        setTextModal(error);
-        openMessageModal();
-        return;
-      }
+      updateCreateSuperAdmin(url);
     } else {
       url = `${process.env.REACT_APP_API_URL}/superAdmins`;
-      try {
-        updateCreateSuperAdmin('POST', url);
-      } catch (error) {
-        setTypeModal('Error');
-        setTextModal(error);
-        openMessageModal();
-        return;
-      }
+      updateCreateSuperAdmin(url);
     }
-    return;
   };
+
   return (
     <form className={styles.container}>
       <div className={styles.header}>

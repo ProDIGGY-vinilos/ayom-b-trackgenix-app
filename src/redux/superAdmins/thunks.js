@@ -5,6 +5,9 @@ import {
   postSuperAdminsPending,
   postSuperAdminsSuccess,
   postSuperAdminsError,
+  putSuperAdminsPending,
+  putSuperAdminsSuccess,
+  putSuperAdminsError,
   deleteSuperAdminsPending,
   deleteSuperAdminsSuccess,
   deleteSuperAdminsError
@@ -28,11 +31,11 @@ export const getSuperAdmins = () => {
   };
 };
 
-export const postSuperAdmins = (url, superAdmin, method) => {
+export const postSuperAdmins = (url, superAdmin) => {
   return (dispatch) => {
     dispatch(postSuperAdminsPending());
     fetch(url, {
-      method: method,
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -48,6 +51,30 @@ export const postSuperAdmins = (url, superAdmin, method) => {
       })
       .catch((error) => {
         dispatch(postSuperAdminsError(error.toString()));
+      });
+  };
+};
+
+export const putSuperAdmins = (url, superAdmin) => {
+  return (dispatch) => {
+    dispatch(putSuperAdminsPending());
+    fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(superAdmin)
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(putSuperAdminsSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(putSuperAdminsError(error.toString()));
       });
   };
 };

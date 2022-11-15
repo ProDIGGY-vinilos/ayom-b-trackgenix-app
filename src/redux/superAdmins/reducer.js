@@ -5,9 +5,9 @@ import {
   POST_SUPERADMINS_PENDING,
   POST_SUPERADMINS_SUCCESS,
   POST_SUPERADMINS_ERROR,
-  // PUT_SUPERADMINS_PENDING,
-  // PUT_SUPERADMINS_SUCCESS,
-  // PUT_SUPERADMINS_ERROR,
+  PUT_SUPERADMINS_PENDING,
+  PUT_SUPERADMINS_SUCCESS,
+  PUT_SUPERADMINS_ERROR,
   DELETE_SUPERADMINS_PENDING,
   DELETE_SUPERADMINS_SUCCESS,
   DELETE_SUPERADMINS_ERROR
@@ -58,8 +58,26 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-        error: action.payload,
-        list: []
+        error: action.payload
+      };
+    case PUT_SUPERADMINS_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        error: ''
+      };
+    case PUT_SUPERADMINS_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: [...state.list, action.payload]
+      };
+    case PUT_SUPERADMINS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
       };
     case DELETE_SUPERADMINS_PENDING:
       return {
