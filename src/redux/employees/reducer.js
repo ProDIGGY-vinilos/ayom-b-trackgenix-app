@@ -10,7 +10,8 @@ import {
   PUT_EMPLOYEES_ERROR,
   DELETE_EMPLOYEES_PENDING,
   DELETE_EMPLOYEES_SUCCESS,
-  DELETE_EMPLOYEES_ERROR
+  DELETE_EMPLOYEES_ERROR,
+  EMPTY_ERROR_MESSAGE
 } from './constant';
 
 const INITIAL_STATE = {
@@ -100,6 +101,12 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         error: action.payload,
         list: [...state.list]
+      };
+    case EMPTY_ERROR_MESSAGE:
+      return {
+        ...state,
+        error: '',
+        message: ''
       };
     default:
       return state;

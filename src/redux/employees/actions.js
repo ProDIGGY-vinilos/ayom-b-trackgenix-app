@@ -10,7 +10,8 @@ import {
   PUT_EMPLOYEES_ERROR,
   DELETE_EMPLOYEES_PENDING,
   DELETE_EMPLOYEES_SUCCESS,
-  DELETE_EMPLOYEES_ERROR
+  DELETE_EMPLOYEES_ERROR,
+  EMPTY_ERROR_MESSAGE
 } from './constant';
 
 export const getEmployeesPending = () => {
@@ -90,5 +91,11 @@ export const deleteEmployeesError = (error) => {
   return {
     type: DELETE_EMPLOYEES_ERROR,
     payload: error
+  };
+};
+
+export const emptyErrorMessage = () => {
+  return {
+    type: EMPTY_ERROR_MESSAGE
   };
 };
