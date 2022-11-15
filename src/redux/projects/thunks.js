@@ -43,7 +43,7 @@ export const postProject = (projectBody) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(postProjectSuccess(data.data));
+          dispatch(postProjectSuccess(data));
         }
       })
       .catch((error) => {
@@ -67,7 +67,7 @@ export const putProject = (id, projectBody) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(postProjectSuccess(data.data));
+          dispatch(postProjectSuccess(data));
         }
       })
       .catch((error) => {

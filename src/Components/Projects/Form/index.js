@@ -30,10 +30,15 @@ const Project = () => {
   const [employees, setEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
-  const [typeModal, setTypeModal] = useState();
-  const [textModal, setTextModal] = useState();
+  const [typeModal, setTypeModal] = useState('');
+  const [textModal, setTextModal] = useState('');
   const [showSharedModal, setShowSharedModal] = useState(false);
-  const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
+  const {
+    list: projectList,
+    isLoading,
+    error,
+    modalMessage
+  } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
 
   const openModal = () => {
@@ -90,7 +95,7 @@ const Project = () => {
     }
   }, []);
 
-  useEffect(async () => {
+  useEffect(() => {
     openModalOnError(error);
   }, [error]);
 
@@ -101,6 +106,16 @@ const Project = () => {
       openSharedModal();
     }
   };
+
+  useEffect(() => {
+    openModalOnSuccess(modalMessage);
+  }, [modalMessage]);
+
+  const openModalOnSuccess = (modalMessage) => {
+    setTypeModal('Success');
+    setTextModal(modalMessage);
+  };
+
   const onChangeValue = (key, value, keyArray = false) => {
     if (keyArray) {
       setProjectBody({
@@ -112,19 +127,11 @@ const Project = () => {
     }
   };
 
-  const onSubmit = async () => {
-    console.log(projectList);
-    if (projectId) {
-      setTypeModal('Success');
-      setTextModal('Project edited successfully');
-      dispatch(putProject(projectId, projectBody));
-      openSharedModal();
-    } else {
-      setTypeModal('Success');
-      setTextModal('Project created successfully');
-      dispatch(postProject(projectBody));
-      openSharedModal();
+  const onSubmit = () => {
+    {
+      projectId ? dispatch(putProject(projectId, projectBody)) : dispatch(postProject(projectBody));
     }
+    openSharedModal();
   };
 
   if (isLoading) {
