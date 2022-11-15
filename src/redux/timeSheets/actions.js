@@ -39,10 +39,10 @@ export const postTimeSheetsPending = () => {
   };
 };
 
-export const postTimeSheetsSuccess = (data) => {
+export const postTimeSheetsSuccess = (payload) => {
   return {
     type: POST_TIMESHEETS_SUCCESS,
-    data
+    payload
   };
 };
 
@@ -59,10 +59,10 @@ export const putTimeSheetsPending = () => {
   };
 };
 
-export const putTimeSheetsSuccess = (data) => {
+export const putTimeSheetsSuccess = (payload) => {
   return {
     type: PUT_TIMESHEETS_SUCCESS,
-    data
+    payload
   };
 };
 

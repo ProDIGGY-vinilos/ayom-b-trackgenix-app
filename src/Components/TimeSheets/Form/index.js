@@ -14,9 +14,6 @@ import { getTasks } from '../../../redux/tasks/thunks';
 
 const TimeSheetsForm = () => {
   const pathed = useParams().id;
-  // const [projects, setProjects] = useState([]);
-  // const [employees, setEmployees] = useState([]);
-  // const [tasks, setTasks] = useState([]);
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [hours, setHours] = useState('');
@@ -56,48 +53,6 @@ const TimeSheetsForm = () => {
     setTaskId(timeSheetData.task._id);
   };
 
-  const projectsFetch = () => {
-    dispatch(getProjects());
-    // try {
-    //   const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`);
-    //   const data = await response.json();
-    //   setProjects(data.data);
-    // } catch (error) {
-    //   setTypeModal('Error');
-    //   setTextModal(error);
-    //   openModal();
-    //   return;
-    // }
-  };
-
-  const tasksFetch = () => {
-    dispatch(getTasks());
-    // try {
-    //   const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`);
-    //   const data = await response.json();
-    //   setTasks(data.data);
-    // } catch (error) {
-    //   setTypeModal('Error');
-    //   setTextModal(error);
-    //   openModal();
-    //   return;
-    // }
-  };
-
-  const employeesFetch = () => {
-    dispatch(getEmployees());
-    // try {
-    //   const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`);
-    //   const data = await response.json();
-    //   setEmployees(data.data);
-    // } catch (error) {
-    //   setTypeModal('Error');
-    //   setTextModal(error);
-    //   openModal();
-    //   return;
-    // }
-  };
-
   const timeSheetFetch = async (id) => {
     fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`)
       .then((response) => response.json())
@@ -111,9 +66,9 @@ const TimeSheetsForm = () => {
       setTimeSheetId(pathed);
       setFormSwitch(true);
     }
-    projectsFetch();
-    tasksFetch();
-    employeesFetch();
+    dispatch(getProjects());
+    dispatch(getTasks());
+    dispatch(getEmployees());
   }, []);
 
   useEffect(() => {
@@ -159,25 +114,6 @@ const TimeSheetsForm = () => {
         setTextModal('TimeSheet added successfully');
         openModal();
       }
-      // const response = await fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-type': 'application/json'
-      //   },
-      //   body: JSON.stringify(req)
-      // });
-      // const data = await response.json();
-      // if (response.status !== 201) {
-      //   setTypeModal('Error');
-      //   setTextModal(data.message);
-      //   openModal();
-      //   return data;
-      // } else {
-      //   setTypeModal('Success');
-      //   setTextModal(data.message);
-      //   openModal();
-      //   return data;
-      // }
     }
   };
 
@@ -212,16 +148,6 @@ const TimeSheetsForm = () => {
               label="Select Project"
             />
           </div>
-          {/* <div>
-            <Select
-              selectedValue={employeeId || undefined}
-              options={employees || undefined}
-              changeValue={setEmployeeId}
-              field="name"
-              label="Select Employee"
-            />
-          </div> */}
-          {/*  */}
           <div>
             <Select
               selectedValue={employeeId || undefined}
@@ -231,7 +157,6 @@ const TimeSheetsForm = () => {
               label="Select Employee"
             />
           </div>
-          {/*  */}
           <div>
             <Select
               selectedValue={taskId || undefined}
