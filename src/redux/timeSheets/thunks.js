@@ -49,11 +49,11 @@ export const postTimeSheets = (data) => {
       })
     })
       .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
         } else {
-          dispatch(postTimeSheetsSuccess(response.data));
+          dispatch(postTimeSheetsSuccess(data.data));
         }
       })
       .catch((error) => {
@@ -80,11 +80,11 @@ export const putTimeSheets = (data, id) => {
       })
     })
       .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
         } else {
-          dispatch(putTimeSheetsSuccess(response.data));
+          dispatch(putTimeSheetsSuccess(data.data));
         }
       })
       .catch((error) => {

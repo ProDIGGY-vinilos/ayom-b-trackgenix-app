@@ -25,13 +25,11 @@ const TimeSheetsForm = () => {
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
   const [formSwitch, setFormSwitch] = useState(false);
-
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.timeSheets);
   const { list: projectsList } = useSelector((state) => state.projects);
   const { list: taskList } = useSelector((state) => state.tasks);
   const { list: employeeList } = useSelector((state) => state.employees);
-
   const timeSheetData = useSelector((state) =>
     state.timeSheets.list.find((timeSheets) => timeSheets._id === timeSheetId)
   );

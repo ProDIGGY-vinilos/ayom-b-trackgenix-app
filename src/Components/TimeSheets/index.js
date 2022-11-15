@@ -10,9 +10,9 @@ const TimeSheets = () => {
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
-
   const { list: timeSheetsList, isLoading, error } = useSelector((state) => state.timeSheets);
   const dispatch = useDispatch();
+
   const openMessageModal = () => {
     setShowMessageModal(true);
   };
