@@ -80,7 +80,6 @@ const TimeSheets = () => {
             isOpen={showMessageModal}
             message={textModal}
             handleClose={closeMessageModal}
-            goBack={'/time-sheets'}
           />
           <Button href="/time-sheet-form" style="roundedPrimary" disabled={false} text="+" />
         </>

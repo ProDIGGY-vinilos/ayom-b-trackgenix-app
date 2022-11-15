@@ -37,8 +37,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-        error: action.payload,
-        list: []
+        error: action.payload
       };
     case POST_ADMINS_PENDING:
       return {
@@ -56,8 +55,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-        error: action.error,
-        list: []
+        error: action.error
       };
     case PUT_ADMINS_PENDING:
       return {
@@ -75,8 +73,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-        error: action.payload,
-        list: []
+        error: action.payload
       };
     case DELETE_ADMIN_PENDING:
       return {
@@ -94,8 +91,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-        error: action.payload,
-        list: []
+        error: action.payload
       };
     default:
       return state;

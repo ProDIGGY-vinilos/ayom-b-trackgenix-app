@@ -62,7 +62,6 @@ const Employees = () => {
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
-        goBack={'/employees'}
       />
     </section>
   );
