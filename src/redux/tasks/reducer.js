@@ -91,7 +91,15 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-        list: [...state.list.filter((task) => task._id !== action.payload._id), action.payload],
+        list: [
+          ...state.list.map((task) => {
+            if (task._id === action.payload._id) {
+              return action.payload;
+            } else {
+              return task;
+            }
+          })
+        ],
         error: ''
       };
     case PUT_TASK_ERROR:
