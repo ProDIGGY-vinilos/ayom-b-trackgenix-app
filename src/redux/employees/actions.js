@@ -2,16 +2,16 @@ import {
   GET_EMPLOYEES_PENDING,
   GET_EMPLOYEES_SUCCESS,
   GET_EMPLOYEES_ERROR,
-  POST_EMPLOYEES_PENDING,
-  POST_EMPLOYEES_SUCCESS,
-  POST_EMPLOYEES_ERROR,
-  PUT_EMPLOYEES_PENDING,
-  PUT_EMPLOYEES_SUCCESS,
-  PUT_EMPLOYEES_ERROR,
-  DELETE_EMPLOYEES_PENDING,
-  DELETE_EMPLOYEES_SUCCESS,
-  DELETE_EMPLOYEES_ERROR,
-  EMPTY_ERROR_MESSAGE
+  POST_EMPLOYEE_PENDING,
+  POST_EMPLOYEE_SUCCESS,
+  POST_EMPLOYEE_ERROR,
+  PUT_EMPLOYEE_PENDING,
+  PUT_EMPLOYEE_SUCCESS,
+  PUT_EMPLOYEE_ERROR,
+  DELETE_EMPLOYEE_PENDING,
+  DELETE_EMPLOYEE_SUCCESS,
+  DELETE_EMPLOYEE_ERROR,
+  EMPTY_ERROR
 } from './constant';
 
 export const getEmployeesPending = () => {
@@ -36,66 +36,66 @@ export const getEmployeesError = (error) => {
 
 export const postEmployeesPending = () => {
   return {
-    type: POST_EMPLOYEES_PENDING
+    type: POST_EMPLOYEE_PENDING
   };
 };
 
 export const postEmployeesSuccess = (data) => {
   return {
-    type: POST_EMPLOYEES_SUCCESS,
+    type: POST_EMPLOYEE_SUCCESS,
     payload: data
   };
 };
 
 export const postEmployeesError = (error) => {
   return {
-    type: POST_EMPLOYEES_ERROR,
+    type: POST_EMPLOYEE_ERROR,
     payload: error
   };
 };
 
 export const putEmployeesPending = () => {
   return {
-    type: PUT_EMPLOYEES_PENDING
+    type: PUT_EMPLOYEE_PENDING
   };
 };
 
 export const putEmployeesSuccess = (data) => {
   return {
-    type: PUT_EMPLOYEES_SUCCESS,
+    type: PUT_EMPLOYEE_SUCCESS,
     payload: data
   };
 };
 
 export const putEmployeesError = (error) => {
   return {
-    type: PUT_EMPLOYEES_ERROR,
+    type: PUT_EMPLOYEE_ERROR,
     payload: error
   };
 };
 
 export const deleteEmployeesPending = () => {
   return {
-    type: DELETE_EMPLOYEES_PENDING
+    type: DELETE_EMPLOYEE_PENDING
   };
 };
 
 export const deleteEmployeesSuccess = (id) => {
   return {
-    type: DELETE_EMPLOYEES_SUCCESS,
+    type: DELETE_EMPLOYEE_SUCCESS,
     payload: id
   };
 };
 
 export const deleteEmployeesError = (error) => {
   return {
-    type: DELETE_EMPLOYEES_ERROR,
+    type: DELETE_EMPLOYEE_ERROR,
     payload: error
   };
 };
 
-export const emptyErrorMessage = () => {
+export const emptyError = () => {
   return {
-    type: EMPTY_ERROR_MESSAGE
+    type: EMPTY_ERROR
   };
 };

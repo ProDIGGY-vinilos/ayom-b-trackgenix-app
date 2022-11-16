@@ -2,23 +2,22 @@ import {
   GET_EMPLOYEES_PENDING,
   GET_EMPLOYEES_SUCCESS,
   GET_EMPLOYEES_ERROR,
-  POST_EMPLOYEES_PENDING,
-  POST_EMPLOYEES_SUCCESS,
-  POST_EMPLOYEES_ERROR,
-  PUT_EMPLOYEES_PENDING,
-  PUT_EMPLOYEES_SUCCESS,
-  PUT_EMPLOYEES_ERROR,
-  DELETE_EMPLOYEES_PENDING,
-  DELETE_EMPLOYEES_SUCCESS,
-  DELETE_EMPLOYEES_ERROR,
-  EMPTY_ERROR_MESSAGE
+  POST_EMPLOYEE_PENDING,
+  POST_EMPLOYEE_SUCCESS,
+  POST_EMPLOYEE_ERROR,
+  PUT_EMPLOYEE_PENDING,
+  PUT_EMPLOYEE_SUCCESS,
+  PUT_EMPLOYEE_ERROR,
+  DELETE_EMPLOYEE_PENDING,
+  DELETE_EMPLOYEE_SUCCESS,
+  DELETE_EMPLOYEE_ERROR,
+  EMPTY_ERROR
 } from './constant';
 
 const INITIAL_STATE = {
   list: [],
   isLoading: false,
-  error: '',
-  message: ''
+  error: ''
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -26,7 +25,8 @@ const reducer = (state = INITIAL_STATE, action) => {
     case GET_EMPLOYEES_PENDING:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        error: ''
       };
     case GET_EMPLOYEES_SUCCESS:
       return {
@@ -42,32 +42,13 @@ const reducer = (state = INITIAL_STATE, action) => {
         error: action.payload,
         list: []
       };
-    case POST_EMPLOYEES_PENDING:
+    case POST_EMPLOYEE_PENDING:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        error: ''
       };
-    case POST_EMPLOYEES_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-        error: false,
-        list: [...state.list, action.payload.data],
-        message: action.payload.message
-      };
-    case POST_EMPLOYEES_ERROR:
-      return {
-        ...state,
-        isLoading: false,
-        error: action.payload,
-        list: [...state.list]
-      };
-    case PUT_EMPLOYEES_PENDING:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case PUT_EMPLOYEES_SUCCESS:
+    case POST_EMPLOYEE_SUCCESS:
       return {
         ...state,
         isLoading: false,
@@ -75,19 +56,41 @@ const reducer = (state = INITIAL_STATE, action) => {
         list: [...state.list, action.payload.data],
         message: action.payload.message
       };
-    case PUT_EMPLOYEES_ERROR:
+    case POST_EMPLOYEE_ERROR:
       return {
         ...state,
         isLoading: false,
         error: action.payload,
         list: [...state.list]
       };
-    case DELETE_EMPLOYEES_PENDING:
+    case PUT_EMPLOYEE_PENDING:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        error: ''
       };
-    case DELETE_EMPLOYEES_SUCCESS:
+    case PUT_EMPLOYEE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: false,
+        list: [...state.list, action.payload.data],
+        message: action.payload.message
+      };
+    case PUT_EMPLOYEE_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+        list: [...state.list]
+      };
+    case DELETE_EMPLOYEE_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        error: ''
+      };
+    case DELETE_EMPLOYEE_SUCCESS:
       return {
         ...state,
         isLoading: false,
@@ -95,18 +98,17 @@ const reducer = (state = INITIAL_STATE, action) => {
         list: [...state.list.filter((element) => element._id !== action.payload)],
         message: action.payload.message
       };
-    case DELETE_EMPLOYEES_ERROR:
+    case DELETE_EMPLOYEE_ERROR:
       return {
         ...state,
         isLoading: false,
         error: action.payload,
         list: [...state.list]
       };
-    case EMPTY_ERROR_MESSAGE:
+    case EMPTY_ERROR:
       return {
         ...state,
-        error: '',
-        message: ''
+        error: ''
       };
     default:
       return state;

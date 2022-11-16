@@ -5,6 +5,9 @@ import {
   postEmployeesPending,
   postEmployeesSuccess,
   postEmployeesError,
+  putEmployeesPending,
+  putEmployeesSuccess,
+  putEmployeesError,
   deleteEmployeesPending,
   deleteEmployeesSuccess,
   deleteEmployeesError
@@ -15,11 +18,11 @@ export const getEmployees = () => {
     dispatch(getEmployeesPending());
     fetch(`${process.env.REACT_APP_API_URL}/employees`)
       .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
         } else {
-          dispatch(getEmployeesSuccess(response.data));
+          dispatch(getEmployeesSuccess(data.data));
         }
       })
       .catch((error) => {
@@ -31,13 +34,19 @@ export const getEmployees = () => {
 export const postEmployee = (url, payload) => {
   return (dispatch) => {
     dispatch(postEmployeesPending());
-    fetch(`${process.env.REACT_APP_API_URL}/employees${url}`, payload)
+    fetch(`${process.env.REACT_APP_API_URL}/employees/${url}`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
       .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
         } else {
-          dispatch(postEmployeesSuccess(response));
+          dispatch(postEmployeesSuccess(data));
         }
       })
       .catch((error) => {
@@ -48,18 +57,24 @@ export const postEmployee = (url, payload) => {
 
 export const putEmployee = (url, payload) => {
   return (dispatch) => {
-    dispatch(postEmployeesPending());
-    fetch(`${process.env.REACT_APP_API_URL}/employees${url}`, payload)
+    dispatch(putEmployeesPending());
+    fetch(`${process.env.REACT_APP_API_URL}/employees/${url}`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
       .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
         } else {
-          dispatch(postEmployeesSuccess(response));
+          dispatch(putEmployeesSuccess(data));
         }
       })
       .catch((error) => {
-        dispatch(postEmployeesError(error.toString()));
+        dispatch(putEmployeesError(error.toString()));
       });
   };
 };

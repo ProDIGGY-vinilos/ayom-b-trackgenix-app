@@ -1,7 +1,7 @@
-import { emptyErrorMessage } from './actions';
+import { emptyError } from './actions';
 
-export const setEmptyErrorMessage = () => {
+export const setEmptyError = () => {
   return (dispatch) => {
-    dispatch(emptyErrorMessage());
+    dispatch(emptyError());
   };
 };

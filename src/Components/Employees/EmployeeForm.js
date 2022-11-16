@@ -7,11 +7,12 @@ import Button from '../Shared/Button/Button';
 import InputField from '../Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { postEmployee, putEmployee } from '../../redux/employees/thunks';
-import { setEmptyErrorMessage } from '../../redux/employees/extras';
+import { setEmptyError } from '../../redux/employees/extras';
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
-  const { error, message } = useSelector((state) => state.employees);
+  const { error } = useSelector((state) => state.employees);
+  const [requested, setRequested] = useState(false);
   const employeeId = useParams().id;
   const employee = useSelector((state) =>
     state.employees.list.find((employee) => employee._id === employeeId)
@@ -34,7 +35,7 @@ const EmployeeForm = () => {
 
   const closeModal = () => {
     setShowModal(false);
-    dispatch(setEmptyErrorMessage());
+    dispatch(setEmptyError());
   };
 
   useEffect(() => {
@@ -42,18 +43,20 @@ const EmployeeForm = () => {
       setTypeModal('Error');
       setTextModal(error);
       openModal();
+      setRequested(false);
+    } else if (employeeId && requested) {
+      setTextModal('Employee updated successfully');
+      openModal();
+      setRequested(false);
+    } else if (!employeeId && requested) {
+      setTextModal('Employee created successfully');
+      openModal();
+      setRequested(false);
     }
   }, [error]);
 
   useEffect(() => {
-    if (message !== '') {
-      setTextModal(message);
-      openModal();
-    }
-  }, [message]);
-
-  useEffect(() => {
-    dispatch(setEmptyErrorMessage());
+    dispatch(setEmptyError());
     if (employeeId) {
       setUserInput({
         name: employee.name,
@@ -72,33 +75,13 @@ const EmployeeForm = () => {
   };
 
   const onSubmit = async () => {
-    let requestOptions;
-
     if (employeeId) {
-      requestOptions = {
-        method: 'PUT',
-        body: JSON.stringify(userInput),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-      setTypeModal('Success');
+      dispatch(putEmployee(employeeId, userInput));
     } else {
-      requestOptions = {
-        method: 'POST',
-        body: JSON.stringify(userInput),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-      setTypeModal('Success');
+      dispatch(postEmployee('', userInput));
     }
-
-    if (employeeId) {
-      dispatch(putEmployee(`/${employeeId}`, requestOptions));
-    } else {
-      dispatch(postEmployee('', requestOptions));
-    }
+    setRequested(true);
+    setTypeModal('Success');
   };
 
   return (
