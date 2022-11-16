@@ -2,15 +2,15 @@ import {
   GET_PROJECTS_PENDING,
   GET_PROJECTS_SUCCESS,
   GET_PROJECTS_ERROR,
-  DELETE_PROJECT_PENDING,
-  DELETE_PROJECT_SUCCESS,
-  DELETE_PROJECT_ERROR,
   POST_PROJECT_PENDING,
   POST_PROJECT_SUCCESS,
   POST_PROJECT_ERROR,
   PUT_PROJECT_PENDING,
   PUT_PROJECT_SUCCESS,
-  PUT_PROJECT_ERROR
+  PUT_PROJECT_ERROR,
+  DELETE_PROJECT_PENDING,
+  DELETE_PROJECT_SUCCESS,
+  DELETE_PROJECT_ERROR
 } from './constant';
 
 const INITIAL_STATE = {
@@ -35,25 +35,6 @@ const reducer = (state = INITIAL_STATE, action) => {
         list: action.payload
       };
     case GET_PROJECTS_ERROR:
-      return {
-        ...state,
-        isLoading: false,
-        error: action.payload,
-        list: []
-      };
-    case DELETE_PROJECT_PENDING:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case DELETE_PROJECT_SUCCESS:
-      return {
-        ...state,
-        list: [...state.list.filter((project) => project._id !== action.payload)],
-        isLoading: false,
-        error: ''
-      };
-    case DELETE_PROJECT_ERROR:
       return {
         ...state,
         isLoading: false,
@@ -96,6 +77,25 @@ const reducer = (state = INITIAL_STATE, action) => {
         error: ''
       };
     case PUT_PROJECT_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+        list: []
+      };
+    case DELETE_PROJECT_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case DELETE_PROJECT_SUCCESS:
+      return {
+        ...state,
+        list: [...state.list.filter((project) => project._id !== action.payload)],
+        isLoading: false,
+        error: ''
+      };
+    case DELETE_PROJECT_ERROR:
       return {
         ...state,
         isLoading: false,

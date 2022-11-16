@@ -5,6 +5,9 @@ import {
   postProjectError,
   postProjectSuccess,
   postProjectPending,
+  putProjectSuccess,
+  putProjectPending,
+  putProjectError,
   deleteProjectError,
   deleteProjectSuccess,
   deleteProjectPending
@@ -24,28 +27,6 @@ export const getProjects = () => {
       })
       .catch((error) => {
         dispatch(getProjectsError(error.toString()));
-      });
-  };
-};
-
-export const deleteProject = (id) => {
-  return (dispatch) => {
-    dispatch(deleteProjectPending());
-    fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-type': 'aplication/json'
-      }
-    })
-      .then((response) => {
-        if (response.status !== 204) {
-          throw new Error('Project cannot be deleted');
-        } else {
-          dispatch(deleteProjectSuccess(id));
-        }
-      })
-      .catch((error) => {
-        dispatch(deleteProjectError(error.toString()));
       });
   };
 };
@@ -76,7 +57,7 @@ export const postProject = (projectBody) => {
 
 export const putProject = (id, projectBody) => {
   return (dispatch) => {
-    dispatch(postProjectPending());
+    dispatch(putProjectPending());
     fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
       method: 'PUT',
       headers: {
@@ -89,11 +70,33 @@ export const putProject = (id, projectBody) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(postProjectSuccess(data));
+          dispatch(putProjectSuccess(data));
         }
       })
       .catch((error) => {
-        dispatch(postProjectError(error.toString()));
+        dispatch(putProjectError(error.toString()));
+      });
+  };
+};
+
+export const deleteProject = (id) => {
+  return (dispatch) => {
+    dispatch(deleteProjectPending());
+    fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'aplication/json'
+      }
+    })
+      .then((response) => {
+        if (response.status !== 204) {
+          throw new Error('Project cannot be deleted');
+        } else {
+          dispatch(deleteProjectSuccess(id));
+        }
+      })
+      .catch((error) => {
+        dispatch(deleteProjectError(error.toString()));
       });
   };
 };
