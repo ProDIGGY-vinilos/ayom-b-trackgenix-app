@@ -57,7 +57,7 @@ const Form = () => {
     setNameValue({ description: e.target.value });
   };
 
-  const onSubmit = async () => {
+  const onSubmit = () => {
     if (taskId) {
       dispatch(putTask(taskId, userInput));
       setTypeModal('Success');
