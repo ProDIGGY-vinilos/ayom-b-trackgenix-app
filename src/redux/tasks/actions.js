@@ -2,6 +2,9 @@ import {
   GET_TASKS_PENDING,
   GET_TASKS_SUCCESS,
   GET_TASKS_ERROR,
+  GET_ONE_TASK_PENDING,
+  GET_ONE_TASK_SUCCESS,
+  GET_ONE_TASK_ERROR,
   POST_TASKS_PENDING,
   POST_TASKS_SUCCESS,
   POST_TASKS_ERROR,
@@ -29,6 +32,26 @@ export const getTasksSuccess = (payload) => {
 export const getTasksError = (error) => {
   return {
     type: GET_TASKS_ERROR,
+    payload: error
+  };
+};
+
+export const getOneTaskPending = () => {
+  return {
+    type: GET_ONE_TASK_PENDING
+  };
+};
+
+export const getOneTaskSuccess = (payload) => {
+  return {
+    type: GET_ONE_TASK_SUCCESS,
+    payload
+  };
+};
+
+export const getOneTaskError = (error) => {
+  return {
+    type: GET_ONE_TASK_ERROR,
     payload: error
   };
 };

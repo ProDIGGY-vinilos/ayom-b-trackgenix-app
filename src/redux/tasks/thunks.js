@@ -2,6 +2,9 @@ import {
   getTasksPending,
   getTasksSuccess,
   getTasksError,
+  getOneTaskPending,
+  getOneTaskSuccess,
+  getOneTaskError,
   postTasksPending,
   postTasksSuccess,
   postTasksError,
@@ -27,6 +30,24 @@ export const getTasks = () => {
       })
       .catch((error) => {
         dispatch(getTasksError(error.toString()));
+      });
+  };
+};
+
+export const getOneTask = (id) => {
+  return (dispatch) => {
+    dispatch(getOneTaskPending());
+    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getOneTaskSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getOneTaskError(error.toString()));
       });
   };
 };

@@ -2,6 +2,9 @@ import {
   GET_TASKS_PENDING,
   GET_TASKS_SUCCESS,
   GET_TASKS_ERROR,
+  GET_ONE_TASK_PENDING,
+  GET_ONE_TASK_SUCCESS,
+  GET_ONE_TASK_ERROR,
   POST_TASKS_PENDING,
   POST_TASKS_SUCCESS,
   POST_TASKS_ERROR,
@@ -40,6 +43,25 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         error: action.payload
       };
+    case GET_ONE_TASK_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        error: ''
+      };
+    case GET_ONE_TASK_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: [action.payload]
+      };
+    case GET_ONE_TASK_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
     case POST_TASKS_PENDING:
       return {
         ...state,
@@ -69,7 +91,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-        list: [...state.list, action.payload],
+        list: [...state.list.filter((task) => task._id !== action.payload._id), action.payload],
         error: ''
       };
     case PUT_TASKS_ERROR:

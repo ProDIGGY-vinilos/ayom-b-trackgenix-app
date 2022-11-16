@@ -5,12 +5,12 @@ import MessageModal from '../../Shared/Modal/MessageModal';
 import styles from '../tasks.module.css';
 import Button from '../../Shared/Button/Button';
 import InputField from '../../Shared/Input/input';
-import { postTask, putTask } from '../../../redux/tasks/thunks';
+import { getOneTask, postTask, putTask } from '../../../redux/tasks/thunks';
 
 const Form = () => {
   const taskId = useParams().id;
   const dispatch = useDispatch();
-  const dataTask = useSelector((state) => state.tasks.list.filter((task) => task._id === taskId));
+  const dataTask = useSelector((state) => state.tasks.list.find((task) => task._id === taskId));
 
   const [userInput, setNameValue] = useState({
     description: ''
@@ -20,6 +20,7 @@ const Form = () => {
   const [typeModal, setTypeModal] = useState('');
   const [textMessageModal, setTextMessageModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
 
   const openMessageModal = () => {
     setShowMessageModal(true);
@@ -29,24 +30,31 @@ const Form = () => {
     setShowMessageModal(false);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     if (taskId) {
-      if (dataTask.length) {
-        setNameValue({ description: dataTask[0].description });
-      } else {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`);
-        const data = await response.json();
-        setNameValue({ description: data.data.description });
+      if (dataTask === undefined) {
+        dispatch(getOneTask(taskId));
+        setIsFetched(true);
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (taskId) {
+      if (dataTask !== undefined) {
+        setNameValue({ description: dataTask.description });
+      } else if (isFetched) {
+        setNameValue({ description: dataTask.description });
+      }
+    }
+  }, [dataTask]);
 
   useEffect(() => {
     openModalOnError(error);
   }, [error]);
 
   const updateInput = async (e) => {
-    setNameValue({ ...userInput, description: e.target.value });
+    setNameValue({ description: e.target.value });
   };
 
   const onSubmit = async () => {
