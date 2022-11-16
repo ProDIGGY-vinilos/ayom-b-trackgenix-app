@@ -72,7 +72,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case POST_TIMESHEET_SUCCESS:
       return {
         ...state,
-        list: [...state.list, action.payload],
+        list: [...state.list.filter((task) => task._id !== action.payload._id), action.payload],
         error: '',
         isLoading: false
       };

@@ -22,7 +22,9 @@ const TimeSheets = () => {
   };
 
   useEffect(() => {
-    dispatch(getTimeSheets());
+    if (!timeSheetsList.length || timeSheetsList.length === 1) {
+      dispatch(getTimeSheets());
+    }
   }, []);
 
   useEffect(async () => {
