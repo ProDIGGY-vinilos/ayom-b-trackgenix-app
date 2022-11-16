@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTimeSheets, deleteTimeSheets } from '../../redux/timeSheets/thunks';
+import { getTimeSheets, deleteTimeSheet } from '../../redux/timeSheets/thunks';
 import styles from './time-sheets.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
@@ -29,8 +29,8 @@ const TimeSheets = () => {
     openModalOnError(error);
   }, [error]);
 
-  const deleteTimeSheet = (id) => {
-    dispatch(deleteTimeSheets(id));
+  const deleteTimeSheets = (id) => {
+    dispatch(deleteTimeSheet(id));
     if (error) {
       openModalOnError(error);
     } else {
@@ -68,7 +68,7 @@ const TimeSheets = () => {
           <Table
             data={timeSheetsList}
             columns={columns}
-            deleteItem={deleteTimeSheet}
+            deleteItem={deleteTimeSheets}
             edit="/time-sheet-form"
           />
           <MessageModal

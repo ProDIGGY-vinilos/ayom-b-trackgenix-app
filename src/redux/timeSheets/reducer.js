@@ -2,15 +2,18 @@ import {
   GET_TIMESHEETS_PENDING,
   GET_TIMESHEETS_SUCCESS,
   GET_TIMESHEETS_ERROR,
-  POST_TIMESHEETS_PENDING,
-  POST_TIMESHEETS_SUCCESS,
-  POST_TIMESHEETS_ERROR,
-  PUT_TIMESHEETS_PENDING,
-  PUT_TIMESHEETS_SUCCESS,
-  PUT_TIMESHEETS_ERROR,
-  DELETE_TIMESHEETS_PENDING,
-  DELETE_TIMESHEETS_SUCCESS,
-  DELETE_TIMESHEETS_ERROR
+  GET_ONE_TIMESHEET_PENDING,
+  GET_ONE_TIMESHEET_SUCCESS,
+  GET_ONE_TIMESHEET_ERROR,
+  POST_TIMESHEET_PENDING,
+  POST_TIMESHEET_SUCCESS,
+  POST_TIMESHEET_ERROR,
+  PUT_TIMESHEET_PENDING,
+  PUT_TIMESHEET_SUCCESS,
+  PUT_TIMESHEET_ERROR,
+  DELETE_TIMESHEET_PENDING,
+  DELETE_TIMESHEET_SUCCESS,
+  DELETE_TIMESHEET_ERROR
 } from './constant';
 
 const INITIAL_STATE = {
@@ -24,6 +27,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case GET_TIMESHEETS_PENDING:
       return {
         ...state,
+        error: '',
         isLoading: true
       };
     case GET_TIMESHEETS_SUCCESS:
@@ -40,61 +44,83 @@ const reducer = (state = INITIAL_STATE, action) => {
         error: action.payload,
         list: []
       };
-    case POST_TIMESHEETS_PENDING:
+    case GET_ONE_TIMESHEET_PENDING:
       return {
         ...state,
+        isLoading: true,
+        error: ''
+      };
+    case GET_ONE_TIMESHEET_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: [action.payload]
+      };
+    case GET_ONE_TIMESHEET_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case POST_TIMESHEET_PENDING:
+      return {
+        ...state,
+        error: '',
         isLoading: true
       };
-    case POST_TIMESHEETS_SUCCESS:
+    case POST_TIMESHEET_SUCCESS:
       return {
         ...state,
         list: [...state.list, action.payload],
         error: '',
         isLoading: false
       };
-    case POST_TIMESHEETS_ERROR:
+    case POST_TIMESHEET_ERROR:
       return {
         ...state,
         isLoading: false,
-        error: action.error,
+        error: action.payload,
         list: []
       };
-    case PUT_TIMESHEETS_PENDING:
+    case PUT_TIMESHEET_PENDING:
       return {
         ...state,
+        error: '',
         isLoading: true
       };
-    case PUT_TIMESHEETS_SUCCESS:
+    case PUT_TIMESHEET_SUCCESS:
       return {
         ...state,
         list: [...state.list, action.payload],
         error: '',
         isLoading: false
       };
-    case PUT_TIMESHEETS_ERROR:
+    case PUT_TIMESHEET_ERROR:
       return {
         ...state,
         isLoading: false,
-        error: action.error,
+        error: action.payload,
         list: []
       };
-    case DELETE_TIMESHEETS_PENDING:
+    case DELETE_TIMESHEET_PENDING:
       return {
         ...state,
+        error: '',
         isLoading: true
       };
-    case DELETE_TIMESHEETS_SUCCESS:
+    case DELETE_TIMESHEET_SUCCESS:
       return {
         ...state,
         list: [...state.list.filter((task) => task._id !== action.payload)],
         error: '',
         isLoading: false
       };
-    case DELETE_TIMESHEETS_ERROR:
+    case DELETE_TIMESHEET_ERROR:
       return {
         ...state,
         isLoading: false,
-        error: action.error,
+        error: action.payload,
         list: []
       };
     default:

@@ -7,7 +7,7 @@ import DatePicker from '../../Shared/Datepicker';
 import MessageModal from '../../Shared/Modal/MessageModal';
 import Button from '../../Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { postTimeSheets, putTimeSheets } from '../../../redux/timeSheets/thunks';
+import { getOneTimeSheet, postTimeSheet, putTimeSheet } from '../../../redux/timeSheets/thunks';
 import getEmployees from '../../../redux/employees/thunks';
 import { getProjects } from '../../../redux/projects/thunks';
 import { getTasks } from '../../../redux/tasks/thunks';
@@ -34,6 +34,14 @@ const TimeSheetsForm = () => {
     state.timeSheets.list.find((timeSheets) => timeSheets._id === timeSheetId)
   );
 
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    }
+  };
+
   const openModal = () => {
     setShowModal(true);
   };
@@ -51,13 +59,15 @@ const TimeSheetsForm = () => {
     setTaskId(timeSheetData.task._id);
   };
 
-  const timeSheetFetch = async (id) => {
-    fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`)
-      .then((response) => response.json())
-      .then((response) => {
-        setStates(response.data);
-      });
-  };
+  useEffect(() => {
+    openModalOnError(error);
+  }, [error]);
+
+  useEffect(() => {
+    if (timeSheetData !== undefined) {
+      setStates(timeSheetData);
+    }
+  }, [timeSheetData]);
 
   useEffect(() => {
     if (pathed) {
@@ -71,10 +81,10 @@ const TimeSheetsForm = () => {
 
   useEffect(() => {
     if (timeSheetId && projectsList.length && employeeList.length && taskList.length) {
-      if (timeSheetData === undefined) {
-        timeSheetFetch(timeSheetId);
-      } else {
+      if (timeSheetData !== undefined) {
         setStates(timeSheetData);
+      } else {
+        dispatch(getOneTimeSheet(timeSheetId));
       }
     }
   }, [projectsList, employeeList, taskList]);
@@ -89,29 +99,15 @@ const TimeSheetsForm = () => {
       hours: Hours
     };
     if (formSwitch) {
-      dispatch(putTimeSheets(req, pathed));
-      if (error) {
-        setTypeModal('Error');
-        setTextModal(error);
-        openModal();
-        return;
-      } else {
-        setTypeModal('Success');
-        setTextModal('TimeSheet edited successfully');
-        openModal();
-      }
+      dispatch(putTimeSheet(req, pathed));
+      setTypeModal('Success');
+      setTextModal('TimeSheet edited successfully');
+      openModal();
     } else {
-      dispatch(postTimeSheets(req));
-      if (error) {
-        setTypeModal('Error');
-        setTextModal(error);
-        openModal();
-        return;
-      } else {
-        setTypeModal('Success');
-        setTextModal('TimeSheet added successfully');
-        openModal();
-      }
+      dispatch(postTimeSheet(req));
+      setTypeModal('Success');
+      setTextModal('TimeSheet added successfully');
+      openModal();
     }
   };
 

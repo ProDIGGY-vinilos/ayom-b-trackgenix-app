@@ -2,15 +2,18 @@ import {
   getTimeSheetsPending,
   getTimeSheetsSuccess,
   getTimeSheetsError,
-  postTimeSheetsPending,
-  postTimeSheetsSuccess,
-  postTimeSheetsError,
-  putTimeSheetsPending,
-  putTimeSheetsSuccess,
-  putTimeSheetsError,
-  deleteTimeSheetsPending,
-  deleteTimeSheetsSuccess,
-  deleteTimeSheetsError
+  getOneTimeSheetPending,
+  getOneTimeSheetSuccess,
+  getOneTimeSheetError,
+  postTimeSheetPending,
+  postTimeSheetSuccess,
+  postTimeSheetError,
+  putTimeSheetPending,
+  putTimeSheetSuccess,
+  putTimeSheetError,
+  deleteTimeSheetPending,
+  deleteTimeSheetSuccess,
+  deleteTimeSheetError
 } from './actions';
 
 export const getTimeSheets = () => {
@@ -31,9 +34,27 @@ export const getTimeSheets = () => {
   };
 };
 
-export const postTimeSheets = (data) => {
+export const getOneTimeSheet = (id) => {
   return (dispatch) => {
-    dispatch(postTimeSheetsPending());
+    dispatch(getOneTimeSheetPending());
+    fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getOneTimeSheetSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getOneTimeSheetError(error.toString()));
+      });
+  };
+};
+
+export const postTimeSheet = (data) => {
+  return (dispatch) => {
+    dispatch(postTimeSheetPending());
     fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
       method: 'POST',
       headers: {
@@ -43,8 +64,9 @@ export const postTimeSheets = (data) => {
         description: data.description,
         date: data.date,
         project: data.project,
-        task: data.task,
+        TimeSheet: data.TimeSheet,
         employee: data.employee,
+        task: data.task,
         hours: data.hours
       })
     })
@@ -53,18 +75,18 @@ export const postTimeSheets = (data) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(postTimeSheetsSuccess(data.data));
+          dispatch(postTimeSheetSuccess(data.data));
         }
       })
       .catch((error) => {
-        dispatch(postTimeSheetsError(error.toString()));
+        dispatch(postTimeSheetError(error.toString()));
       });
   };
 };
 
-export const putTimeSheets = (data, id) => {
+export const putTimeSheet = (data, id) => {
   return (dispatch) => {
-    dispatch(putTimeSheetsPending());
+    dispatch(putTimeSheetPending());
     fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
       method: 'PUT',
       headers: {
@@ -74,8 +96,9 @@ export const putTimeSheets = (data, id) => {
         description: data.description,
         date: data.date,
         project: data.project,
-        task: data.task,
+        TimeSheet: data.TimeSheet,
         employee: data.employee,
+        task: data.task,
         hours: data.hours
       })
     })
@@ -84,18 +107,18 @@ export const putTimeSheets = (data, id) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(putTimeSheetsSuccess(data.data));
+          dispatch(putTimeSheetSuccess(data.data));
         }
       })
       .catch((error) => {
-        dispatch(putTimeSheetsError(error.toString()));
+        dispatch(putTimeSheetError(error.toString()));
       });
   };
 };
 
-export const deleteTimeSheets = (id) => {
+export const deleteTimeSheet = (id) => {
   return (dispatch) => {
-    dispatch(deleteTimeSheetsPending());
+    dispatch(deleteTimeSheetPending());
     fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
       method: 'DELETE',
       headers: {
@@ -106,11 +129,11 @@ export const deleteTimeSheets = (id) => {
         if (response.status !== 204) {
           throw new Error("Couldn't remove TimeSheet");
         } else {
-          dispatch(deleteTimeSheetsSuccess(id));
+          dispatch(deleteTimeSheetSuccess(id));
         }
       })
       .catch((err) => {
-        dispatch(deleteTimeSheetsError(err.toString()));
+        dispatch(deleteTimeSheetError(err.toString()));
       });
   };
 };
