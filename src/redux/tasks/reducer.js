@@ -5,15 +5,15 @@ import {
   GET_ONE_TASK_PENDING,
   GET_ONE_TASK_SUCCESS,
   GET_ONE_TASK_ERROR,
-  POST_TASKS_PENDING,
-  POST_TASKS_SUCCESS,
-  POST_TASKS_ERROR,
-  PUT_TASKS_PENDING,
-  PUT_TASKS_SUCCESS,
-  PUT_TASKS_ERROR,
-  DELETE_TASKS_PENDING,
-  DELETE_TASKS_SUCCESS,
-  DELETE_TASKS_ERROR
+  POST_TASK_PENDING,
+  POST_TASK_SUCCESS,
+  POST_TASK_ERROR,
+  PUT_TASK_PENDING,
+  PUT_TASK_SUCCESS,
+  PUT_TASK_ERROR,
+  DELETE_TASK_PENDING,
+  DELETE_TASK_SUCCESS,
+  DELETE_TASK_ERROR
 } from './constant';
 
 const INITIAL_STATE = {
@@ -62,58 +62,58 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         error: action.payload
       };
-    case POST_TASKS_PENDING:
+    case POST_TASK_PENDING:
       return {
         ...state,
         isLoading: true,
         error: ''
       };
-    case POST_TASKS_SUCCESS:
+    case POST_TASK_SUCCESS:
       return {
         ...state,
         isLoading: false,
         list: [...state.list, action.payload],
         error: ''
       };
-    case POST_TASKS_ERROR:
+    case POST_TASK_ERROR:
       return {
         ...state,
         isLoading: false,
         error: action.payload
       };
-    case PUT_TASKS_PENDING:
+    case PUT_TASK_PENDING:
       return {
         ...state,
         isLoading: true,
         error: ''
       };
-    case PUT_TASKS_SUCCESS:
+    case PUT_TASK_SUCCESS:
       return {
         ...state,
         isLoading: false,
         list: [...state.list.filter((task) => task._id !== action.payload._id), action.payload],
         error: ''
       };
-    case PUT_TASKS_ERROR:
+    case PUT_TASK_ERROR:
       return {
         ...state,
         isLoading: false,
         error: action.payload
       };
-    case DELETE_TASKS_PENDING:
+    case DELETE_TASK_PENDING:
       return {
         ...state,
         isLoading: true,
         error: ''
       };
-    case DELETE_TASKS_SUCCESS:
+    case DELETE_TASK_SUCCESS:
       return {
         ...state,
         isLoading: false,
         error: '',
         list: [...state.list.filter((task) => task._id !== action.payload)]
       };
-    case DELETE_TASKS_ERROR:
+    case DELETE_TASK_ERROR:
       return {
         ...state,
         isLoading: false,

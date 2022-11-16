@@ -5,15 +5,15 @@ import {
   getOneTaskPending,
   getOneTaskSuccess,
   getOneTaskError,
-  postTasksPending,
-  postTasksSuccess,
-  postTasksError,
-  putTasksPending,
-  putTasksSuccess,
-  putTasksError,
-  deleteTasksPending,
-  deleteTasksSuccess,
-  deleteTasksError
+  postTaskPending,
+  postTaskSuccess,
+  postTaskError,
+  putTaskPending,
+  putTaskSuccess,
+  putTaskError,
+  deleteTaskPending,
+  deleteTaskSuccess,
+  deleteTaskError
 } from './actions';
 
 export const getTasks = () => {
@@ -54,7 +54,7 @@ export const getOneTask = (id) => {
 
 export const postTask = (taskBody) => {
   return (dispatch) => {
-    dispatch(postTasksPending());
+    dispatch(postTaskPending());
     fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
       method: 'POST',
       headers: {
@@ -67,18 +67,18 @@ export const postTask = (taskBody) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(postTasksSuccess(data.data));
+          dispatch(postTaskSuccess(data.data));
         }
       })
       .catch((error) => {
-        dispatch(postTasksError(error.toString()));
+        dispatch(postTaskError(error.toString()));
       });
   };
 };
 
 export const putTask = (id, taskBody) => {
   return (dispatch) => {
-    dispatch(putTasksPending());
+    dispatch(putTaskPending());
     fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
       method: 'PUT',
       headers: {
@@ -91,18 +91,18 @@ export const putTask = (id, taskBody) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(putTasksSuccess(data.data));
+          dispatch(putTaskSuccess(data.data));
         }
       })
       .catch((error) => {
-        dispatch(putTasksError(error.toString()));
+        dispatch(putTaskError(error.toString()));
       });
   };
 };
 
 export const deleteTask = (id) => {
   return (dispatch) => {
-    dispatch(deleteTasksPending());
+    dispatch(deleteTaskPending());
     fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
       method: 'DELETE'
     })
@@ -114,14 +114,14 @@ export const deleteTask = (id) => {
               throw new Error(data.message);
             })
             .catch((error) => {
-              dispatch(deleteTasksError(error.toString()));
+              dispatch(deleteTaskError(error.toString()));
             });
         } else {
-          dispatch(deleteTasksSuccess(id));
+          dispatch(deleteTaskSuccess(id));
         }
       })
       .catch((error) => {
-        dispatch(deleteTasksError(error.toString()));
+        dispatch(deleteTaskError(error.toString()));
       });
   };
 };

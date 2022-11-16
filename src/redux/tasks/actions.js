@@ -5,15 +5,15 @@ import {
   GET_ONE_TASK_PENDING,
   GET_ONE_TASK_SUCCESS,
   GET_ONE_TASK_ERROR,
-  POST_TASKS_PENDING,
-  POST_TASKS_SUCCESS,
-  POST_TASKS_ERROR,
-  PUT_TASKS_PENDING,
-  PUT_TASKS_SUCCESS,
-  PUT_TASKS_ERROR,
-  DELETE_TASKS_PENDING,
-  DELETE_TASKS_SUCCESS,
-  DELETE_TASKS_ERROR
+  POST_TASK_PENDING,
+  POST_TASK_SUCCESS,
+  POST_TASK_ERROR,
+  PUT_TASK_PENDING,
+  PUT_TASK_SUCCESS,
+  PUT_TASK_ERROR,
+  DELETE_TASK_PENDING,
+  DELETE_TASK_SUCCESS,
+  DELETE_TASK_ERROR
 } from './constant';
 
 export const getTasksPending = () => {
@@ -58,60 +58,60 @@ export const getOneTaskError = (error) => {
 
 export const postTasksPending = () => {
   return {
-    type: POST_TASKS_PENDING
+    type: POST_TASK_PENDING
   };
 };
 
 export const postTasksSuccess = (payload) => {
   return {
-    type: POST_TASKS_SUCCESS,
+    type: POST_TASK_SUCCESS,
     payload
   };
 };
 
 export const postTasksError = (error) => {
   return {
-    type: POST_TASKS_ERROR,
+    type: POST_TASK_ERROR,
     payload: error
   };
 };
 
 export const putTasksPending = () => {
   return {
-    type: PUT_TASKS_PENDING
+    type: PUT_TASK_PENDING
   };
 };
 
 export const putTasksSuccess = (payload) => {
   return {
-    type: PUT_TASKS_SUCCESS,
+    type: PUT_TASK_SUCCESS,
     payload
   };
 };
 
 export const putTasksError = (error) => {
   return {
-    type: PUT_TASKS_ERROR,
+    type: PUT_TASK_ERROR,
     payload: error
   };
 };
 
 export const deleteTasksPending = () => {
   return {
-    type: DELETE_TASKS_PENDING
+    type: DELETE_TASK_PENDING
   };
 };
 
 export const deleteTasksSuccess = (payload) => {
   return {
-    type: DELETE_TASKS_SUCCESS,
+    type: DELETE_TASK_SUCCESS,
     payload
   };
 };
 
 export const deleteTasksError = (error) => {
   return {
-    type: DELETE_TASKS_ERROR,
+    type: DELETE_TASK_ERROR,
     payload: error
   };
 };
