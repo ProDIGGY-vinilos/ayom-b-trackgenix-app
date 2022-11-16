@@ -56,60 +56,60 @@ export const getOneTaskError = (error) => {
   };
 };
 
-export const postTasksPending = () => {
+export const postTaskPending = () => {
   return {
     type: POST_TASK_PENDING
   };
 };
 
-export const postTasksSuccess = (payload) => {
+export const postTaskSuccess = (payload) => {
   return {
     type: POST_TASK_SUCCESS,
     payload
   };
 };
 
-export const postTasksError = (error) => {
+export const postTaskError = (error) => {
   return {
     type: POST_TASK_ERROR,
     payload: error
   };
 };
 
-export const putTasksPending = () => {
+export const putTaskPending = () => {
   return {
     type: PUT_TASK_PENDING
   };
 };
 
-export const putTasksSuccess = (payload) => {
+export const putTaskSuccess = (payload) => {
   return {
     type: PUT_TASK_SUCCESS,
     payload
   };
 };
 
-export const putTasksError = (error) => {
+export const putTaskError = (error) => {
   return {
     type: PUT_TASK_ERROR,
     payload: error
   };
 };
 
-export const deleteTasksPending = () => {
+export const deleteTaskPending = () => {
   return {
     type: DELETE_TASK_PENDING
   };
 };
 
-export const deleteTasksSuccess = (payload) => {
+export const deleteTaskSuccess = (payload) => {
   return {
     type: DELETE_TASK_SUCCESS,
     payload
   };
 };
 
-export const deleteTasksError = (error) => {
+export const deleteTaskError = (error) => {
   return {
     type: DELETE_TASK_ERROR,
     payload: error
