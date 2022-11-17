@@ -4,14 +4,14 @@ import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getSuperAdmins, deleteSuperAdmins } from '../../redux/superAdmins/thunks';
+import { getSuperAdmin, deleteSuperAdmin } from '../../redux/superAdmins/thunks';
 
 const SuperAdmins = () => {
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
 
-  const { list: superAdminsList, isLoading, error } = useSelector((state) => state.superAdmins);
+  const { list: superAdminList, isLoading, error } = useSelector((state) => state.superAdmins);
   const dispatch = useDispatch();
 
   const openModal = () => {
@@ -23,7 +23,7 @@ const SuperAdmins = () => {
   };
 
   useEffect(() => {
-    dispatch(getSuperAdmins());
+    dispatch(getSuperAdmin());
   }, []);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const SuperAdmins = () => {
   }, [error]);
 
   const onDeleteSuperAdmins = (id) => {
-    dispatch(deleteSuperAdmins(id));
+    dispatch(deleteSuperAdmin(id));
     if (error) {
       openModalOnError(error);
     } else {
@@ -69,7 +69,7 @@ const SuperAdmins = () => {
       ) : (
         <>
           <Table
-            data={superAdminsList}
+            data={superAdminList}
             columns={columns}
             deleteItem={onDeleteSuperAdmins}
             edit="/super-admin-form"
