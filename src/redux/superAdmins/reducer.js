@@ -1,7 +1,7 @@
 import {
-  GET_SUPERADMIN_PENDING,
-  GET_SUPERADMIN_SUCCESS,
-  GET_SUPERADMIN_ERROR,
+  GET_SUPERADMINS_PENDING,
+  GET_SUPERADMINS_SUCCESS,
+  GET_SUPERADMINS_ERROR,
   POST_SUPERADMIN_PENDING,
   POST_SUPERADMIN_SUCCESS,
   POST_SUPERADMIN_ERROR,
@@ -21,20 +21,20 @@ const INITIAL_STATE = {
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case GET_SUPERADMIN_PENDING:
+    case GET_SUPERADMINS_PENDING:
       return {
         ...state,
         isLoading: true,
         error: ''
       };
-    case GET_SUPERADMIN_SUCCESS:
+    case GET_SUPERADMINS_SUCCESS:
       return {
         ...state,
         isLoading: false,
         error: '',
         list: action.payload
       };
-    case GET_SUPERADMIN_ERROR:
+    case GET_SUPERADMINS_ERROR:
       return {
         ...state,
         isLoading: false,

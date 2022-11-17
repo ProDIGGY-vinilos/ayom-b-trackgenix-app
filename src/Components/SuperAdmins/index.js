@@ -30,7 +30,7 @@ const SuperAdmins = () => {
     openModalOnError(error);
   }, [error]);
 
-  const onDeleteSuperAdmins = (id) => {
+  const onDeleteSuperAdmin = (id) => {
     dispatch(deleteSuperAdmin(id));
     if (error) {
       openModalOnError(error);
@@ -71,7 +71,7 @@ const SuperAdmins = () => {
           <Table
             data={superAdminList}
             columns={columns}
-            deleteItem={onDeleteSuperAdmins}
+            deleteItem={onDeleteSuperAdmin}
             edit="/super-admin-form"
           />
           <Button href="/super-admin-form" style="roundedPrimary" disabled={false} text="+" />

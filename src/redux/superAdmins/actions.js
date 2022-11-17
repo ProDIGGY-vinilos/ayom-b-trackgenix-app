@@ -1,7 +1,7 @@
 import {
-  GET_SUPERADMIN_ERROR,
-  GET_SUPERADMIN_SUCCESS,
-  GET_SUPERADMIN_PENDING,
+  GET_SUPERADMINS_ERROR,
+  GET_SUPERADMINS_SUCCESS,
+  GET_SUPERADMINS_PENDING,
   POST_SUPERADMIN_PENDING,
   POST_SUPERADMIN_SUCCESS,
   POST_SUPERADMIN_ERROR,
@@ -13,22 +13,22 @@ import {
   DELETE_SUPERADMIN_ERROR
 } from './constant';
 
-export const getSuperAdminPending = () => {
+export const getSuperAdminsPending = () => {
   return {
-    type: GET_SUPERADMIN_PENDING
+    type: GET_SUPERADMINS_PENDING
   };
 };
 
-export const getSuperAdminSuccess = (payload) => {
+export const getSuperAdminsSuccess = (payload) => {
   return {
-    type: GET_SUPERADMIN_SUCCESS,
+    type: GET_SUPERADMINS_SUCCESS,
     payload
   };
 };
 
-export const getSuperAdminError = (error) => {
+export const getSuperAdminsError = (error) => {
   return {
-    type: GET_SUPERADMIN_ERROR,
+    type: GET_SUPERADMINS_ERROR,
     payload: error
   };
 };

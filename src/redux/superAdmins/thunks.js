@@ -1,7 +1,7 @@
 import {
-  getSuperAdminError,
-  getSuperAdminSuccess,
-  getSuperAdminPending,
+  getSuperAdminsError,
+  getSuperAdminsSuccess,
+  getSuperAdminsPending,
   postSuperAdminPending,
   postSuperAdminSuccess,
   postSuperAdminError,
@@ -13,20 +13,20 @@ import {
   deleteSuperAdminError
 } from './actions';
 
-export const getSuperAdmin = () => {
+export const getSuperAdmins = () => {
   return (dispatch) => {
-    dispatch(getSuperAdminPending());
+    dispatch(getSuperAdminsPending());
     fetch(`${process.env.REACT_APP_API_URL}/superAdmins`)
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(getSuperAdminSuccess(data.data));
+          dispatch(getSuperAdminsSuccess(data.data));
         }
       })
       .catch((error) => {
-        dispatch(getSuperAdminError(error.toString()));
+        dispatch(getSuperAdminsError(error.toString()));
       });
   };
 };
