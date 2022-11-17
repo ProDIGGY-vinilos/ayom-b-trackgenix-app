@@ -4,10 +4,16 @@ import MessageModal from '../Shared/Modal/MessageModal';
 import styles from './admins.module.css';
 import Button from '../Shared/Button/Button';
 import InputField from '../Shared/Input/input';
+import { useSelector, useDispatch } from 'react-redux';
+import { postAdmin, putAdmin } from '../../redux/admins/thunks';
 
 function Form() {
+  const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.admins);
   const adminId = useParams().id;
-
+  const adminData = useSelector((state) =>
+    state.admins.list.find((admin) => admin._id === adminId)
+  );
   const [inputValue, setInputValue] = useState({
     name: '',
     lastName: '',
@@ -30,24 +36,39 @@ function Form() {
   useEffect(async () => {
     if (adminId) {
       document.getElementById('fromHeader').innerHTML = 'EDIT ADMIN';
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`);
-        const data = await response.json();
+      if (adminData === undefined) {
+        fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`)
+          .then((response) => response.json())
+          .then((response) => {
+            setInputValue({
+              name: response.data.name,
+              lastName: response.data.lastName,
+              email: response.data.email,
+              password: response.data.password
+            });
+          });
+      } else {
         setInputValue({
-          name: data.data.name,
-          lastName: data.data.lastName,
-          email: data.data.email,
-          password: data.data.password
+          name: adminData.name,
+          lastName: adminData.lastName,
+          email: adminData.email,
+          password: adminData.password
         });
-        return;
-      } catch (err) {
-        setTypeModal('Error');
-        setTextMessageModal(err.message);
-        openMessageModal();
-        return;
       }
     } else document.getElementById('fromHeader').innerHTML = 'ADD ADMIN';
   }, []);
+
+  useEffect(() => {
+    openModalOnError(error);
+  }, [error]);
+
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextMessageModal(error);
+      openMessageModal();
+    }
+  };
 
   const onChange = (e) => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
@@ -55,47 +76,22 @@ function Form() {
 
   const onSubmit = async () => {
     if (adminId) {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(inputValue)
-      });
-      const data = await response.json();
-      if (response.status !== 200 && response.status !== 201) {
-        setTypeModal('Error');
-        setTextMessageModal(data.message);
-        openMessageModal();
-        return;
-      } else {
+      dispatch(putAdmin(inputValue, adminId));
+      if (!error) {
         setTypeModal('Success');
-        setTextMessageModal(data.message);
+        setTextMessageModal('The administrator was edited successfully');
         openMessageModal();
-        return data;
       }
     } else {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(inputValue)
-      });
-      const data = await response.json();
-      if (response.status !== 200 && response.status !== 201) {
-        setTypeModal('Error');
-        setTextMessageModal(data.message);
-        openMessageModal();
-        return;
-      } else {
+      dispatch(postAdmin(inputValue));
+      if (!error) {
         setTypeModal('Success');
-        setTextMessageModal(data.message);
+        setTextMessageModal('The administrator was added successfully');
         openMessageModal();
-        return data;
       }
     }
   };
+
   return (
     <form className={styles.form}>
       <div className={styles.formHeader}>
