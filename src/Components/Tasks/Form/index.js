@@ -1,84 +1,84 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import MessageModal from '../../Shared/Modal/MessageModal';
 import styles from '../tasks.module.css';
 import Button from '../../Shared/Button/Button';
 import InputField from '../../Shared/Input/input';
+import { getOneTask, postTask, putTask } from '../../../redux/tasks/thunks';
 
 const Form = () => {
   const taskId = useParams().id;
+  const dispatch = useDispatch();
+  const dataTask = useSelector((state) => state.tasks.list.find((task) => task._id === taskId));
 
   const [userInput, setNameValue] = useState({
     description: ''
   });
 
-  const [showModal, setShowModal] = useState(false);
-  const [typeModal, setTypeModal] = useState();
-  const [textModal, setTextModal] = useState();
+  const { error } = useSelector((state) => state.tasks);
+  const [typeModal, setTypeModal] = useState('');
+  const [textMessageModal, setTextMessageModal] = useState('');
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
 
-  const openModal = () => {
-    setShowModal(true);
+  const openMessageModal = () => {
+    setShowMessageModal(true);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     if (taskId) {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`);
-      const data = await response.json();
-      setNameValue({ ...userInput, description: data.data.description });
+      if (dataTask === undefined) {
+        dispatch(getOneTask(taskId));
+        setIsFetched(true);
+      }
     }
   }, []);
 
+  useEffect(() => {
+    if (taskId) {
+      if (dataTask !== undefined) {
+        setNameValue({ description: dataTask.description });
+      } else if (isFetched) {
+        setNameValue({ description: dataTask.description });
+      }
+    }
+  }, [dataTask]);
+
+  useEffect(() => {
+    openModalOnError(error);
+  }, [error]);
+
   const updateInput = async (e) => {
-    setNameValue({ ...userInput, description: e.target.value });
+    setNameValue({ description: e.target.value });
   };
 
-  const onSubmit = async () => {
-    let options;
-    let url;
+  const onSubmit = () => {
     if (taskId) {
-      options = {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userInput)
-      };
-      url = `${process.env.REACT_APP_API_URL}/tasks/${taskId}`;
+      dispatch(putTask(taskId, userInput));
       setTypeModal('Success');
+      setTextMessageModal('The Task was updated successfully');
+      openMessageModal();
     } else {
-      options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userInput)
-      };
-      url = `${process.env.REACT_APP_API_URL}/tasks`;
+      dispatch(postTask(userInput));
       setTypeModal('Success');
-    }
-    try {
-      const response = await fetch(url, options);
-      const data = await response.json();
-      if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
-        setTypeModal('Error');
-        setTextModal(data.message);
-        openModal();
-        return;
-      }
-      setTextModal(data.message);
-      openModal();
-      return data;
-    } catch (error) {
-      setTypeModal('Error');
-      setTextModal(error);
-      openModal();
-      return;
+      setTextMessageModal('The Task was created successfully');
+      openMessageModal();
     }
   };
+
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextMessageModal(error);
+      openMessageModal();
+    }
+  };
+
   return (
     <div className={styles.container}>
       <form className={styles.addItem} onSubmit={onSubmit}>
@@ -90,16 +90,16 @@ const Form = () => {
             type="text"
             placeholder="description"
             value={userInput.description}
-            onChange={updateInput}
+            onChange={(e) => updateInput(e)}
           />
         </div>
         <div className={styles.buttonsDiv}>
           <Button onClick={onSubmit} style="squaredPrimary" disabled={false} text="Save" />
           <MessageModal
             type={typeModal}
-            isOpen={showModal}
-            message={textModal}
-            handleClose={closeModal}
+            isOpen={showMessageModal}
+            message={textMessageModal}
+            handleClose={closeMessageModal}
             goBack={'/tasks'}
           />
         </div>

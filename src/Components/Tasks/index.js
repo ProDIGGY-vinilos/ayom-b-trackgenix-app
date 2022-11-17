@@ -4,12 +4,14 @@ import styles from './tasks.module.css';
 import MessageModal from '../Shared/Modal/MessageModal';
 import Button from '../Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTasks } from '../../redux/tasks/thunks';
+import { getTasks, deleteTask } from '../../redux/tasks/thunks';
 
 const Tasks = () => {
-  const [typeModal, setTypeModal] = useState();
-  const [textModal, setTextModal] = useState();
+  const [typeModal, setTypeModal] = useState('');
+  const [textModal, setTextModal] = useState('');
   const [showModal, setShowModal] = useState(false);
+
+  const data = useSelector((state) => state.tasks.list);
 
   const { list: tasksList, isLoading, error } = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
@@ -22,32 +24,24 @@ const Tasks = () => {
     setShowModal(false);
   };
 
-  useEffect(async () => {
-    dispatch(getTasks());
+  useEffect(() => {
+    if (!data.length || data.length === 1) {
+      dispatch(getTasks());
+    }
   }, []);
 
-  const deleteTask = () => {
-    dispatch(getTasks());
-    setTypeModal('Success');
-    setTextModal('The task was successfully removed');
-    openModal();
-  };
+  useEffect(() => {
+    openModalOnError(error);
+  }, [error]);
 
   const deleteTaskFunction = async (id) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-type': 'application/json'
-      }
-    });
-    if (response.status == 204) {
-      deleteTask();
-    } else if ([400, 404, 500].includes(response.status)) {
-      const data = await response.json();
-      setTypeModal('Error');
-      setTextModal(data.message);
+    dispatch(deleteTask(id));
+    if (error) {
+      openModalOnError(error);
+    } else {
+      setTypeModal('Success');
+      setTextModal('The Task was removed successfully');
       openModal();
-      return;
     }
   };
 
@@ -57,11 +51,17 @@ const Tasks = () => {
     { heading: 'Actions' }
   ];
 
-  if (error) {
-    setTypeModal('Error');
-    setTextModal(error);
-    openModal();
-  }
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    }
+  };
+
+  useEffect(() => {
+    openModalOnError(error);
+  }, [error]);
 
   return (
     <div className={styles.container}>
