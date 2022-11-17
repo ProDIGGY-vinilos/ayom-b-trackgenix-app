@@ -65,7 +65,15 @@ const reducer = (state = INITIAL_STATE, action) => {
     case PUT_ADMIN_SUCCESS:
       return {
         ...state,
-        list: [...state.list, action.data],
+        list: [
+          ...state.list.map((admin) => {
+            if (admin._id === action.data._id) {
+              return action.data;
+            } else {
+              return admin;
+            }
+          })
+        ],
         error: '',
         isLoading: false
       };
