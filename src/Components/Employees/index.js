@@ -37,7 +37,6 @@ const Employees = () => {
   useEffect(() => {
     dispatch(clearError());
     if (!employeesList.length || employeesList.length === 1) {
-      console.log(employeesList);
       dispatch(getEmployees());
     }
   }, []);
