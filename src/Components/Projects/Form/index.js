@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postProject, putProject } from '../../../redux/projects/thunks';
 
 const Project = () => {
-  let formTtitle = 'Tittle';
+  let formTitle = 'Title';
   const projectId = useParams().id;
   const [projectBody, setProjectBody] = useState({
     name: '',
@@ -33,12 +33,7 @@ const Project = () => {
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showSharedModal, setShowSharedModal] = useState(false);
-  const {
-    list: projectList,
-    isLoading,
-    error,
-    modalMessage
-  } = useSelector((state) => state.projects);
+  const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
 
   const openModal = () => {
@@ -57,12 +52,13 @@ const Project = () => {
     setShowSharedModal(false);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     if (projectId) {
       setIsFetched(true);
       const newProjectList = [
         ...projectList.filter((projectItem) => projectItem._id === projectId)
       ];
+      console.log(newProjectList);
       setProjectBody({
         name: newProjectList[0].name,
         description: newProjectList[0].description,
@@ -106,15 +102,6 @@ const Project = () => {
     }
   };
 
-  useEffect(() => {
-    setSuccessMessage(modalMessage);
-  }, [modalMessage]);
-
-  const setSuccessMessage = (modalMessage) => {
-    setTypeModal('Success');
-    setTextModal(modalMessage);
-  };
-
   const onChangeValue = (key, value, keyArray = false) => {
     if (keyArray) {
       setProjectBody({
@@ -130,6 +117,9 @@ const Project = () => {
     {
       projectId ? dispatch(putProject(projectId, projectBody)) : dispatch(postProject(projectBody));
     }
+    setTypeModal('Success');
+    console.log(projectList.list);
+    setTextModal('xD');
     openSharedModal();
   };
 
@@ -144,7 +134,7 @@ const Project = () => {
       ) : (
         <h2 className={styles.title}>Add new project</h2>
       )}
-      <h2 className={styles.title}>{formTtitle}</h2>
+      <h2 className={styles.title}>{formTitle}</h2>
       <Button href="/projects" style="roundedSecondary" disabled={false} text="X" />
       <form className={styles.formContainer} onSubmit={onSubmit}>
         <div className={styles.formDiv}>

@@ -16,7 +16,6 @@ import {
 const INITIAL_STATE = {
   list: [],
   isLoading: false,
-  modalMessage: '',
   error: ''
 };
 
@@ -44,14 +43,12 @@ const reducer = (state = INITIAL_STATE, action) => {
     case POST_PROJECT_PENDING:
       return {
         ...state,
-        isLoading: true,
-        modalMessage: ''
+        isLoading: true
       };
     case POST_PROJECT_SUCCESS:
       return {
         ...state,
         list: [...state.list, action.payload.data],
-        modalMessage: action.payload.message,
         isLoading: false,
         error: ''
       };
@@ -65,14 +62,19 @@ const reducer = (state = INITIAL_STATE, action) => {
     case PUT_PROJECT_PENDING:
       return {
         ...state,
-        isLoading: true,
-        modalMessage: ''
+        isLoading: true
       };
     case PUT_PROJECT_SUCCESS:
       return {
         ...state,
-        list: [...state.list, action.payload.data],
-        modalMessage: action.payload.message,
+        list: [
+          ...state.list.map((project) => {
+            if (project._id === action.payload.data._id) {
+              return action.payload.data;
+            }
+            return project;
+          })
+        ],
         isLoading: false,
         error: ''
       };
