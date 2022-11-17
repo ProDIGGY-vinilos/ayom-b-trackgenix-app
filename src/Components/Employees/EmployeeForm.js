@@ -7,7 +7,7 @@ import Button from '../Shared/Button/Button';
 import InputField from '../Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { postEmployee, putEmployee } from '../../redux/employees/thunks';
-import { setEmptyError } from '../../redux/employees/extras';
+import { clearError } from '../../redux/employees/actions';
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const EmployeeForm = () => {
 
   const closeModal = () => {
     setShowModal(false);
-    dispatch(setEmptyError());
+    dispatch(clearError());
   };
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const EmployeeForm = () => {
   }, [error]);
 
   useEffect(() => {
-    dispatch(setEmptyError());
+    dispatch(clearError());
     if (employeeId) {
       setUserInput({
         name: employee.name,

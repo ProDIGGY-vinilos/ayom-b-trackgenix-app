@@ -11,7 +11,7 @@ import {
   DELETE_EMPLOYEE_PENDING,
   DELETE_EMPLOYEE_SUCCESS,
   DELETE_EMPLOYEE_ERROR,
-  EMPTY_ERROR
+  CLEAR_ERROR
 } from './constant';
 
 export const getEmployeesPending = () => {
@@ -94,8 +94,8 @@ export const deleteEmployeesError = (error) => {
   };
 };
 
-export const emptyError = () => {
+export const clearError = () => {
   return {
-    type: EMPTY_ERROR
+    type: CLEAR_ERROR
   };
 };

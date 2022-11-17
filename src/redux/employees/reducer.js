@@ -11,7 +11,7 @@ import {
   DELETE_EMPLOYEE_PENDING,
   DELETE_EMPLOYEE_SUCCESS,
   DELETE_EMPLOYEE_ERROR,
-  EMPTY_ERROR
+  CLEAR_ERROR
 } from './constant';
 
 const INITIAL_STATE = {
@@ -53,8 +53,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: false,
-        list: [...state.list, action.payload.data],
-        message: action.payload.message
+        list: [...state.list, action.payload.data]
       };
     case POST_EMPLOYEE_ERROR:
       return {
@@ -74,8 +73,14 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: false,
-        list: [...state.list, action.payload.data],
-        message: action.payload.message
+        list: [
+          ...state.list.map((item) => {
+            if (item._id === action.payload.data._id) {
+              return action.payload.data;
+            }
+            return item;
+          })
+        ]
       };
     case PUT_EMPLOYEE_ERROR:
       return {
@@ -87,25 +92,21 @@ const reducer = (state = INITIAL_STATE, action) => {
     case DELETE_EMPLOYEE_PENDING:
       return {
         ...state,
-        isLoading: true,
         error: ''
       };
     case DELETE_EMPLOYEE_SUCCESS:
       return {
         ...state,
-        isLoading: false,
         error: false,
-        list: [...state.list.filter((element) => element._id !== action.payload)],
-        message: action.payload.message
+        list: [...state.list.filter((element) => element._id !== action.payload)]
       };
     case DELETE_EMPLOYEE_ERROR:
       return {
         ...state,
-        isLoading: false,
         error: action.payload,
         list: [...state.list]
       };
-    case EMPTY_ERROR:
+    case CLEAR_ERROR:
       return {
         ...state,
         error: ''

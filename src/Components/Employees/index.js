@@ -5,7 +5,7 @@ import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { getEmployees, deleteEmployee } from '../../redux/employees/thunks';
-import { setEmptyError } from '../../redux/employees/extras';
+import { clearError } from '../../redux/employees/actions';
 
 const Employees = () => {
   const [typeModal, setTypeModal] = useState('');
@@ -20,7 +20,7 @@ const Employees = () => {
 
   const closeModal = () => {
     setShowModal(false);
-    dispatch(setEmptyError());
+    dispatch(clearError());
   };
 
   const deleteItem = () => {
@@ -35,8 +35,11 @@ const Employees = () => {
   };
 
   useEffect(() => {
-    dispatch(setEmptyError());
-    dispatch(getEmployees());
+    dispatch(clearError());
+    if (!employeesList.length || employeesList.length === 1) {
+      console.log(employeesList);
+      dispatch(getEmployees());
+    }
   }, []);
 
   useEffect(() => {
