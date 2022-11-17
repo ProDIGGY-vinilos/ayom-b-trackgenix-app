@@ -9,6 +9,7 @@ import Button from '../../Shared/Button/Button';
 import InputField from '../../Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { postProject, putProject } from '../../../redux/projects/thunks';
+import getEmployees from '../../../redux/employees/thunks';
 
 const Project = () => {
   let formTitle = 'Title';
@@ -34,6 +35,7 @@ const Project = () => {
   const [textModal, setTextModal] = useState('');
   const [showSharedModal, setShowSharedModal] = useState(false);
   const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
+  const { list: employeesList } = useSelector((state) => state.employees);
   const dispatch = useDispatch();
 
   const openModal = () => {
@@ -53,12 +55,12 @@ const Project = () => {
   };
 
   useEffect(() => {
+    dispatch(getEmployees());
     if (projectId) {
       setIsFetched(true);
       const newProjectList = [
         ...projectList.filter((projectItem) => projectItem._id === projectId)
       ];
-      console.log(newProjectList);
       setProjectBody({
         name: newProjectList[0].name,
         description: newProjectList[0].description,
@@ -76,29 +78,22 @@ const Project = () => {
     } else {
       setIsFetched(false);
     }
-  }, []);
-
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`);
-      const data = await response.json();
-      setEmployees(data.data);
-    } catch (error) {
-      setTypeModal('Error');
-      setTextModal(error);
-      openSharedModal();
-      return;
-    }
+    setEmployees(employeesList);
   }, []);
 
   useEffect(() => {
-    setErrorMessage(error);
+    setModalMessage(error);
   }, [error]);
 
-  const setErrorMessage = (error) => {
+  const setModalMessage = (error) => {
     if (error) {
       setTypeModal('Error');
       setTextModal(error);
+    } else {
+      setTypeModal('Success');
+      projectId === ''
+        ? setTextModal('Project updated successfully')
+        : setTextModal('Project created successfully');
     }
   };
 
@@ -114,12 +109,7 @@ const Project = () => {
   };
 
   const onSubmit = () => {
-    {
-      projectId ? dispatch(putProject(projectId, projectBody)) : dispatch(postProject(projectBody));
-    }
-    setTypeModal('Success');
-    console.log(projectList.list);
-    setTextModal('xD');
+    projectId ? dispatch(putProject(projectId, projectBody)) : dispatch(postProject(projectBody));
     openSharedModal();
   };
 
@@ -186,11 +176,7 @@ const Project = () => {
         {projectBody.employees.map((employee, index) => {
           return (
             <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
-              <FormEmployee
-                employees={employees || undefined}
-                employee={employee}
-                changeValue={onChangeValue}
-              />
+              <FormEmployee employees={employees} employee={employee} changeValue={onChangeValue} />
             </div>
           );
         })}
