@@ -2,12 +2,12 @@ import {
   getAdminsPending,
   getAdminsSuccess,
   getAdminsError,
-  postAdminsPending,
-  postAdminsSuccess,
-  postAdminsError,
-  putAdminsPending,
-  putAdminsSuccess,
-  putAdminsError,
+  postAdminPending,
+  postAdminSuccess,
+  postAdminError,
+  putAdminPending,
+  putAdminSuccess,
+  putAdminError,
   deleteAdminPending,
   deleteAdminSuccess,
   deleteAdminError
@@ -31,9 +31,9 @@ export const getAdmins = () => {
   };
 };
 
-export const postAdmins = (data) => {
+export const postAdmin = (data) => {
   return (dispatch) => {
-    dispatch(postAdminsPending());
+    dispatch(postAdminPending());
     fetch(`${process.env.REACT_APP_API_URL}/admins/`, {
       method: 'POST',
       headers: {
@@ -51,18 +51,18 @@ export const postAdmins = (data) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(postAdminsSuccess(data.data));
+          dispatch(postAdminSuccess(data.data));
         }
       })
       .catch((err) => {
-        dispatch(postAdminsError(err.toString()));
+        dispatch(postAdminError(err.toString()));
       });
   };
 };
 
-export const putAdmins = (data, id) => {
+export const putAdmin = (data, id) => {
   return (dispatch) => {
-    dispatch(putAdminsPending());
+    dispatch(putAdminPending());
     fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
       method: 'PUT',
       headers: {
@@ -80,11 +80,11 @@ export const putAdmins = (data, id) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(putAdminsSuccess(data.data));
+          dispatch(putAdminSuccess(data.data));
         }
       })
       .catch((err) => {
-        dispatch(putAdminsError(err.toString()));
+        dispatch(putAdminError(err.toString()));
       });
   };
 };

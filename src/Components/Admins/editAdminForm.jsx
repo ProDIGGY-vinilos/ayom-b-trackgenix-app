@@ -5,7 +5,7 @@ import styles from './admins.module.css';
 import Button from '../Shared/Button/Button';
 import InputField from '../Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
-import { postAdmins, putAdmins } from '../../redux/admins/thunks';
+import { postAdmin, putAdmin } from '../../redux/admins/thunks';
 
 function Form() {
   const dispatch = useDispatch();
@@ -24,10 +24,6 @@ function Form() {
   const [typeModal, setTypeModal] = useState();
   const [textMessageModal, setTextMessageModal] = useState();
   const [showMessageModal, setShowMessageModal] = useState(false);
-
-  useEffect(() => {
-    openModalOnError(error);
-  }, [error]);
 
   const openMessageModal = () => {
     setShowMessageModal(true);
@@ -62,6 +58,10 @@ function Form() {
     } else document.getElementById('fromHeader').innerHTML = 'ADD ADMIN';
   }, []);
 
+  useEffect(() => {
+    openModalOnError(error);
+  }, [error]);
+
   const openModalOnError = (error) => {
     if (error) {
       setTypeModal('Error');
@@ -76,14 +76,14 @@ function Form() {
 
   const onSubmit = async () => {
     if (adminId) {
-      dispatch(putAdmins(inputValue, adminId));
+      dispatch(putAdmin(inputValue, adminId));
       if (!error) {
         setTypeModal('Success');
         setTextMessageModal('The administrator was edited successfully');
         openMessageModal();
       }
     } else {
-      dispatch(postAdmins(inputValue));
+      dispatch(postAdmin(inputValue));
       if (!error) {
         setTypeModal('Success');
         setTextMessageModal('The administrator was added successfully');

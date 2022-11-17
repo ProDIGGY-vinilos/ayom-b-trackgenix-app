@@ -2,12 +2,12 @@ import {
   GET_ADMINS_PENDING,
   GET_ADMINS_SUCCESS,
   GET_ADMINS_ERROR,
-  POST_ADMINS_PENDING,
-  POST_ADMINS_SUCCESS,
-  POST_ADMINS_ERROR,
-  PUT_ADMINS_PENDING,
-  PUT_ADMINS_SUCCESS,
-  PUT_ADMINS_ERROR,
+  POST_ADMIN_PENDING,
+  POST_ADMIN_SUCCESS,
+  POST_ADMIN_ERROR,
+  PUT_ADMIN_PENDING,
+  PUT_ADMIN_SUCCESS,
+  PUT_ADMIN_ERROR,
   DELETE_ADMIN_PENDING,
   DELETE_ADMIN_SUCCESS,
   DELETE_ADMIN_ERROR
@@ -39,37 +39,37 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         error: action.payload
       };
-    case POST_ADMINS_PENDING:
+    case POST_ADMIN_PENDING:
       return {
         ...state,
         isLoading: true
       };
-    case POST_ADMINS_SUCCESS:
+    case POST_ADMIN_SUCCESS:
       return {
         ...state,
         list: [...state.list, action.data],
         error: '',
         isLoading: false
       };
-    case POST_ADMINS_ERROR:
+    case POST_ADMIN_ERROR:
       return {
         ...state,
         isLoading: false,
         error: action.error
       };
-    case PUT_ADMINS_PENDING:
+    case PUT_ADMIN_PENDING:
       return {
         ...state,
         isLoading: true
       };
-    case PUT_ADMINS_SUCCESS:
+    case PUT_ADMIN_SUCCESS:
       return {
         ...state,
         list: [...state.list, action.data],
         error: '',
         isLoading: false
       };
-    case PUT_ADMINS_ERROR:
+    case PUT_ADMIN_ERROR:
       return {
         ...state,
         isLoading: false,

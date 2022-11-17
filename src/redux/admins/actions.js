@@ -2,12 +2,12 @@ import {
   GET_ADMINS_PENDING,
   GET_ADMINS_SUCCESS,
   GET_ADMINS_ERROR,
-  POST_ADMINS_PENDING,
-  POST_ADMINS_SUCCESS,
-  POST_ADMINS_ERROR,
-  PUT_ADMINS_PENDING,
-  PUT_ADMINS_SUCCESS,
-  PUT_ADMINS_ERROR,
+  POST_ADMIN_PENDING,
+  POST_ADMIN_SUCCESS,
+  POST_ADMIN_ERROR,
+  PUT_ADMIN_PENDING,
+  PUT_ADMIN_SUCCESS,
+  PUT_ADMIN_ERROR,
   DELETE_ADMIN_PENDING,
   DELETE_ADMIN_SUCCESS,
   DELETE_ADMIN_ERROR
@@ -33,42 +33,42 @@ export const getAdminsError = (error) => {
   };
 };
 
-export const postAdminsPending = () => {
+export const postAdminPending = () => {
   return {
-    type: POST_ADMINS_PENDING
+    type: POST_ADMIN_PENDING
   };
 };
 
-export const postAdminsSuccess = (data) => {
+export const postAdminSuccess = (data) => {
   return {
-    type: POST_ADMINS_SUCCESS,
+    type: POST_ADMIN_SUCCESS,
     data
   };
 };
 
-export const postAdminsError = (error) => {
+export const postAdminError = (error) => {
   return {
-    type: POST_ADMINS_ERROR,
+    type: POST_ADMIN_ERROR,
     error
   };
 };
 
-export const putAdminsPending = () => {
+export const putAdminPending = () => {
   return {
-    type: PUT_ADMINS_PENDING
+    type: PUT_ADMIN_PENDING
   };
 };
 
-export const putAdminsSuccess = (data) => {
+export const putAdminSuccess = (data) => {
   return {
-    type: PUT_ADMINS_SUCCESS,
+    type: PUT_ADMIN_SUCCESS,
     data
   };
 };
 
-export const putAdminsError = (error) => {
+export const putAdminError = (error) => {
   return {
-    type: PUT_ADMINS_ERROR,
+    type: PUT_ADMIN_ERROR,
     payload: error
   };
 };
