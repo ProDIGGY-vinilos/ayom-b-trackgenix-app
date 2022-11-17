@@ -4,11 +4,12 @@ import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import getEmployees from '../../redux/employees/thunks';
+import { getEmployees, deleteEmployee } from '../../redux/employees/thunks';
+import { clearError } from '../../redux/employees/actions';
 
 const Employees = () => {
-  const [typeModal, setTypeModal] = useState();
-  const [textModal, setTextModal] = useState();
+  const [typeModal, setTypeModal] = useState('');
+  const [textModal, setTextModal] = useState('');
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const { list: employeesList, isLoading, error } = useSelector((state) => state.employees);
@@ -19,26 +20,31 @@ const Employees = () => {
 
   const closeModal = () => {
     setShowModal(false);
+    dispatch(clearError());
   };
 
   const deleteItem = () => {
-    dispatch(getEmployees());
     setTypeModal('Success');
     setTextModal('The employee was successfully removed');
     openModal();
   };
 
-  const deleteEmployee = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, { method: 'DELETE' });
+  const onDeleteEmployee = async (id) => {
+    dispatch(deleteEmployee(id));
     deleteItem(id);
   };
 
-  useEffect(async () => {
-    dispatch(getEmployees());
+  useEffect(() => {
+    dispatch(clearError());
+    if (!employeesList.length || employeesList.length === 1) {
+      dispatch(getEmployees());
+    }
   }, []);
 
-  useEffect(async () => {
-    openModalOnError(error);
+  useEffect(() => {
+    if (error) {
+      openModalOnError(error);
+    }
   }, [error]);
 
   const openModalOnError = (error) => {
@@ -68,7 +74,7 @@ const Employees = () => {
       <Table
         data={employeesList}
         columns={columns}
-        deleteItem={deleteEmployee}
+        deleteItem={onDeleteEmployee}
         edit="/employee-form"
       />
       <Button href="/employee-form" style="roundedPrimary" disabled={false} text="+" />

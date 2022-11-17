@@ -5,9 +5,18 @@ import MessageModal from '../Shared/Modal/MessageModal';
 import styles from './employees.module.css';
 import Button from '../Shared/Button/Button';
 import InputField from '../Shared/Input/input';
+import { useSelector, useDispatch } from 'react-redux';
+import { postEmployee, putEmployee } from '../../redux/employees/thunks';
+import { clearError } from '../../redux/employees/actions';
 
 const EmployeeForm = () => {
+  const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.employees);
+  const [requested, setRequested] = useState(false);
   const employeeId = useParams().id;
+  const employee = useSelector((state) =>
+    state.employees.list.find((employee) => employee._id === employeeId)
+  );
   const [userInput, setUserInput] = useState({
     name: '',
     lastName: '',
@@ -16,8 +25,8 @@ const EmployeeForm = () => {
     password: ''
   });
 
-  const [typeModal, setTypeModal] = useState();
-  const [textModal, setTextModal] = useState();
+  const [typeModal, setTypeModal] = useState('');
+  const [textModal, setTextModal] = useState('');
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
@@ -26,27 +35,37 @@ const EmployeeForm = () => {
 
   const closeModal = () => {
     setShowModal(false);
+    dispatch(clearError());
   };
 
-  useEffect(async () => {
+  useEffect(() => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+      setRequested(false);
+    } else if (employeeId && requested) {
+      setTextModal('Employee updated successfully');
+      openModal();
+      setRequested(false);
+    } else if (!employeeId && requested) {
+      setTextModal('Employee created successfully');
+      openModal();
+      setRequested(false);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    dispatch(clearError());
     if (employeeId) {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${employeeId}`);
-        const data = await response.json();
-        setUserInput({
-          name: data.data.name,
-          lastName: data.data.lastName,
-          email: data.data.email,
-          phone: data.data.phone,
-          password: data.data.password
-        });
-        return;
-      } catch (err) {
-        setTypeModal('Error');
-        setTextModal(err.message);
-        openModal();
-        return;
-      }
+      setUserInput({
+        name: employee.name,
+        lastName: employee.lastName,
+        email: employee.email,
+        phone: employee.phone,
+        password: employee.password
+      });
+      return;
     }
   }, []);
 
@@ -56,50 +75,13 @@ const EmployeeForm = () => {
   };
 
   const onSubmit = async () => {
-    let requestOptions;
-
     if (employeeId) {
-      requestOptions = {
-        method: 'PUT',
-        body: JSON.stringify(userInput),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-      setTypeModal('Success');
+      dispatch(putEmployee(employeeId, userInput));
     } else {
-      requestOptions = {
-        method: 'POST',
-        body: JSON.stringify(userInput),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-      setTypeModal('Success');
+      dispatch(postEmployee('', userInput));
     }
-
-    let url = !employeeId ? '' : '/' + employeeId;
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/employees${url}`,
-        requestOptions
-      );
-      const data = await response.json();
-      if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
-        setTypeModal('Error');
-        setTextModal(data.message);
-        openModal();
-        return;
-      }
-      setTextModal(data.message);
-      openModal();
-      return data;
-    } catch (error) {
-      setTypeModal('Error');
-      setTextModal(error);
-      openModal();
-      return;
-    }
+    setRequested(true);
+    setTypeModal('Success');
   };
 
   return (
