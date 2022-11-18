@@ -11,7 +11,7 @@ import {
   deleteAdminPending,
   deleteAdminSuccess,
   deleteAdminError
-} from './actions';
+} from 'redux/admins/actions';
 
 export const getAdmins = () => {
   return (dispatch) => {

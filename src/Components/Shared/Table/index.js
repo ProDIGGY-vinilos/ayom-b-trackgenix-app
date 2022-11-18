@@ -1,6 +1,6 @@
 import React from 'react';
-import TableRow from './TableRow';
-import styles from './table.module.css';
+import TableRow from 'Components/Shared/Table/TableRow';
+import styles from 'Components/Shared/Table/table.module.css';
 
 const Table = ({ columns, data, deleteItem, edit }) => {
   return (

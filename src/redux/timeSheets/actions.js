@@ -14,7 +14,7 @@ import {
   DELETE_TIMESHEET_PENDING,
   DELETE_TIMESHEET_SUCCESS,
   DELETE_TIMESHEET_ERROR
-} from './constant';
+} from 'redux/timeSheets/constant';
 
 export const getTimeSheetsPending = () => {
   return {

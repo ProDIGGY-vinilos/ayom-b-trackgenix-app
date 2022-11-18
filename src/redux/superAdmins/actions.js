@@ -11,7 +11,7 @@ import {
   DELETE_SUPERADMIN_PENDING,
   DELETE_SUPERADMIN_SUCCESS,
   DELETE_SUPERADMIN_ERROR
-} from './constant';
+} from 'redux/superAdmins/constant';
 
 export const getSuperAdminsPending = () => {
   return {

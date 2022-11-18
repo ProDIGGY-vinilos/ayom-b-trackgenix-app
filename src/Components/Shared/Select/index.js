@@ -1,4 +1,4 @@
-import styles from './select.module.css';
+import styles from 'Components/Shared/Select/select.module.css';
 
 const Select = ({ selectedValue, options, changeValue, field, label }) => {
   const handleChange = (e) => {
