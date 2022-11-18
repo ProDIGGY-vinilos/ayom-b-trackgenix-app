@@ -7,8 +7,12 @@ import MessageModal from '../../Shared/Modal/MessageModal';
 import styles from './form.module.css';
 import Button from '../../Shared/Button/Button';
 import InputField from '../../Shared/Input/input';
+import { useSelector, useDispatch } from 'react-redux';
+import { postProject, putProject } from '../../../redux/projects/thunks';
+import getEmployees from '../../../redux/employees/thunks';
 
 const Project = () => {
+  let formTitle = 'Title';
   const projectId = useParams().id;
   const [projectBody, setProjectBody] = useState({
     name: '',
@@ -27,10 +31,12 @@ const Project = () => {
   const [employees, setEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [typeModal, setTypeModal] = useState();
-  const [textModal, setTextModal] = useState();
+  const [typeModal, setTypeModal] = useState('');
+  const [textModal, setTextModal] = useState('');
   const [showSharedModal, setShowSharedModal] = useState(false);
+  const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
+  const { list: employeesList } = useSelector((state) => state.employees);
+  const dispatch = useDispatch();
 
   const openModal = () => {
     setShowModal(true);
@@ -48,51 +54,48 @@ const Project = () => {
     setShowSharedModal(false);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
+    dispatch(getEmployees());
     if (projectId) {
-      try {
-        setIsFetched(true);
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`);
-        const data = await response.json();
-        setProjectBody({
-          name: data.data.name,
-          description: data.data.description,
-          startDate: data.data.startDate.substring(0, 10),
-          endDate: data.data.endDate.substring(0, 10),
-          clientName: data.data.clientName,
-          employees: [
-            {
-              employee: data.data.employees[0].employee._id,
-              role: data.data.employees[0].role,
-              rate: data.data.employees[0].rate
-            }
-          ]
-        });
-      } catch (error) {
-        setIsFetched(false);
-        setTypeModal('Error');
-        setTextModal(error);
-        openSharedModal();
-        return;
-      }
+      setIsFetched(true);
+      const newProjectList = [
+        ...projectList.filter((projectItem) => projectItem._id === projectId)
+      ];
+      setProjectBody({
+        name: newProjectList[0].name,
+        description: newProjectList[0].description,
+        startDate: newProjectList[0].startDate.substring(0, 10),
+        endDate: newProjectList[0].endDate.substring(0, 10),
+        clientName: newProjectList[0].clientName,
+        employees: [
+          {
+            employee: newProjectList[0].employees[0].employee._id,
+            role: newProjectList[0].employees[0].role,
+            rate: newProjectList[0].employees[0].rate
+          }
+        ]
+      });
     } else {
       setIsFetched(false);
     }
-    setIsLoading(false);
-  }, []);
+    setEmployees(employeesList);
+  }, [employeesList]);
 
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`);
-      const data = await response.json();
-      setEmployees(data.data);
-    } catch (error) {
+  useEffect(() => {
+    setModalMessage(error);
+  }, [error]);
+
+  const setModalMessage = (error) => {
+    if (error) {
       setTypeModal('Error');
       setTextModal(error);
-      openSharedModal();
-      return;
+    } else {
+      setTypeModal('Success');
+      projectId === ''
+        ? setTextModal('Project updated successfully')
+        : setTextModal('Project created successfully');
     }
-  }, []);
+  };
 
   const onChangeValue = (key, value, keyArray = false) => {
     if (keyArray) {
@@ -105,59 +108,23 @@ const Project = () => {
     }
   };
 
-  const onSubmit = async () => {
-    if (projectId) {
-      setTypeModal('Success');
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(projectBody)
-      });
-      const data = await response.json();
-      if (response.status === 201) {
-        setTextModal(data.message);
-        openSharedModal();
-        return data;
-      } else if ([400, 404, 500].includes(response.status)) {
-        setTypeModal('Error');
-        setTextModal(data.message);
-        openSharedModal();
-        return;
-      }
-    } else {
-      setTypeModal('Success');
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(projectBody)
-      });
-      const data = await response.json();
-
-      if (response.status === 201) {
-        setTextModal(data.message);
-        openSharedModal();
-        return data;
-      } else if (response.status === 400) {
-        setTypeModal('Error');
-        setTextModal(data.message);
-        openSharedModal();
-        return;
-      }
-    }
+  const onSubmit = () => {
+    projectId ? dispatch(putProject(projectId, projectBody)) : dispatch(postProject(projectBody));
+    openSharedModal();
   };
+
+  if (isLoading) {
+    return <h3>Loading...</h3>;
+  }
 
   return (
     <div className={styles.container}>
-      {isLoading && <h3>Loading</h3>}
       {isFetched ? (
         <h2 className={styles.title}>Edit Project</h2>
       ) : (
         <h2 className={styles.title}>Add new project</h2>
       )}
+      <h2 className={styles.title}>{formTitle}</h2>
       <Button href="/projects" style="roundedSecondary" disabled={false} text="X" />
       <form className={styles.formContainer} onSubmit={onSubmit}>
         <div className={styles.formDiv}>
@@ -209,11 +176,7 @@ const Project = () => {
         {projectBody.employees.map((employee, index) => {
           return (
             <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
-              <FormEmployee
-                employees={employees || undefined}
-                employee={employee}
-                changeValue={onChangeValue}
-              />
+              <FormEmployee employees={employees} employee={employee} changeValue={onChangeValue} />
             </div>
           );
         })}
