@@ -79,7 +79,7 @@ const Project = () => {
       setIsFetched(false);
     }
     setEmployees(employeesList);
-  }, []);
+  }, [employeesList]);
 
   useEffect(() => {
     setModalMessage(error);
