@@ -9,7 +9,7 @@ import Button from '../../Shared/Button/Button';
 import InputField from '../../Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { postProject, putProject } from '../../../redux/projects/thunks';
-import getEmployees from '../../../redux/employees/thunks';
+import { getEmployees } from '../../../redux/employees/thunks';
 
 const Project = () => {
   let formTitle = 'Title';
