@@ -8,7 +8,7 @@ import MessageModal from '../../Shared/Modal/MessageModal';
 import Button from '../../Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { getOneTimeSheet, postTimeSheet, putTimeSheet } from '../../../redux/timeSheets/thunks';
-import getEmployees from '../../../redux/employees/thunks';
+import { getEmployees } from '../../../redux/employees/thunks';
 import { getProjects } from '../../../redux/projects/thunks';
 import { getTasks } from '../../../redux/tasks/thunks';
 
