@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import styles from './admins.module.css';
-import MessageModal from '../Shared/Modal/MessageModal';
-import Table from '../Shared/Table';
-import Button from '../Shared/Button/Button';
+import styles from 'Components/Admins/admins.module.css';
+import MessageModal from 'Components/Shared/Modal/MessageModal';
+import Table from 'Components/Shared/Table';
+import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAdmins, deleteAdmin } from '../../redux/admins/thunks';
+import { getAdmins, deleteAdmin } from 'redux/admins/thunks';
 
 const Admins = () => {
   const { list: adminList, isLoading, error } = useSelector((state) => state.admins);

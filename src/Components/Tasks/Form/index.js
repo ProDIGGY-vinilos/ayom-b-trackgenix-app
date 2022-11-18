@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import MessageModal from '../../Shared/Modal/MessageModal';
-import styles from '../tasks.module.css';
-import Button from '../../Shared/Button/Button';
-import InputField from '../../Shared/Input/input';
-import { getOneTask, postTask, putTask } from '../../../redux/tasks/thunks';
+import MessageModal from 'Components/Shared/Modal/MessageModal';
+import styles from 'Components/Tasks/tasks.module.css';
+import Button from 'Components/Shared/Button/Button';
+import InputField from 'Components/Shared/Input/input';
+import { getOneTask, postTask, putTask } from 'redux/tasks/thunks';
 
 const Form = () => {
   const taskId = useParams().id;

@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './modal.module.css';
-import Button from '../../Button/Button';
+import styles from 'Components/Shared/Modal/MessageModal/modal.module.css';
+import Button from 'Components/Shared/Button/Button';
 
 const MessageModal = ({ type, isOpen, message, handleClose, goBack }) => {
   if (!isOpen) {

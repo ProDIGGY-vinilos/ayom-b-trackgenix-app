@@ -11,7 +11,7 @@ import {
   DELETE_PROJECT_PENDING,
   DELETE_PROJECT_ERROR,
   DELETE_PROJECT_SUCCESS
-} from './constant';
+} from 'redux/projects/constant';
 
 export const getProjectsPending = () => {
   return {

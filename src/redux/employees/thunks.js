@@ -11,7 +11,7 @@ import {
   deleteEmployeesPending,
   deleteEmployeesSuccess,
   deleteEmployeesError
-} from './actions';
+} from 'redux/employees/actions';
 
 export const getEmployees = () => {
   return (dispatch) => {

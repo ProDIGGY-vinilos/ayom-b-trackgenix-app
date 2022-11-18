@@ -1,7 +1,7 @@
 import React from 'react';
-import Modal from '../../Modal/ActionModal';
+import Modal from 'Components/Shared/Modal/ActionModal';
 import { useState } from 'react';
-import Button from '../../Button/Button';
+import Button from 'Components/Shared/Button/Button';
 
 const TableRow = ({ item, columns, deleteItem, edit }) => {
   const [showModal, setShowModal] = useState(false);

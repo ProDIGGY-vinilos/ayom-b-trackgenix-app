@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import styles from './super-admins.module.css';
-import MessageModal from '../Shared/Modal/MessageModal';
-import Table from '../Shared/Table';
-import Button from '../Shared/Button/Button';
+import styles from 'Components/SuperAdmins/super-admins.module.css';
+import MessageModal from 'Components/Shared/Modal/MessageModal';
+import Table from 'Components/Shared/Table';
+import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getSuperAdmins, deleteSuperAdmin } from '../../redux/superAdmins/thunks';
+import { getSuperAdmins, deleteSuperAdmin } from 'redux/superAdmins/thunks';
 
 const SuperAdmins = () => {
   const [typeModal, setTypeModal] = useState();
