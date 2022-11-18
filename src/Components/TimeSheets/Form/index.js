@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import styles from './form.module.css';
-import Select from '../../Shared/Select';
-import InputField from '../../Shared/Input/input';
-import DatePicker from '../../Shared/Datepicker';
-import MessageModal from '../../Shared/Modal/MessageModal';
-import Button from '../../Shared/Button/Button';
+import styles from 'Components/TimeSheets/Form/form.module.css';
+import Select from 'Components/Shared/Select';
+import InputField from 'Components/Shared/Input/input';
+import DatePicker from 'Components/Shared/Datepicker';
+import MessageModal from 'Components/Shared/Modal/MessageModal';
+import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOneTimeSheet, postTimeSheet, putTimeSheet } from '../../../redux/timeSheets/thunks';
-import { getEmployees } from '../../../redux/employees/thunks';
-import { getProjects } from '../../../redux/projects/thunks';
-import { getTasks } from '../../../redux/tasks/thunks';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { getOneTimeSheet, postTimeSheet, putTimeSheet } from 'redux/timeSheets/thunks';
+import { getEmployees } from 'redux/employees/thunks';
+import { getProjects } from 'redux/projects/thunks';
+import { getTasks } from 'redux/tasks/thunks';
 
 const TimeSheetsForm = () => {
   const pathed = useParams().id;

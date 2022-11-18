@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTimeSheets, deleteTimeSheet } from '../../redux/timeSheets/thunks';
-import styles from './time-sheets.module.css';
-import MessageModal from '../Shared/Modal/MessageModal';
-import Table from '../Shared/Table';
-import Button from '../Shared/Button/Button';
+import { getTimeSheets, deleteTimeSheet } from 'redux/timeSheets/thunks';
+import styles from 'Components/TimeSheets/time-sheets.module.css';
+import MessageModal from 'Components/Shared/Modal/MessageModal';
+import Table from 'Components/Shared/Table';
+import Button from 'Components/Shared/Button/Button';
 
 const TimeSheets = () => {
   const [typeModal, setTypeModal] = useState('');

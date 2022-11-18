@@ -1,16 +1,16 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import MessageModal from '../Shared/Modal/MessageModal';
-import styles from './employees.module.css';
-import Button from '../Shared/Button/Button';
-import InputField from '../Shared/Input/input';
+import MessageModal from 'Components/Shared/Modal/MessageModal';
+import styles from 'Components/Employees/employees.module.css';
+import Button from 'Components/Shared/Button/Button';
+import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
-import { postEmployee, putEmployee } from '../../redux/employees/thunks';
-import { clearError } from '../../redux/employees/actions';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { postEmployee, putEmployee } from 'redux/employees/thunks';
+import { clearError } from 'redux/employees/actions';
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();

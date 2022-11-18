@@ -2,14 +2,14 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './form.module.css';
-import InputField from '../../Shared/Input/input';
-import MessageModal from '../../Shared/Modal/MessageModal';
-import Button from '../../Shared/Button/Button';
-import { postSuperAdmin, putSuperAdmin } from '../../../redux/superAdmins/thunks';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+import styles from 'Components/SuperAdmins/Form/form.module.css';
+import InputField from 'Components/Shared/Input/input';
+import MessageModal from 'Components/Shared/Modal/MessageModal';
+import Button from 'Components/Shared/Button/Button';
+import { postSuperAdmin, putSuperAdmin } from 'redux/superAdmins/thunks';
 
 const Form = () => {
   const dispatch = useDispatch();

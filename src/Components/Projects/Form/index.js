@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import FormEmployee from './FormEmployees/index';
-import DatePicker from '../../Shared/Datepicker';
-import FormModal from '../Modal';
-import MessageModal from '../../Shared/Modal/MessageModal';
-import styles from './form.module.css';
-import Button from '../../Shared/Button/Button';
-import InputField from '../../Shared/Input/input';
+import FormEmployee from 'Components/Projects/Form/FormEmployees/index';
+import DatePicker from 'Components/Shared/Datepicker';
+import FormModal from 'Components/Projects/Modal';
+import MessageModal from 'Components/Shared/Modal/MessageModal';
+import styles from 'Components/Projects/Form/form.module.css';
+import Button from 'Components/Shared/Button/Button';
+import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
-import { postProject, putProject } from '../../../redux/projects/thunks';
-import { getEmployees } from '../../../redux/employees/thunks';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { postProject, putProject } from 'redux/projects/thunks';
+import { getEmployees } from 'redux/employees/thunks';
 
 const Project = () => {
   let formTitle = 'Title';

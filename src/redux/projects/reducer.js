@@ -11,7 +11,7 @@ import {
   DELETE_PROJECT_PENDING,
   DELETE_PROJECT_SUCCESS,
   DELETE_PROJECT_ERROR
-} from './constant';
+} from 'redux/projects/constant';
 
 const INITIAL_STATE = {
   list: [],

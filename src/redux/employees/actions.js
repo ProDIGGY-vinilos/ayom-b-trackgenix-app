@@ -12,7 +12,7 @@ import {
   DELETE_EMPLOYEE_SUCCESS,
   DELETE_EMPLOYEE_ERROR,
   CLEAR_ERROR
-} from './constant';
+} from 'redux/employees/constant';
 
 export const getEmployeesPending = () => {
   return {

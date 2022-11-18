@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import Table from '../Shared/Table';
-import styles from './tasks.module.css';
-import MessageModal from '../Shared/Modal/MessageModal';
-import Button from '../Shared/Button/Button';
+import Table from 'Components/Shared/Table';
+import styles from 'Components/Tasks/tasks.module.css';
+import MessageModal from 'Components/Shared/Modal/MessageModal';
+import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTasks, deleteTask } from '../../redux/tasks/thunks';
+import { getTasks, deleteTask } from 'redux/tasks/thunks';
 
 const Tasks = () => {
   const [typeModal, setTypeModal] = useState('');

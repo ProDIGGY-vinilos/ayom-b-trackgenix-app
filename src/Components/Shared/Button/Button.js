@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import styles from './button.module.css';
+import styles from 'Components/Shared/Button/button.module.css';
 
 const Button = ({ style, href, text, icon, onClick, disabled }) => {
   const history = useHistory();

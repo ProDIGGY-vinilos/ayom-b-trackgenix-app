@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './formemployee.module.css';
-import InputField from '../../../Shared/Input/input';
-import Select from '../../../Shared/Select';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+import styles from 'Components/Projects/Form/FormEmployees/formemployee.module.css';
+import InputField from 'Components/Shared/Input/input';
+import Select from 'Components/Shared/Select';
 
 const FormEmployee = ({ employees, employee, changeValue }) => {
   const roles = [{ role: 'DEV' }, { role: 'QA' }, { role: 'PM' }, { role: 'TL' }];

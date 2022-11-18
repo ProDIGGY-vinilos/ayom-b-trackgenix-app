@@ -1,22 +1,22 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Header from '../Header/index';
-import Footer from '../Footer/index';
-import Admins from '../Admins/index';
-import AdminForm from '../Admins/editAdminForm';
-import SuperAdmins from '../SuperAdmins/index';
-import SuperAdminForm from '../SuperAdmins/Form/index';
-import Home from '../Home/index';
-import styles from './layout.module.css';
-import Employees from '../Employees/index';
-import Projects from '../Projects';
-import ProjectForm from '../Projects/Form/index';
-import TimeSheets from '../TimeSheets';
-import TimeSheetsForm from '../TimeSheets/Form';
-import Tasks from '../Tasks/index';
-import EmployeeForm from '../Employees/EmployeeForm';
-import TasksForm from '../Tasks/Form/index';
+import Header from 'Components/Header/index';
+import Footer from 'Components/Footer/index';
+import Admins from 'Components/Admins/index';
+import AdminForm from 'Components/Admins/editAdminForm';
+import SuperAdmins from 'Components/SuperAdmins/index';
+import SuperAdminForm from 'Components/SuperAdmins/Form/index';
+import Home from 'Components/Home/index';
+import styles from 'Components/Layout/layout.module.css';
+import Employees from 'Components/Employees/index';
+import Projects from 'Components/Projects/index';
+import ProjectForm from 'Components/Projects/Form/index';
+import TimeSheets from 'Components/TimeSheets/index';
+import TimeSheetsForm from 'Components/TimeSheets/Form/index';
+import Tasks from 'Components/Tasks/index';
+import EmployeeForm from 'Components/Employees/EmployeeForm';
+import TasksForm from 'Components/Tasks/Form/index';
 
 const Layout = () => {
   return (
