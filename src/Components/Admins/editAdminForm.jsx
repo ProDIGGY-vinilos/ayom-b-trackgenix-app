@@ -6,6 +6,9 @@ import Button from '../Shared/Button/Button';
 import InputField from '../Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { postAdmin, putAdmin } from '../../redux/admins/thunks';
+import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 function Form() {
   const dispatch = useDispatch();
@@ -19,6 +22,27 @@ function Form() {
     lastName: '',
     email: '',
     password: ''
+  });
+
+  const schema = Joi.object({
+    name: Joi.string()
+      .required()
+      .alphanum()
+      .pattern(/^([^0-9]*)$/i, 'only letters'),
+    lastName: Joi.string()
+      .required()
+      .alphanum()
+      .pattern(/^([^0-9]*)$/i, 'only letters'),
+    email: Joi.string().required(),
+    password: Joi.string().alphanum().required()
+  });
+
+  const {
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(schema)
   });
 
   const [typeModal, setTypeModal] = useState();
@@ -105,6 +129,8 @@ function Form() {
           type="text"
           value={inputValue.name}
           onChange={onChange}
+          register={register}
+          error={errors.name?.message}
         />
       </div>
       <div className={styles.fromInput}>
@@ -114,6 +140,8 @@ function Form() {
           type="text"
           value={inputValue.lastName}
           onChange={onChange}
+          register={register}
+          error={errors.lastName?.message}
         />
       </div>
       <div className={styles.fromInput}>
@@ -123,6 +151,8 @@ function Form() {
           type="email"
           value={inputValue.email}
           onChange={onChange}
+          register={register}
+          error={errors.email?.message}
         />
       </div>
       <div className={styles.fromInput}>
@@ -132,6 +162,8 @@ function Form() {
           type="password"
           value={inputValue.password}
           onChange={onChange}
+          register={register}
+          error={errors.password?.message}
         />
       </div>
       <div>

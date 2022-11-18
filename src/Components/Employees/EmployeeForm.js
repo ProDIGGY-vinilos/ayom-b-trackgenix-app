@@ -8,6 +8,9 @@ import InputField from '../Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { postEmployee, putEmployee } from '../../redux/employees/thunks';
 import { clearError } from '../../redux/employees/actions';
+import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
@@ -28,6 +31,18 @@ const EmployeeForm = () => {
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showModal, setShowModal] = useState(false);
+
+  const schema = Joi.object({
+    name: Joi.string()
+  });
+
+  const {
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(schema)
+  });
 
   const openModal = () => {
     setShowModal(true);
@@ -97,6 +112,8 @@ const EmployeeForm = () => {
             placeholder="name"
             value={userInput.name}
             onChange={handleChange}
+            register={register}
+            error={errors.name?.message}
           />
         </div>
         <div className={styles.formControl}>
@@ -107,6 +124,8 @@ const EmployeeForm = () => {
             placeholder="last name"
             value={userInput.lastName}
             onChange={handleChange}
+            register={register}
+            error={errors.lastName?.message}
           />
         </div>
         <div className={styles.formControl}>
@@ -117,6 +136,8 @@ const EmployeeForm = () => {
             placeholder="email"
             value={userInput.email}
             onChange={handleChange}
+            register={register}
+            error={errors.email?.message}
           />
         </div>
         <div className={styles.formControl}>
@@ -127,6 +148,8 @@ const EmployeeForm = () => {
             placeholder="phone"
             value={userInput.phone}
             onChange={handleChange}
+            register={register}
+            error={errors.phone?.message}
           />
         </div>
         <div className={styles.formControl}>
@@ -137,6 +160,8 @@ const EmployeeForm = () => {
             placeholder="password"
             value={userInput.password}
             onChange={handleChange}
+            register={register}
+            error={errors.password?.message}
           />
         </div>
         <div>

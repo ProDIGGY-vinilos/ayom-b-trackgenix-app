@@ -10,6 +10,9 @@ import InputField from '../../Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { postProject, putProject } from '../../../redux/projects/thunks';
 import { getEmployees } from '../../../redux/employees/thunks';
+import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const Project = () => {
   let formTitle = 'Title';
@@ -37,6 +40,18 @@ const Project = () => {
   const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
   const { list: employeesList } = useSelector((state) => state.employees);
   const dispatch = useDispatch();
+
+  const schema = Joi.object({
+    name: Joi.string()
+  });
+
+  const {
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(schema)
+  });
 
   const openModal = () => {
     setShowModal(true);
@@ -135,16 +150,20 @@ const Project = () => {
             placeholder="project name"
             value={isFetched ? projectBody.name : undefined}
             onChange={(e) => onChangeValue('name', e.target.value)}
+            register={register}
+            error={errors.name?.message}
           />
         </div>
         <div className={styles.formDiv}>
           <InputField
             label="Client Name"
-            name="client name"
+            name="clientName"
             type="text"
             placeholder="client name"
             value={isFetched ? projectBody.clientName : undefined}
             onChange={(e) => onChangeValue('clientName', e.target.value)}
+            register={register}
+            error={errors.clientName?.message}
           />
         </div>
         <div className={styles.formFull}>

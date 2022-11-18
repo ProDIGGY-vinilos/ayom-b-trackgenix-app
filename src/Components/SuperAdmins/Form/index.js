@@ -7,6 +7,9 @@ import InputField from '../../Shared/Input/input';
 import MessageModal from '../../Shared/Modal/MessageModal';
 import Button from '../../Shared/Button/Button';
 import { postSuperAdmin, putSuperAdmin } from '../../../redux/superAdmins/thunks';
+import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -22,6 +25,18 @@ const Form = () => {
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
+
+  const schema = Joi.object({
+    name: Joi.string()
+  });
+
+  const {
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(schema)
+  });
 
   const openMessageModal = () => {
     setShowMessageModal(true);
@@ -115,6 +130,8 @@ const Form = () => {
           placeholder="name"
           value={superAdmin.name}
           onChange={updateField}
+          register={register}
+          error={errors.name?.message}
         />
       </div>
       <div className={styles.inputDiv}>
@@ -125,6 +142,8 @@ const Form = () => {
           placeholder="last name"
           value={superAdmin.lastName}
           onChange={updateField}
+          register={register}
+          error={errors.lastName?.message}
         />
       </div>
       <div className={styles.inputDiv}>
@@ -135,6 +154,8 @@ const Form = () => {
           placeholder="email"
           value={superAdmin.email}
           onChange={updateField}
+          register={register}
+          error={errors.email?.message}
         />
       </div>
       <div className={styles.inputDiv}>
@@ -145,6 +166,8 @@ const Form = () => {
           placeholder="password"
           value={superAdmin.password}
           onChange={updateField}
+          register={register}
+          error={errors.password?.message}
         />
       </div>
       <Button onClick={onConfirm} style="squaredPrimary" disabled={false} text="Save" />

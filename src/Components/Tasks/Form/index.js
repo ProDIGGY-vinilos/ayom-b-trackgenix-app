@@ -6,6 +6,9 @@ import styles from '../tasks.module.css';
 import Button from '../../Shared/Button/Button';
 import InputField from '../../Shared/Input/input';
 import { getOneTask, postTask, putTask } from '../../../redux/tasks/thunks';
+import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const Form = () => {
   const taskId = useParams().id;
@@ -21,6 +24,18 @@ const Form = () => {
   const [textMessageModal, setTextMessageModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
+
+  const schema = Joi.object({
+    name: Joi.string()
+  });
+
+  const {
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(schema)
+  });
 
   const openMessageModal = () => {
     setShowMessageModal(true);
@@ -91,6 +106,8 @@ const Form = () => {
             placeholder="description"
             value={userInput.description}
             onChange={(e) => updateInput(e)}
+            register={register}
+            error={errors.description?.message}
           />
         </div>
         <div className={styles.buttonsDiv}>

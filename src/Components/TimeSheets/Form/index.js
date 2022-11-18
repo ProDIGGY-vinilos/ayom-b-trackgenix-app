@@ -11,6 +11,9 @@ import { getOneTimeSheet, postTimeSheet, putTimeSheet } from '../../../redux/tim
 import { getEmployees } from '../../../redux/employees/thunks';
 import { getProjects } from '../../../redux/projects/thunks';
 import { getTasks } from '../../../redux/tasks/thunks';
+import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const TimeSheetsForm = () => {
   const pathed = useParams().id;
@@ -33,7 +36,17 @@ const TimeSheetsForm = () => {
   const timeSheetData = useSelector((state) =>
     state.timeSheets.list.find((timeSheets) => timeSheets._id === timeSheetId)
   );
+  const schema = Joi.object({
+    name: Joi.string()
+  });
 
+  const {
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(schema)
+  });
   const openModalOnError = (error) => {
     if (error) {
       setTypeModal('Error');
@@ -126,11 +139,14 @@ const TimeSheetsForm = () => {
           </div>
           <div>
             <InputField
+              name="hours"
               label="Hours"
               type="text"
               defaultValue={hours || undefined}
               value={hours || undefined}
               onChange={(e) => setHours(e.target.value)}
+              register={register}
+              error={errors.hours?.message}
             />
           </div>
           <div>
