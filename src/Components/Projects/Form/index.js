@@ -9,8 +9,6 @@ import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { postProject, putProject } from 'redux/projects/thunks';
 import { getEmployees } from 'redux/employees/thunks';
 
@@ -41,17 +39,7 @@ const Project = () => {
   const { list: employeesList } = useSelector((state) => state.employees);
   const dispatch = useDispatch();
 
-  const schema = Joi.object({
-    name: Joi.string()
-  });
-
-  const {
-    register,
-    formState: { errors }
-  } = useForm({
-    mode: 'onBlur',
-    resolver: joiResolver(schema)
-  });
+  const { register } = useForm();
 
   const openModal = () => {
     setShowModal(true);
@@ -94,7 +82,7 @@ const Project = () => {
       setIsFetched(false);
     }
     setEmployees(employeesList);
-  }, [employeesList]);
+  }, []);
 
   useEffect(() => {
     setModalMessage(error);
@@ -151,7 +139,6 @@ const Project = () => {
             value={isFetched ? projectBody.name : undefined}
             onChange={(e) => onChangeValue('name', e.target.value)}
             register={register}
-            error={errors.name?.message}
           />
         </div>
         <div className={styles.formDiv}>
@@ -163,7 +150,6 @@ const Project = () => {
             value={isFetched ? projectBody.clientName : undefined}
             onChange={(e) => onChangeValue('clientName', e.target.value)}
             register={register}
-            error={errors.clientName?.message}
           />
         </div>
         <div className={styles.formFull}>
@@ -179,16 +165,18 @@ const Project = () => {
         </div>
         <div className={styles.formDiv}>
           <DatePicker
-            label="Start Date"
+            label="startDate"
             inputValue={projectBody.startDate.substring(0, 10)}
             changeValue={(value) => onChangeValue('startDate', value)}
+            register={register}
           />
         </div>
         <div className={styles.formDiv}>
           <DatePicker
-            label="End Date"
+            label="endDate"
             inputValue={projectBody.endDate.substring(0, 10)}
             changeValue={(value) => onChangeValue('endDate', value)}
+            register={register}
           />
         </div>
         <h4 className={styles.formFull}>Employees: </h4>

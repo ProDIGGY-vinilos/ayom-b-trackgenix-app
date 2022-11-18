@@ -1,6 +1,16 @@
 import styles from '../Input/input.module.css';
 
-const InputField = ({ id, name, value, type, placeholder, onChange, label, register, error }) => {
+const InputField = ({
+  id,
+  name,
+  value,
+  type,
+  placeholder,
+  onChange,
+  label,
+  register,
+  error = ''
+}) => {
   return (
     <div key={id}>
       {label && <label>{label}</label>}

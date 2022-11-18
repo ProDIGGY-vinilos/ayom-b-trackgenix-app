@@ -1,6 +1,6 @@
 import styles from 'Components/Shared/Select/select.module.css';
 
-const Select = ({ selectedValue, options, changeValue, field, label }) => {
+const Select = ({ selectedValue, options, changeValue, field, label, register, error = '' }) => {
   const handleChange = (e) => {
     changeValue(e.target.value);
   };
@@ -19,6 +19,7 @@ const Select = ({ selectedValue, options, changeValue, field, label }) => {
     <div className={styles.selectContainer}>
       <label>{label}</label>
       <select
+        {...register(field)}
         className={styles.select}
         value={selectedValue || ''}
         onChange={(e) => handleChange(e)}
@@ -34,6 +35,7 @@ const Select = ({ selectedValue, options, changeValue, field, label }) => {
           );
         })}
       </select>
+      {error && <p>{error}</p>}
     </div>
   );
 };

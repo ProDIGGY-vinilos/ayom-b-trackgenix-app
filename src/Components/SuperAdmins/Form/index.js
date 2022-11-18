@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
 import styles from 'Components/SuperAdmins/Form/form.module.css';
 import InputField from 'Components/Shared/Input/input';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
@@ -26,17 +24,7 @@ const Form = () => {
   const [textModal, setTextModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
 
-  const schema = Joi.object({
-    name: Joi.string()
-  });
-
-  const {
-    register,
-    formState: { errors }
-  } = useForm({
-    mode: 'onBlur',
-    resolver: joiResolver(schema)
-  });
+  const { register } = useForm();
 
   const openMessageModal = () => {
     setShowMessageModal(true);
@@ -131,7 +119,6 @@ const Form = () => {
           value={superAdmin.name}
           onChange={updateField}
           register={register}
-          error={errors.name?.message}
         />
       </div>
       <div className={styles.inputDiv}>
@@ -143,7 +130,6 @@ const Form = () => {
           value={superAdmin.lastName}
           onChange={updateField}
           register={register}
-          error={errors.lastName?.message}
         />
       </div>
       <div className={styles.inputDiv}>
@@ -155,7 +141,6 @@ const Form = () => {
           value={superAdmin.email}
           onChange={updateField}
           register={register}
-          error={errors.email?.message}
         />
       </div>
       <div className={styles.inputDiv}>
@@ -167,7 +152,6 @@ const Form = () => {
           value={superAdmin.password}
           onChange={updateField}
           register={register}
-          error={errors.password?.message}
         />
       </div>
       <Button onClick={onConfirm} style="squaredPrimary" disabled={false} text="Save" />

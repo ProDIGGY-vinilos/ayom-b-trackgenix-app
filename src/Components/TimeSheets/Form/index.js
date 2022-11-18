@@ -8,8 +8,6 @@ import MessageModal from 'Components/Shared/Modal/MessageModal';
 import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { getOneTimeSheet, postTimeSheet, putTimeSheet } from 'redux/timeSheets/thunks';
 import { getEmployees } from 'redux/employees/thunks';
 import { getProjects } from 'redux/projects/thunks';
@@ -36,17 +34,9 @@ const TimeSheetsForm = () => {
   const timeSheetData = useSelector((state) =>
     state.timeSheets.list.find((timeSheets) => timeSheets._id === timeSheetId)
   );
-  const schema = Joi.object({
-    name: Joi.string()
-  });
 
-  const {
-    register,
-    formState: { errors }
-  } = useForm({
-    mode: 'onBlur',
-    resolver: joiResolver(schema)
-  });
+  const { register } = useForm();
+
   const openModalOnError = (error) => {
     if (error) {
       setTypeModal('Error');
@@ -135,7 +125,12 @@ const TimeSheetsForm = () => {
       <form className={styles.form}>
         <div className={styles.formcontainer}>
           <div>
-            <DatePicker label="Date" inputValue={date.substring(0, 10)} changeValue={setDate} />
+            <DatePicker
+              label="Date"
+              inputValue={date.substring(0, 10)}
+              changeValue={setDate}
+              register={register}
+            />
           </div>
           <div>
             <InputField
@@ -146,7 +141,6 @@ const TimeSheetsForm = () => {
               value={hours || undefined}
               onChange={(e) => setHours(e.target.value)}
               register={register}
-              error={errors.hours?.message}
             />
           </div>
           <div>
@@ -156,6 +150,7 @@ const TimeSheetsForm = () => {
               changeValue={setProjectId}
               field="description"
               label="Select Project"
+              register={register}
             />
           </div>
           <div>
@@ -165,6 +160,7 @@ const TimeSheetsForm = () => {
               changeValue={setEmployeeId}
               field="name"
               label="Select Employee"
+              register={register}
             />
           </div>
           <div>
@@ -174,6 +170,7 @@ const TimeSheetsForm = () => {
               changeValue={setTaskId}
               field="description"
               label="Select Task"
+              register={register}
             />
           </div>
         </div>

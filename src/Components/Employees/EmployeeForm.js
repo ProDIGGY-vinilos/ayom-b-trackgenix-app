@@ -7,8 +7,6 @@ import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { postEmployee, putEmployee } from 'redux/employees/thunks';
 import { clearError } from 'redux/employees/actions';
 
@@ -32,17 +30,7 @@ const EmployeeForm = () => {
   const [textModal, setTextModal] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  const schema = Joi.object({
-    name: Joi.string()
-  });
-
-  const {
-    register,
-    formState: { errors }
-  } = useForm({
-    mode: 'onBlur',
-    resolver: joiResolver(schema)
-  });
+  const { register } = useForm();
 
   const openModal = () => {
     setShowModal(true);
@@ -113,7 +101,6 @@ const EmployeeForm = () => {
             value={userInput.name}
             onChange={handleChange}
             register={register}
-            error={errors.name?.message}
           />
         </div>
         <div className={styles.formControl}>
@@ -125,7 +112,6 @@ const EmployeeForm = () => {
             value={userInput.lastName}
             onChange={handleChange}
             register={register}
-            error={errors.lastName?.message}
           />
         </div>
         <div className={styles.formControl}>
@@ -137,7 +123,6 @@ const EmployeeForm = () => {
             value={userInput.email}
             onChange={handleChange}
             register={register}
-            error={errors.email?.message}
           />
         </div>
         <div className={styles.formControl}>
@@ -149,7 +134,6 @@ const EmployeeForm = () => {
             value={userInput.phone}
             onChange={handleChange}
             register={register}
-            error={errors.phone?.message}
           />
         </div>
         <div className={styles.formControl}>
@@ -161,7 +145,6 @@ const EmployeeForm = () => {
             value={userInput.password}
             onChange={handleChange}
             register={register}
-            error={errors.password?.message}
           />
         </div>
         <div>
