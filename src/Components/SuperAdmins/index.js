@@ -4,14 +4,14 @@ import MessageModal from '../Shared/Modal/MessageModal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import getSuperAdmins from '../../redux/superAdmins/thunks';
+import { getSuperAdmins, deleteSuperAdmin } from '../../redux/superAdmins/thunks';
 
 const SuperAdmins = () => {
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
 
-  const { list: superAdminsList, isLoading, error } = useSelector((state) => state.superAdmins);
+  const { list: superAdminList, isLoading, error } = useSelector((state) => state.superAdmins);
   const dispatch = useDispatch();
 
   const openModal = () => {
@@ -22,30 +22,22 @@ const SuperAdmins = () => {
     setShowModal(false);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(getSuperAdmins());
   }, []);
 
-  const onDeleteSuperAdmin = () => {
-    dispatch(getSuperAdmins());
-    setTypeModal('Success');
-    setTextModal('The super administrator was successfully removed');
-    openModal();
-  };
+  useEffect(() => {
+    openModalOnError(error);
+  }, [error]);
 
-  const deleteSuperAdmin = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
-        method: 'DELETE'
-      });
-      if (response.status === 204) {
-        onDeleteSuperAdmin(id);
-      }
-    } catch (error) {
-      setTypeModal('Error');
-      setTextModal(error);
+  const onDeleteSuperAdmin = (id) => {
+    dispatch(deleteSuperAdmin(id));
+    if (error) {
+      openModalOnError(error);
+    } else {
+      setTypeModal('Success');
+      setTextModal('The super administrator was successfully removed');
       openModal();
-      return;
     }
   };
 
@@ -77,9 +69,9 @@ const SuperAdmins = () => {
       ) : (
         <>
           <Table
-            data={superAdminsList}
+            data={superAdminList}
             columns={columns}
-            deleteItem={deleteSuperAdmin}
+            deleteItem={onDeleteSuperAdmin}
             edit="/super-admin-form"
           />
           <Button href="/super-admin-form" style="roundedPrimary" disabled={false} text="+" />
