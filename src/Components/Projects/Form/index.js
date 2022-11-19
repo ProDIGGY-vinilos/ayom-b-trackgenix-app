@@ -8,6 +8,7 @@ import styles from 'Components/Projects/Form/form.module.css';
 import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import { postProject, putProject } from 'redux/projects/thunks';
 import { getEmployees } from 'redux/employees/thunks';
 
@@ -37,6 +38,8 @@ const Project = () => {
   const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
   const { list: employeesList } = useSelector((state) => state.employees);
   const dispatch = useDispatch();
+
+  const { register } = useForm();
 
   const openModal = () => {
     setShowModal(true);
@@ -79,7 +82,7 @@ const Project = () => {
       setIsFetched(false);
     }
     setEmployees(employeesList);
-  }, [employeesList]);
+  }, []);
 
   useEffect(() => {
     setModalMessage(error);
@@ -135,16 +138,18 @@ const Project = () => {
             placeholder="project name"
             value={isFetched ? projectBody.name : undefined}
             onChange={(e) => onChangeValue('name', e.target.value)}
+            register={register}
           />
         </div>
         <div className={styles.formDiv}>
           <InputField
             label="Client Name"
-            name="client name"
+            name="clientName"
             type="text"
             placeholder="client name"
             value={isFetched ? projectBody.clientName : undefined}
             onChange={(e) => onChangeValue('clientName', e.target.value)}
+            register={register}
           />
         </div>
         <div className={styles.formFull}>
@@ -160,16 +165,18 @@ const Project = () => {
         </div>
         <div className={styles.formDiv}>
           <DatePicker
-            label="Start Date"
+            label="startDate"
             inputValue={projectBody.startDate.substring(0, 10)}
             changeValue={(value) => onChangeValue('startDate', value)}
+            register={register}
           />
         </div>
         <div className={styles.formDiv}>
           <DatePicker
-            label="End Date"
+            label="endDate"
             inputValue={projectBody.endDate.substring(0, 10)}
             changeValue={(value) => onChangeValue('endDate', value)}
+            register={register}
           />
         </div>
         <h4 className={styles.formFull}>Employees: </h4>

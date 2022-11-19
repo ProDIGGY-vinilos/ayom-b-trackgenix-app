@@ -6,6 +6,7 @@ import styles from 'Components/Employees/employees.module.css';
 import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import { postEmployee, putEmployee } from 'redux/employees/thunks';
 import { clearError } from 'redux/employees/actions';
 
@@ -28,6 +29,8 @@ const EmployeeForm = () => {
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showModal, setShowModal] = useState(false);
+
+  const { register } = useForm();
 
   const openModal = () => {
     setShowModal(true);
@@ -97,6 +100,7 @@ const EmployeeForm = () => {
             placeholder="name"
             value={userInput.name}
             onChange={handleChange}
+            register={register}
           />
         </div>
         <div className={styles.formControl}>
@@ -107,6 +111,7 @@ const EmployeeForm = () => {
             placeholder="last name"
             value={userInput.lastName}
             onChange={handleChange}
+            register={register}
           />
         </div>
         <div className={styles.formControl}>
@@ -117,6 +122,7 @@ const EmployeeForm = () => {
             placeholder="email"
             value={userInput.email}
             onChange={handleChange}
+            register={register}
           />
         </div>
         <div className={styles.formControl}>
@@ -127,6 +133,7 @@ const EmployeeForm = () => {
             placeholder="phone"
             value={userInput.phone}
             onChange={handleChange}
+            register={register}
           />
         </div>
         <div className={styles.formControl}>
@@ -137,6 +144,7 @@ const EmployeeForm = () => {
             placeholder="password"
             value={userInput.password}
             onChange={handleChange}
+            register={register}
           />
         </div>
         <div>

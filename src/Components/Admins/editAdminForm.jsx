@@ -5,6 +5,7 @@ import styles from 'Components/Admins/admins.module.css';
 import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import { postAdmin, putAdmin } from 'redux/admins/thunks';
 
 function Form() {
@@ -20,6 +21,8 @@ function Form() {
     email: '',
     password: ''
   });
+
+  const { register } = useForm();
 
   const [typeModal, setTypeModal] = useState();
   const [textMessageModal, setTextMessageModal] = useState();
@@ -105,6 +108,7 @@ function Form() {
           type="text"
           value={inputValue.name}
           onChange={onChange}
+          register={register}
         />
       </div>
       <div className={styles.fromInput}>
@@ -114,6 +118,7 @@ function Form() {
           type="text"
           value={inputValue.lastName}
           onChange={onChange}
+          register={register}
         />
       </div>
       <div className={styles.fromInput}>
@@ -123,6 +128,7 @@ function Form() {
           type="email"
           value={inputValue.email}
           onChange={onChange}
+          register={register}
         />
       </div>
       <div className={styles.fromInput}>
@@ -132,6 +138,7 @@ function Form() {
           type="password"
           value={inputValue.password}
           onChange={onChange}
+          register={register}
         />
       </div>
       <div>

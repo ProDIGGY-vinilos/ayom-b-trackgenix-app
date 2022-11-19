@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import styles from 'Components/SuperAdmins/Form/form.module.css';
 import InputField from 'Components/Shared/Input/input';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
@@ -22,6 +23,8 @@ const Form = () => {
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
+
+  const { register } = useForm();
 
   const openMessageModal = () => {
     setShowMessageModal(true);
@@ -115,6 +118,7 @@ const Form = () => {
           placeholder="name"
           value={superAdmin.name}
           onChange={updateField}
+          register={register}
         />
       </div>
       <div className={styles.inputDiv}>
@@ -125,6 +129,7 @@ const Form = () => {
           placeholder="last name"
           value={superAdmin.lastName}
           onChange={updateField}
+          register={register}
         />
       </div>
       <div className={styles.inputDiv}>
@@ -135,6 +140,7 @@ const Form = () => {
           placeholder="email"
           value={superAdmin.email}
           onChange={updateField}
+          register={register}
         />
       </div>
       <div className={styles.inputDiv}>
@@ -145,6 +151,7 @@ const Form = () => {
           placeholder="password"
           value={superAdmin.password}
           onChange={updateField}
+          register={register}
         />
       </div>
       <Button onClick={onConfirm} style="squaredPrimary" disabled={false} text="Save" />

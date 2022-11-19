@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import styles from 'Components/Tasks/tasks.module.css';
 import Button from 'Components/Shared/Button/Button';
@@ -21,6 +22,8 @@ const Form = () => {
   const [textMessageModal, setTextMessageModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
+
+  const { register } = useForm();
 
   const openMessageModal = () => {
     setShowMessageModal(true);
@@ -91,6 +94,7 @@ const Form = () => {
             placeholder="description"
             value={userInput.description}
             onChange={(e) => updateInput(e)}
+            register={register}
           />
         </div>
         <div className={styles.buttonsDiv}>
