@@ -73,10 +73,6 @@ function Form() {
     }
   };
 
-  const onChange = (e) => {
-    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
-  };
-
   const onSubmit = async () => {
     if (adminId) {
       dispatch(putAdmin(inputValue, adminId));
@@ -102,44 +98,16 @@ function Form() {
         <Button href="/admins" style="roundedSecondary" disabled={false} text="X" />
       </div>
       <div className={styles.fromInput}>
-        <InputField
-          label="Name"
-          name="name"
-          type="text"
-          value={inputValue.name}
-          onChange={onChange}
-          register={register}
-        />
+        <InputField label="Name" name="name" type="text" register={register} />
       </div>
       <div className={styles.fromInput}>
-        <InputField
-          label="Last Name"
-          name="lastName"
-          type="text"
-          value={inputValue.lastName}
-          onChange={onChange}
-          register={register}
-        />
+        <InputField label="Last Name" name="lastName" type="text" register={register} />
       </div>
       <div className={styles.fromInput}>
-        <InputField
-          label="Email"
-          name="email"
-          type="email"
-          value={inputValue.email}
-          onChange={onChange}
-          register={register}
-        />
+        <InputField label="Email" name="email" type="email" register={register} />
       </div>
       <div className={styles.fromInput}>
-        <InputField
-          label="Password"
-          name="password"
-          type="password"
-          value={inputValue.password}
-          onChange={onChange}
-          register={register}
-        />
+        <InputField label="Password" name="password" type="password" register={register} />
       </div>
       <div>
         <MessageModal

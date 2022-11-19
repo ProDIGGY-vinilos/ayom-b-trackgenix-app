@@ -56,10 +56,6 @@ const Form = () => {
     openModalOnError(error);
   }, [error]);
 
-  const updateInput = async (e) => {
-    setNameValue({ description: e.target.value });
-  };
-
   const onSubmit = () => {
     if (taskId) {
       dispatch(putTask(taskId, userInput));
@@ -92,8 +88,6 @@ const Form = () => {
             name="description"
             type="text"
             placeholder="description"
-            value={userInput.description}
-            onChange={(e) => updateInput(e)}
             register={register}
           />
         </div>
