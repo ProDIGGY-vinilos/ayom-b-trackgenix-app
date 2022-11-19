@@ -152,9 +152,7 @@ const EmployeeForm = () => {
           />
         </div>
         <Button
-          onClick={() => {
-            handleSubmit(onSubmit);
-          }}
+          onClick={handleSubmit(onSubmit)}
           style="squaredPrimary"
           disabled={false}
           text="Save"
