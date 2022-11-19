@@ -1,18 +1,8 @@
-const DatePicker = ({ changeValue, inputValue, label, inputName, register, error = '' }) => {
-  const HandleChange = (e) => {
-    changeValue(e.target.value);
-  };
-
+const DatePicker = ({ label, inputName, register, error = '' }) => {
   return (
     <div>
       <label>{label}</label>
-      <input
-        {...register(label)}
-        name={inputName}
-        type="date"
-        value={inputValue}
-        onChange={(e) => HandleChange(e)}
-      ></input>
+      <input {...register(label)} name={inputName} type="date"></input>
       {error && <p>{error}</p>}
     </div>
   );
