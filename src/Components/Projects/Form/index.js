@@ -13,7 +13,6 @@ import { postProject, putProject } from 'redux/projects/thunks';
 import { getEmployees } from 'redux/employees/thunks';
 
 const Project = () => {
-  let formTitle = 'Title';
   const projectId = useParams().id;
   const [projectBody, setProjectBody] = useState({
     name: '',
@@ -29,17 +28,25 @@ const Project = () => {
       }
     ]
   });
+
   const [employees, setEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showSharedModal, setShowSharedModal] = useState(false);
+
   const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
   const { list: employeesList } = useSelector((state) => state.employees);
-  const dispatch = useDispatch();
 
-  const { register } = useForm();
+  const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange'
+  });
 
   const openModal = () => {
     setShowModal(true);
@@ -100,19 +107,9 @@ const Project = () => {
     }
   };
 
-  const onChangeValue = (key, value, keyArray = false) => {
-    if (keyArray) {
-      setProjectBody({
-        ...projectBody,
-        employees: [{ ...projectBody.employees[0], [key]: value }]
-      });
-    } else {
-      setProjectBody({ ...projectBody, [key]: value });
-    }
-  };
-
-  const onSubmit = () => {
-    projectId ? dispatch(putProject(projectId, projectBody)) : dispatch(postProject(projectBody));
+  const onSubmit = (data) => {
+    console.log(data);
+    projectId ? dispatch(putProject(projectId, data)) : dispatch(postProject(data));
     openSharedModal();
   };
 
@@ -127,18 +124,16 @@ const Project = () => {
       ) : (
         <h2 className={styles.title}>Add new project</h2>
       )}
-      <h2 className={styles.title}>{formTitle}</h2>
       <Button href="/projects" style="roundedSecondary" disabled={false} text="X" />
-      <form className={styles.formContainer} onSubmit={onSubmit}>
+      <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.formDiv}>
           <InputField
             label="Project Name"
             name="name"
             type="text"
             placeholder="project name"
-            value={isFetched ? projectBody.name : undefined}
-            onChange={(e) => onChangeValue('name', e.target.value)}
             register={register}
+            error={errors.name?.message}
           />
         </div>
         <div className={styles.formDiv}>
@@ -147,9 +142,8 @@ const Project = () => {
             name="clientName"
             type="text"
             placeholder="client name"
-            value={isFetched ? projectBody.clientName : undefined}
-            onChange={(e) => onChangeValue('clientName', e.target.value)}
             register={register}
+            error={errors.clientName?.message}
           />
         </div>
         <div className={styles.formFull}>
@@ -158,32 +152,37 @@ const Project = () => {
             name="description"
             cols="30"
             rows="10"
+            {...register('description')}
             className={styles.textarea}
-            value={isFetched ? projectBody.description : undefined}
-            onChange={(e) => onChangeValue('description', e.target.value)}
           ></textarea>
+          {errors.description && <p>errors.description.message</p>}
         </div>
         <div className={styles.formDiv}>
           <DatePicker
-            label="startDate"
-            inputValue={projectBody.startDate.substring(0, 10)}
-            changeValue={(value) => onChangeValue('startDate', value)}
+            inputName="startDate"
+            label="Start date"
             register={register}
+            error={errors.startDate?.message}
           />
         </div>
         <div className={styles.formDiv}>
           <DatePicker
-            label="endDate"
-            inputValue={projectBody.endDate.substring(0, 10)}
-            changeValue={(value) => onChangeValue('endDate', value)}
+            inputName="endDate"
+            label="End date"
             register={register}
+            error={errors.endDate?.message}
           />
         </div>
         <h4 className={styles.formFull}>Employees: </h4>
         {projectBody.employees.map((employee, index) => {
           return (
             <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
-              <FormEmployee employees={employees} employee={employee} changeValue={onChangeValue} />
+              <FormEmployee
+                employees={employees}
+                employee={employee}
+                register={register}
+                errors={errors}
+              />
             </div>
           );
         })}
@@ -199,7 +198,7 @@ const Project = () => {
       <FormModal
         show={showModal}
         closeModal={closeModal}
-        onAddUpdate={onSubmit}
+        onAddUpdate={handleSubmit(onSubmit)}
         id={isFetched ? projectBody._id : undefined}
         title={isFetched ? 'Update Project' : 'Add New Project'}
         text={

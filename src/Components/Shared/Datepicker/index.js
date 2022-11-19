@@ -2,7 +2,7 @@ const DatePicker = ({ label, inputName, register, error = '' }) => {
   return (
     <div>
       <label>{label}</label>
-      <input {...register(label)} name={inputName} type="date"></input>
+      <input {...register(inputName)} name={inputName} type="date"></input>
       {error && <p>{error}</p>}
     </div>
   );
