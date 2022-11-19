@@ -14,20 +14,9 @@ import { getEmployees } from 'redux/employees/thunks';
 
 const Project = () => {
   const projectId = useParams().id;
-  const [projectBody, setProjectBody] = useState({
-    name: '',
-    description: '',
-    startDate: '',
-    endDate: '',
-    clientName: '',
-    employees: [
-      {
-        employee: '',
-        role: '',
-        rate: ''
-      }
-    ]
-  });
+  const projectData = useSelector((state) =>
+    state.projects.list.find((project) => project._id === projectId)
+  );
 
   const [employees, setEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -43,6 +32,7 @@ const Project = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm({
     mode: 'onChange'
@@ -64,31 +54,53 @@ const Project = () => {
     setShowSharedModal(false);
   };
 
+  let projectBodyData = {
+    name: projectData?.name,
+    description: projectData?.description,
+    startDate: projectData?.startDate.substring(0, 10),
+    endDate: projectData?.endDate.substring(0, 10),
+    clientName: projectData?.clientName,
+    employees: [
+      {
+        employee: projectData?.employees[0].employee._id,
+        role: projectData?.employees[0].role,
+        rate: projectData?.employees[0].rate
+      }
+    ]
+  };
+
   useEffect(() => {
     dispatch(getEmployees());
     if (projectId) {
       setIsFetched(true);
-      const newProjectList = [
-        ...projectList.filter((projectItem) => projectItem._id === projectId)
-      ];
-      setProjectBody({
-        name: newProjectList[0].name,
-        description: newProjectList[0].description,
-        startDate: newProjectList[0].startDate.substring(0, 10),
-        endDate: newProjectList[0].endDate.substring(0, 10),
-        clientName: newProjectList[0].clientName,
-        employees: [
-          {
-            employee: newProjectList[0].employees[0].employee._id,
-            role: newProjectList[0].employees[0].role,
-            rate: newProjectList[0].employees[0].rate
-          }
-        ]
-      });
-    } else {
-      setIsFetched(false);
+      if (projectData === undefined) {
+        fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`)
+          .then((response) => response.json())
+          .then((response) => {
+            projectBodyData({
+              name: response.name,
+              description: response.description,
+              startDate: response.startDate.substring(0, 10),
+              endDate: response.endDate.substring(0, 10),
+              clientName: response.clientName,
+              employees: [
+                {
+                  employee: response.employees[0].employee._id,
+                  role: response.employees[0].role,
+                  rate: response.employees[0].rate
+                }
+              ]
+            });
+          });
+      } else {
+        setIsFetched(false);
+      }
     }
     setEmployees(employeesList);
+  }, [projectBodyData]);
+
+  useEffect(() => {
+    reset(projectBodyData);
   }, []);
 
   useEffect(() => {
@@ -174,7 +186,7 @@ const Project = () => {
           />
         </div>
         <h4 className={styles.formFull}>Employees: </h4>
-        {projectBody.employees.map((employee, index) => {
+        {projectList.employees.map((employee, index) => {
           return (
             <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
               <FormEmployee
@@ -199,12 +211,12 @@ const Project = () => {
         show={showModal}
         closeModal={closeModal}
         onAddUpdate={handleSubmit(onSubmit)}
-        id={isFetched ? projectBody._id : undefined}
+        id={isFetched ? projectData._id : undefined}
         title={isFetched ? 'Update Project' : 'Add New Project'}
         text={
           isFetched
             ? `Are you sure you want to update the project?`
-            : `Are you sure you want to add the project "${projectBody.name}"?`
+            : `Are you sure you want to add the project "${projectData.name}"?`
         }
       />
     </div>
