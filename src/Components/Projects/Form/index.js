@@ -136,6 +136,8 @@ const Project = () => {
             name="name"
             type="text"
             placeholder="project name"
+            value={isFetched ? projectBody.name : undefined}
+            onChange={(e) => onChangeValue('name', e.target.value)}
             register={register}
           />
         </div>
@@ -145,18 +147,37 @@ const Project = () => {
             name="clientName"
             type="text"
             placeholder="client name"
+            value={isFetched ? projectBody.clientName : undefined}
+            onChange={(e) => onChangeValue('clientName', e.target.value)}
             register={register}
           />
         </div>
         <div className={styles.formFull}>
           <label>Description</label>
-          <textarea name="description" cols="30" rows="10" className={styles.textarea}></textarea>
+          <textarea
+            name="description"
+            cols="30"
+            rows="10"
+            className={styles.textarea}
+            value={isFetched ? projectBody.description : undefined}
+            onChange={(e) => onChangeValue('description', e.target.value)}
+          ></textarea>
         </div>
         <div className={styles.formDiv}>
-          <DatePicker label="startDate" register={register} />
+          <DatePicker
+            label="startDate"
+            inputValue={projectBody.startDate.substring(0, 10)}
+            changeValue={(value) => onChangeValue('startDate', value)}
+            register={register}
+          />
         </div>
         <div className={styles.formDiv}>
-          <DatePicker label="endDate" register={register} />
+          <DatePicker
+            label="endDate"
+            inputValue={projectBody.endDate.substring(0, 10)}
+            changeValue={(value) => onChangeValue('endDate', value)}
+            register={register}
+          />
         </div>
         <h4 className={styles.formFull}>Employees: </h4>
         {projectBody.employees.map((employee, index) => {

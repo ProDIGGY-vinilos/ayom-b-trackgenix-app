@@ -60,6 +60,10 @@ const Form = () => {
     }
   }, []);
 
+  const updateField = (e) => {
+    setSuperAdmin({ ...superAdmin, [e.target.name]: e.target.value });
+  };
+
   const validateFields = () => {
     for (const val in superAdmin) {
       if (superAdmin[`${val}`].trim().length !== 0) {
@@ -107,7 +111,15 @@ const Form = () => {
         <Button onClick={validateFields} style="roundedSecondary" disabled={false} text="X" />
       </div>
       <div className={styles.inputDiv}>
-        <InputField label="Name" name="name" type="text" placeholder="name" register={register} />
+        <InputField
+          label="Name"
+          name="name"
+          type="text"
+          placeholder="name"
+          value={superAdmin.name}
+          onChange={updateField}
+          register={register}
+        />
       </div>
       <div className={styles.inputDiv}>
         <InputField
@@ -115,6 +127,8 @@ const Form = () => {
           name="lastName"
           type="text"
           placeholder="last name"
+          value={superAdmin.lastName}
+          onChange={updateField}
           register={register}
         />
       </div>
@@ -124,6 +138,8 @@ const Form = () => {
           name="email"
           type="email"
           placeholder="email"
+          value={superAdmin.email}
+          onChange={updateField}
           register={register}
         />
       </div>
@@ -133,6 +149,8 @@ const Form = () => {
           name="password"
           type="password"
           placeholder="password"
+          value={superAdmin.password}
+          onChange={updateField}
           register={register}
         />
       </div>

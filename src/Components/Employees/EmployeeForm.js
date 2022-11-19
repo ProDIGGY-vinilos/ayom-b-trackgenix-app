@@ -72,6 +72,11 @@ const EmployeeForm = () => {
     }
   }, []);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserInput({ ...userInput, [name]: value });
+  };
+
   const onSubmit = async () => {
     if (employeeId) {
       dispatch(putEmployee(employeeId, userInput));
@@ -88,7 +93,15 @@ const EmployeeForm = () => {
         <h3 className={styles.titleForm}>Create Employee</h3>
         <Button href="/employees" style="roundedSecondary" disabled={false} text="X" />
         <div className={styles.formControl}>
-          <InputField label="Name" name="name" type="text" placeholder="name" register={register} />
+          <InputField
+            label="Name"
+            name="name"
+            type="text"
+            placeholder="name"
+            value={userInput.name}
+            onChange={handleChange}
+            register={register}
+          />
         </div>
         <div className={styles.formControl}>
           <InputField
@@ -96,6 +109,8 @@ const EmployeeForm = () => {
             name="lastName"
             type="text"
             placeholder="last name"
+            value={userInput.lastName}
+            onChange={handleChange}
             register={register}
           />
         </div>
@@ -105,6 +120,8 @@ const EmployeeForm = () => {
             name="email"
             type="mail"
             placeholder="email"
+            value={userInput.email}
+            onChange={handleChange}
             register={register}
           />
         </div>
@@ -114,6 +131,8 @@ const EmployeeForm = () => {
             name="phone"
             type="number"
             placeholder="phone"
+            value={userInput.phone}
+            onChange={handleChange}
             register={register}
           />
         </div>
@@ -123,6 +142,8 @@ const EmployeeForm = () => {
             name="password"
             type="password"
             placeholder="password"
+            value={userInput.password}
+            onChange={handleChange}
             register={register}
           />
         </div>

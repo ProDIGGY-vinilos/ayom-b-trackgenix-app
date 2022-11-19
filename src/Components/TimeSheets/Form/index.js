@@ -125,7 +125,12 @@ const TimeSheetsForm = () => {
       <form className={styles.form}>
         <div className={styles.formcontainer}>
           <div>
-            <DatePicker label="Date" register={register} />
+            <DatePicker
+              label="Date"
+              inputValue={date.substring(0, 10)}
+              changeValue={setDate}
+              register={register}
+            />
           </div>
           <div>
             <InputField
@@ -133,32 +138,37 @@ const TimeSheetsForm = () => {
               label="Hours"
               type="text"
               defaultValue={hours || undefined}
+              value={hours || undefined}
+              onChange={(e) => setHours(e.target.value)}
               register={register}
             />
           </div>
           <div>
             <Select
+              selectedValue={projectId || undefined}
               options={projectsList || undefined}
+              changeValue={setProjectId}
               field="description"
-              name="description"
               label="Select Project"
               register={register}
             />
           </div>
           <div>
             <Select
+              selectedValue={employeeId || undefined}
               options={employeeList || undefined}
+              changeValue={setEmployeeId}
               field="name"
-              name="name"
               label="Select Employee"
               register={register}
             />
           </div>
           <div>
             <Select
+              selectedValue={taskId || undefined}
               options={taskList || undefined}
+              changeValue={setTaskId}
               field="description"
-              name="description"
               label="Select Task"
               register={register}
             />
@@ -166,7 +176,11 @@ const TimeSheetsForm = () => {
         </div>
         <div className={styles.textareacontainer}>
           <label>Description</label>
-          <textarea placeholder="Description"></textarea>
+          <textarea
+            value={description || undefined}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Description"
+          ></textarea>
         </div>
       </form>
       <Button
