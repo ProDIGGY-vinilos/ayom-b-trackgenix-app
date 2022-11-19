@@ -17,12 +17,6 @@ function Form() {
   const adminData = useSelector((state) =>
     state.admins.list.find((admin) => admin._id === adminId)
   );
-  const [inputValue, setInputValue] = useState({
-    name: '',
-    lastName: '',
-    email: '',
-    password: ''
-  });
 
   const {
     register,
@@ -30,7 +24,7 @@ function Form() {
     formState: { errors },
     reset
   } = useForm({
-    mode: 'onBlur',
+    mode: 'onChange',
     resolver: joiResolver(schema)
   });
 
@@ -46,7 +40,7 @@ function Form() {
     setShowMessageModal(false);
   };
 
-  const MOCK_DATA = {
+  let MOCK_DATA = {
     name: adminData?.name,
     lastName: adminData?.lastName,
     email: adminData?.email,
@@ -64,12 +58,12 @@ function Form() {
         fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`)
           .then((response) => response.json())
           .then((response) => {
-            setInputValue({
+            MOCK_DATA = {
               name: response.data.name,
               lastName: response.data.lastName,
               email: response.data.email,
               password: response.data.password
-            });
+            };
           });
       }
     } else document.getElementById('fromHeader').innerHTML = 'ADD ADMIN';
@@ -87,20 +81,16 @@ function Form() {
     }
   };
 
-  const onChange = (e) => {
-    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
-  };
-
-  const onSubmit = async () => {
+  const onSubmit = (data) => {
     if (adminId) {
-      dispatch(putAdmin(inputValue, adminId));
+      dispatch(putAdmin(data, adminId));
       if (!error) {
         setTypeModal('Success');
         setTextMessageModal('The administrator was edited successfully');
         openMessageModal();
       }
     } else {
-      dispatch(postAdmin(inputValue));
+      dispatch(postAdmin(data));
       if (!error) {
         setTypeModal('Success');
         setTextMessageModal('The administrator was added successfully');
@@ -110,7 +100,7 @@ function Form() {
   };
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.formHeader}>
         <h3 id="fromHeader">Tittle</h3>
         <Button href="/admins" style="roundedSecondary" disabled={false} text="X" />

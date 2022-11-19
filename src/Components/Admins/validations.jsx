@@ -9,6 +9,8 @@ export const schema = Joi.object({
     .required()
     .alphanum()
     .pattern(/^([^0-9]*)$/i, 'only letters'),
-  email: Joi.string().required(),
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required(),
   password: Joi.string().alphanum().required()
 });
