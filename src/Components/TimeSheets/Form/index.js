@@ -11,6 +11,8 @@ import { getOneTimeSheet, postTimeSheet, putTimeSheet } from '../../../redux/tim
 import { getEmployees } from '../../../redux/employees/thunks';
 import { getProjects } from '../../../redux/projects/thunks';
 import { getTasks } from '../../../redux/tasks/thunks';
+import { useForm } from 'react-hook-form';
+import Joi from 'joi';
 
 const TimeSheetsForm = () => {
   const pathed = useParams().id;
@@ -33,6 +35,64 @@ const TimeSheetsForm = () => {
   const timeSheetData = useSelector((state) =>
     state.timeSheets.list.find((timeSheets) => timeSheets._id === timeSheetId)
   );
+
+  const employeesValidation = Joi.object({
+    name: Joi.string()
+      .alphanum()
+      .pattern(/^([^0-9]*)$/i, 'only letters')
+      .required(),
+    lastName: Joi.string()
+      .alphanum()
+      .pattern(/^([^0-9]*)$/i, 'only letters')
+      .required(),
+    phone: Joi.string()
+      .length(10)
+      .pattern(/^[0-9]+$/, 'only numbers')
+      .required(),
+    email: Joi.string().email().required(),
+    password: Joi.string()
+      .alphanum()
+      .pattern(/^(?=.*?[a-z])(?=.*?[0-9]).{8,}$/, 'Letters, numbers and minimum 8 characters')
+      .required()
+  });
+
+  const employeeForProjectValidation = Joi.object({
+    employee: employeesValidation.required(),
+    role: Joi.string().valid('DEV', 'QA', 'PM', 'TL').required(),
+    rate: Joi.number().required()
+  });
+  const projectValidation = Joi.object({
+    name: Joi.string().min(3).required(),
+    description: Joi.string().min(3).required(),
+    startDate: Joi.date().required(),
+    endDate: Joi.date().required(),
+    clientName: Joi.string().min(3).required(),
+    employees: Joi.array().items(employeeForProjectValidation).required()
+  });
+
+  const timeSheetValidation = Joi.object({
+    description: Joi.string().max(100).required(),
+    date: Joi.date().required(),
+    task: Joi.string()
+      .required()
+      .trim()
+      .regex(/^(?=.*[a-zA-Z].*)([\w\s\W]+)$/)
+      .min(3),
+    project: projectValidation.required(),
+    employee: employeesValidation.required(),
+    hours: Joi.number().integer().positive().required()
+  });
+
+  console.log(timeSheetValidation);
+
+  const {
+    handleSubmit,
+    register
+    /* watch, */
+    /* formState: { errors } */
+  } = useForm({
+    mode: 'onChange'
+  });
 
   const openModalOnError = (error) => {
     if (error) {
@@ -119,13 +179,19 @@ const TimeSheetsForm = () => {
         <h2 className={styles.title}>Add new time sheet</h2>
       )}
       <Button href="/time-sheets" style="roundedSecondary" disabled={false} text="X" />
-      <form className={styles.form}>
+      <form onSubmit={handleSubmit(createTimeSheet)} className={styles.form}>
         <div className={styles.formcontainer}>
           <div>
-            <DatePicker label="Date" inputValue={date.substring(0, 10)} changeValue={setDate} />
+            <DatePicker
+              register={register}
+              label="Date"
+              inputValue={date.substring(0, 10)}
+              changeValue={setDate}
+            />
           </div>
           <div>
             <InputField
+              register={register}
               label="Hours"
               type="text"
               defaultValue={hours || undefined}
@@ -135,6 +201,7 @@ const TimeSheetsForm = () => {
           </div>
           <div>
             <Select
+              register={register}
               selectedValue={projectId || undefined}
               options={projectsList || undefined}
               changeValue={setProjectId}
@@ -144,6 +211,7 @@ const TimeSheetsForm = () => {
           </div>
           <div>
             <Select
+              register={register}
               selectedValue={employeeId || undefined}
               options={employeeList || undefined}
               changeValue={setEmployeeId}
@@ -153,6 +221,7 @@ const TimeSheetsForm = () => {
           </div>
           <div>
             <Select
+              register={register}
               selectedValue={taskId || undefined}
               options={taskList || undefined}
               changeValue={setTaskId}
