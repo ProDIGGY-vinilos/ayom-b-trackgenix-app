@@ -7,6 +7,8 @@ import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { postAdmin, putAdmin } from 'redux/admins/thunks';
+import { schema } from 'Components/Admins/validations';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 function Form() {
   const dispatch = useDispatch();
@@ -22,7 +24,15 @@ function Form() {
     password: ''
   });
 
-  const { register } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(schema)
+  });
 
   const [typeModal, setTypeModal] = useState();
   const [textMessageModal, setTextMessageModal] = useState();
@@ -35,6 +45,17 @@ function Form() {
   const closeMessageModal = () => {
     setShowMessageModal(false);
   };
+
+  const MOCK_DATA = {
+    name: adminData?.name,
+    lastName: adminData?.lastName,
+    email: adminData?.email,
+    password: adminData?.password
+  };
+
+  useEffect(() => {
+    reset(MOCK_DATA);
+  }, []);
 
   useEffect(async () => {
     if (adminId) {
@@ -50,13 +71,6 @@ function Form() {
               password: response.data.password
             });
           });
-      } else {
-        setInputValue({
-          name: adminData.name,
-          lastName: adminData.lastName,
-          email: adminData.email,
-          password: adminData.password
-        });
       }
     } else document.getElementById('fromHeader').innerHTML = 'ADD ADMIN';
   }, []);
@@ -106,9 +120,8 @@ function Form() {
           label="Name"
           name="name"
           type="text"
-          value={inputValue.name}
-          onChange={onChange}
           register={register}
+          error={errors.name?.message}
         />
       </div>
       <div className={styles.fromInput}>
@@ -116,9 +129,8 @@ function Form() {
           label="Last Name"
           name="lastName"
           type="text"
-          value={inputValue.lastName}
-          onChange={onChange}
           register={register}
+          error={errors.lastName?.message}
         />
       </div>
       <div className={styles.fromInput}>
@@ -126,9 +138,8 @@ function Form() {
           label="Email"
           name="email"
           type="email"
-          value={inputValue.email}
-          onChange={onChange}
           register={register}
+          error={errors.email?.message}
         />
       </div>
       <div className={styles.fromInput}>
@@ -136,9 +147,8 @@ function Form() {
           label="Password"
           name="password"
           type="password"
-          value={inputValue.password}
-          onChange={onChange}
           register={register}
+          error={errors.password?.message}
         />
       </div>
       <div>
@@ -150,7 +160,12 @@ function Form() {
           goBack={'/admins'}
         />
       </div>
-      <Button onClick={onSubmit} style="squaredPrimary" disabled={false} text="Save" />
+      <Button
+        onClick={handleSubmit(onSubmit)}
+        style="squaredPrimary"
+        disabled={false}
+        text="Save"
+      />
     </form>
   );
 }
