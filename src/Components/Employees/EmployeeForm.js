@@ -94,7 +94,7 @@ const EmployeeForm = () => {
         <Button href="/employees" style="roundedSecondary" disabled={false} text="X" />
         <div className={styles.formControl}>
           <InputField
-            label="Namea"
+            label="Name"
             name="name"
             type="text"
             placeholder="name"
