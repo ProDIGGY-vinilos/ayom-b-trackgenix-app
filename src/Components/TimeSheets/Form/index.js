@@ -12,16 +12,17 @@ import { getEmployees } from '../../../redux/employees/thunks';
 import { getProjects } from '../../../redux/projects/thunks';
 import { getTasks } from '../../../redux/tasks/thunks';
 import { useForm } from 'react-hook-form';
-import Joi from 'joi';
+import { timeSheetValidation } from './validations';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const TimeSheetsForm = () => {
   const pathed = useParams().id;
-  const [description, setDescription] = useState('');
+  /* const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [hours, setHours] = useState('');
   const [projectId, setProjectId] = useState('');
   const [employeeId, setEmployeeId] = useState('');
-  const [taskId, setTaskId] = useState('');
+  const [taskId, setTaskId] = useState(''); */
   const [timeSheetId, setTimeSheetId] = useState('');
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
@@ -36,63 +37,26 @@ const TimeSheetsForm = () => {
     state.timeSheets.list.find((timeSheets) => timeSheets._id === timeSheetId)
   );
 
-  const employeesValidation = Joi.object({
-    name: Joi.string()
-      .alphanum()
-      .pattern(/^([^0-9]*)$/i, 'only letters')
-      .required(),
-    lastName: Joi.string()
-      .alphanum()
-      .pattern(/^([^0-9]*)$/i, 'only letters')
-      .required(),
-    phone: Joi.string()
-      .length(10)
-      .pattern(/^[0-9]+$/, 'only numbers')
-      .required(),
-    email: Joi.string().email().required(),
-    password: Joi.string()
-      .alphanum()
-      .pattern(/^(?=.*?[a-z])(?=.*?[0-9]).{8,}$/, 'Letters, numbers and minimum 8 characters')
-      .required()
-  });
-
-  const employeeForProjectValidation = Joi.object({
-    employee: employeesValidation.required(),
-    role: Joi.string().valid('DEV', 'QA', 'PM', 'TL').required(),
-    rate: Joi.number().required()
-  });
-  const projectValidation = Joi.object({
-    name: Joi.string().min(3).required(),
-    description: Joi.string().min(3).required(),
-    startDate: Joi.date().required(),
-    endDate: Joi.date().required(),
-    clientName: Joi.string().min(3).required(),
-    employees: Joi.array().items(employeeForProjectValidation).required()
-  });
-
-  const timeSheetValidation = Joi.object({
-    description: Joi.string().max(100).required(),
-    date: Joi.date().required(),
-    task: Joi.string()
-      .required()
-      .trim()
-      .regex(/^(?=.*[a-zA-Z].*)([\w\s\W]+)$/)
-      .min(3),
-    project: projectValidation.required(),
-    employee: employeesValidation.required(),
-    hours: Joi.number().integer().positive().required()
-  });
-
-  console.log(timeSheetValidation);
+  console.log(timeSheetData);
 
   const {
+    register,
     handleSubmit,
-    register
-    /* watch, */
-    /* formState: { errors } */
+    formState: { errors },
+    reset
   } = useForm({
-    mode: 'onChange'
+    mode: 'onChange',
+    resolver: joiResolver(timeSheetValidation)
   });
+
+  const MOCK_DATA = {
+    date: timeSheetData?.date,
+    hours: timeSheetData?.hours,
+    project: timeSheetData?.project,
+    employee: timeSheetData?.employee,
+    task: timeSheetData?.task,
+    description: timeSheetData?.description
+  };
 
   const openModalOnError = (error) => {
     if (error) {
@@ -110,14 +74,14 @@ const TimeSheetsForm = () => {
     setShowModal(false);
   };
 
-  const setStates = (timeSheetData) => {
+  /* const setStates = (timeSheetData) => {
     setDescription(timeSheetData.description);
     setDate(timeSheetData.date);
     setHours(timeSheetData.hours);
     setProjectId(timeSheetData.project._id);
     setEmployeeId(timeSheetData.employee._id);
     setTaskId(timeSheetData.task._id);
-  };
+  }; */
 
   useEffect(() => {
     openModalOnError(error);
@@ -125,7 +89,8 @@ const TimeSheetsForm = () => {
 
   useEffect(() => {
     if (timeSheetData !== undefined) {
-      setStates(timeSheetData);
+      /* setStates(timeSheetData); */
+      reset(MOCK_DATA);
     }
   }, [timeSheetData]);
 
@@ -142,7 +107,8 @@ const TimeSheetsForm = () => {
   useEffect(() => {
     if (timeSheetId && projectsList.length && employeeList.length && taskList.length) {
       if (timeSheetData !== undefined) {
-        setStates(timeSheetData);
+        /* setStates(timeSheetData); */
+        reset(MOCK_DATA);
       } else {
         dispatch(getOneTimeSheet(timeSheetId));
       }
@@ -183,64 +149,74 @@ const TimeSheetsForm = () => {
         <div className={styles.formcontainer}>
           <div>
             <DatePicker
-              register={register}
               label="Date"
-              inputValue={date.substring(0, 10)}
-              changeValue={setDate}
+              name="date"
+              /* inputValue={date.substring(0, 10)}
+              changeValue={setDate} */
+              register={register}
+              error={errors.date?.message}
             />
           </div>
           <div>
             <InputField
-              register={register}
               label="Hours"
+              name="hours"
               type="text"
-              defaultValue={hours || undefined}
+              register={register}
+              error={errors.hours?.message}
+              /* defaultValue={hours || undefined}
               value={hours || undefined}
-              onChange={(e) => setHours(e.target.value)}
+              onChange={(e) => setHours(e.target.value)} */
             />
           </div>
           <div>
             <Select
-              register={register}
-              selectedValue={projectId || undefined}
-              options={projectsList || undefined}
-              changeValue={setProjectId}
-              field="description"
               label="Select Project"
+              name="project"
+              register={register}
+              error={errors.project?.message}
+              /* selectedValue={projectId || undefined} */
+              options={projectsList || undefined}
+              /* changeValue={setProjectId} */
+              field="project"
             />
           </div>
           <div>
             <Select
               register={register}
-              selectedValue={employeeId || undefined}
+              /* selectedValue={employeeId || undefined} */
               options={employeeList || undefined}
-              changeValue={setEmployeeId}
-              field="name"
+              /* changeValue={setEmployeeId} */
+              field="employee"
               label="Select Employee"
+              name="employee"
+              error={errors.employee?.message}
             />
           </div>
           <div>
             <Select
               register={register}
-              selectedValue={taskId || undefined}
+              /* selectedValue={taskId || undefined} */
               options={taskList || undefined}
-              changeValue={setTaskId}
+              /* changeValue={setTaskId} */
               field="description"
               label="Select Task"
+              name="task"
+              error={errors.task?.message}
             />
           </div>
         </div>
         <div className={styles.textareacontainer}>
           <label>Description</label>
           <textarea
-            value={description || undefined}
-            onChange={(e) => setDescription(e.target.value)}
+            /* value={description || undefined} */
+            /* onChange={(e) => setDescription(e.target.value)} */
             placeholder="Description"
           ></textarea>
         </div>
       </form>
       <Button
-        onClick={() => createTimeSheet(description, date, hours, projectId, taskId, employeeId)}
+        onClick={handleSubmit(createTimeSheet)}
         style="squaredPrimary"
         disabled={false}
         text="Save"
