@@ -3,28 +3,35 @@ import styles from 'Components/Projects/Form/FormEmployees/formemployee.module.c
 import InputField from 'Components/Shared/Input/input';
 import Select from 'Components/Shared/Select';
 
-const FormEmployee = ({ register, /* errors, */ employees, employee }) => {
+const FormEmployee = ({ register, errors, employees }) => {
   const roles = [{ role: 'DEV' }, { role: 'QA' }, { role: 'PM' }, { role: 'TL' }];
   return (
     <div className={styles.employees}>
       <Select
-        selectedValue={employee?.employee}
         options={employees}
         field="lastName"
-        name="employeeId"
+        name="employees[0].employee"
         label="Employees"
         register={register}
+        error={errors.employees?.employee?.message}
       />
       <Select
-        selectedValue={employee?.role}
         options={roles}
         field="role"
-        name="role"
+        name="employees[0].role"
         label="Role"
         register={register}
+        error={errors.employees?.role?.message}
       />
       <div>
-        <InputField name="rate" type="number" placeholder="Rate" label="Rate" register={register} />
+        <InputField
+          name="employees[0].rate"
+          type="number"
+          placeholder="Rate"
+          label="Rate"
+          register={register}
+          error={errors.employees?.rate?.message}
+        />
       </div>
     </div>
   );

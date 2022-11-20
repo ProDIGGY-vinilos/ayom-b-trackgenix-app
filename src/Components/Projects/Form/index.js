@@ -9,6 +9,8 @@ import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { schema } from 'Components/Projects/validations';
 import { postProject, putProject } from 'redux/projects/thunks';
 import { getEmployees } from 'redux/employees/thunks';
 
@@ -18,14 +20,13 @@ const Project = () => {
     state.projects.list.find((project) => project._id === projectId)
   );
 
-  const [employees, setEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showSharedModal, setShowSharedModal] = useState(false);
 
-  const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
+  const { isLoading, error } = useSelector((state) => state.projects);
   const { list: employeesList } = useSelector((state) => state.employees);
 
   const dispatch = useDispatch();
@@ -35,7 +36,8 @@ const Project = () => {
     reset,
     formState: { errors }
   } = useForm({
-    mode: 'onChange'
+    mode: 'onChange',
+    resolver: joiResolver(schema)
   });
 
   const openModal = () => {
@@ -77,27 +79,18 @@ const Project = () => {
         fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`)
           .then((response) => response.json())
           .then((response) => {
-            projectBodyData({
-              name: response.name,
-              description: response.description,
-              startDate: response.startDate.substring(0, 10),
-              endDate: response.endDate.substring(0, 10),
-              clientName: response.clientName,
-              employees: [
-                {
-                  employee: response.employees[0].employee._id,
-                  role: response.employees[0].role,
-                  rate: response.employees[0].rate
-                }
-              ]
-            });
+            projectBodyData = {
+              ...response.data,
+              startDate: response.data.startDate.substring(0, 10),
+              endDate: response.data.endDate.substring(0, 10)
+            };
+            reset(projectBodyData);
           });
       } else {
         setIsFetched(false);
       }
     }
-    setEmployees(employeesList);
-  }, [projectBodyData]);
+  }, []);
 
   useEffect(() => {
     reset(projectBodyData);
@@ -106,6 +99,7 @@ const Project = () => {
   useEffect(() => {
     setModalMessage(error);
   }, [error]);
+  console.log(errors);
 
   const setModalMessage = (error) => {
     if (error) {
@@ -167,7 +161,7 @@ const Project = () => {
             {...register('description')}
             className={styles.textarea}
           ></textarea>
-          {errors.description && <p>errors.description.message</p>}
+          {errors.description && <p>{errors.description.message}</p>}
         </div>
         <div className={styles.formDiv}>
           <DatePicker
@@ -186,18 +180,9 @@ const Project = () => {
           />
         </div>
         <h4 className={styles.formFull}>Employees: </h4>
-        {projectList.employees.map((employee, index) => {
-          return (
-            <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
-              <FormEmployee
-                employees={employees}
-                employee={employee}
-                register={register}
-                errors={errors}
-              />
-            </div>
-          );
-        })}
+        <div className={`${styles.formFull} ${styles.employeesDiv}`}>
+          <FormEmployee employees={employeesList} register={register} errors={errors} />
+        </div>
         <Button onClick={openModal} style="squaredPrimary" disabled={false} text="Save" />
       </form>
       <MessageModal
@@ -211,12 +196,12 @@ const Project = () => {
         show={showModal}
         closeModal={closeModal}
         onAddUpdate={handleSubmit(onSubmit)}
-        id={isFetched ? projectData._id : undefined}
+        //id={isFetched ? projectData?._id : undefined}
         title={isFetched ? 'Update Project' : 'Add New Project'}
         text={
           isFetched
             ? `Are you sure you want to update the project?`
-            : `Are you sure you want to add the project "${projectData.name}"?`
+            : `Are you sure you want to add the project?`
         }
       />
     </div>
