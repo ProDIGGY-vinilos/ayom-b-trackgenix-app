@@ -7,23 +7,28 @@ import styles from 'Components/Tasks/tasks.module.css';
 import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
 import { getOneTask, postTask, putTask } from 'redux/tasks/thunks';
+import { joiResolver } from '@hookform/resolvers/joi';
+import schema from 'Components/Tasks/Form/validations';
 
 const Form = () => {
   const taskId = useParams().id;
   const dispatch = useDispatch();
   const dataTask = useSelector((state) => state.tasks.list.find((task) => task._id === taskId));
 
-  const [userInput, setNameValue] = useState({
-    description: ''
-  });
-
   const { error } = useSelector((state) => state.tasks);
   const [typeModal, setTypeModal] = useState('');
   const [textMessageModal, setTextMessageModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
-  const [isFetched, setIsFetched] = useState(false);
 
-  const { register } = useForm();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(schema)
+  });
 
   const openMessageModal = () => {
     setShowMessageModal(true);
@@ -37,7 +42,6 @@ const Form = () => {
     if (taskId) {
       if (dataTask === undefined) {
         dispatch(getOneTask(taskId));
-        setIsFetched(true);
       }
     }
   }, []);
@@ -45,9 +49,7 @@ const Form = () => {
   useEffect(() => {
     if (taskId) {
       if (dataTask !== undefined) {
-        setNameValue({ description: dataTask.description });
-      } else if (isFetched) {
-        setNameValue({ description: dataTask.description });
+        reset({ description: dataTask.description });
       }
     }
   }, [dataTask]);
@@ -56,18 +58,14 @@ const Form = () => {
     openModalOnError(error);
   }, [error]);
 
-  const updateInput = async (e) => {
-    setNameValue({ description: e.target.value });
-  };
-
-  const onSubmit = () => {
+  const onSubmit = (data) => {
     if (taskId) {
-      dispatch(putTask(taskId, userInput));
+      dispatch(putTask(taskId, data));
       setTypeModal('Success');
       setTextMessageModal('The Task was updated successfully');
       openMessageModal();
     } else {
-      dispatch(postTask(userInput));
+      dispatch(postTask(data));
       setTypeModal('Success');
       setTextMessageModal('The Task was created successfully');
       openMessageModal();
@@ -84,21 +82,26 @@ const Form = () => {
 
   return (
     <div className={styles.container}>
-      <form className={styles.addItem} onSubmit={onSubmit}>
+      <form className={styles.addItem} onSubmit={handleSubmit(onSubmit)}>
         <Button href="/tasks" style="roundedSecondary" diabled={false} text="X" />
         <div>
           <InputField
-            label="Description"
+            id={taskId}
             name="description"
             type="text"
             placeholder="description"
-            value={userInput.description}
-            onChange={(e) => updateInput(e)}
+            label="Description"
             register={register}
+            error={errors.description?.message}
           />
         </div>
         <div className={styles.buttonsDiv}>
-          <Button onClick={onSubmit} style="squaredPrimary" disabled={false} text="Save" />
+          <Button
+            onClick={handleSubmit(onSubmit)}
+            style="squaredPrimary"
+            disabled={false}
+            text="Save"
+          />
           <MessageModal
             type={typeModal}
             isOpen={showMessageModal}
