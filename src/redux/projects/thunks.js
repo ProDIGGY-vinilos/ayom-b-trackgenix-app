@@ -11,7 +11,7 @@ import {
   deleteProjectError,
   deleteProjectSuccess,
   deleteProjectPending
-} from './actions';
+} from 'redux/projects/actions';
 
 export const getProjects = () => {
   return (dispatch) => {

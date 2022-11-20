@@ -1,11 +1,12 @@
 import React from 'react';
-import styles from './formemployee.module.css';
-import InputField from '../../../Shared/Input/input';
-import Select from '../../../Shared/Select';
+import { useForm } from 'react-hook-form';
+import styles from 'Components/Projects/Form/FormEmployees/formemployee.module.css';
+import InputField from 'Components/Shared/Input/input';
+import Select from 'Components/Shared/Select';
 
 const FormEmployee = ({ employees, employee, changeValue }) => {
   const roles = [{ role: 'DEV' }, { role: 'QA' }, { role: 'PM' }, { role: 'TL' }];
-
+  const { register } = useForm();
   return (
     <div className={styles.employees}>
       <Select
@@ -14,6 +15,7 @@ const FormEmployee = ({ employees, employee, changeValue }) => {
         changeValue={(value) => changeValue('employee', value, true)}
         field="lastName"
         label="Employees"
+        register={register}
       />
       <Select
         selectedValue={employee?.role}
@@ -21,6 +23,7 @@ const FormEmployee = ({ employees, employee, changeValue }) => {
         changeValue={(value) => changeValue('role', value, true)}
         field="role"
         label="Role"
+        register={register}
       />
       <div>
         <InputField
@@ -30,6 +33,7 @@ const FormEmployee = ({ employees, employee, changeValue }) => {
           placeholder="Rate"
           onChange={(e) => changeValue('rate', e.target.value, true)}
           label="Rate"
+          register={register}
         />
       </div>
     </div>

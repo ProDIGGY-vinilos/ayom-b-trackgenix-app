@@ -14,7 +14,7 @@ import {
   deleteTaskPending,
   deleteTaskSuccess,
   deleteTaskError
-} from './actions';
+} from 'redux/tasks/actions';
 
 export const getTasks = () => {
   return (dispatch) => {

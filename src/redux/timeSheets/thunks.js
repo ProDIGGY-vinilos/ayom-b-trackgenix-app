@@ -14,7 +14,7 @@ import {
   deleteTimeSheetPending,
   deleteTimeSheetSuccess,
   deleteTimeSheetError
-} from './actions';
+} from 'redux/timeSheets/actions';
 
 export const getTimeSheets = () => {
   return (dispatch) => {

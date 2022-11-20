@@ -14,7 +14,7 @@ import {
   DELETE_TASK_PENDING,
   DELETE_TASK_SUCCESS,
   DELETE_TASK_ERROR
-} from './constant';
+} from 'redux/tasks/constant';
 
 const INITIAL_STATE = {
   list: [],

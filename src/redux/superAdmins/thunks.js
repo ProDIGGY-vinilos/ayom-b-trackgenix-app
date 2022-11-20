@@ -11,7 +11,7 @@ import {
   deleteSuperAdminPending,
   deleteSuperAdminSuccess,
   deleteSuperAdminError
-} from './actions';
+} from 'redux/superAdmins/actions';
 
 export const getSuperAdmins = () => {
   return (dispatch) => {

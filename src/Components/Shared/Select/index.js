@@ -1,13 +1,9 @@
-import styles from './select.module.css';
+import styles from 'Components/Shared/Select/select.module.css';
 
-const Select = ({ selectedValue, options, changeValue, field, label }) => {
-  const handleChange = (e) => {
-    changeValue(e.target.value);
-  };
-
+const Select = ({ options, field, name, label, register, error = '' }) => {
   if (!options || !options.length) {
     return (
-      <select className={styles.select} disabled value={''} onChange={(e) => handleChange(e)}>
+      <select className={styles.select} disabled value={''}>
         <option className={styles.option} disabled value="">
           Loading data
         </option>
@@ -18,14 +14,7 @@ const Select = ({ selectedValue, options, changeValue, field, label }) => {
   return (
     <div className={styles.selectContainer}>
       <label>{label}</label>
-      <select
-        className={styles.select}
-        value={selectedValue || ''}
-        onChange={(e) => handleChange(e)}
-      >
-        <option className={styles.option} disabled value="">
-          --Choose an option--
-        </option>
+      <select {...register(name)} className={styles.select}>
         {options.map((item) => {
           return (
             <option className={styles.option} value={item._id} key={item._id}>
@@ -34,6 +23,7 @@ const Select = ({ selectedValue, options, changeValue, field, label }) => {
           );
         })}
       </select>
+      {error && <p>{error}</p>}
     </div>
   );
 };

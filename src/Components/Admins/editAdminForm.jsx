@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import MessageModal from '../Shared/Modal/MessageModal';
-import styles from './admins.module.css';
-import Button from '../Shared/Button/Button';
-import InputField from '../Shared/Input/input';
+import MessageModal from 'Components/Shared/Modal/MessageModal';
+import styles from 'Components/Admins/admins.module.css';
+import Button from 'Components/Shared/Button/Button';
+import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
-import { postAdmin, putAdmin } from '../../redux/admins/thunks';
+import { useForm } from 'react-hook-form';
+import { postAdmin, putAdmin } from 'redux/admins/thunks';
 
 function Form() {
   const dispatch = useDispatch();
@@ -20,6 +21,8 @@ function Form() {
     email: '',
     password: ''
   });
+
+  const { register } = useForm();
 
   const [typeModal, setTypeModal] = useState();
   const [textMessageModal, setTextMessageModal] = useState();
@@ -105,6 +108,7 @@ function Form() {
           type="text"
           value={inputValue.name}
           onChange={onChange}
+          register={register}
         />
       </div>
       <div className={styles.fromInput}>
@@ -114,6 +118,7 @@ function Form() {
           type="text"
           value={inputValue.lastName}
           onChange={onChange}
+          register={register}
         />
       </div>
       <div className={styles.fromInput}>
@@ -123,6 +128,7 @@ function Form() {
           type="email"
           value={inputValue.email}
           onChange={onChange}
+          register={register}
         />
       </div>
       <div className={styles.fromInput}>
@@ -132,6 +138,7 @@ function Form() {
           type="password"
           value={inputValue.password}
           onChange={onChange}
+          register={register}
         />
       </div>
       <div>

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import styles from './employees.module.css';
-import MessageModal from '../Shared/Modal/MessageModal';
-import Table from '../Shared/Table';
-import Button from '../Shared/Button/Button';
+import styles from 'Components/Employees/employees.module.css';
+import MessageModal from 'Components/Shared/Modal/MessageModal';
+import Table from 'Components/Shared/Table';
+import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getEmployees, deleteEmployee } from '../../redux/employees/thunks';
-import { clearError } from '../../redux/employees/actions';
+import { getEmployees, deleteEmployee } from 'redux/employees/thunks';
+import { clearError } from 'redux/employees/actions';
 
 const Employees = () => {
   const [typeModal, setTypeModal] = useState('');

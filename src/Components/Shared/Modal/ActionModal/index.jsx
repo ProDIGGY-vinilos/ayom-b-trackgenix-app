@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './modal.module.css';
-import Button from '../../Button/Button';
+import styles from 'Components/Shared/Modal/ActionModal/modal.module.css';
+import Button from 'Components/Shared/Button/Button';
 
 const Modal = ({
   showModal,
