@@ -40,7 +40,7 @@ function Form() {
     setShowMessageModal(false);
   };
 
-  let MOCK_DATA = {
+  let data = {
     name: adminData?.name,
     lastName: adminData?.lastName,
     email: adminData?.email,
@@ -48,7 +48,7 @@ function Form() {
   };
 
   useEffect(() => {
-    reset(MOCK_DATA);
+    reset(data);
   }, []);
 
   useEffect(async () => {
@@ -58,12 +58,14 @@ function Form() {
         fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`)
           .then((response) => response.json())
           .then((response) => {
-            MOCK_DATA = {
+            data = {
+              ...response.data,
               name: response.data.name,
               lastName: response.data.lastName,
               email: response.data.email,
               password: response.data.password
             };
+            reset(data);
           });
       }
     } else document.getElementById('fromHeader').innerHTML = 'ADD ADMIN';
