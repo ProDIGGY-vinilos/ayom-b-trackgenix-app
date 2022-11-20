@@ -4,9 +4,9 @@ const employeeValidation = Joi.object({
   employee: Joi.string().required(),
   role: Joi.string().required().valid('DEV', 'QA', 'TL', 'PM'),
   rate: Joi.number().positive().required().messages({
-    'string.empty': 'Rate required',
+    'string.empty': 'Rate is required',
     'number.pattern.base': 'Rate should be positive numbers only',
-    'any.required': 'Rate required'
+    'any.required': 'Rate is required'
   })
 });
 
@@ -17,10 +17,10 @@ export const schema = Joi.object({
     .regex(/^(?=.*[a-zA-Z].*)([\w\s\W]+)$/)
     .required()
     .messages({
-      'string.empty': 'Name required',
-      'string.pattern.base': 'Name should have letters only',
-      'string.min': 'Name should have a minimum length of 3 characters',
-      'any.required': 'Name required'
+      'string.empty': 'Project name is required',
+      'string.pattern.base': 'Project name should have letters only',
+      'string.min': 'Project name should have a minimum length of 3 characters',
+      'any.required': 'Project name is required'
     }),
   description: Joi.string()
     .min(5)
@@ -28,14 +28,17 @@ export const schema = Joi.object({
     .regex(/^(?=.*[a-zA-Z].*)([\w\s\W]+)$/)
     .required()
     .messages({
-      'string.empty': 'Description required',
+      'string.empty': 'Description is required',
       'string.pattern.base': 'Name should have letters only',
       'string.min': 'Description should have a minimum length of 5 characters',
-      'any.required': 'Description required'
+      'any.required': 'Description is required'
     }),
-  startDate: Joi.date().required(),
+  startDate: Joi.date().required().messages({
+    'any.required': 'Start date is required'
+  }),
   endDate: Joi.date().greater(Joi.ref('startDate')).messages({
-    'date.greater': 'End date must be newer than start date'
+    'date.greater': 'End date must be newer than start date',
+    'any.required': 'End date is required'
   }),
   clientName: Joi.string()
     .min(3)
@@ -43,10 +46,10 @@ export const schema = Joi.object({
     .regex(/^(?=.*[a-zA-Z].*)([\w\s\W]+)$/)
     .required()
     .messages({
-      'string.empty': 'Client name required',
+      'string.empty': 'Client name is required',
       'string.pattern.base': 'Client name should have letters only',
       'string.min': 'Client name should have a minimum length of 2 characters',
-      'any.required': 'Client name required'
+      'any.required': 'Client name is required'
     }),
   employees: Joi.array().items(employeeValidation)
 });
