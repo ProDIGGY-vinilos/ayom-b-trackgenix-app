@@ -31,27 +31,22 @@ const TimeSheetsForm = () => {
     state.timeSheets.list.find((timeSheets) => timeSheets._id === timeSheetId)
   );
 
-  //setValues
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
     reset
   } = useForm({
     mode: 'onChange',
     resolver: joiResolver(timeSheetValidation)
   });
 
-  console.log(errors);
-
   const MOCK_DATA = {
     date: timeSheetData?.date.substring(0, 10),
     hours: timeSheetData?.hours,
-    project: timeSheetData?.project,
-    employee: timeSheetData?.employee,
-    task: timeSheetData?.task,
+    project: timeSheetData?.project._id,
+    employee: timeSheetData?.employee._id,
+    task: timeSheetData?.task._id,
     description: timeSheetData?.description
   };
 
@@ -114,8 +109,6 @@ const TimeSheetsForm = () => {
       openModal();
     }
   };
-
-  console.log(JSON.stringify(watch('project')));
 
   return (
     <div className={styles.container}>

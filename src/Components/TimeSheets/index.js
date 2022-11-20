@@ -22,17 +22,8 @@ const TimeSheets = () => {
   };
 
   useEffect(() => {
-    /* let incompleteField = false;
-    for (let i = 0; i < timeSheetsList.length; i++) {
-      if (typeof timeSheetsList[i].employee === 'string' || typeof timeSheetsList[i].project === 'string' || typeof timeSheetsList[i].employee === 'string') {
-        incompleteField = true;
-        break;
-      }
-    } */
-    if (!timeSheetsList.length || timeSheetsList.length === 1 /* || incompleteField === true */) {
-      dispatch(getTimeSheets());
-    }
-  }, [timeSheetsList]);
+    dispatch(getTimeSheets());
+  }, []);
 
   useEffect(async () => {
     openModalOnError(error);
