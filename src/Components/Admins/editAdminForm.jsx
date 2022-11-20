@@ -7,6 +7,8 @@ import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { postAdmin, putAdmin } from 'redux/admins/thunks';
+import { schema } from 'Components/Admins/validations';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 function Form() {
   const dispatch = useDispatch();
@@ -15,14 +17,16 @@ function Form() {
   const adminData = useSelector((state) =>
     state.admins.list.find((admin) => admin._id === adminId)
   );
-  const [inputValue, setInputValue] = useState({
-    name: '',
-    lastName: '',
-    email: '',
-    password: ''
-  });
 
-  const { register } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(schema)
+  });
 
   const [typeModal, setTypeModal] = useState();
   const [textMessageModal, setTextMessageModal] = useState();
@@ -36,6 +40,17 @@ function Form() {
     setShowMessageModal(false);
   };
 
+  let data = {
+    name: adminData?.name,
+    lastName: adminData?.lastName,
+    email: adminData?.email,
+    password: adminData?.password
+  };
+
+  useEffect(() => {
+    reset(data);
+  }, []);
+
   useEffect(async () => {
     if (adminId) {
       document.getElementById('fromHeader').innerHTML = 'EDIT ADMIN';
@@ -43,20 +58,15 @@ function Form() {
         fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`)
           .then((response) => response.json())
           .then((response) => {
-            setInputValue({
+            data = {
+              ...response.data,
               name: response.data.name,
               lastName: response.data.lastName,
               email: response.data.email,
               password: response.data.password
-            });
+            };
+            reset(data);
           });
-      } else {
-        setInputValue({
-          name: adminData.name,
-          lastName: adminData.lastName,
-          email: adminData.email,
-          password: adminData.password
-        });
       }
     } else document.getElementById('fromHeader').innerHTML = 'ADD ADMIN';
   }, []);
@@ -73,20 +83,16 @@ function Form() {
     }
   };
 
-  const onChange = (e) => {
-    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
-  };
-
-  const onSubmit = async () => {
+  const onSubmit = (data) => {
     if (adminId) {
-      dispatch(putAdmin(inputValue, adminId));
+      dispatch(putAdmin(data, adminId));
       if (!error) {
         setTypeModal('Success');
         setTextMessageModal('The administrator was edited successfully');
         openMessageModal();
       }
     } else {
-      dispatch(postAdmin(inputValue));
+      dispatch(postAdmin(data));
       if (!error) {
         setTypeModal('Success');
         setTextMessageModal('The administrator was added successfully');
@@ -96,7 +102,7 @@ function Form() {
   };
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.formHeader}>
         <h3 id="fromHeader">Tittle</h3>
         <Button href="/admins" style="roundedSecondary" disabled={false} text="X" />
@@ -106,9 +112,8 @@ function Form() {
           label="Name"
           name="name"
           type="text"
-          value={inputValue.name}
-          onChange={onChange}
           register={register}
+          error={errors.name?.message}
         />
       </div>
       <div className={styles.fromInput}>
@@ -116,9 +121,8 @@ function Form() {
           label="Last Name"
           name="lastName"
           type="text"
-          value={inputValue.lastName}
-          onChange={onChange}
           register={register}
+          error={errors.lastName?.message}
         />
       </div>
       <div className={styles.fromInput}>
@@ -126,9 +130,8 @@ function Form() {
           label="Email"
           name="email"
           type="email"
-          value={inputValue.email}
-          onChange={onChange}
           register={register}
+          error={errors.email?.message}
         />
       </div>
       <div className={styles.fromInput}>
@@ -136,9 +139,8 @@ function Form() {
           label="Password"
           name="password"
           type="password"
-          value={inputValue.password}
-          onChange={onChange}
           register={register}
+          error={errors.password?.message}
         />
       </div>
       <div>
@@ -150,7 +152,12 @@ function Form() {
           goBack={'/admins'}
         />
       </div>
-      <Button onClick={onSubmit} style="squaredPrimary" disabled={false} text="Save" />
+      <Button
+        onClick={handleSubmit(onSubmit)}
+        style="squaredPrimary"
+        disabled={false}
+        text="Save"
+      />
     </form>
   );
 }
