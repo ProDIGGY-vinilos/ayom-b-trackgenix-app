@@ -99,7 +99,6 @@ const Project = () => {
   useEffect(() => {
     setModalMessage(error);
   }, [error]);
-  console.log(errors);
 
   const setModalMessage = (error) => {
     if (error) {
@@ -114,7 +113,6 @@ const Project = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
     projectId ? dispatch(putProject(projectId, data)) : dispatch(postProject(data));
     openSharedModal();
   };
@@ -196,7 +194,6 @@ const Project = () => {
         show={showModal}
         closeModal={closeModal}
         onAddUpdate={handleSubmit(onSubmit)}
-        //id={isFetched ? projectData?._id : undefined}
         title={isFetched ? 'Update Project' : 'Add New Project'}
         text={
           isFetched
