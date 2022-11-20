@@ -19,7 +19,6 @@ const Form = () => {
   const [typeModal, setTypeModal] = useState('');
   const [textMessageModal, setTextMessageModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
-  const [isFetched, setIsFetched] = useState(false);
 
   const {
     handleSubmit,
@@ -43,7 +42,6 @@ const Form = () => {
     if (taskId) {
       if (dataTask === undefined) {
         dispatch(getOneTask(taskId));
-        setIsFetched(true);
       }
     }
   }, []);
@@ -51,8 +49,6 @@ const Form = () => {
   useEffect(() => {
     if (taskId) {
       if (dataTask !== undefined) {
-        reset({ description: dataTask.description });
-      } else if (isFetched) {
         reset({ description: dataTask.description });
       }
     }
