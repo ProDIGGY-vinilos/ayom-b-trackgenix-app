@@ -8,23 +8,23 @@ import InputField from 'Components/Shared/Input/input';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import Button from 'Components/Shared/Button/Button';
 import { postSuperAdmin, putSuperAdmin } from 'redux/superAdmins/thunks';
+import { joiResolver } from '@hookform/resolvers/joi';
+import schema from 'Components/SuperAdmins/Form/validations';
 
 const Form = () => {
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.superAdmins);
   const superAdminId = useParams().id;
-  const [superAdmin, setSuperAdmin] = useState({
-    name: '',
-    lastName: '',
-    email: '',
-    password: ''
-  });
   const [title, setTitle] = useState([]);
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
-
-  const { register } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm({ mode: 'onChange', resolver: joiResolver(schema) });
 
   const openMessageModal = () => {
     setShowMessageModal(true);
@@ -41,13 +41,15 @@ const Form = () => {
           `${process.env.REACT_APP_API_URL}/superAdmins/${superAdminId}`
         );
         const data = await response.json();
-        setSuperAdmin({
+        data({
+          ...response.data,
           name: data.data.name,
           lastName: data.data.lastName,
           email: data.data.email,
           password: data.data.password
         });
         setTitle('Super admin edit');
+        reset(data);
         return;
       } catch (error) {
         setTypeModal('Error');
@@ -60,13 +62,9 @@ const Form = () => {
     }
   }, []);
 
-  const updateField = (e) => {
-    setSuperAdmin({ ...superAdmin, [e.target.name]: e.target.value });
-  };
-
-  const validateFields = () => {
-    for (const val in superAdmin) {
-      if (superAdmin[`${val}`].trim().length !== 0) {
+  const validateFields = (data) => {
+    for (const val in data) {
+      if (data[`${val}`].trim().length !== 0) {
         openMessageModal();
         return;
       } else {
@@ -87,17 +85,17 @@ const Form = () => {
     }
   };
 
-  const onConfirm = () => {
+  const onSubmit = (data) => {
     let url = '';
     if (superAdminId) {
       url = `${process.env.REACT_APP_API_URL}/superAdmins/${superAdminId}`;
-      dispatch(putSuperAdmin(url, superAdmin));
+      dispatch(putSuperAdmin(url, data));
       setTypeModal('Success');
       setTextModal('SuperAdmin updated successfully');
       openMessageModal();
     } else {
       url = `${process.env.REACT_APP_API_URL}/superAdmins`;
-      dispatch(postSuperAdmin(url, superAdmin));
+      dispatch(postSuperAdmin(url, data));
       setTypeModal('Success');
       setTextModal('SuperAdmin created successfully');
       openMessageModal();
@@ -105,7 +103,7 @@ const Form = () => {
   };
 
   return (
-    <form className={styles.container}>
+    <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.header}>
         <h3>{title}</h3>
         <Button onClick={validateFields} style="roundedSecondary" disabled={false} text="X" />
@@ -116,9 +114,8 @@ const Form = () => {
           name="name"
           type="text"
           placeholder="name"
-          value={superAdmin.name}
-          onChange={updateField}
           register={register}
+          error={errors.name?.message}
         />
       </div>
       <div className={styles.inputDiv}>
@@ -127,9 +124,8 @@ const Form = () => {
           name="lastName"
           type="text"
           placeholder="last name"
-          value={superAdmin.lastName}
-          onChange={updateField}
           register={register}
+          error={errors.lastName?.message}
         />
       </div>
       <div className={styles.inputDiv}>
@@ -138,9 +134,8 @@ const Form = () => {
           name="email"
           type="email"
           placeholder="email"
-          value={superAdmin.email}
-          onChange={updateField}
           register={register}
+          error={errors.email?.message}
         />
       </div>
       <div className={styles.inputDiv}>
@@ -149,12 +144,16 @@ const Form = () => {
           name="password"
           type="password"
           placeholder="password"
-          value={superAdmin.password}
-          onChange={updateField}
           register={register}
+          error={errors.password?.message}
         />
       </div>
-      <Button onClick={onConfirm} style="squaredPrimary" disabled={false} text="Save" />
+      <Button
+        onClick={handleSubmit(onSubmit)}
+        style="squaredPrimary"
+        disabled={false}
+        text="Save"
+      />
       <MessageModal
         type={typeModal}
         isOpen={showMessageModal}

@@ -1,27 +1,10 @@
 import styles from '../Input/input.module.css';
 
-const InputField = ({
-  id,
-  name,
-  value,
-  type,
-  placeholder,
-  onChange,
-  label,
-  register,
-  error = ''
-}) => {
+const InputField = ({ id, name, type, placeholder, label, register, error = '' }) => {
   return (
     <div key={id}>
       {label && <label>{label}</label>}
-      <input
-        {...register(name)}
-        name={name}
-        type={type}
-        value={value}
-        placeholder={placeholder}
-        onChange={(e) => onChange(e)}
-      />
+      <input {...register(name)} name={name} type={type} placeholder={placeholder} />
       {error && <p className={styles.textColor}>{error}</p>}
     </div>
   );
