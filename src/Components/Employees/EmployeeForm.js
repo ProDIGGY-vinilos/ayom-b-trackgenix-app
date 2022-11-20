@@ -61,7 +61,7 @@ const EmployeeForm = () => {
     }
   }, [error]);
 
-  const MOCK_DATA = {
+  const employeeData = {
     name: employee?.name,
     lastName: employee?.lastName,
     email: employee?.email,
@@ -72,7 +72,7 @@ const EmployeeForm = () => {
   useEffect(() => {
     dispatch(clearError());
     if (employeeId) {
-      reset(MOCK_DATA);
+      reset(employeeData);
       return;
     }
   }, []);

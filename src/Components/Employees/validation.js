@@ -4,7 +4,14 @@ export const schema = Joi.object({
   name: Joi.string()
     .alphanum()
     .pattern(/^([^0-9]*)$/i, 'only letters')
-    .required(),
+    .required()
+    .messages({
+      'string.base': `"Name" should be a type of 'text'`,
+      'string.alphanum': `"Name" should be only characters`,
+      'string.empty': `"Name" cannot be an empty field`,
+      'string.pattern.name': `"Name" should be only letters`,
+      'any.required': `"Name" is a required field`
+    }),
   lastName: Joi.string()
     .alphanum()
     .pattern(/^([^0-9]*)$/i, 'only letters')
