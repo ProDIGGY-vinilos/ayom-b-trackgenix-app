@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const employeesValidation = Joi.object({
+/* const employeesValidation = Joi.object({
   name: Joi.string()
     .alphanum()
     .pattern(/^([^0-9]*)$/i, 'only letters')
@@ -46,5 +46,18 @@ export const timeSheetValidation = Joi.object({
     .min(3),
   project: projectValidation.required(),
   employee: employeesValidation.required(),
+  hours: Joi.number().integer().positive().required()
+}); */
+
+export const timeSheetValidation = Joi.object({
+  description: Joi.string().max(100).required(),
+  date: Joi.date().required(),
+  task: Joi.string()
+    .required()
+    .trim()
+    .regex(/^(?=.*[a-zA-Z].*)([\w\s\W]+)$/)
+    .min(3),
+  project: Joi.string().length(24).required(),
+  employee: Joi.string().length(24).required(),
   hours: Joi.number().integer().positive().required()
 });

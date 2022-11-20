@@ -17,12 +17,6 @@ import { joiResolver } from '@hookform/resolvers/joi';
 
 const TimeSheetsForm = () => {
   const pathed = useParams().id;
-  /* const [description, setDescription] = useState('');
-  const [date, setDate] = useState('');
-  const [hours, setHours] = useState('');
-  const [projectId, setProjectId] = useState('');
-  const [employeeId, setEmployeeId] = useState('');
-  const [taskId, setTaskId] = useState(''); */
   const [timeSheetId, setTimeSheetId] = useState('');
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
@@ -37,20 +31,23 @@ const TimeSheetsForm = () => {
     state.timeSheets.list.find((timeSheets) => timeSheets._id === timeSheetId)
   );
 
-  console.log(timeSheetData);
+  //setValues
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
     reset
   } = useForm({
     mode: 'onChange',
     resolver: joiResolver(timeSheetValidation)
   });
 
+  console.log(errors);
+
   const MOCK_DATA = {
-    date: timeSheetData?.date,
+    date: timeSheetData?.date.substring(0, 10),
     hours: timeSheetData?.hours,
     project: timeSheetData?.project,
     employee: timeSheetData?.employee,
@@ -74,22 +71,12 @@ const TimeSheetsForm = () => {
     setShowModal(false);
   };
 
-  /* const setStates = (timeSheetData) => {
-    setDescription(timeSheetData.description);
-    setDate(timeSheetData.date);
-    setHours(timeSheetData.hours);
-    setProjectId(timeSheetData.project._id);
-    setEmployeeId(timeSheetData.employee._id);
-    setTaskId(timeSheetData.task._id);
-  }; */
-
   useEffect(() => {
     openModalOnError(error);
   }, [error]);
 
   useEffect(() => {
     if (timeSheetData !== undefined) {
-      /* setStates(timeSheetData); */
       reset(MOCK_DATA);
     }
   }, [timeSheetData]);
@@ -107,7 +94,6 @@ const TimeSheetsForm = () => {
   useEffect(() => {
     if (timeSheetId && projectsList.length && employeeList.length && taskList.length) {
       if (timeSheetData !== undefined) {
-        /* setStates(timeSheetData); */
         reset(MOCK_DATA);
       } else {
         dispatch(getOneTimeSheet(timeSheetId));
@@ -115,27 +101,21 @@ const TimeSheetsForm = () => {
     }
   }, [projectsList, employeeList, taskList]);
 
-  const createTimeSheet = (Description, Date, Hours, ProjectId, TaskId, EmployeeId) => {
-    const req = {
-      description: Description,
-      date: Date,
-      project: ProjectId,
-      task: TaskId,
-      employee: EmployeeId,
-      hours: Hours
-    };
+  const createTimeSheet = (data) => {
     if (formSwitch) {
-      dispatch(putTimeSheet(req, pathed));
+      dispatch(putTimeSheet(data, pathed));
       setTypeModal('Success');
       setTextModal('TimeSheet edited successfully');
       openModal();
     } else {
-      dispatch(postTimeSheet(req));
+      dispatch(postTimeSheet(data));
       setTypeModal('Success');
       setTextModal('TimeSheet added successfully');
       openModal();
     }
   };
+
+  console.log(JSON.stringify(watch('project')));
 
   return (
     <div className={styles.container}>
@@ -149,10 +129,8 @@ const TimeSheetsForm = () => {
         <div className={styles.formcontainer}>
           <div>
             <DatePicker
-              label="Date"
-              name="date"
-              /* inputValue={date.substring(0, 10)}
-              changeValue={setDate} */
+              label="date"
+              inputName="date"
               register={register}
               error={errors.date?.message}
             />
@@ -164,41 +142,32 @@ const TimeSheetsForm = () => {
               type="text"
               register={register}
               error={errors.hours?.message}
-              /* defaultValue={hours || undefined}
-              value={hours || undefined}
-              onChange={(e) => setHours(e.target.value)} */
             />
           </div>
           <div>
             <Select
-              label="Select Project"
+              options={projectsList || undefined}
+              field="name"
               name="project"
+              label="Select Project"
               register={register}
               error={errors.project?.message}
-              /* selectedValue={projectId || undefined} */
-              options={projectsList || undefined}
-              /* changeValue={setProjectId} */
-              field="project"
             />
           </div>
           <div>
             <Select
-              register={register}
-              /* selectedValue={employeeId || undefined} */
               options={employeeList || undefined}
-              /* changeValue={setEmployeeId} */
-              field="employee"
-              label="Select Employee"
+              field="name"
               name="employee"
+              label="Select Employee"
+              register={register}
               error={errors.employee?.message}
             />
           </div>
           <div>
             <Select
               register={register}
-              /* selectedValue={taskId || undefined} */
               options={taskList || undefined}
-              /* changeValue={setTaskId} */
               field="description"
               label="Select Task"
               name="task"
@@ -209,10 +178,11 @@ const TimeSheetsForm = () => {
         <div className={styles.textareacontainer}>
           <label>Description</label>
           <textarea
-            /* value={description || undefined} */
-            /* onChange={(e) => setDescription(e.target.value)} */
+            name="description"
+            {...register('description')}
             placeholder="Description"
           ></textarea>
+          {errors.description && <p>{errors.description.message}</p>}
         </div>
       </form>
       <Button
