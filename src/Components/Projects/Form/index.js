@@ -41,7 +41,10 @@ const Project = () => {
   });
 
   const openModal = () => {
-    setShowModal(true);
+    let errorsSize = Object.keys(errors).length;
+    if (errorsSize === 0) {
+      setShowModal(true);
+    }
   };
 
   const closeModal = () => {
@@ -51,7 +54,6 @@ const Project = () => {
   const openSharedModal = () => {
     setShowSharedModal(true);
   };
-
   const closeSharedModal = () => {
     setShowSharedModal(false);
   };
@@ -130,6 +132,8 @@ const Project = () => {
   };
 
   const onSubmit = (data) => {
+    console.log(errors.endDate);
+    console.log(data.endDate);
     projectId ? dispatch(putProject(projectId, data)) : dispatch(postProject(data));
     openSharedModal();
   };

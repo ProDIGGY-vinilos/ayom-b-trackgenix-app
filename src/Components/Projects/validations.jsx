@@ -34,11 +34,11 @@ export const schema = Joi.object({
       'any.required': 'Description is required'
     }),
   startDate: Joi.date().required().messages({
-    'any.required': 'Start date is required'
+    'date.base': 'Start date is required'
   }),
   endDate: Joi.date().greater(Joi.ref('startDate')).messages({
     'date.greater': 'End date must be newer than start date',
-    'any.required': 'End date is required'
+    'date.base': 'End date is required'
   }),
   clientName: Joi.string()
     .min(3)
