@@ -130,8 +130,6 @@ const Project = () => {
   };
 
   const onSubmit = (data) => {
-    console.log('Test');
-    console.log(data);
     projectId ? dispatch(putProject(projectId, data)) : dispatch(postProject(data));
     openSharedModal();
   };
