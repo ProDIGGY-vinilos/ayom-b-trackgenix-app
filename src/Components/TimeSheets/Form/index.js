@@ -7,20 +7,16 @@ import DatePicker from 'Components/Shared/Datepicker';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
 import { getOneTimeSheet, postTimeSheet, putTimeSheet } from 'redux/timeSheets/thunks';
 import { getEmployees } from 'redux/employees/thunks';
 import { getProjects } from 'redux/projects/thunks';
 import { getTasks } from 'redux/tasks/thunks';
+import { useForm } from 'react-hook-form';
+import { timeSheetValidation } from './validations';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const TimeSheetsForm = () => {
   const pathed = useParams().id;
-  const [description, setDescription] = useState('');
-  const [date, setDate] = useState('');
-  const [hours, setHours] = useState('');
-  const [projectId, setProjectId] = useState('');
-  const [employeeId, setEmployeeId] = useState('');
-  const [taskId, setTaskId] = useState('');
   const [timeSheetId, setTimeSheetId] = useState('');
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
@@ -35,7 +31,24 @@ const TimeSheetsForm = () => {
     state.timeSheets.list.find((timeSheets) => timeSheets._id === timeSheetId)
   );
 
-  const { register } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(timeSheetValidation)
+  });
+
+  const data = {
+    date: timeSheetData?.date.substring(0, 10),
+    hours: timeSheetData?.hours,
+    project: timeSheetData?.project._id,
+    employee: timeSheetData?.employee._id,
+    task: timeSheetData?.task._id,
+    description: timeSheetData?.description
+  };
 
   const openModalOnError = (error) => {
     if (error) {
@@ -53,22 +66,13 @@ const TimeSheetsForm = () => {
     setShowModal(false);
   };
 
-  const setStates = (timeSheetData) => {
-    setDescription(timeSheetData.description);
-    setDate(timeSheetData.date);
-    setHours(timeSheetData.hours);
-    setProjectId(timeSheetData.project._id);
-    setEmployeeId(timeSheetData.employee._id);
-    setTaskId(timeSheetData.task._id);
-  };
-
   useEffect(() => {
     openModalOnError(error);
   }, [error]);
 
   useEffect(() => {
     if (timeSheetData !== undefined) {
-      setStates(timeSheetData);
+      reset(data);
     }
   }, [timeSheetData]);
 
@@ -85,29 +89,21 @@ const TimeSheetsForm = () => {
   useEffect(() => {
     if (timeSheetId && projectsList.length && employeeList.length && taskList.length) {
       if (timeSheetData !== undefined) {
-        setStates(timeSheetData);
+        reset(data);
       } else {
         dispatch(getOneTimeSheet(timeSheetId));
       }
     }
   }, [projectsList, employeeList, taskList]);
 
-  const createTimeSheet = (Description, Date, Hours, ProjectId, TaskId, EmployeeId) => {
-    const req = {
-      description: Description,
-      date: Date,
-      project: ProjectId,
-      task: TaskId,
-      employee: EmployeeId,
-      hours: Hours
-    };
+  const createTimeSheet = (data) => {
     if (formSwitch) {
-      dispatch(putTimeSheet(req, pathed));
+      dispatch(putTimeSheet(data, pathed));
       setTypeModal('Success');
       setTextModal('TimeSheet edited successfully');
       openModal();
     } else {
-      dispatch(postTimeSheet(req));
+      dispatch(postTimeSheet(data));
       setTypeModal('Success');
       setTextModal('TimeSheet added successfully');
       openModal();
@@ -122,14 +118,14 @@ const TimeSheetsForm = () => {
         <h2 className={styles.title}>Add new time sheet</h2>
       )}
       <Button href="/time-sheets" style="roundedSecondary" disabled={false} text="X" />
-      <form className={styles.form}>
+      <form onSubmit={handleSubmit(createTimeSheet)} className={styles.form}>
         <div className={styles.formcontainer}>
           <div>
             <DatePicker
-              label="Date"
-              inputValue={date.substring(0, 10)}
-              changeValue={setDate}
+              label="date"
+              inputName="date"
               register={register}
+              error={errors.date?.message}
             />
           </div>
           <div>
@@ -137,54 +133,53 @@ const TimeSheetsForm = () => {
               name="hours"
               label="Hours"
               type="text"
-              defaultValue={hours || undefined}
-              value={hours || undefined}
-              onChange={(e) => setHours(e.target.value)}
               register={register}
+              error={errors.hours?.message}
             />
           </div>
           <div>
             <Select
-              selectedValue={projectId || undefined}
               options={projectsList || undefined}
-              changeValue={setProjectId}
-              field="description"
+              field="name"
+              name="project"
               label="Select Project"
               register={register}
+              error={errors.project?.message}
             />
           </div>
           <div>
             <Select
-              selectedValue={employeeId || undefined}
               options={employeeList || undefined}
-              changeValue={setEmployeeId}
               field="name"
+              name="employee"
               label="Select Employee"
               register={register}
+              error={errors.employee?.message}
             />
           </div>
           <div>
             <Select
-              selectedValue={taskId || undefined}
+              register={register}
               options={taskList || undefined}
-              changeValue={setTaskId}
               field="description"
               label="Select Task"
-              register={register}
+              name="task"
+              error={errors.task?.message}
             />
           </div>
         </div>
         <div className={styles.textareacontainer}>
           <label>Description</label>
           <textarea
-            value={description || undefined}
-            onChange={(e) => setDescription(e.target.value)}
+            name="description"
+            {...register('description')}
             placeholder="Description"
           ></textarea>
+          {errors.description && <p>{errors.description.message}</p>}
         </div>
       </form>
       <Button
-        onClick={() => createTimeSheet(description, date, hours, projectId, taskId, employeeId)}
+        onClick={handleSubmit(createTimeSheet)}
         style="squaredPrimary"
         disabled={false}
         text="Save"
