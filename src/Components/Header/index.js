@@ -1,57 +1,22 @@
-import { Link } from 'react-router-dom';
 import styles from 'Components/Header/header.module.css';
+import { Switch, Route } from 'react-router-dom';
+
+const myAccount = (title) => {
+  return <div className={styles.route}>{title}</div>;
+};
 
 const Header = () => {
   return (
-    <header>
-      <div className={styles.container}>
-        <div className={styles.brand}>Radium Rocket</div>
-        <div>
-          <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
-            <img
-              className={styles.socialIcon}
-              src={`${process.env.PUBLIC_URL}/assets/images/facebook.svg`}
-            />
-          </a>
-          <a href={'https://twitter.com/radiumrocket'} target={'_blank'} rel="noreferrer">
-            <img
-              className={styles.socialIcon}
-              src={`${process.env.PUBLIC_URL}/assets/images/twitter.svg`}
-            />
-          </a>
-          <a href={'https://www.instagram.com/radium.rocket/'} target={'_blank'} rel="noreferrer">
-            <img
-              className={styles.socialIcon}
-              src={`${process.env.PUBLIC_URL}/assets/images/instagram.svg`}
-            />
-          </a>
-        </div>
+    <header className={styles.container}>
+      <div className={styles.appName}>
+        Track<span>GENIX</span>
       </div>
-      <nav className={styles.navbar}>
-        <div className={styles.appName}>
-          Track<span>GENIX</span>
-        </div>
-        <ul className={styles.rutes}>
-          <li>
-            <Link to="/admins">admins</Link>
-          </li>
-          <li>
-            <Link to="/super-admins">super admins</Link>
-          </li>
-          <li>
-            <Link to="/employees">employees</Link>
-          </li>
-          <li>
-            <Link to="/projects">projects</Link>
-          </li>
-          <li>
-            <Link to="/time-sheets">timesheets</Link>
-          </li>
-          <li>
-            <Link to="/tasks">tasks</Link>
-          </li>
-        </ul>
-      </nav>
+      <Switch>
+        <Route exact path="/profile" component={() => myAccount('Profile')} />
+        <Route exact path="/timesheets" component={() => myAccount('TimeSheets')} />
+        <Route exact path="/projects" component={() => myAccount('Projects')} />
+      </Switch>
+      <h1 className={styles.logout}>Log out</h1>
     </header>
   );
 };

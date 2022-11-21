@@ -2,5 +2,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 100vh;
+  height: 100vh;
+}
+
+.bodycontainer {
+  display: flex;
+  height: 100%;
 }
