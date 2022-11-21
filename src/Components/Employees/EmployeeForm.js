@@ -9,6 +9,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { postEmployee, putEmployee } from 'redux/employees/thunks';
 import { clearError } from 'redux/employees/actions';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { schema } from 'Components/Employees/validation';
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
@@ -18,19 +20,20 @@ const EmployeeForm = () => {
   const employee = useSelector((state) =>
     state.employees.list.find((employee) => employee._id === employeeId)
   );
-  const [userInput, setUserInput] = useState({
-    name: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    password: ''
-  });
 
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  const { register } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(schema)
+  });
 
   const openModal = () => {
     setShowModal(true);
@@ -58,30 +61,27 @@ const EmployeeForm = () => {
     }
   }, [error]);
 
+  const employeeData = {
+    name: employee?.name,
+    lastName: employee?.lastName,
+    email: employee?.email,
+    phone: employee?.phone,
+    password: employee?.password
+  };
+
   useEffect(() => {
     dispatch(clearError());
     if (employeeId) {
-      setUserInput({
-        name: employee.name,
-        lastName: employee.lastName,
-        email: employee.email,
-        phone: employee.phone,
-        password: employee.password
-      });
+      reset(employeeData);
       return;
     }
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserInput({ ...userInput, [name]: value });
-  };
-
-  const onSubmit = async () => {
+  const onSubmit = (data) => {
     if (employeeId) {
-      dispatch(putEmployee(employeeId, userInput));
+      dispatch(putEmployee(employeeId, data));
     } else {
-      dispatch(postEmployee('', userInput));
+      dispatch(postEmployee('', data));
     }
     setRequested(true);
     setTypeModal('Success');
@@ -89,7 +89,7 @@ const EmployeeForm = () => {
 
   return (
     <>
-      <form className={styles.container} onSubmit={onSubmit}>
+      <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
         <h3 className={styles.titleForm}>Create Employee</h3>
         <Button href="/employees" style="roundedSecondary" disabled={false} text="X" />
         <div className={styles.formControl}>
@@ -98,9 +98,8 @@ const EmployeeForm = () => {
             name="name"
             type="text"
             placeholder="name"
-            value={userInput.name}
-            onChange={handleChange}
             register={register}
+            error={errors.name?.message}
           />
         </div>
         <div className={styles.formControl}>
@@ -109,9 +108,8 @@ const EmployeeForm = () => {
             name="lastName"
             type="text"
             placeholder="last name"
-            value={userInput.lastName}
-            onChange={handleChange}
             register={register}
+            error={errors.lastName?.message}
           />
         </div>
         <div className={styles.formControl}>
@@ -120,9 +118,8 @@ const EmployeeForm = () => {
             name="email"
             type="mail"
             placeholder="email"
-            value={userInput.email}
-            onChange={handleChange}
             register={register}
+            error={errors.email?.message}
           />
         </div>
         <div className={styles.formControl}>
@@ -131,9 +128,8 @@ const EmployeeForm = () => {
             name="phone"
             type="number"
             placeholder="phone"
-            value={userInput.phone}
-            onChange={handleChange}
             register={register}
+            error={errors.phone?.message}
           />
         </div>
         <div className={styles.formControl}>
@@ -142,9 +138,8 @@ const EmployeeForm = () => {
             name="password"
             type="password"
             placeholder="password"
-            value={userInput.password}
-            onChange={handleChange}
             register={register}
+            error={errors.password?.message}
           />
         </div>
         <div>
@@ -157,9 +152,7 @@ const EmployeeForm = () => {
           />
         </div>
         <Button
-          onClick={() => {
-            onSubmit();
-          }}
+          onClick={handleSubmit(onSubmit)}
           style="squaredPrimary"
           disabled={false}
           text="Save"
