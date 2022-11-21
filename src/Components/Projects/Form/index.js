@@ -2,47 +2,49 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FormEmployee from 'Components/Projects/Form/FormEmployees/index';
 import DatePicker from 'Components/Shared/Datepicker';
-import FormModal from 'Components/Projects/Modal';
+import Modal from 'Components/Shared/Modal/ActionModal';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import styles from 'Components/Projects/Form/form.module.css';
 import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { postProject, putProject } from 'redux/projects/thunks';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { schema } from 'Components/Projects/validations';
+import { getOneProject, postProject, putProject } from 'redux/projects/thunks';
 import { getEmployees } from 'redux/employees/thunks';
 
 const Project = () => {
-  let formTitle = 'Title';
   const projectId = useParams().id;
-  const [projectBody, setProjectBody] = useState({
-    name: '',
-    description: '',
-    startDate: '',
-    endDate: '',
-    clientName: '',
-    employees: [
-      {
-        employee: '',
-        role: '',
-        rate: ''
-      }
-    ]
-  });
-  const [employees, setEmployees] = useState([]);
+  const projectData = useSelector((state) =>
+    state.projects.list.find((project) => project._id === projectId)
+  );
+
   const [showModal, setShowModal] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showSharedModal, setShowSharedModal] = useState(false);
-  const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
-  const { list: employeesList } = useSelector((state) => state.employees);
-  const dispatch = useDispatch();
 
-  const { register } = useForm();
+  const { isLoading, error } = useSelector((state) => state.projects);
+  const { list: employeesList } = useSelector((state) => state.employees);
+
+  const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(schema)
+  });
 
   const openModal = () => {
-    setShowModal(true);
+    let errorsSize = Object.keys(errors).length;
+    if (errorsSize === 0) {
+      setShowModal(true);
+    }
   };
 
   const closeModal = () => {
@@ -52,36 +54,65 @@ const Project = () => {
   const openSharedModal = () => {
     setShowSharedModal(true);
   };
-
   const closeSharedModal = () => {
     setShowSharedModal(false);
+  };
+
+  let projectBodyData = {
+    name: projectData?.name,
+    description: projectData?.description,
+    startDate: projectData?.startDate.substring(0, 10),
+    endDate: projectData?.endDate.substring(0, 10),
+    clientName: projectData?.clientName,
+    employees: [
+      {
+        employee: projectData?.employees[0].employee._id,
+        role: projectData?.employees[0].role,
+        rate: projectData?.employees[0].rate
+      }
+    ]
   };
 
   useEffect(() => {
     dispatch(getEmployees());
     if (projectId) {
       setIsFetched(true);
-      const newProjectList = [
-        ...projectList.filter((projectItem) => projectItem._id === projectId)
-      ];
-      setProjectBody({
-        name: newProjectList[0].name,
-        description: newProjectList[0].description,
-        startDate: newProjectList[0].startDate.substring(0, 10),
-        endDate: newProjectList[0].endDate.substring(0, 10),
-        clientName: newProjectList[0].clientName,
-        employees: [
-          {
-            employee: newProjectList[0].employees[0].employee._id,
-            role: newProjectList[0].employees[0].role,
-            rate: newProjectList[0].employees[0].rate
-          }
-        ]
-      });
-    } else {
-      setIsFetched(false);
+      if (projectData === undefined) {
+        dispatch(getOneProject(projectId));
+      } else {
+        setIsFetched(false);
+      }
     }
-    setEmployees(employeesList);
+  }, []);
+
+  useEffect(() => {
+    dispatch(getEmployees());
+    if (projectId) {
+      setIsFetched(true);
+      if (projectData !== undefined) {
+        projectBodyData = {
+          name: projectData?.name,
+          description: projectData?.description,
+          startDate: projectData?.startDate.substring(0, 10),
+          endDate: projectData?.endDate.substring(0, 10),
+          clientName: projectData?.clientName,
+          employees: [
+            {
+              employee: projectData?.employees[0]?.employee._id,
+              role: projectData?.employees[0]?.role,
+              rate: projectData?.employees[0]?.rate
+            }
+          ]
+        };
+        reset(projectBodyData);
+      } else {
+        setIsFetched(false);
+      }
+    }
+  }, [projectData]);
+
+  useEffect(() => {
+    reset(projectBodyData);
   }, []);
 
   useEffect(() => {
@@ -100,19 +131,8 @@ const Project = () => {
     }
   };
 
-  const onChangeValue = (key, value, keyArray = false) => {
-    if (keyArray) {
-      setProjectBody({
-        ...projectBody,
-        employees: [{ ...projectBody.employees[0], [key]: value }]
-      });
-    } else {
-      setProjectBody({ ...projectBody, [key]: value });
-    }
-  };
-
-  const onSubmit = () => {
-    projectId ? dispatch(putProject(projectId, projectBody)) : dispatch(postProject(projectBody));
+  const onSubmit = (data) => {
+    projectId ? dispatch(putProject(projectId, data)) : dispatch(postProject(data));
     openSharedModal();
   };
 
@@ -127,18 +147,16 @@ const Project = () => {
       ) : (
         <h2 className={styles.title}>Add new project</h2>
       )}
-      <h2 className={styles.title}>{formTitle}</h2>
       <Button href="/projects" style="roundedSecondary" disabled={false} text="X" />
-      <form className={styles.formContainer} onSubmit={onSubmit}>
+      <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.formDiv}>
           <InputField
             label="Project Name"
             name="name"
             type="text"
             placeholder="project name"
-            value={isFetched ? projectBody.name : undefined}
-            onChange={(e) => onChangeValue('name', e.target.value)}
             register={register}
+            error={errors.name?.message}
           />
         </div>
         <div className={styles.formDiv}>
@@ -147,9 +165,8 @@ const Project = () => {
             name="clientName"
             type="text"
             placeholder="client name"
-            value={isFetched ? projectBody.clientName : undefined}
-            onChange={(e) => onChangeValue('clientName', e.target.value)}
             register={register}
+            error={errors.clientName?.message}
           />
         </div>
         <div className={styles.formFull}>
@@ -158,35 +175,31 @@ const Project = () => {
             name="description"
             cols="30"
             rows="10"
+            {...register('description')}
             className={styles.textarea}
-            value={isFetched ? projectBody.description : undefined}
-            onChange={(e) => onChangeValue('description', e.target.value)}
           ></textarea>
+          {errors.description && <p>{errors.description.message}</p>}
         </div>
         <div className={styles.formDiv}>
           <DatePicker
-            label="startDate"
-            inputValue={projectBody.startDate.substring(0, 10)}
-            changeValue={(value) => onChangeValue('startDate', value)}
+            inputName="startDate"
+            label="Start date"
             register={register}
+            error={errors.startDate?.message}
           />
         </div>
         <div className={styles.formDiv}>
           <DatePicker
-            label="endDate"
-            inputValue={projectBody.endDate.substring(0, 10)}
-            changeValue={(value) => onChangeValue('endDate', value)}
+            inputName="endDate"
+            label="End date"
             register={register}
+            error={errors.endDate?.message}
           />
         </div>
         <h4 className={styles.formFull}>Employees: </h4>
-        {projectBody.employees.map((employee, index) => {
-          return (
-            <div className={`${styles.formFull} ${styles.employeesDiv}`} key={index}>
-              <FormEmployee employees={employees} employee={employee} changeValue={onChangeValue} />
-            </div>
-          );
-        })}
+        <div className={`${styles.formFull} ${styles.employeesDiv}`}>
+          <FormEmployee employees={employeesList} register={register} errors={errors} />
+        </div>
         <Button onClick={openModal} style="squaredPrimary" disabled={false} text="Save" />
       </form>
       <MessageModal
@@ -196,17 +209,19 @@ const Project = () => {
         handleClose={closeSharedModal}
         goBack={'/projects'}
       />
-      <FormModal
-        show={showModal}
+      <Modal
+        showModal={showModal}
         closeModal={closeModal}
-        onAddUpdate={onSubmit}
-        id={isFetched ? projectBody._id : undefined}
         title={isFetched ? 'Update Project' : 'Add New Project'}
-        text={
+        message={
           isFetched
             ? `Are you sure you want to update the project?`
-            : `Are you sure you want to add the project "${projectBody.name}"?`
+            : `Are you sure you want to add the project?`
         }
+        confirmAction={handleSubmit(onSubmit)}
+        id={projectId}
+        declineButtonText="Cancel"
+        confirmButtonText="Confirm"
       />
     </div>
   );

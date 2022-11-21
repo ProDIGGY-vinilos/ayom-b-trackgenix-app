@@ -2,6 +2,9 @@ import {
   GET_PROJECTS_PENDING,
   GET_PROJECTS_SUCCESS,
   GET_PROJECTS_ERROR,
+  GET_ONE_PROJECT_PENDING,
+  GET_ONE_PROJECT_SUCCESS,
+  GET_ONE_PROJECT_ERROR,
   POST_PROJECT_PENDING,
   POST_PROJECT_SUCCESS,
   POST_PROJECT_ERROR,
@@ -29,6 +32,26 @@ export const getProjectsSuccess = (payload) => {
 export const getProjectsError = (error) => {
   return {
     type: GET_PROJECTS_ERROR,
+    payload: error
+  };
+};
+
+export const getOneProjectPending = () => {
+  return {
+    type: GET_ONE_PROJECT_PENDING
+  };
+};
+
+export const getOneProjectSuccess = (data) => {
+  return {
+    type: GET_ONE_PROJECT_SUCCESS,
+    payload: data
+  };
+};
+
+export const getOneProjectError = (error) => {
+  return {
+    type: GET_ONE_PROJECT_ERROR,
     payload: error
   };
 };

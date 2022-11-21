@@ -2,6 +2,9 @@ import {
   getProjectsError,
   getProjectsSuccess,
   getProjectsPending,
+  getOneProjectError,
+  getOneProjectSuccess,
+  getOneProjectPending,
   postProjectError,
   postProjectSuccess,
   postProjectPending,
@@ -27,6 +30,24 @@ export const getProjects = () => {
       })
       .catch((error) => {
         dispatch(getProjectsError(error.toString()));
+      });
+  };
+};
+
+export const getOneProject = (id) => {
+  return (dispatch) => {
+    dispatch(getOneProjectPending());
+    fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getOneProjectSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getOneProjectError(error.toString()));
       });
   };
 };

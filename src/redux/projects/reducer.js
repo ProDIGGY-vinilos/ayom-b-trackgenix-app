@@ -2,6 +2,9 @@ import {
   GET_PROJECTS_PENDING,
   GET_PROJECTS_SUCCESS,
   GET_PROJECTS_ERROR,
+  GET_ONE_PROJECT_PENDING,
+  GET_ONE_PROJECT_SUCCESS,
+  GET_ONE_PROJECT_ERROR,
   POST_PROJECT_PENDING,
   POST_PROJECT_SUCCESS,
   POST_PROJECT_ERROR,
@@ -39,6 +42,25 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         error: action.payload,
         list: []
+      };
+    case GET_ONE_PROJECT_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        error: ''
+      };
+    case GET_ONE_PROJECT_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: [action.payload]
+      };
+    case GET_ONE_PROJECT_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
       };
     case POST_PROJECT_PENDING:
       return {
