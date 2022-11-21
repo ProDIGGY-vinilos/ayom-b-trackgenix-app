@@ -41,7 +41,7 @@ const TimeSheetsForm = () => {
     resolver: joiResolver(timeSheetValidation)
   });
 
-  const MOCK_DATA = {
+  const data = {
     date: timeSheetData?.date.substring(0, 10),
     hours: timeSheetData?.hours,
     project: timeSheetData?.project._id,
@@ -72,7 +72,7 @@ const TimeSheetsForm = () => {
 
   useEffect(() => {
     if (timeSheetData !== undefined) {
-      reset(MOCK_DATA);
+      reset(data);
     }
   }, [timeSheetData]);
 
@@ -89,7 +89,7 @@ const TimeSheetsForm = () => {
   useEffect(() => {
     if (timeSheetId && projectsList.length && employeeList.length && taskList.length) {
       if (timeSheetData !== undefined) {
-        reset(MOCK_DATA);
+        reset(data);
       } else {
         dispatch(getOneTimeSheet(timeSheetId));
       }
