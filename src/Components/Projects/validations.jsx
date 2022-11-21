@@ -18,7 +18,7 @@ export const schema = Joi.object({
     .required()
     .messages({
       'string.empty': 'Project name is required',
-      'string.pattern.base': 'Project name should have letters only',
+      'string.pattern.base': 'Project name should have at least 1 letter',
       'string.min': 'Project name should have a minimum length of 3 characters',
       'any.required': 'Project name is required'
     }),
@@ -29,7 +29,7 @@ export const schema = Joi.object({
     .required()
     .messages({
       'string.empty': 'Description is required',
-      'string.pattern.base': 'Name should have letters only',
+      'string.pattern.base': 'Description should have at least 1 letter',
       'string.min': 'Description should have a minimum length of 5 characters',
       'any.required': 'Description is required'
     }),
@@ -47,8 +47,8 @@ export const schema = Joi.object({
     .required()
     .messages({
       'string.empty': 'Client name is required',
-      'string.pattern.base': 'Client name should have letters only',
-      'string.min': 'Client name should have a minimum length of 2 characters',
+      'string.pattern.base': 'Client name should have at least 1 letter',
+      'string.min': 'Client name should have a minimum length of 3 characters',
       'any.required': 'Client name is required'
     }),
   employees: Joi.array().items(employeeValidation)
