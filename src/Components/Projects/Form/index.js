@@ -132,8 +132,6 @@ const Project = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(errors.endDate);
-    console.log(data.endDate);
     projectId ? dispatch(putProject(projectId, data)) : dispatch(postProject(data));
     openSharedModal();
   };
