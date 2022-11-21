@@ -7,7 +7,7 @@ import styles from 'Components/SuperAdmins/Form/form.module.css';
 import InputField from 'Components/Shared/Input/input';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import Button from 'Components/Shared/Button/Button';
-import { postSuperAdmin, putSuperAdmin } from 'redux/superAdmins/thunks';
+import { getSuperAdminsById, postSuperAdmin, putSuperAdmin } from 'redux/superAdmins/thunks';
 import { joiResolver } from '@hookform/resolvers/joi';
 import schema from 'Components/SuperAdmins/Form/validations';
 
@@ -15,7 +15,9 @@ const Form = () => {
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.superAdmins);
   const superAdminId = useParams().id;
-  const [title, setTitle] = useState([]);
+  const dataSuperAdmin = useSelector((state) =>
+    state.superAdmins.list.find((superAdmins) => superAdmins._id === superAdminId)
+  );
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
@@ -34,44 +36,26 @@ const Form = () => {
     setShowMessageModal(false);
   };
 
-  useEffect(async () => {
+  const data = {
+    name: dataSuperAdmin?.name,
+    lastName: dataSuperAdmin?.lastName,
+    email: dataSuperAdmin?.email,
+    password: dataSuperAdmin?.password
+  };
+
+  useEffect(() => {
     if (superAdminId) {
-      try {
-        const response = await fetch(
-          `${process.env.REACT_APP_API_URL}/superAdmins/${superAdminId}`
-        );
-        const data = await response.json();
-        const fetchData = {
-          ...response.data,
-          name: data.data.name,
-          lastName: data.data.lastName,
-          email: data.data.email,
-          password: data.data.password
-        };
-        setTitle('Super admin edit');
-        reset(fetchData);
-        return;
-      } catch (error) {
-        setTypeModal('Error');
-        setTextModal('error');
-        openMessageModal();
-        return;
-      }
-    } else {
-      setTitle('Super admin create');
+      dispatch(getSuperAdminsById(superAdminId));
     }
   }, []);
 
-  const validateFields = (data) => {
-    for (const val in data) {
-      if (data[`${val}`].trim().length !== 0) {
-        openMessageModal();
-        return;
-      } else {
-        document.location.href = '/super-admins';
+  useEffect(() => {
+    if (superAdminId) {
+      if (dataSuperAdmin !== undefined) {
+        reset(data);
       }
     }
-  };
+  }, [dataSuperAdmin]);
 
   useEffect(() => {
     openModalOnError(error);
@@ -86,27 +70,22 @@ const Form = () => {
   };
 
   const onSubmit = (data) => {
-    let url = '';
     if (superAdminId) {
-      url = `${process.env.REACT_APP_API_URL}/superAdmins/${superAdminId}`;
-      dispatch(putSuperAdmin(url, data));
+      dispatch(putSuperAdmin(superAdminId, data));
       setTypeModal('Success');
       setTextModal('SuperAdmin updated successfully');
-      openMessageModal();
     } else {
-      url = `${process.env.REACT_APP_API_URL}/superAdmins`;
-      dispatch(postSuperAdmin(url, data));
+      dispatch(postSuperAdmin(superAdminId, data));
       setTypeModal('Success');
       setTextModal('SuperAdmin created successfully');
-      openMessageModal();
     }
+    openMessageModal();
   };
 
   return (
     <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.header}>
-        <h3>{title}</h3>
-        <Button onClick={validateFields} style="roundedSecondary" disabled={false} text="X" />
+        <Button href="/super-admins" style="roundedSecondary" disabled={false} text="X" />
       </div>
       <div className={styles.inputDiv}>
         <InputField

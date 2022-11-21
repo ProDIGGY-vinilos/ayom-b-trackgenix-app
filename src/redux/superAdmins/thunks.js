@@ -2,6 +2,9 @@ import {
   getSuperAdminsError,
   getSuperAdminsSuccess,
   getSuperAdminsPending,
+  getOneSuperAdminPending,
+  getOneSuperAdminSuccess,
+  getOneSuperAdminError,
   postSuperAdminPending,
   postSuperAdminSuccess,
   postSuperAdminError,
@@ -31,10 +34,28 @@ export const getSuperAdmins = () => {
   };
 };
 
-export const postSuperAdmin = (url, superAdmin) => {
+export const getSuperAdminsById = (id) => {
+  return (dispatch) => {
+    dispatch(getOneSuperAdminPending());
+    fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getOneSuperAdminSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getOneSuperAdminError(error.toString()));
+      });
+  };
+};
+
+export const postSuperAdmin = (superAdminId, superAdmin) => {
   return (dispatch) => {
     dispatch(postSuperAdminPending());
-    fetch(url, {
+    fetch(`${process.env.REACT_APP_API_URL}/superAdmins`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -55,10 +76,10 @@ export const postSuperAdmin = (url, superAdmin) => {
   };
 };
 
-export const putSuperAdmin = (url, superAdmin) => {
+export const putSuperAdmin = (superAdminId, superAdmin) => {
   return (dispatch) => {
     dispatch(putSuperAdminPending());
-    fetch(url, {
+    fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${superAdminId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
