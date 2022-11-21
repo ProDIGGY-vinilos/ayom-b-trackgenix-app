@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FormEmployee from 'Components/Projects/Form/FormEmployees/index';
 import DatePicker from 'Components/Shared/Datepicker';
-import FormModal from 'Components/Projects/Modal';
+import Modal from 'Components/Shared/Modal/ActionModal';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import styles from 'Components/Projects/Form/form.module.css';
 import Button from 'Components/Shared/Button/Button';
@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { schema } from 'Components/Projects/validations';
-import { postProject, putProject } from 'redux/projects/thunks';
+import { getOneProject, postProject, putProject } from 'redux/projects/thunks';
 import { getEmployees } from 'redux/employees/thunks';
 
 const Project = () => {
@@ -76,21 +76,38 @@ const Project = () => {
     if (projectId) {
       setIsFetched(true);
       if (projectData === undefined) {
-        fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}`)
-          .then((response) => response.json())
-          .then((response) => {
-            projectBodyData = {
-              ...response.data,
-              startDate: response.data.startDate.substring(0, 10),
-              endDate: response.data.endDate.substring(0, 10)
-            };
-            reset(projectBodyData);
-          });
+        dispatch(getOneProject(projectId));
       } else {
         setIsFetched(false);
       }
     }
   }, []);
+
+  useEffect(() => {
+    dispatch(getEmployees());
+    if (projectId) {
+      setIsFetched(true);
+      if (projectData !== undefined) {
+        projectBodyData = {
+          name: projectData?.name,
+          description: projectData?.description,
+          startDate: projectData?.startDate.substring(0, 10),
+          endDate: projectData?.endDate.substring(0, 10),
+          clientName: projectData?.clientName,
+          employees: [
+            {
+              employee: projectData?.employees[0]?.employee._id,
+              role: projectData?.employees[0]?.role,
+              rate: projectData?.employees[0]?.rate
+            }
+          ]
+        };
+        reset(projectBodyData);
+      } else {
+        setIsFetched(false);
+      }
+    }
+  }, [projectData]);
 
   useEffect(() => {
     reset(projectBodyData);
@@ -113,6 +130,8 @@ const Project = () => {
   };
 
   const onSubmit = (data) => {
+    console.log('Test');
+    console.log(data);
     projectId ? dispatch(putProject(projectId, data)) : dispatch(postProject(data));
     openSharedModal();
   };
@@ -190,16 +209,19 @@ const Project = () => {
         handleClose={closeSharedModal}
         goBack={'/projects'}
       />
-      <FormModal
-        show={showModal}
+      <Modal
+        showModal={showModal}
         closeModal={closeModal}
-        onAddUpdate={handleSubmit(onSubmit)}
         title={isFetched ? 'Update Project' : 'Add New Project'}
-        text={
+        message={
           isFetched
             ? `Are you sure you want to update the project?`
             : `Are you sure you want to add the project?`
         }
+        confirmAction={handleSubmit(onSubmit)}
+        id={projectId}
+        declineButtonText="Cancel"
+        confirmButtonText="Confirm"
       />
     </div>
   );
