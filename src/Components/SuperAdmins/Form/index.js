@@ -41,19 +41,19 @@ const Form = () => {
           `${process.env.REACT_APP_API_URL}/superAdmins/${superAdminId}`
         );
         const data = await response.json();
-        data({
+        const fetchData = {
           ...response.data,
           name: data.data.name,
           lastName: data.data.lastName,
           email: data.data.email,
           password: data.data.password
-        });
+        };
         setTitle('Super admin edit');
-        reset(data);
+        reset(fetchData);
         return;
       } catch (error) {
         setTypeModal('Error');
-        setTextModal(error);
+        setTextModal('error');
         openMessageModal();
         return;
       }
