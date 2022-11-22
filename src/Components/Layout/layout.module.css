@@ -1,11 +1,12 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
   
-  .bodycontainer {
-    display: flex;
-    height: 100%;
-  }
+.bodycontainer {
+  display: flex;
+  height: 100%;
+  overflow-y: auto;
+}

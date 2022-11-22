@@ -8,4 +8,5 @@
 .bodycontainer {
   display: flex;
   height: 100%;
+  overflow-y: auto;
 }
