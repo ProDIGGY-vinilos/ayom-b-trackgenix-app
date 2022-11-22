@@ -10,8 +10,8 @@
     font-family: 'Roboto';
 }
 
-.rutes {
-    margin-top: 100px;
+.routes {
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -20,24 +20,35 @@
     padding: 0px;
 }
 
-.rutes > li {
-    margin-bottom: 25px;
+.listItem {
+    margin-bottom: 5px;
     padding: 15px 0;
     text-align: center;
 }
 
-.rutes > li > a, .logout {
+.link, .logout {
     color: #373867;
     font-weight: bold;
     font-size: 25px;
     text-decoration: none;
+    margin: 0px;
+    margin-bottom: 10px;
 }
 
 .selected {
+    margin-bottom: 5px;
+    padding: 15px 0;
+    text-align: center;
     background-color: rgba(55, 56, 103, 0.2);
 }
 
 .logout {
     justify-self: flex-end;
     align-self: center;
+}
+
+.bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

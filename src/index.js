@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import Layout from 'Components/Layout';
+import { Switch, Route, Redirect, BrowserRouter } from 'react-router-dom';
+import EmployeeLayout from 'Components/Layout/EmployeeLayout';
+import AdminLayout from 'Components/Layout/AdminLayout';
 import 'index.css';
 import ReactDOM from 'react-dom';
 
@@ -11,7 +12,14 @@ ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
       <BrowserRouter>
-        <Layout />
+        <Switch>
+          <Route path="/employee" component={EmployeeLayout} />
+          <Route path="/admin" component={AdminLayout} />
+          <Route path="/home" component={EmployeeLayout} />
+          <Route path="*">
+            <Redirect to="/home" />
+          </Route>
+        </Switch>
       </BrowserRouter>
     </React.StrictMode>
   </Provider>,
