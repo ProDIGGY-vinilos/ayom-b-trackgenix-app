@@ -12,7 +12,8 @@ import styles from 'Components/Layout/layout.module.css';
 import Employees from 'Components/Employees/index';
 import Projects from 'Components/Projects/index';
 import ProjectForm from 'Components/Projects/Form/index';
-import TimeSheets from 'Components/TimeSheets/index';
+//import TimeSheets from 'Components/TimeSheets/index';
+import TimeSheetsList from 'Components/Pages/Employee/TimesheetList/index';
 import TimeSheetsForm from 'Components/TimeSheets/Form/index';
 import Tasks from 'Components/Tasks/index';
 import EmployeeForm from 'Components/Employees/EmployeeForm';
@@ -39,7 +40,7 @@ const Layout = () => {
         <Route exact path="/projects" component={Projects} />
         <Route exact path="/project-form" component={ProjectForm} />
         <Route path="/project-form/:id" component={ProjectForm} />
-        <Route exact path="/time-sheets" component={TimeSheets} />
+        <Route exact path="/time-sheets" component={TimeSheetsList} />
         <Route exact path="/time-sheet-form" component={TimeSheetsForm} />
         <Route path="/time-sheet-form/:id" component={TimeSheetsForm} />
         <Route exact path="/tasks" component={Tasks} />

@@ -5,6 +5,9 @@ import {
   getOneTimeSheetPending,
   getOneTimeSheetSuccess,
   getOneTimeSheetError,
+  getTimeSheetsByEmployeePending,
+  getTimeSheetsByEmployeeSuccess,
+  getTimeSheetsByEmployeeError,
   postTimeSheetPending,
   postTimeSheetSuccess,
   postTimeSheetError,
@@ -30,6 +33,24 @@ export const getTimeSheets = () => {
       })
       .catch((error) => {
         dispatch(getTimeSheetsError(error.toString()));
+      });
+  };
+};
+
+export const getTimeSheetsByEmployee = (id) => {
+  return (dispatch) => {
+    dispatch(getTimeSheetsByEmployeePending());
+    fetch(`${process.env.REACT_APP_API_URL}/timeSheet/employee/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getTimeSheetsByEmployeeSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getTimeSheetsByEmployeeError(error.toString()));
       });
   };
 };
