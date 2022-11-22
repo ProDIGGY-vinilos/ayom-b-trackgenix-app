@@ -2,20 +2,13 @@
 
 .container {
   display: flex;
-  height: 5em;
+  height: 50px;
   background-color: #373867;
-  padding: 1.2% 1%;
   font-family: 'Roboto';
 }
 
 .logo {
-  margin-left: 30px;
+  margin-left: 40px;
   width: fit-content;
   height: 100%;
-}
-
-.appName {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #fff;
 }
