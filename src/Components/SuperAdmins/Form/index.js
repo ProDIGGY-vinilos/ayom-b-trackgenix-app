@@ -85,7 +85,7 @@ const Form = () => {
   return (
     <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.header}>
-        <Button href="/super-admins" style="roundedSecondary" disabled={false} text="X" />
+        <Button href="/admin/super-admins" style="roundedSecondary" disabled={false} text="X" />
       </div>
       <div className={styles.inputDiv}>
         <InputField
@@ -138,7 +138,7 @@ const Form = () => {
         isOpen={showMessageModal}
         message={textModal}
         handleClose={closeMessageModal}
-        goBack={'/super-admins'}
+        goBack={'/admin/super-admins'}
       />
     </form>
   );

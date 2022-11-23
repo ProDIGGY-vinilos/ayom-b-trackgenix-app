@@ -72,9 +72,9 @@ const SuperAdmins = () => {
             data={superAdminList}
             columns={columns}
             deleteItem={onDeleteSuperAdmin}
-            edit="/super-admin-form"
+            edit="/admin/super-admin-form"
           />
-          <Button href="/super-admin-form" style="roundedPrimary" disabled={false} text="+" />
+          <Button href="/admin/super-admin-form" style="roundedPrimary" disabled={false} text="+" />
           <MessageModal
             type={typeModal}
             isOpen={showModal}

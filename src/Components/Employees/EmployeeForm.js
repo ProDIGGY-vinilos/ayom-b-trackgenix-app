@@ -91,7 +91,7 @@ const EmployeeForm = () => {
     <>
       <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
         <h3 className={styles.titleForm}>Create Employee</h3>
-        <Button href="/employees" style="roundedSecondary" disabled={false} text="X" />
+        <Button href="/admin/employees" style="roundedSecondary" disabled={false} text="X" />
         <div className={styles.formControl}>
           <InputField
             label="Name"
@@ -148,7 +148,7 @@ const EmployeeForm = () => {
             isOpen={showModal}
             message={textModal}
             handleClose={closeModal}
-            goBack={'/employees'}
+            goBack={'/admin/employees'}
           />
         </div>
         <Button

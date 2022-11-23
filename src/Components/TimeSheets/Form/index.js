@@ -117,7 +117,7 @@ const TimeSheetsForm = () => {
       ) : (
         <h2 className={styles.title}>Add new time sheet</h2>
       )}
-      <Button href="/time-sheets" style="roundedSecondary" disabled={false} text="X" />
+      <Button href="/admin/timesheets" style="roundedSecondary" disabled={false} text="X" />
       <form onSubmit={handleSubmit(createTimeSheet)} className={styles.form}>
         <div className={styles.formcontainer}>
           <div>
@@ -189,7 +189,7 @@ const TimeSheetsForm = () => {
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
-        goBack={'/time-sheets'}
+        goBack={'/admin/timesheets'}
       />
     </div>
   );

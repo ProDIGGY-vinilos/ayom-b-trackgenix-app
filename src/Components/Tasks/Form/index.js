@@ -83,7 +83,7 @@ const Form = () => {
   return (
     <div className={styles.container}>
       <form className={styles.addItem} onSubmit={handleSubmit(onSubmit)}>
-        <Button href="/tasks" style="roundedSecondary" diabled={false} text="X" />
+        <Button href="/admin/tasks" style="roundedSecondary" diabled={false} text="X" />
         <div>
           <InputField
             id={taskId}
@@ -107,7 +107,7 @@ const Form = () => {
             isOpen={showMessageModal}
             message={textMessageModal}
             handleClose={closeMessageModal}
-            goBack={'/tasks'}
+            goBack={'/admin/tasks'}
           />
         </div>
       </form>
