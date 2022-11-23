@@ -5,6 +5,9 @@ import {
   GET_ONE_PROJECT_PENDING,
   GET_ONE_PROJECT_SUCCESS,
   GET_ONE_PROJECT_ERROR,
+  GET_PROJECTS_BY_EMPLOYEE_PENDING,
+  GET_PROJECTS_BY_EMPLOYEE_SUCCESS,
+  GET_PROJECTS_BY_EMPLOYEE_ERROR,
   POST_PROJECT_PENDING,
   POST_PROJECT_SUCCESS,
   POST_PROJECT_ERROR,
@@ -52,6 +55,26 @@ export const getOneProjectSuccess = (data) => {
 export const getOneProjectError = (error) => {
   return {
     type: GET_ONE_PROJECT_ERROR,
+    payload: error
+  };
+};
+
+export const getProjectsByEmployeePending = () => {
+  return {
+    type: GET_PROJECTS_BY_EMPLOYEE_PENDING
+  };
+};
+
+export const getProjectsByEmployeeSuccess = (payload) => {
+  return {
+    type: GET_PROJECTS_BY_EMPLOYEE_SUCCESS,
+    payload
+  };
+};
+
+export const getProjectsByEmployeeError = (error) => {
+  return {
+    type: GET_PROJECTS_BY_EMPLOYEE_ERROR,
     payload: error
   };
 };

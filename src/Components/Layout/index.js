@@ -17,6 +17,7 @@ import TimeSheetsForm from 'Components/TimeSheets/Form/index';
 import Tasks from 'Components/Tasks/index';
 import EmployeeForm from 'Components/Employees/EmployeeForm';
 import TasksForm from 'Components/Tasks/Form/index';
+import ProjectPage from 'Components/Test';
 
 const Layout = () => {
   return (
@@ -27,6 +28,7 @@ const Layout = () => {
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>
+        <Route exact path="/test/:id" component={ProjectPage} />
         <Route exact path="/admins" component={Admins} />
         <Route exact path="/admin-form" component={AdminForm} />
         <Route path="/admin-form/:id" component={AdminForm} />
