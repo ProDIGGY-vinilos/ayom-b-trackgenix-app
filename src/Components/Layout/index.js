@@ -15,7 +15,8 @@ import ProjectForm from 'Components/Projects/Form/index';
 import TimeSheets from 'Components/TimeSheets/index';
 import TimeSheetsForm from 'Components/TimeSheets/Form/index';
 import Tasks from 'Components/Tasks/index';
-import EmployeeForm from 'Components/Employees/EmployeeForm';
+import EmployeeForm from 'Components/Pages/Employee/MyProfile/MyProfile';
+import MyProfileEdit from 'Components/Pages/Employee/MyProfile/MyProfileEdit';
 import TasksForm from 'Components/Tasks/Form/index';
 
 const Layout = () => {
@@ -33,9 +34,8 @@ const Layout = () => {
         <Route exact path="/super-admins" component={SuperAdmins} />
         <Route exact path="/super-admin-form" component={SuperAdminForm} />
         <Route path="/super-admin-form/:id" component={SuperAdminForm} />
-        <Route exact path="/employees" component={Employees} />
         <Route exact path="/employee-form" component={EmployeeForm} />
-        <Route path="/employee-form/:id" component={EmployeeForm} />
+        <Route path="/employee-form/:id" component={MyProfileEdit} />
         <Route exact path="/projects" component={Projects} />
         <Route exact path="/project-form" component={ProjectForm} />
         <Route path="/project-form/:id" component={ProjectForm} />

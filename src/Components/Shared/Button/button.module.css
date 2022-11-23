@@ -77,3 +77,9 @@
     background-color: #EA3354;
     color: #ffffff;
 }
+
+.divInput{
+    display: flex;
+    justify-content: space-between;
+    color: #373867;
+}
