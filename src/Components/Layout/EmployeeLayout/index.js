@@ -4,7 +4,6 @@ import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import Header from 'Components/Shared/Header/index';
 import Sidebar from 'Components/Shared/Sidebar';
 import styles from 'Components/Layout/EmployeeLayout/layout.module.css';
-/* import Projects from 'Components/Projects/index'; */
 import ProjectsList from 'Components/Pages/Employee/ProjectList/index';
 import ProjectForm from 'Components/Projects/Form/index';
 import TimeSheets from 'Components/TimeSheets/index';
