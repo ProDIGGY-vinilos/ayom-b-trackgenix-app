@@ -12,6 +12,7 @@
 .table {
   width: 1054px;
   height: 100%;
+  margin-left: 4%;
   border-radius: 15px;
   border: #d2d0d0 solid 1px;
 }
@@ -42,6 +43,6 @@
 .buttons {
   display: flex;
   align-items: flex-end;
-  width: 100%;
+  width: 73%;
   justify-content: flex-end;
 }

@@ -30,12 +30,7 @@ const EmployeeProfile = () => {
     <section className={styles.container}>
       <h2>Employee</h2>
       <Table data={employeesList} columns={columns} edit="/employee-form" />
-      <Button
-        href={`/employee-form/${employeeId}`}
-        style="squaredPrimary"
-        disabled={false}
-        text="Edit"
-      />
+      <Button href="profile-form" style="squaredPrimary" disabled={false} text="Edit" />
     </section>
   );
 };

@@ -8,6 +8,8 @@ import Projects from 'Components/Projects/index';
 import ProjectForm from 'Components/Projects/Form/index';
 import TimeSheets from 'Components/TimeSheets/index';
 import TimeSheetsForm from 'Components/TimeSheets/Form/index';
+import MyProfile from 'Components/Pages/Employee/MyProfile/MyProfile';
+import MyProfileForm from 'Components/Pages/Employee/MyProfile/MyProfileEdit';
 import Home from 'Components/Home';
 import createTitle from 'Helpers/create-title.js';
 
@@ -33,6 +35,8 @@ const Layout = () => {
           <Route exact path="/employee/timesheets" component={TimeSheets} />
           <Route exact path="/employee/time-sheet-form" component={TimeSheetsForm} />
           <Route path="/employee/time-sheet-form/:id" component={TimeSheetsForm} />
+          <Route exact path="/employee/profile" component={MyProfile} />
+          <Route exact path="/employee/profile-form" component={MyProfileForm} />
           <Route path="/employee">
             <Redirect to="/employee/projects" />
           </Route>

@@ -143,7 +143,7 @@ const EmployeeForm = () => {
           </tbody>
         </table>
         <div className={styles.buttons}>
-          <Button href="/employees" style="squaredPrimary" disabled={false} text="Back" />
+          <Button href="profile" style="squaredPrimary" disabled={false} text="Back" />
           <MessageModal
             type={typeModal}
             isOpen={showModal}
