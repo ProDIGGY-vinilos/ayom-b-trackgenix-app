@@ -16,35 +16,28 @@ import Admins from 'Components/Admins/index';
 import AdminForm from 'Components/Admins/editAdminForm';
 import Tasks from 'Components/Tasks/index';
 import TasksForm from 'Components/Tasks/Form/index';
-import Home from 'Components/Home';
+import createTitle from 'Helpers/create-title.js';
 
-const Layout = () => {
-  const createTitle = (path) => {
-    path = path.split('-');
-    const rightPath = path.map((path) => {
-      return path.substring(0, 1).toUpperCase() + path.substring(1, path.lenght);
-    });
-    return rightPath.join(' ');
-  };
-  const functions = [
+const AdminLayout = () => {
+  const sideBarOptions = [
     { link: '/admin/projects', label: 'Projects' },
-    { link: '/admin/timesheets', label: 'Timeheets' },
-    { link: '/admin/profile', label: 'Profile' },
+    { link: '/admin/timesheets', label: 'Timesheets' },
+    { link: '/admin/employees', label: 'Employees' },
     { link: '/admin/tasks', label: 'Tasks' },
     { link: '/admin/super-admins', label: 'Super Admins' },
     { link: '/admin/admins', label: 'Admins' },
-    { link: '/admin/employees', label: 'Employees' }
+    { link: '/admin/profile', label: 'Profile' }
   ];
   let path = useLocation().pathname.split('/');
   path = path[path.length - 1];
   path = createTitle(path);
+
   return (
     <div className={styles.container}>
       <Header header={path} />
-      <div className={styles.bodycontainer}>
-        <Sidebar array={functions} user={'Admin'} />
+      <div className={styles.bodyContainer}>
+        <Sidebar options={sideBarOptions} user={'Admin'} />
         <Switch>
-          <Route exact path="/home" component={Home} />
           <Route exact path="/admin/projects" component={Projects} />
           <Route exact path="/admin/project-form" component={ProjectForm} />
           <Route path="/admin/project-form/:id" component={ProjectForm} />
@@ -73,4 +66,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default AdminLayout;

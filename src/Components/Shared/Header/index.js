@@ -1,12 +1,11 @@
 import styles from 'Components/Shared/Header/header.module.css';
 import logo from 'Components/Shared/Header/assets/logo.png';
-import Title from 'Components/Shared/Header/Title';
 
-const Header = ({ header }) => {
+const Header = ({ Title }) => {
   return (
     <header className={styles.container}>
       <img className={styles.logo} src={logo} />
-      <Title title={header} />
+      <div className={styles.route}>{Title}</div>
     </header>
   );
 };

@@ -9,16 +9,10 @@ import ProjectForm from 'Components/Projects/Form/index';
 import TimeSheets from 'Components/TimeSheets/index';
 import TimeSheetsForm from 'Components/TimeSheets/Form/index';
 import Home from 'Components/Home';
+import createTitle from 'Helpers/create-title.js';
 
 const Layout = () => {
-  const createTitle = (path) => {
-    path = path.split('-');
-    const rightPath = path.map((path) => {
-      return path.substring(0, 1).toUpperCase() + path.substring(1, path.lenght);
-    });
-    return rightPath.join(' ');
-  };
-  const functions = [
+  const sideBarOptions = [
     { link: '/employee/projects', label: 'Projects' },
     { link: '/employee/timesheets', label: 'Timesheets' },
     { link: '/employee/profile', label: 'Profile' }
@@ -29,8 +23,8 @@ const Layout = () => {
   return (
     <div className={styles.container}>
       <Header header={path} />
-      <div className={styles.bodycontainer}>
-        <Sidebar array={functions} user={'Employee'} />
+      <div className={styles.bodyContainer}>
+        <Sidebar options={sideBarOptions} user={'Employee'} />
         <Switch>
           <Route exact path="/home" component={Home} />
           <Route exact path="/employee/projects" component={Projects} />

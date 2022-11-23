@@ -1,31 +1,29 @@
 import { Link, useLocation } from 'react-router-dom';
 import styles from 'Components/Shared/Sidebar/sidebar.module.css';
 
-const Sidebar = ({ array, user }) => {
+const Sidebar = ({ options, user }) => {
   const location = useLocation().pathname;
 
   return (
     <aside className={styles.container}>
-      <ul className={styles.routes}>
-        {array.map((element, index) => {
+      <div className={styles.routes}>
+        {options.map((option, index) => {
           return (
-            <li
+            <Link
               key={index}
-              className={location === element.link ? styles.selected : styles.listItem}
+              className={location === option.link ? styles.selected : styles.listItem}
+              to={option.link}
             >
-              <Link className={styles.link} to={element.link}>
-                {element.label}
-              </Link>
-            </li>
+              {option.label}
+            </Link>
           );
         })}
-      </ul>
+      </div>
       <div className={styles.bottom}>
-        <h1 className={styles.logout}>{user}</h1>
+        <span className={styles.logout}>{user}</span>
         <Link className={styles.logout} to="/home">
           Log Out
         </Link>
-        {/* <h1 className={styles.logout}>Log out</h1> */}
       </div>
     </aside>
   );

@@ -1,14 +1,14 @@
 import Sidebar from 'Components/Shared/Sidebar';
 import Header from 'Components/Header/index';
-import styles from 'Components/Layour/layour.module.css';
+import styles from 'Components/LayouT/layout.module.css';
 
-const Layout = ({ Switch }) => {
+const Layout = ({ Children }) => {
   return (
     <div className={styles.container}>
       <Header />
-      <div className={styles.bodycontainer}>
+      <div className={styles.bodyContainer}>
         <Sidebar />
-        {Switch}
+        {Children}
       </div>
     </div>
   );
