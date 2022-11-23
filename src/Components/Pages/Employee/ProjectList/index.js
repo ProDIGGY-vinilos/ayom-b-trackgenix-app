@@ -1,12 +1,11 @@
 import Table from 'Components/Shared/Table';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { getProjectsByEmployee } from 'redux/projects/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 
 const ProjectPage = () => {
-  const userId = useParams().id;
+  const userId = '636c1e8ddabe537336ae082a';
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -36,8 +35,6 @@ const ProjectPage = () => {
   useEffect(() => {
     openModalOnError(error);
   }, [error]);
-
-  console.log(projectsList);
 
   const columns = [
     { heading: 'Name', value: 'name' },
