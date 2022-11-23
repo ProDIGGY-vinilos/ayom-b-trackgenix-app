@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTimeSheetsByEmployee } from 'redux/timeSheets/thunks';
-import styles from 'Components/TimeSheets/time-sheets.module.css';
+import styles from 'Components/Pages/Employee/TimeSheetsList/time-sheets.module.css';
 import Table from 'Components/Shared/Table';
 import Button from 'Components/Shared/Button/Button';
 
@@ -29,7 +29,12 @@ const TimeSheetsList = () => {
       ) : (
         <>
           <Table data={timeSheetsList} columns={columns} />
-          <Button href="/time-sheet-form" style="roundedPrimary" disabled={false} text="+" />
+          <Button
+            href="/employee/time-sheet-form"
+            style="roundedPrimary"
+            disabled={false}
+            text="+"
+          />
         </>
       )}
     </section>

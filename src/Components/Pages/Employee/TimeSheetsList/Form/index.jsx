@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import styles from 'Components/TimeSheets/Form/form.module.css';
+import styles from 'Components/Pages/Employee/TimeSheetsList/Form/form.module.css';
 import Select from 'Components/Shared/Select';
 import InputField from 'Components/Shared/Input/input';
 import DatePicker from 'Components/Shared/Datepicker';

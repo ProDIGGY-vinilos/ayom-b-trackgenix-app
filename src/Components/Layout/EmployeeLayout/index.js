@@ -6,8 +6,8 @@ import Sidebar from 'Components/Shared/Sidebar';
 import styles from 'Components/Layout/EmployeeLayout/layout.module.css';
 import Projects from 'Components/Projects/index';
 import ProjectForm from 'Components/Projects/Form/index';
-import TimeSheets from 'Components/TimeSheets/index';
-import TimeSheetsForm from 'Components/TimeSheets/Form/index';
+import TimeSheets from 'Components/Pages/Employee/TimeSheetsList/index';
+import TimeSheetsForm from 'Components/Pages/Employee/TimeSheetsList/Form/index';
 import Home from 'Components/Home';
 import createTitle from 'Helpers/create-title.js';
 
