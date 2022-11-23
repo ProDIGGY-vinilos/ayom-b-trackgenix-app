@@ -74,7 +74,7 @@ const Tasks = () => {
             data={tasksList}
             columns={columns}
             deleteItem={deleteTaskFunction}
-            edit="/task-form"
+            edit="/admin/task-form"
           />
           <MessageModal
             type={typeModal}
@@ -82,7 +82,7 @@ const Tasks = () => {
             message={textModal}
             handleClose={closeModal}
           />
-          <Button href="/task-form" style="roundedPrimary" disabled={false} text="+" />
+          <Button href="/admin/task-form" style="roundedPrimary" disabled={false} text="+" />
         </>
       )}
     </div>
