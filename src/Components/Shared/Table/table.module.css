@@ -46,6 +46,11 @@
   background-color: #aace9b33;
 }
 
+.buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
 .tableHeader{
   background-color: #3738671a;
   color: #373867;

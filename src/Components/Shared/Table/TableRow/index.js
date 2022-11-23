@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'Components/Shared/Modal/ActionModal';
 import { useState } from 'react';
 import Button from 'Components/Shared/Button/Button';
+import styles from 'Components/Shared/Table/table.module.css';
 
 const TableRow = ({ item, columns, deleteItem, edit }) => {
   const [showModal, setShowModal] = useState(false);
@@ -25,7 +26,7 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
           if (columnItem.heading === 'Actions') {
             return (
               <>
-                <td>
+                <td className={styles.buttons}>
                   <Button
                     href={`${edit}/${item._id}`}
                     style="squaredSecondary"
