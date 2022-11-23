@@ -1,5 +1,6 @@
 .container {
   margin: auto;
+  margin-right: 75px;
   width: 80%;
   display: flex;
   align-items: flex-end;
@@ -10,7 +11,7 @@
 
 h2 {
   width: 100%;
-  margin: auto;
+  margin: 0;
   text-align: center;
   font-size: 32px;
   background-color: #EA3354;
