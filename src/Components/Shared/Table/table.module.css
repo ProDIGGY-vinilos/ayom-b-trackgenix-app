@@ -30,8 +30,12 @@
 
 .tableRow td {
   border-top: #252525 solid 2px;
-  border-bottom: #252525 solid 2px;
   border-radius: 0px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
 }
 
 .tableHeader{

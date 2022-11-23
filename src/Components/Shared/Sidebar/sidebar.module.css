@@ -1,0 +1,55 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: #d9d9d9;
+    width: 130px;
+    height: 94vh;
+    justify-content: space-between;
+    position: fixed;
+}
+
+.routes {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-self: flex-start;
+    list-style-type: none;
+    padding: 0px;
+}
+
+.listItem {
+    margin-bottom: 5px;
+    padding: 15px 0;
+    font-size: 16px;
+    text-align: center;
+    color: #373867;
+    font-weight: bold;
+}
+
+.logout {
+    color: #373867;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+    margin: 0px;
+    margin-bottom: 10px;
+    justify-self: flex-end;
+    align-self: center;
+}
+
+.selected {
+    margin-bottom: 5px;
+    padding: 15px 0;
+    font-size: 17px;
+    text-align: center;
+    color: #373867;
+    font-weight: bold;
+    background-color: rgba(55, 56, 103, 0.2);
+}
+
+.bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
