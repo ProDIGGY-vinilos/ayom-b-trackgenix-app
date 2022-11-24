@@ -4,7 +4,7 @@ import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import Header from 'Components/Shared/Header/index';
 import Sidebar from 'Components/Shared/Sidebar';
 import styles from 'Components/Layout/EmployeeLayout/layout.module.css';
-import Projects from 'Components/Projects/index';
+import ProjectsList from 'Components/Pages/Employee/ProjectList/index';
 import ProjectForm from 'Components/Projects/Form/index';
 import TimeSheets from 'Components/TimeSheets/index';
 import TimeSheetsForm from 'Components/TimeSheets/Form/index';
@@ -27,9 +27,7 @@ const Layout = () => {
         <Sidebar options={sideBarOptions} user={'Employee'} />
         <Switch>
           <Route exact path="/home" component={Home} />
-          <Route exact path="/employee/projects" component={Projects} />
-          <Route exact path="/employee/project-form" component={ProjectForm} />
-          <Route path="/employee/project-form/:id" component={ProjectForm} />
+          <Route exact path="/employee/projects" component={ProjectsList} />
           <Route exact path="/employee/timesheets" component={TimeSheets} />
           <Route exact path="/employee/time-sheet-form" component={TimeSheetsForm} />
           <Route path="/employee/time-sheet-form/:id" component={TimeSheetsForm} />
