@@ -8,7 +8,7 @@ import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { postTimeSheet } from 'redux/timeSheets/thunks';
 import { getEmployees } from 'redux/employees/thunks';
-import { getProjects } from 'redux/projects/thunks';
+import { getProjectsByEmployee } from 'redux/projects/thunks';
 import { getTasks } from 'redux/tasks/thunks';
 import { useForm } from 'react-hook-form';
 import { timeSheetValidation } from './validations';
@@ -54,9 +54,9 @@ const TimeSheetsForm = () => {
   }, [error]);
 
   useEffect(() => {
-    dispatch(getProjects());
     dispatch(getTasks());
     dispatch(getEmployees());
+    dispatch(getProjectsByEmployee(employeeId));
   }, []);
 
   const createTimeSheet = (data) => {
@@ -73,7 +73,7 @@ const TimeSheetsForm = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Add new time sheet</h2>
-      <Button href="/timesheets" style="roundedSecondary" disabled={false} text="X" />
+      <Button href="/employee/timesheets" style="roundedSecondary" disabled={false} text="X" />
       <form onSubmit={handleSubmit(createTimeSheet)} className={styles.form}>
         <div className={styles.formContainer}>
           <div>
@@ -136,7 +136,7 @@ const TimeSheetsForm = () => {
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
-        goBack={'/timesheets'}
+        goBack={'/employee/timesheets'}
       />
     </div>
   );
