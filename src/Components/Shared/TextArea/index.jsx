@@ -1,15 +1,15 @@
 import styles from './textArea.module.css';
 
-const TextAreaField = ({ label, name, placeholder, register, columns, rows, error = '' }) => {
+const TextAreaField = ({ label, name, placeholder, register, columns, error = '' }) => {
   return (
     <div>
       {label && <label>{label}</label>}
       <textarea
+        className={styles.textArea}
         name={name}
         placeholder={placeholder}
         {...register(name)}
         cols={columns}
-        rows={rows}
       />
       {error && <p className={styles.textColor}>{error}</p>}
     </div>

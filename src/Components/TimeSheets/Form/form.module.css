@@ -62,10 +62,6 @@
     justify-content: flex-start;
 }
 
-textarea {
-    height: 100px;
-}
-
 .buttons {
     display: flex;
     justify-content: space-around;
