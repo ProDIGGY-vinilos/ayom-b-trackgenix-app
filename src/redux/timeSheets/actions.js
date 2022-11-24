@@ -2,6 +2,9 @@ import {
   GET_TIMESHEETS_PENDING,
   GET_TIMESHEETS_SUCCESS,
   GET_TIMESHEETS_ERROR,
+  GET_TIMESHEETS_BY_EMPLOYEE_PENDING,
+  GET_TIMESHEETS_BY_EMPLOYEE_SUCCESS,
+  GET_TIMESHEETS_BY_EMPLOYEE_ERROR,
   GET_ONE_TIMESHEET_PENDING,
   GET_ONE_TIMESHEET_SUCCESS,
   GET_ONE_TIMESHEET_ERROR,
@@ -32,6 +35,26 @@ export const getTimeSheetsSuccess = (payload) => {
 export const getTimeSheetsError = (error) => {
   return {
     type: GET_TIMESHEETS_ERROR,
+    payload: error
+  };
+};
+
+export const getTimeSheetsByEmployeePending = () => {
+  return {
+    type: GET_TIMESHEETS_BY_EMPLOYEE_PENDING
+  };
+};
+
+export const getTimeSheetsByEmployeeSuccess = (payload) => {
+  return {
+    type: GET_TIMESHEETS_BY_EMPLOYEE_SUCCESS,
+    payload
+  };
+};
+
+export const getTimeSheetsByEmployeeError = (error) => {
+  return {
+    type: GET_TIMESHEETS_BY_EMPLOYEE_ERROR,
     payload: error
   };
 };

@@ -2,6 +2,9 @@ import {
   GET_TIMESHEETS_PENDING,
   GET_TIMESHEETS_SUCCESS,
   GET_TIMESHEETS_ERROR,
+  GET_TIMESHEETS_BY_EMPLOYEE_PENDING,
+  GET_TIMESHEETS_BY_EMPLOYEE_SUCCESS,
+  GET_TIMESHEETS_BY_EMPLOYEE_ERROR,
   GET_ONE_TIMESHEET_PENDING,
   GET_ONE_TIMESHEET_SUCCESS,
   GET_ONE_TIMESHEET_ERROR,
@@ -38,6 +41,26 @@ const reducer = (state = INITIAL_STATE, action) => {
         list: action.payload
       };
     case GET_TIMESHEETS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+        list: []
+      };
+    case GET_TIMESHEETS_BY_EMPLOYEE_PENDING:
+      return {
+        ...state,
+        error: '',
+        isLoading: true
+      };
+    case GET_TIMESHEETS_BY_EMPLOYEE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: action.payload
+      };
+    case GET_TIMESHEETS_BY_EMPLOYEE_ERROR:
       return {
         ...state,
         isLoading: false,
