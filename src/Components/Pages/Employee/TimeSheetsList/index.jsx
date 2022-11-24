@@ -28,6 +28,7 @@ const TimeSheetsList = () => {
         <h3>Loading...</h3>
       ) : (
         <>
+          <h2 className={styles.title}>Timesheets</h2>
           <Table data={timeSheetsList} columns={columns} />
           <Button
             href="/employee/time-sheet-form"

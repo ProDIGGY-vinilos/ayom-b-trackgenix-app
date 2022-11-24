@@ -35,25 +35,25 @@
     font-weight: bold;
 }
 
-.formcontainer {
+.formContainer {
     display: flex;
     flex-direction: column;
     width: 50%;
     justify-content: space-evenly;
 }
 
-.formcontainer > div {
+.formContainer > div {
     display: flex;
     flex-direction: column;
     margin-top: 0px;
     margin-bottom: 5px;
 }
 
-.formcontainer > div > input {
+.formContainer > div > input {
     height: 100%;
 }
 
-.textareacontainer {
+.textAreaContainer {
     display: flex;
     flex-direction: column;
     width: 40%;
@@ -61,7 +61,7 @@
     justify-content: flex-start;
 }
 
-textarea {
+.textArea {
     height: 100px;
 }
 

@@ -73,9 +73,9 @@ const TimeSheetsForm = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Add new time sheet</h2>
-      <Button href="/time-sheets" style="roundedSecondary" disabled={false} text="X" />
+      <Button href="/timesheets" style="roundedSecondary" disabled={false} text="X" />
       <form onSubmit={handleSubmit(createTimeSheet)} className={styles.form}>
-        <div className={styles.formcontainer}>
+        <div className={styles.formContainer}>
           <div>
             <DatePicker
               label="Date"
@@ -114,9 +114,10 @@ const TimeSheetsForm = () => {
             />
           </div>
         </div>
-        <div className={styles.textareacontainer}>
+        <div className={styles.textAreaContainer}>
           <label>Description</label>
           <textarea
+            className={styles.textArea}
             name="description"
             {...register('description')}
             placeholder="Description"
@@ -135,7 +136,7 @@ const TimeSheetsForm = () => {
         isOpen={showModal}
         message={textModal}
         handleClose={closeModal}
-        goBack={'/time-sheets'}
+        goBack={'/timesheets'}
       />
     </div>
   );
