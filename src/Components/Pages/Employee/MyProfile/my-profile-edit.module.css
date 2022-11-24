@@ -17,11 +17,11 @@
   border: #d2d0d0 solid 1px;
 }
 
-.tbody {
+.tBody {
   width: 70%;
 }
 
-.rowcontainer {
+.rowContainer {
   display: flex;
   justify-content: space-between;
   height: 20%;
@@ -29,7 +29,7 @@
   border-bottom: #d2d0d0 solid 1px;
 }
 
-.tbody :hover {
+.tBody :hover {
   background-color: rgba(170, 206, 155, 0.2);
 }
 

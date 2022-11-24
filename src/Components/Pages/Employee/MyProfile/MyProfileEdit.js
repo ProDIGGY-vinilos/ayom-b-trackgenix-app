@@ -79,8 +79,8 @@ const EmployeeForm = () => {
     <>
       <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
         <table className={styles.table}>
-          <tbody className={styles.tbody}>
-            <tr className={styles.rowcontainer}>
+          <tbody className={styles.tBody}>
+            <tr className={styles.rowContainer}>
               <td className={styles.td}>Name</td>
               <td className={styles.td}>
                 <InputField
@@ -92,7 +92,7 @@ const EmployeeForm = () => {
                 />
               </td>
             </tr>
-            <tr className={styles.rowcontainer}>
+            <tr className={styles.rowContainer}>
               <td className={styles.td}>Last Name</td>
               <td className={styles.td}>
                 <InputField
@@ -104,7 +104,7 @@ const EmployeeForm = () => {
                 />
               </td>
             </tr>
-            <tr className={styles.rowcontainer}>
+            <tr className={styles.rowContainer}>
               <td className={styles.td}>Email</td>
               <td className={styles.td}>
                 <InputField
@@ -116,7 +116,7 @@ const EmployeeForm = () => {
                 />
               </td>
             </tr>
-            <tr className={styles.rowcontainer}>
+            <tr className={styles.rowContainer}>
               <td className={styles.td}>Phone Number</td>
               <td className={styles.td}>
                 <InputField
@@ -128,7 +128,7 @@ const EmployeeForm = () => {
                 />
               </td>
             </tr>
-            <tr className={styles.rowcontainer}>
+            <tr className={styles.rowContainer}>
               <td className={styles.td}>Password</td>
               <td className={styles.td}>
                 <InputField
