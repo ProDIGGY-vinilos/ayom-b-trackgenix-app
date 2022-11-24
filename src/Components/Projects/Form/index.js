@@ -178,8 +178,8 @@ const Project = () => {
             placeholder="Description"
             register={register}
             columns="100"
+            error={errors.description?.message}
           />
-          {errors.description && <p>{errors.description.message}</p>}
         </div>
         <div className={styles.formDiv}>
           <DatePicker

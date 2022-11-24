@@ -176,8 +176,8 @@ const TimeSheetsForm = () => {
             placeholder="Description"
             register={register}
             columns={30}
+            error={errors.description?.message}
           />
-          {errors.description && <p>{errors.description.message}</p>}
         </div>
       </form>
       <Button
