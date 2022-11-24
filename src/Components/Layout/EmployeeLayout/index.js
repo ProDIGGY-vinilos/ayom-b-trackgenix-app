@@ -28,8 +28,6 @@ const Layout = () => {
         <Switch>
           <Route exact path="/home" component={Home} />
           <Route exact path="/employee/projects" component={ProjectsList} />
-          <Route exact path="/employee/project-form" component={ProjectForm} />
-          <Route path="/employee/project-form/:id" component={ProjectForm} />
           <Route exact path="/employee/timesheets" component={TimeSheets} />
           <Route exact path="/employee/time-sheet-form" component={TimeSheetsForm} />
           <Route path="/employee/time-sheet-form/:id" component={TimeSheetsForm} />

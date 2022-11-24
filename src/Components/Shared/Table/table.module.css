@@ -5,7 +5,6 @@
 .tableContainer {
   text-align: center;
   width: 100%;
-  font-family: 'Roboto';
 }
 
 .tableTitle{
@@ -28,7 +27,6 @@
   border-collapse: separate;
   border: solid 3px;
   border-color: #E0E0E0;
-  font-family: 'Roboto';
   color: #373867;
 }
 
