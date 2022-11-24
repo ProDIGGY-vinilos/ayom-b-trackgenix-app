@@ -1,12 +1,12 @@
 .formcontrol {
     margin: 20px 0;
-  }
+}
 
-  .formControl label {
+.formControl label {
     display: block;
-  }
+}
 
-  .formControl input {
+.formControl input {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -17,9 +17,9 @@
     border: 2px solid #808080;
     border-radius: 4px;
     font-weight: 100;
-  }
+}
 
-  .textColor {
+.textColor {
     color: #f00;
     margin: 0px;
-  }
+}
