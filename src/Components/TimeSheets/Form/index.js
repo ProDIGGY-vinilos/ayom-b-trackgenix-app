@@ -6,6 +6,7 @@ import InputField from 'Components/Shared/Input/input';
 import DatePicker from 'Components/Shared/Datepicker';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import Button from 'Components/Shared/Button/Button';
+import TextAreaField from 'Components/Shared/TextArea';
 import { useSelector, useDispatch } from 'react-redux';
 import { getOneTimeSheet, postTimeSheet, putTimeSheet } from 'redux/timeSheets/thunks';
 import { getEmployees } from 'redux/employees/thunks';
@@ -170,11 +171,12 @@ const TimeSheetsForm = () => {
         </div>
         <div className={styles.textareacontainer}>
           <label>Description</label>
-          <textarea
+          <TextAreaField
             name="description"
-            {...register('description')}
             placeholder="Description"
-          ></textarea>
+            register={register}
+            columns={30}
+          />
           {errors.description && <p>{errors.description.message}</p>}
         </div>
       </form>
