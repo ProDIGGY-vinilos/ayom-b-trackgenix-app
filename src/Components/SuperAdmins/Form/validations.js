@@ -7,10 +7,10 @@ const schema = Joi.object({
     .required()
     .empty()
     .messages({
-      'string.alphanum': 'Name cannot contain special characters.',
-      'string.pattern.base': 'Name can only contain letters.',
-      'string.empty': 'Name cannot be an empty field.',
-      'any.required': 'Name is requiered.'
+      'string.alphanum': 'Name cannot contain special characters',
+      'string.pattern.base': 'Name must be of type text',
+      'string.empty': 'Name cannot be an empty field',
+      'any.required': 'Name is requiered'
     }),
   lastName: Joi.string()
     .alphanum()
@@ -18,19 +18,19 @@ const schema = Joi.object({
     .required()
     .empty()
     .messages({
-      'string.alphanum': 'Name cannot contain special characters.',
-      'string.pattern.base': 'Name can only contain letters.',
-      'string.empty': 'Name cannot be an empty field.',
-      'any.required': 'Name is requiered.'
+      'string.alphanum': 'Last Name cannot contain special characters',
+      'string.pattern.base': 'Last Name must be of type text',
+      'string.empty': 'Last Name cannot be an empty field',
+      'any.required': 'Last Name is requiered'
     }),
   email: Joi.string()
     .email({ tlds: { allow: false } })
     .required()
     .empty()
     .messages({
-      'string.email': 'Invalid email.',
-      'string.empty': 'Email cannot be an empty field.',
-      'any.required': 'Email is requiered.'
+      'string.email': 'Invalid email format',
+      'string.empty': 'Email cannot be an empty field',
+      'any.required': 'Email is required'
     }),
   password: Joi.string()
     .alphanum()
@@ -38,9 +38,9 @@ const schema = Joi.object({
     .required()
     .empty()
     .messages({
-      'string.alphanum': 'Password cannot contain special characters.',
-      'string.empty': 'Password cannot be an empty field.',
-      'any.required': 'Password is requiered.'
+      'string.alphanum': 'Password cannot contain special characters',
+      'string.empty': 'Password cannot be an empty field',
+      'any.required': 'Password is required'
     })
 });
 
