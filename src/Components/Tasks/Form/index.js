@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import styles from 'Components/Tasks/tasks.module.css';
 import Button from 'Components/Shared/Button/Button';
-import InputField from 'Components/Shared/Input/input';
+import TextAreaField from 'Components/Shared/TextArea/index';
 import { getOneTask, postTask, putTask } from 'redux/tasks/thunks';
 import { joiResolver } from '@hookform/resolvers/joi';
 import schema from 'Components/Tasks/Form/validations';
@@ -85,13 +85,12 @@ const Form = () => {
       <form className={styles.addItem} onSubmit={handleSubmit(onSubmit)}>
         <Button href="/admin/tasks" style="roundedSecondary" diabled={false} text="X" />
         <div>
-          <InputField
-            id={taskId}
+          <TextAreaField
+            className={styles.textarea}
             name="description"
-            type="text"
-            placeholder="description"
-            label="Description"
+            placeholder="Description"
             register={register}
+            columns="100"
             error={errors.description?.message}
           />
         </div>

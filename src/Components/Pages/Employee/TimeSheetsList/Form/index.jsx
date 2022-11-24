@@ -13,6 +13,7 @@ import { getTasks } from 'redux/tasks/thunks';
 import { useForm } from 'react-hook-form';
 import { timeSheetValidation } from './validations';
 import { joiResolver } from '@hookform/resolvers/joi';
+import TextAreaField from 'Components/Shared/TextArea';
 
 const TimeSheetsForm = () => {
   const [typeModal, setTypeModal] = useState();
@@ -116,13 +117,13 @@ const TimeSheetsForm = () => {
         </div>
         <div className={styles.textAreaContainer}>
           <label>Description</label>
-          <textarea
-            className={styles.textArea}
+          <TextAreaField
             name="description"
-            {...register('description')}
             placeholder="Description"
-          ></textarea>
-          {errors.description && <p>{errors.description.message}</p>}
+            register={register}
+            columns={40}
+            error={errors.description?.message}
+          />
         </div>
       </form>
       <Button

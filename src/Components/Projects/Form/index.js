@@ -7,6 +7,7 @@ import MessageModal from 'Components/Shared/Modal/MessageModal';
 import styles from 'Components/Projects/Form/form.module.css';
 import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
+import TextAreaField from 'Components/Shared/TextArea';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -171,14 +172,14 @@ const Project = () => {
         </div>
         <div className={styles.formFull}>
           <label>Description</label>
-          <textarea
-            name="description"
-            cols="30"
-            rows="10"
-            {...register('description')}
+          <TextAreaField
             className={styles.textarea}
-          ></textarea>
-          {errors.description && <p>{errors.description.message}</p>}
+            name="description"
+            placeholder="Description"
+            register={register}
+            columns="100"
+            error={errors.description?.message}
+          />
         </div>
         <div className={styles.formDiv}>
           <DatePicker
