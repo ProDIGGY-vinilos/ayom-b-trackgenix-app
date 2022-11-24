@@ -18,7 +18,7 @@ export const schema = Joi.object({
     .required()
     .messages({
       'string.empty': 'Project name is required',
-      'string.pattern.base': 'Project name should have at least 1 letter',
+      'string.pattern.base': 'Project name must be at least 1 letter',
       'string.min': 'Project name must be at least 3 characters long',
       'any.required': 'Project name is required'
     }),
@@ -29,7 +29,7 @@ export const schema = Joi.object({
     .required()
     .messages({
       'string.empty': 'Description cannot be an empty field',
-      'string.pattern.base': 'Description should have at least 1 letter',
+      'string.pattern.base': 'Description must be at least 1 letter',
       'string.min': 'Description   must be 5 characters long',
       'any.required': 'Description is required'
     }),
@@ -47,7 +47,7 @@ export const schema = Joi.object({
     .required()
     .messages({
       'string.empty': 'Client cannot be an empty field',
-      'string.pattern.base': 'Client name should have at least 1 letter',
+      'string.pattern.base': 'Client name must be at least 1 letter',
       'string.min': 'Client must be at least 3 characters long	',
       'any.required': 'Client name is required'
     }),
