@@ -8,7 +8,11 @@ const Table = ({ columns, data, deleteItem, edit }) => {
       <thead className={styles.tableHeader}>
         <tr>
           {columns.map((item, index) => {
-            return <th key={index}>{item.heading}</th>;
+            return (
+              <th className={styles.tableTitles} key={index}>
+                {item.heading}
+              </th>
+            );
           })}
         </tr>
       </thead>

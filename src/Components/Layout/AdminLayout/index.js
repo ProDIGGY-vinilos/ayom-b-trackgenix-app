@@ -45,8 +45,8 @@ const AdminLayout = () => {
           <Route exact path="/admin/time-sheet-form" component={TimeSheetsForm} />
           <Route path="/admin/time-sheet-form/:id" component={TimeSheetsForm} />
           <Route exact path="/admin/tasks" component={Tasks} />
-          <Route exact path="/admin/tasks-form" component={TasksForm} />
-          <Route path="/admin/tasks-form/:id" component={TasksForm} />
+          <Route exact path="/admin/task-form" component={TasksForm} />
+          <Route path="/admin/task-form/:id" component={TasksForm} />
           <Route exact path="/admin/super-admins" component={SuperAdmins} />
           <Route exact path="/admin/super-admin-form" component={SuperAdminForm} />
           <Route path="/admin/super-admin-form/:id" component={SuperAdminForm} />

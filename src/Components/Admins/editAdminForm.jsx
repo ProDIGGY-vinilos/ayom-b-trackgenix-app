@@ -105,7 +105,7 @@ function Form() {
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.formHeader}>
         <h3 id="fromHeader">Tittle</h3>
-        <Button href="/admins" style="roundedSecondary" disabled={false} text="X" />
+        <Button href="/admin/admins" style="roundedSecondary" disabled={false} text="X" />
       </div>
       <div className={styles.fromInput}>
         <InputField
@@ -149,7 +149,7 @@ function Form() {
           isOpen={showMessageModal}
           message={textMessageModal}
           handleClose={closeMessageModal}
-          goBack={'/admins'}
+          goBack={'/admin/admins'}
         />
       </div>
       <Button

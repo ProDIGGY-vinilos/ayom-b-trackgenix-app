@@ -69,7 +69,7 @@ const TimeSheets = () => {
             data={timeSheetsList}
             columns={columns}
             deleteItem={deleteTimeSheets}
-            edit="/time-sheet-form"
+            edit="/admin/time-sheet-form"
           />
           <MessageModal
             type={typeModal}
@@ -77,7 +77,7 @@ const TimeSheets = () => {
             message={textModal}
             handleClose={closeMessageModal}
           />
-          <Button href="/time-sheet-form" style="roundedPrimary" disabled={false} text="+" />
+          <Button href="/admin/time-sheet-form" style="roundedPrimary" disabled={false} text="+" />
         </>
       )}
     </section>

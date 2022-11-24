@@ -147,7 +147,7 @@ const Project = () => {
       ) : (
         <h2 className={styles.title}>Add new project</h2>
       )}
-      <Button href="/projects" style="roundedSecondary" disabled={false} text="X" />
+      <Button href="/admin/projects" style="roundedSecondary" disabled={false} text="X" />
       <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.formDiv}>
           <InputField
@@ -207,7 +207,7 @@ const Project = () => {
         isOpen={showSharedModal}
         message={textModal}
         handleClose={closeSharedModal}
-        goBack={'/projects'}
+        goBack={'/admin/projects'}
       />
       <Modal
         showModal={showModal}

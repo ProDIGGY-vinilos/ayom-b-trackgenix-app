@@ -10,27 +10,37 @@
 .tableTitle{
   margin: auto;
   width: 100%;
-  border-radius: 15px 15px 0px 0px;
-  background-color: #EA3354;
+  border-radius: 10px 10px 0px 0px;
+  background-color: #3738671a;
+}
+
+.tableTitles{
+  padding: 30px 20px;
 }
 
 .table{
   margin: 15px auto;
-  width: 100%;
-  border-radius: 15px;
-  background-color: #F0F4F9;
+  width: 80%;
+  border-radius: 10px;
+  background-color: #FFFFFF;
   border-spacing: 0px;
   border-collapse: separate;
-  box-shadow: 5px 5px 6px 0.5px #000000cc;
+  border: solid 3px;
+  border-color: #E0E0E0;
+  color: #373867;
 }
 
-.table tr:last-child td:first-child { border-bottom-left-radius: 15px; }
-
-.table tr:last-child td:last-child { border-bottom-right-radius: 15px; }
-
 .tableRow td {
-  border-top: #252525 solid 2px;
+  border-top: #E0E0E0 solid 1px;
   border-radius: 0px;
+  padding: 30px 40px;
+  text-align: center;
+  font-size: 18px;
+  font-weight:500;
+}
+
+.tableRow tr:hover{
+  background-color: #aace9b33;
 }
 
 .buttons {
@@ -39,10 +49,7 @@
 }
 
 .tableHeader{
-  background-color: #EA3354;
-  color: #000000;
+  background-color: #3738671a;
+  color: #373867;
+  font-size: 20px;
 }
-
-.tableHeader tr:first-child th:first-child { border-top-left-radius: 15px; }
-
-.tableHeader tr:first-child th:last-child { border-top-right-radius: 15px; }

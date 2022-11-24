@@ -1,6 +1,7 @@
 .title{
-  margin: 0px;
-  width: 100%;
+  margin: auto;
+  margin-right: 75px;
+  width: 80%;
   font-family: 'Open Sans', BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
@@ -19,9 +20,10 @@
 }
 
 .formContainer{
-  width: 100%;
+  width: 80%;
   height: fit-content;
-  margin: 15px;
+  margin: auto;
+  margin-right: 75px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
