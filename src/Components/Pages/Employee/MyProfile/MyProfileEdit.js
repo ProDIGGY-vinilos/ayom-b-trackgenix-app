@@ -133,7 +133,7 @@ const EmployeeForm = () => {
               <td className={styles.td}>
                 <InputField
                   name="password"
-                  type="text"
+                  type="password"
                   placeholder="Password"
                   register={register}
                   error={errors.password?.message}

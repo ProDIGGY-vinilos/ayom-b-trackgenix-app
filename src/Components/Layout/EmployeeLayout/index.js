@@ -6,11 +6,11 @@ import Header from 'Components/Shared/Header/index';
 import Sidebar from 'Components/Shared/Sidebar';
 import styles from 'Components/Layout/EmployeeLayout/layout.module.css';
 
+const ProjectsList = lazy(() => import('Components/Pages/Employee/ProjectList/index'));
+const TimeSheets = lazy(() => import('Components/Pages/Employee/TimeSheetsList/index'));
+const TimeSheetsForm = lazy(() => import('Components/Pages/Employee/TimeSheetsList/Form/index'));
 const MyProfile = lazy(() => import('Components/Pages/Employee/MyProfile/MyProfile'));
 const MyProfileForm = lazy(() => import('Components/Pages/Employee/MyProfile/MyProfileEdit'));
-const ProjectsList = lazy(() => import('Components/Projects/index'));
-const TimeSheets = lazy(() => import('Components/TimeSheets/index'));
-const TimeSheetsForm = lazy(() => import('Components/TimeSheets/Form/index'));
 
 const Layout = () => {
   const sideBarOptions = [
@@ -26,7 +26,7 @@ const Layout = () => {
       <Header header={path} />
       <div className={styles.bodyContainer}>
         <Sidebar options={sideBarOptions} user={'Employee'} />
-        <Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
           <Switch>
             <Route exact path="/employee/projects" component={ProjectsList} />
             <Route exact path="/employee/timesheets" component={TimeSheets} />
@@ -37,7 +37,6 @@ const Layout = () => {
             <Route path="/employee">
               <Redirect to="/employee/projects" />
             </Route>
-            {/* <Route exact path="/employee/account" component={} /> */}
           </Switch>
         </Suspense>
       </div>
