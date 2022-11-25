@@ -29,7 +29,7 @@ const EmployeeProfile = () => {
   return (
     <section className={styles.container}>
       <h2>Employee</h2>
-      <Table data={employeesList} columns={columns} edit="/employee-form" />
+      <Table data={employeesList} columns={columns} edit="/employee/profile" />
       <Button href="profile-form" style="squaredPrimary" disabled={false} text="Edit" />
     </section>
   );

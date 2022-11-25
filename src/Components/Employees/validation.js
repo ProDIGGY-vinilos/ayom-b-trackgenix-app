@@ -50,7 +50,7 @@ export const schema = Joi.object({
   password: Joi.string()
     .alphanum()
     .min(8)
-    .pattern(/^(?=.*?[a-z])(?=.*?[0-9])$/)
+    .pattern(/^(?=.*?[a-z])(?=.*?[0-9]).{8,}$/)
     .required()
     .messages({
       'string.base': 'Password must be of type text',
