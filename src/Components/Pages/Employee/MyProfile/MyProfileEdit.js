@@ -149,7 +149,7 @@ const EmployeeForm = () => {
             isOpen={showModal}
             message={textModal}
             handleClose={closeModal}
-            goBack={'/employee-form'}
+            goBack={'/employee/profile'}
           />
           <Button
             onClick={handleSubmit(onSubmit)}
