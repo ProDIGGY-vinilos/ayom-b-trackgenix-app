@@ -9,7 +9,7 @@ export const timeSheetValidation = Joi.object({
     .messages({
       'string.empty': 'Description cannot be an empty field',
       'string.pattern.base': 'Description must be at least 1 letter',
-      'string.min': 'Description must be at least 3 characters long	',
+      'string.min': 'Description must be at least 3 characters long',
       'any.required': 'Description is required'
     }),
   date: Joi.date().required().messages({

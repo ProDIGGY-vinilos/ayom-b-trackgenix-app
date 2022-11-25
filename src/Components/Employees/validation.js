@@ -3,22 +3,26 @@ import Joi from 'joi';
 export const schema = Joi.object({
   name: Joi.string()
     .alphanum()
+    .min(3)
     .pattern(/^([^0-9]*)$/i)
     .required()
     .messages({
       'string.base': 'Name must be of type text',
       'string.alphanum': 'Name cannot contain special characters',
+      'string.min': 'Name must be at least 3 characters long',
       'string.empty': 'Name cannot be an empty field',
       'string.pattern.base': 'Name must be of type text',
       'any.required': 'Name is required'
     }),
   lastName: Joi.string()
     .alphanum()
+    .min(3)
     .pattern(/^([^0-9]*)$/i)
     .required()
     .messages({
       'string.base': 'Last Name must be of type text',
       'string.alphanum': 'Last Name cannot contain special characters',
+      'string.min': 'Last Name must be at least 3 characters long',
       'string.empty': 'Last Name cannot be an empty field',
       'string.pattern.base': 'Last Name must be of type text',
       'any.required': 'Last Name is required'
@@ -51,9 +55,9 @@ export const schema = Joi.object({
     .messages({
       'string.base': 'Password must be of type text',
       'string.alphanum': 'Password cannot contain special characters',
-      'string.min': 'Password Length must be at least 8 characters long',
+      'string.min': 'Password must be at least 8 characters long',
       'string.empty': 'Password cannot be an empty field',
-      'string.pattern.base': `"Password" should be letters, numbers and minimum 8 characters`,
+      'string.pattern.base': 'Password must be of type text and number',
       'any.required': 'Password is required'
     })
 });
