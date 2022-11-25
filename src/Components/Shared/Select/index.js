@@ -23,7 +23,7 @@ const Select = ({ options, field, name, label, register, error = '' }) => {
           );
         })}
       </select>
-      {error && <p>{error}</p>}
+      {error && <p className={styles.textColor}>{error}</p>}
     </div>
   );
 };

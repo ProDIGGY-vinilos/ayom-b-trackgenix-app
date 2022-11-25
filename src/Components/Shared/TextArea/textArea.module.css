@@ -1,0 +1,9 @@
+.textColor {
+  color: #f00;
+  margin: 0px;
+}
+
+.textArea {
+  height: 130px;
+  resize: none;
+}

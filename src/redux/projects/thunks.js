@@ -5,6 +5,9 @@ import {
   getOneProjectError,
   getOneProjectSuccess,
   getOneProjectPending,
+  getProjectsByEmployeeError,
+  getProjectsByEmployeeSuccess,
+  getProjectsByEmployeePending,
   postProjectError,
   postProjectSuccess,
   postProjectPending,
@@ -48,6 +51,24 @@ export const getOneProject = (id) => {
       })
       .catch((error) => {
         dispatch(getOneProjectError(error.toString()));
+      });
+  };
+};
+
+export const getProjectsByEmployee = (id) => {
+  return (dispatch) => {
+    dispatch(getProjectsByEmployeePending());
+    fetch(`${process.env.REACT_APP_API_URL}/projects/employee/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getProjectsByEmployeeSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getProjectsByEmployeeError(error.toString()));
       });
   };
 };

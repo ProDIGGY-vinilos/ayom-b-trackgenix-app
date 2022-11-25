@@ -5,6 +5,9 @@ import {
   GET_ONE_PROJECT_PENDING,
   GET_ONE_PROJECT_SUCCESS,
   GET_ONE_PROJECT_ERROR,
+  GET_PROJECTS_BY_EMPLOYEE_PENDING,
+  GET_PROJECTS_BY_EMPLOYEE_SUCCESS,
+  GET_PROJECTS_BY_EMPLOYEE_ERROR,
   POST_PROJECT_PENDING,
   POST_PROJECT_SUCCESS,
   POST_PROJECT_ERROR,
@@ -61,6 +64,25 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: action.payload
+      };
+    case GET_PROJECTS_BY_EMPLOYEE_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GET_PROJECTS_BY_EMPLOYEE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: action.payload
+      };
+    case GET_PROJECTS_BY_EMPLOYEE_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+        list: []
       };
     case POST_PROJECT_PENDING:
       return {

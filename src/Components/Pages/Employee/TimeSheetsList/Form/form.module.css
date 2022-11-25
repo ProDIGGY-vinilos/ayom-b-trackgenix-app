@@ -1,17 +1,15 @@
 .title{
     margin: 0px;
-    width: 80%;
+    width: 100%;
     font-family: 'Open Sans', BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 .container {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    padding-right: 75px;
-    margin: auto;
+    align-items: center;
     margin-top: 10%;
+    margin-left: 15%;
     height: 100%;
     width: 80%;
 }
@@ -27,7 +25,8 @@
     justify-content: space-around;
     align-items: center;
     height: 250px;
-    width: 80%;
+    width: 100%;
+    margin-bottom: 10px;
     padding-bottom: 5px;
 }
 
@@ -36,25 +35,25 @@
     font-weight: bold;
 }
 
-.formcontainer {
+.formContainer {
     display: flex;
     flex-direction: column;
     width: 50%;
     justify-content: space-evenly;
 }
 
-.formcontainer > div {
+.formContainer > div {
     display: flex;
     flex-direction: column;
     margin-top: 0px;
     margin-bottom: 5px;
 }
 
-.formcontainer > div > input {
+.formContainer > div > input {
     height: 100%;
 }
 
-.textareacontainer {
+.textAreaContainer {
     display: flex;
     flex-direction: column;
     width: 40%;

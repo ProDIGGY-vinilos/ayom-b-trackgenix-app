@@ -78,9 +78,9 @@ const Projects = () => {
             data={projectList}
             columns={columns}
             deleteItem={deleteItem}
-            edit="/project-form"
+            edit="/admin/project-form"
           />
-          <Button href="/project-form" style="roundedPrimary" disabled={false} text="+" />
+          <Button href="/admin/project-form" style="roundedPrimary" disabled={false} text="+" />
         </>
       )}
       <MessageModal

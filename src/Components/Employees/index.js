@@ -75,9 +75,9 @@ const Employees = () => {
         data={employeesList}
         columns={columns}
         deleteItem={onDeleteEmployee}
-        edit="/employee-form"
+        edit="/admin/employee-form"
       />
-      <Button href="/employee-form" style="roundedPrimary" disabled={false} text="+" />
+      <Button href="/admin/employee-form" style="roundedPrimary" disabled={false} text="+" />
       <MessageModal
         type={typeModal}
         isOpen={showModal}

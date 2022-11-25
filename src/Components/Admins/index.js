@@ -65,8 +65,8 @@ const Admins = () => {
   return (
     <section className={styles.container}>
       <h2>Admin</h2>
-      <Table data={adminList} columns={columns} deleteItem={removeAdmin} edit="/admin-form" />
-      <Button href={`/admin-form`} style="roundedPrimary" disabled={false} text="+" />
+      <Table data={adminList} columns={columns} deleteItem={removeAdmin} edit="/admin/admin-form" />
+      <Button href={`/admin/admin-form`} style="roundedPrimary" disabled={false} text="+" />
       <MessageModal
         type={typeModal}
         isOpen={showModal}
