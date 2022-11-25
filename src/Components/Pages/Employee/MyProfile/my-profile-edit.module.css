@@ -1,0 +1,48 @@
+.container {
+  margin: auto;
+  width: 80%;
+  height: 500px;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  align-content: center;
+  color: #373867;
+}
+
+.table {
+  width: 1054px;
+  height: 100%;
+  margin-left: 4%;
+  border-radius: 15px;
+  border: #d2d0d0 solid 1px;
+}
+
+.tBody {
+  width: 70%;
+}
+
+.rowContainer {
+  display: flex;
+  justify-content: space-between;
+  height: 20%;
+  padding: 0px 30px;
+  border-bottom: #d2d0d0 solid 1px;
+}
+
+.tBody :hover {
+  background-color: rgba(170, 206, 155, 0.2);
+}
+
+.td {
+  display: flex;
+  align-items: center;
+  padding-right: 200px;
+  padding-left: 73px;
+}
+
+.buttons {
+  display: flex;
+  align-items: flex-end;
+  width: 73%;
+  justify-content: flex-end;
+}
