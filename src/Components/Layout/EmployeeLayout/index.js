@@ -6,6 +6,8 @@ import Header from 'Components/Shared/Header/index';
 import Sidebar from 'Components/Shared/Sidebar';
 import styles from 'Components/Layout/EmployeeLayout/layout.module.css';
 
+const MyProfile = lazy(() => import('Components/Pages/Employee/MyProfile/MyProfile'));
+const MyProfileForm = lazy(() => import('Components/Pages/Employee/MyProfile/MyProfileEdit'));
 const ProjectsList = lazy(() => import('Components/Projects/index'));
 const TimeSheets = lazy(() => import('Components/TimeSheets/index'));
 const TimeSheetsForm = lazy(() => import('Components/TimeSheets/Form/index'));
@@ -30,6 +32,8 @@ const Layout = () => {
             <Route exact path="/employee/timesheets" component={TimeSheets} />
             <Route exact path="/employee/time-sheet-form" component={TimeSheetsForm} />
             <Route path="/employee/time-sheet-form/:id" component={TimeSheetsForm} />
+            <Route exact path="/employee/profile" component={MyProfile} />
+            <Route exact path="/employee/profile-form" component={MyProfileForm} />
             <Route path="/employee">
               <Redirect to="/employee/projects" />
             </Route>
