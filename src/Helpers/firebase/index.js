@@ -33,7 +33,7 @@ export const tokenListener = () => {
           sessionStorage.setItem('token', token);
         }
       } catch (error) {
-        console.log('Error', error);
+        alert('Error', error);
       }
     } else {
       store.dispatch(logoutSuccess());

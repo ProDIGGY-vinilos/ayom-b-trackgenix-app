@@ -18,7 +18,6 @@ const Routes = () => {
         <Switch>
           <PrivateRoute path="/employee" role="EMPLOYEE" component={EmployeeLayout} />
           <PrivateRoute path="/admin" role="ADMIN" component={AdminLayout} />
-          {/* <PrivateRoute path="/admin" role="SUPER_ADMIN" component={AdminLayout} /> */}
           <Route path="/home" component={Home} />
           <Route path="*">
             <Redirect to="/home" />
