@@ -10,7 +10,6 @@ const AdminLayout = lazy(() => import('Components/Layout/AdminLayout'));
 
 const Routes = () => {
   useEffect(() => {
-    console.log('tokenListener activated');
     tokenListener();
   }, []);
   return (
