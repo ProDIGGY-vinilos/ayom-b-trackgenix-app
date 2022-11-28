@@ -39,7 +39,6 @@ const Login = (props) => {
   };
 
   const viewPassword = () => {
-    console.log(showPassword);
     if (!showPassword) {
       setShowPassword(true);
     } else {
@@ -70,7 +69,6 @@ const Login = (props) => {
 
   const onSubmit = (data) => {
     dispatch(login(data));
-    console.log(error);
     setTypeModal('Success');
     setTextModal('Login successful');
     openModal();
