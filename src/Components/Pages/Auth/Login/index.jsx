@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { schema } from 'Components/Pages/Auth/Login/validations';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
-import { login } from 'redux/auth/thunks';
+import { login, logout } from 'redux/auth/thunks';
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -96,6 +96,14 @@ const Login = (props) => {
               style="squaredPrimary"
               disabled={false}
               text="Submit"
+            />
+            <Button
+              onClick={() => {
+                dispatch(logout());
+              }}
+              style="squaredPrimary"
+              disabled={false}
+              text="Log Out"
             />
             <MessageModal
               type={typeModal}

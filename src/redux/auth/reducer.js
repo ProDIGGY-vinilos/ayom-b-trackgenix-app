@@ -26,7 +26,8 @@ const reducer = (state = INITIAL_STATE, action) => {
     case SIGN_UP_PENDING:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        error: ''
       };
     case LOGIN_ERROR:
     case LOGOUT_ERROR:
