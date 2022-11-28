@@ -15,6 +15,7 @@ const Login = (props) => {
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const openModal = () => {
     setShowModal(true);
@@ -34,6 +35,15 @@ const Login = (props) => {
           props.history.push('/super-admin');
           break;
       }
+    }
+  };
+
+  const viewPassword = () => {
+    console.log(showPassword);
+    if (!showPassword) {
+      setShowPassword(true);
+    } else {
+      setShowPassword(false);
     }
   };
 
@@ -91,11 +101,15 @@ const Login = (props) => {
               <InputField
                 label="Password"
                 name="password"
-                type="password"
+                type={!showPassword ? 'password' : 'text'}
                 placeholder="Password"
                 register={register}
                 error={errors.password?.message}
               />
+            </div>
+            <div>
+              <label>Show Password</label>
+              <input type="checkbox" onClick={() => viewPassword()} />
             </div>
             <div className={styles.buttons}>
               <Button href="/home" style="squaredPrimary" disabled={false} text="Back" />
