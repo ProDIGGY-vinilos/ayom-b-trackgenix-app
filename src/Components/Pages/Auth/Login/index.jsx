@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { schema } from 'Components/Pages/Auth/Login/validations';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
-import { login, logout } from 'redux/auth/thunks';
+import { login } from 'redux/auth/thunks';
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -72,47 +72,48 @@ const Login = (props) => {
 
   return (
     <>
+      <h2 className={styles.title}>TRACKGENIX</h2>
       <div className={styles.container}>
-        <h2>Login</h2>
-        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-          <InputField
-            name="email"
-            type="text"
-            placeholder="Email"
-            register={register}
-            error={errors.email?.message}
-          />
-          <InputField
-            name="password"
-            type="password"
-            placeholder="Password"
-            register={register}
-            error={errors.password?.message}
-          />
-          <div className={styles.buttons}>
-            <Button href="/home" style="squaredPrimary" disabled={false} text="Back" />
-            <Button
-              onClick={handleSubmit(onSubmit)}
-              style="squaredPrimary"
-              disabled={false}
-              text="Submit"
-            />
-            <Button
-              onClick={() => {
-                dispatch(logout());
-              }}
-              style="squaredPrimary"
-              disabled={false}
-              text="Log Out"
-            />
-            <MessageModal
-              type={typeModal}
-              isOpen={showModal}
-              message={textModal}
-              handleClose={closeModal}
-            />
-          </div>
-        </form>
+        <div>
+          <h3 className={styles.login}>Login</h3>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.flexForm}>
+              <InputField
+                label="Email"
+                name="email"
+                type="text"
+                placeholder="Email"
+                register={register}
+                error={errors.email?.message}
+              />
+            </div>
+            <div className={styles.flexForm}>
+              <InputField
+                label="Password"
+                name="password"
+                type="password"
+                placeholder="Password"
+                register={register}
+                error={errors.password?.message}
+              />
+            </div>
+            <div className={styles.buttons}>
+              <Button href="/home" style="squaredPrimary" disabled={false} text="Back" />
+              <Button
+                onClick={handleSubmit(onSubmit)}
+                style="squaredPrimary"
+                disabled={false}
+                text="Submit"
+              />
+              <MessageModal
+                type={typeModal}
+                isOpen={showModal}
+                message={textModal}
+                handleClose={closeModal}
+              />
+            </div>
+          </form>
+        </div>
       </div>
     </>
   );
