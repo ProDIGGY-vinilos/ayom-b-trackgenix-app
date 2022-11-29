@@ -5,9 +5,14 @@ const Home = () => {
   return (
     <section className={styles.container}>
       <div className={styles.title}>Home</div>
-      <Link className={styles.link} to="/login">
-        Sign In
-      </Link>
+      <div>
+        <Link className={styles.link} to="/login">
+          Sign In
+        </Link>
+        <Link className={styles.link} to="/sign-up">
+          Sign Up
+        </Link>
+      </div>
       <Link className={styles.link} to="/employee">
         Employee Page
       </Link>

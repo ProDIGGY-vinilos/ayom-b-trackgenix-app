@@ -8,6 +8,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { schema } from 'Components/Pages/Auth/Login/validations';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import { login } from 'redux/auth/thunks';
+import { Link } from 'react-router-dom';
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -117,6 +118,12 @@ const Login = (props) => {
                 disabled={false}
                 text="Submit"
               />
+              <p>
+                New to Trackgenix?{' '}
+                <Link className={styles.link} to="/sign-up">
+                  Sign up now
+                </Link>
+              </p>
               <MessageModal
                 type={typeModal}
                 isOpen={showModal}
