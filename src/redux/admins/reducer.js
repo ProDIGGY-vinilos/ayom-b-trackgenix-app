@@ -2,6 +2,9 @@ import {
   GET_ADMINS_PENDING,
   GET_ADMINS_SUCCESS,
   GET_ADMINS_ERROR,
+  GET_ONE_ADMIN_PENDING,
+  GET_ONE_ADMIN_SUCCESS,
+  GET_ONE_ADMIN_ERROR,
   POST_ADMIN_PENDING,
   POST_ADMIN_SUCCESS,
   POST_ADMIN_ERROR,
@@ -34,6 +37,24 @@ const reducer = (state = INITIAL_STATE, action) => {
         list: action.payload
       };
     case GET_ADMINS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case GET_ONE_ADMIN_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GET_ONE_ADMIN_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: [action.payload]
+      };
+    case GET_ONE_ADMIN_ERROR:
       return {
         ...state,
         isLoading: false,
