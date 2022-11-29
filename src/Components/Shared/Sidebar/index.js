@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import styles from 'Components/Shared/Sidebar/sidebar.module.css';
-import Button from '../Button/Button';
+import Button from 'Components/Shared/Button/Button';
 import { logout } from 'redux/auth/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
