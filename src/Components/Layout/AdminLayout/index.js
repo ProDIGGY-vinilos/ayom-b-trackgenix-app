@@ -10,8 +10,6 @@ const Projects = lazy(() => import('Components/Projects/index'));
 const ProjectForm = lazy(() => import('Components/Projects/Form/index'));
 const TimeSheets = lazy(() => import('Components/TimeSheets/index'));
 const TimeSheetsForm = lazy(() => import('Components/TimeSheets/Form/index'));
-const SuperAdmins = lazy(() => import('Components/SuperAdmins/index'));
-const SuperAdminForm = lazy(() => import('Components/SuperAdmins/Form/index'));
 const Employees = lazy(() => import('Components/Employees/index'));
 const EmployeeForm = lazy(() => import('Components/Employees/EmployeeForm'));
 const Admins = lazy(() => import('Components/Admins/index'));
