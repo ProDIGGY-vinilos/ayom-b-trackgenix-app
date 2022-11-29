@@ -1,42 +1,45 @@
+class Login {
+    get loginBtn () {
+        return $('#root > section > div:nth-child(2) > a:nth-child(1)')
+    }
 
-
-const Page = require('./page');
-
-/**
- * sub page containing specific selectors and methods for a specific page
- */
-class LoginPage extends Page {
-    /**
-     * define selectors using getter methods
-     */
-    get inputUsername () {
-        return $('#username');
+    get inputMail () {
+        return $('#root > div > div > form > div:nth-child(1) > div > input[type=text]');
     }
 
     get inputPassword () {
-        return $('#password');
+        return $('#root > div > div > form > div:nth-child(2) > div > input[type=password]');
     }
 
     get btnSubmit () {
-        return $('button[type="submit"]');
+        return $('#root > div > div > form > div:nth-child(4) > button:nth-child(2)');
     }
 
-    /**
-     * a method to encapsule automation code to interact with the page
-     * e.g. to login using username and password
-     */
+    get btnBack () {
+        return $('#root > div > div > form > div:nth-child(4) > button:nth-child(1)')
+    }
+
+    get acceptBtn () {
+        return $('#root > div > div > form > div:nth-child(4) > div > div > button')
+    }
+
+    get emailMsg () {
+        return $('#root > div > div > form > div:nth-child(1) > div > p')
+    }
+
+    get passwordMsg () {
+        return $('#root > div > div > form > div:nth-child(2) > div > p')
+    }
+
+    get rrLogo () {
+        return $('#root > div > header > img')
+    }
+
     async login (username, password) {
-        await this.inputUsername.setValue(username);
+        await this.inputMail.setValue(username);
         await this.inputPassword.setValue(password);
         await this.btnSubmit.click();
     }
-
-    /**
-     * overwrite specific options to adapt it to page object
-     */
-    open () {
-        return super.open('login');
-    }
 }
 
-module.exports = new LoginPage();
+module.exports = new Login();
