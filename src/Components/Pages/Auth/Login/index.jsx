@@ -1,0 +1,141 @@
+import styles from 'Components/Pages/Auth/Login/login.module.css';
+import InputField from 'Components/Shared/Input/input';
+import Button from 'Components/Shared/Button/Button';
+import { useSelector, useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { schema } from 'Components/Pages/Auth/Login/validations';
+import MessageModal from 'Components/Shared/Modal/MessageModal';
+import { login } from 'redux/auth/thunks';
+import { Link } from 'react-router-dom';
+
+const Login = (props) => {
+  const dispatch = useDispatch();
+  const { isLoading, error, role } = useSelector((state) => state.auth);
+  const [typeModal, setTypeModal] = useState('');
+  const [textModal, setTextModal] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    if (!error) {
+      switch (role) {
+        case 'EMPLOYEE':
+          props.history.push('/employee');
+          break;
+        case 'ADMIN':
+          props.history.push('/admin');
+          break;
+        case 'SUPER_ADMIN':
+          props.history.push('/super-admin');
+          break;
+      }
+    }
+  };
+
+  const viewPassword = () => {
+    if (!showPassword) {
+      setShowPassword(true);
+    } else {
+      setShowPassword(false);
+    }
+  };
+
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    }
+  };
+
+  useEffect(() => {
+    openModalOnError(error);
+  }, [error]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(schema)
+  });
+
+  const onSubmit = (data) => {
+    dispatch(login(data));
+    setTypeModal('Success');
+    setTextModal('Login successful');
+    openModal();
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <>
+      <h2 className={styles.title}>TRACKGENIX</h2>
+      <div className={styles.container}>
+        <div>
+          <h3 className={styles.login}>Login</h3>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.flexForm}>
+              <InputField
+                label="Email"
+                name="email"
+                type="text"
+                placeholder="Email"
+                register={register}
+                error={errors.email?.message}
+              />
+            </div>
+            <div className={styles.flexForm}>
+              <InputField
+                label="Password"
+                name="password"
+                type={!showPassword ? 'password' : 'text'}
+                placeholder="Password"
+                register={register}
+                error={errors.password?.message}
+              />
+            </div>
+            <div>
+              <label>Show Password</label>
+              <input type="checkbox" onClick={() => viewPassword()} />
+            </div>
+            <div className={styles.buttons}>
+              <Button href="/home" style="squaredPrimary" disabled={false} text="Back" />
+              <Button
+                onClick={handleSubmit(onSubmit)}
+                style="squaredPrimary"
+                disabled={false}
+                text="Submit"
+              />
+              <p>
+                New to Trackgenix?{' '}
+                <Link className={styles.link} to="/sign-up">
+                  Sign up now
+                </Link>
+              </p>
+              <MessageModal
+                type={typeModal}
+                isOpen={showModal}
+                message={textModal}
+                handleClose={closeModal}
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Login;

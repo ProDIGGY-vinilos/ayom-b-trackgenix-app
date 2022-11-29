@@ -19,20 +19,19 @@ export const login = (inputData) => {
       sessionStorage.setItem('token', token);
       return role;
     } catch (error) {
-      return dispatch(loginError());
+      return dispatch(loginError(error.toString()));
     }
   };
 };
 
 export const logout = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(logoutPending());
-    return signOut(auth)
-      .then(() => {
-        sessionStorage.clear();
-      })
-      .catch((error) => {
-        return dispatch(logoutError(error.toString()));
-      });
+    try {
+      await signOut(auth);
+      sessionStorage.clear();
+    } catch (error) {
+      dispatch(logoutError(error.toString()));
+    }
   };
 };

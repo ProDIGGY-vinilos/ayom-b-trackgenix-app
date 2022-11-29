@@ -10,6 +10,7 @@ import { postEmployee } from 'redux/employees/thunks';
 import { clearError } from 'redux/employees/actions';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { schema } from 'Components/Pages/Auth/SignUp/validation';
+import { Link } from 'react-router-dom';
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
@@ -135,6 +136,12 @@ const EmployeeForm = () => {
               text="Save"
             />
           </div>
+          <p>
+            Already have an account?{' '}
+            <Link className={styles.link} to="/login">
+              Sign in now
+            </Link>
+          </p>
         </form>
       </div>
     </>
