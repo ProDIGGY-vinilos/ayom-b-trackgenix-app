@@ -16,10 +16,14 @@ import {
   deleteEmployeesError
 } from 'redux/employees/actions';
 
-export const getEmployees = () => {
+export const getEmployees = (token) => {
   return (dispatch) => {
     dispatch(getEmployeesPending());
-    fetch(`${process.env.REACT_APP_API_URL}/employees`)
+    fetch(`${process.env.REACT_APP_API_URL}/employees`, {
+      headers: {
+        token
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -34,10 +38,14 @@ export const getEmployees = () => {
   };
 };
 
-export const getOneEmployee = (id) => {
+export const getOneEmployee = (id, token) => {
   return (dispatch) => {
     dispatch(getOneEmployeePending());
-    fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`)
+    fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
+      headers: {
+        token
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -76,14 +84,15 @@ export const postEmployee = (url, payload) => {
   };
 };
 
-export const putEmployee = (url, payload) => {
+export const putEmployee = (url, payload, token) => {
   return (dispatch) => {
     dispatch(putEmployeesPending());
     fetch(`${process.env.REACT_APP_API_URL}/employees/${url}`, {
       method: 'PUT',
       body: JSON.stringify(payload),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token
       }
     })
       .then((response) => response.json())
@@ -100,10 +109,15 @@ export const putEmployee = (url, payload) => {
   };
 };
 
-export const deleteEmployee = (id) => {
+export const deleteEmployee = (id, token) => {
   return (dispatch) => {
     dispatch(deleteEmployeesPending());
-    fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, { method: 'DELETE' })
+    fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
+      method: 'DELETE',
+      headers: {
+        token
+      }
+    })
       .then((response) => {
         if (response.status !== 204) {
           response

@@ -19,10 +19,14 @@ import {
   deleteProjectPending
 } from 'redux/projects/actions';
 
-export const getProjects = () => {
+export const getProjects = (token) => {
   return (dispatch) => {
     dispatch(getProjectsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/projects`)
+    fetch(`${process.env.REACT_APP_API_URL}/projects`, {
+      headers: {
+        token
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -37,10 +41,14 @@ export const getProjects = () => {
   };
 };
 
-export const getOneProject = (id) => {
+export const getOneProject = (id, token) => {
   return (dispatch) => {
     dispatch(getOneProjectPending());
-    fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`)
+    fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+      headers: {
+        token
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -55,10 +63,14 @@ export const getOneProject = (id) => {
   };
 };
 
-export const getProjectsByEmployee = (id) => {
+export const getProjectsByEmployee = (id, token) => {
   return (dispatch) => {
     dispatch(getProjectsByEmployeePending());
-    fetch(`${process.env.REACT_APP_API_URL}/projects/employee/${id}`)
+    fetch(`${process.env.REACT_APP_API_URL}/projects/employee/${id}`, {
+      headers: {
+        token
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -73,13 +85,14 @@ export const getProjectsByEmployee = (id) => {
   };
 };
 
-export const postProject = (projectBody) => {
+export const postProject = (projectBody, token) => {
   return (dispatch) => {
     dispatch(postProjectPending());
     fetch(`${process.env.REACT_APP_API_URL}/projects`, {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token
       },
       body: JSON.stringify(projectBody)
     })
@@ -97,13 +110,14 @@ export const postProject = (projectBody) => {
   };
 };
 
-export const putProject = (id, projectBody) => {
+export const putProject = (id, projectBody, token) => {
   return (dispatch) => {
     dispatch(putProjectPending());
     fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token
       },
       body: JSON.stringify(projectBody)
     })
@@ -121,13 +135,14 @@ export const putProject = (id, projectBody) => {
   };
 };
 
-export const deleteProject = (id) => {
+export const deleteProject = (id, token) => {
   return (dispatch) => {
     dispatch(deleteProjectPending());
     fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
       method: 'DELETE',
       headers: {
-        'Content-type': 'aplication/json'
+        'Content-type': 'aplication/json',
+        token
       }
     })
       .then((response) => {

@@ -12,6 +12,7 @@ const TimeSheets = () => {
   const [showMessageModal, setShowMessageModal] = useState(false);
   const { list: timeSheetsList, isLoading, error } = useSelector((state) => state.timeSheets);
   const dispatch = useDispatch();
+  const token = sessionStorage.getItem('token');
 
   const openMessageModal = () => {
     setShowMessageModal(true);
@@ -22,7 +23,7 @@ const TimeSheets = () => {
   };
 
   useEffect(() => {
-    dispatch(getTimeSheets());
+    dispatch(getTimeSheets(token));
   }, []);
 
   useEffect(async () => {
@@ -30,7 +31,7 @@ const TimeSheets = () => {
   }, [error]);
 
   const deleteTimeSheets = (id) => {
-    dispatch(deleteTimeSheet(id));
+    dispatch(deleteTimeSheet(id, token));
     if (error) {
       openModalOnError(error);
     } else {

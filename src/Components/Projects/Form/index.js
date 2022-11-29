@@ -20,6 +20,7 @@ const Project = () => {
   const projectData = useSelector((state) =>
     state.projects.list.find((project) => project._id === projectId)
   );
+  const token = sessionStorage.getItem('token');
 
   const [showModal, setShowModal] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
@@ -75,11 +76,11 @@ const Project = () => {
   };
 
   useEffect(() => {
-    dispatch(getEmployees());
+    dispatch(getEmployees(token));
     if (projectId) {
       setIsFetched(true);
       if (projectData === undefined) {
-        dispatch(getOneProject(projectId));
+        dispatch(getOneProject(projectId, token));
       } else {
         setIsFetched(false);
       }
@@ -87,7 +88,7 @@ const Project = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getEmployees());
+    dispatch(getEmployees(token));
     if (projectId) {
       setIsFetched(true);
       if (projectData !== undefined) {
@@ -133,7 +134,7 @@ const Project = () => {
   };
 
   const onSubmit = (data) => {
-    projectId ? dispatch(putProject(projectId, data)) : dispatch(postProject(data));
+    projectId ? dispatch(putProject(projectId, data, token)) : dispatch(postProject(data, token));
     openSharedModal();
   };
 

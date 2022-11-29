@@ -20,6 +20,7 @@ const EmployeeForm = () => {
   const employee = useSelector((state) =>
     state.employees.list.find((employee) => employee._id === employeeId)
   );
+  const token = sessionStorage.getItem('token');
 
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
@@ -79,7 +80,7 @@ const EmployeeForm = () => {
 
   const onSubmit = (data) => {
     if (employeeId) {
-      dispatch(putEmployee(employeeId, data));
+      dispatch(putEmployee(employeeId, data, token));
     } else {
       dispatch(postEmployee('', data));
     }

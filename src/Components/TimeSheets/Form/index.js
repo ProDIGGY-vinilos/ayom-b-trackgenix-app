@@ -31,6 +31,7 @@ const TimeSheetsForm = () => {
   const timeSheetData = useSelector((state) =>
     state.timeSheets.list.find((timeSheets) => timeSheets._id === timeSheetId)
   );
+  const token = sessionStorage.getItem('token');
 
   const {
     register,
@@ -82,9 +83,9 @@ const TimeSheetsForm = () => {
       setTimeSheetId(pathed);
       setFormSwitch(true);
     }
-    dispatch(getProjects());
-    dispatch(getTasks());
-    dispatch(getEmployees());
+    dispatch(getProjects(token));
+    dispatch(getTasks(token));
+    dispatch(getEmployees(token));
   }, []);
 
   useEffect(() => {
@@ -92,19 +93,19 @@ const TimeSheetsForm = () => {
       if (timeSheetData !== undefined) {
         reset(data);
       } else {
-        dispatch(getOneTimeSheet(timeSheetId));
+        dispatch(getOneTimeSheet(timeSheetId, token));
       }
     }
   }, [projectsList, employeeList, taskList]);
 
   const createTimeSheet = (data) => {
     if (formSwitch) {
-      dispatch(putTimeSheet(data, pathed));
+      dispatch(putTimeSheet(data, pathed, token));
       setTypeModal('Success');
       setTextModal('TimeSheet edited successfully');
       openModal();
     } else {
-      dispatch(postTimeSheet(data));
+      dispatch(postTimeSheet(data, token));
       setTypeModal('Success');
       setTextModal('TimeSheet added successfully');
       openModal();

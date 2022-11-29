@@ -9,9 +9,10 @@ const EmployeeProfile = () => {
   const dispatch = useDispatch();
   const { list: employeesList, isLoading } = useSelector((state) => state.employees);
   const employeeId = '636c1e8ddabe537336ae082a';
+  const token = sessionStorage.getItem('token');
 
   useEffect(() => {
-    dispatch(getOneEmployee(employeeId));
+    dispatch(getOneEmployee(employeeId, token));
   }, []);
 
   const columns = [

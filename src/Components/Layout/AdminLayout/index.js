@@ -10,8 +10,6 @@ const Projects = lazy(() => import('Components/Projects/index'));
 const ProjectForm = lazy(() => import('Components/Projects/Form/index'));
 const TimeSheets = lazy(() => import('Components/TimeSheets/index'));
 const TimeSheetsForm = lazy(() => import('Components/TimeSheets/Form/index'));
-const SuperAdmins = lazy(() => import('Components/SuperAdmins/index'));
-const SuperAdminForm = lazy(() => import('Components/SuperAdmins/Form/index'));
 const Employees = lazy(() => import('Components/Employees/index'));
 const EmployeeForm = lazy(() => import('Components/Employees/EmployeeForm'));
 const Admins = lazy(() => import('Components/Admins/index'));
@@ -25,7 +23,6 @@ const AdminLayout = () => {
     { link: '/admin/timesheets', label: 'Timesheets' },
     { link: '/admin/employees', label: 'Employees' },
     { link: '/admin/tasks', label: 'Tasks' },
-    { link: '/admin/super-admins', label: 'Super Admins' },
     { link: '/admin/admins', label: 'Admins' },
     { link: '/admin/profile', label: 'Profile' }
   ];
@@ -49,9 +46,6 @@ const AdminLayout = () => {
             <Route exact path="/admin/tasks" component={Tasks} />
             <Route exact path="/admin/task-form" component={TasksForm} />
             <Route path="/admin/task-form/:id" component={TasksForm} />
-            <Route exact path="/admin/super-admins" component={SuperAdmins} />
-            <Route exact path="/admin/super-admin-form" component={SuperAdminForm} />
-            <Route path="/admin/super-admin-form/:id" component={SuperAdminForm} />
             <Route exact path="/admin/admins" component={Admins} />
             <Route exact path="/admin/admin-form" component={AdminForm} />
             <Route path="/admin/admin-form/:id" component={AdminForm} />

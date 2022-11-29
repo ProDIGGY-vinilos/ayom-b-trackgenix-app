@@ -9,6 +9,7 @@ import { getAdmins, deleteAdmin } from 'redux/admins/thunks';
 const Admins = () => {
   const { list: adminList, isLoading, error } = useSelector((state) => state.admins);
   const dispatch = useDispatch();
+  const token = sessionStorage.getItem('token');
 
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
@@ -23,7 +24,7 @@ const Admins = () => {
   };
 
   useEffect(() => {
-    dispatch(getAdmins());
+    dispatch(getAdmins(token));
   }, []);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const Admins = () => {
   }, [error]);
 
   const removeAdmin = (id) => {
-    dispatch(deleteAdmin(id));
+    dispatch(deleteAdmin(id, token));
     if (error) {
       openModalOnError(error);
     } else {

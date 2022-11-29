@@ -18,6 +18,7 @@ const Form = () => {
   const dataSuperAdmin = useSelector((state) =>
     state.superAdmins.list.find((superAdmins) => superAdmins._id === superAdminId)
   );
+  const token = sessionStorage.getItem('token');
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
@@ -45,7 +46,7 @@ const Form = () => {
 
   useEffect(() => {
     if (superAdminId) {
-      dispatch(getSuperAdminsById(superAdminId));
+      dispatch(getSuperAdminsById(superAdminId, token));
     }
   }, []);
 
@@ -71,11 +72,11 @@ const Form = () => {
 
   const onSubmit = (data) => {
     if (superAdminId) {
-      dispatch(putSuperAdmin(superAdminId, data));
+      dispatch(putSuperAdmin(superAdminId, data, token));
       setTypeModal('Success');
       setTextModal('SuperAdmin updated successfully');
     } else {
-      dispatch(postSuperAdmin(superAdminId, data));
+      dispatch(postSuperAdmin(superAdminId, data, token));
       setTypeModal('Success');
       setTextModal('SuperAdmin created successfully');
     }
