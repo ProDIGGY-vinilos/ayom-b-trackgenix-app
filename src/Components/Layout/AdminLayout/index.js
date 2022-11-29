@@ -10,6 +10,7 @@ const Projects = lazy(() => import('Components/Pages/Admin/Projects/ProjectList/
 const ProjectForm = lazy(() => import('Components/Pages/Admin/Projects/ProjectForm/index'));
 const Employees = lazy(() => import('Components/Pages/Admin/Employees/EmployeeList/index'));
 const EmployeeForm = lazy(() => import('Components/Pages/Admin/Employees/EmployeeForm/index'));
+const TimeSheets = lazy(() => import('Components/Pages/Admin/TimeSheetsList/index'));
 const MyProfile = lazy(() => import('Components/Pages/Admin/MyProfile/index'));
 const MyProfileForm = lazy(() => import('Components/Pages/Admin/MyProfile/MyProfileForm/index'));
 
@@ -17,6 +18,7 @@ const AdminLayout = () => {
   const sideBarOptions = [
     { link: '/admin/projects', label: 'Projects' },
     { link: '/admin/employees', label: 'Employees' },
+    { link: '/admin/timesheets', label: 'TimeSheets' },
     { link: '/admin/profile', label: 'Profile' }
   ];
   let path = useLocation().pathname.split('/');
@@ -36,6 +38,7 @@ const AdminLayout = () => {
             <Route exact path="/admin/employees" component={Employees} />
             <Route exact path="/admin/employee-form" component={EmployeeForm} />
             <Route path="/admin/employee-form/:id" component={EmployeeForm} />
+            <Route exact path="/admin/timesheets" component={TimeSheets} />
             <Route exact path="/admin/profile" component={MyProfile} />
             <Route exact path="/admin/profile-form" component={MyProfileForm} />
             <Route path="/admin/profile-form/:id" component={MyProfileForm} />

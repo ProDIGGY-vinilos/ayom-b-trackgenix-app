@@ -8,7 +8,7 @@ import { getOneAdmin } from 'redux/admins/thunks';
 const AdminProfile = () => {
   const dispatch = useDispatch();
   const { list: adminsList, isLoading } = useSelector((state) => state.admins);
-  const adminId = '636d720f757f0ced2671fe72';
+  const adminId = '6384cc21efce54826a2b23ca';
   const token = sessionStorage.getItem('token');
 
   useEffect(() => {

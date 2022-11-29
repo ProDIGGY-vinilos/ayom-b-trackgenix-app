@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import styles from 'Components/Employees/employees.module.css';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import Table from 'Components/Shared/Table';
-import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { getEmployees, deleteEmployee } from 'redux/employees/thunks';
 import { clearError } from 'redux/employees/actions';
@@ -57,7 +56,6 @@ const Employees = () => {
   };
 
   const columns = [
-    { heading: 'Id', value: '_id' },
     { heading: 'Name', value: 'name' },
     { heading: 'Last Name', value: 'lastName' },
     { heading: 'Email', value: 'email' },
@@ -81,7 +79,6 @@ const Employees = () => {
       ) : (
         <h2>No Employees</h2>
       )}
-      <Button href="/admin/employee-form" style="roundedPrimary" disabled={false} text="+" />
       <MessageModal
         type={typeModal}
         isOpen={showModal}
