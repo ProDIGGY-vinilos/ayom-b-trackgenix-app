@@ -19,10 +19,14 @@ import {
   deleteTimeSheetError
 } from 'redux/timeSheets/actions';
 
-export const getTimeSheets = () => {
+export const getTimeSheets = (token) => {
   return (dispatch) => {
     dispatch(getTimeSheetsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/timeSheet`)
+    fetch(`${process.env.REACT_APP_API_URL}/timeSheet`, {
+      headers: {
+        token
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -37,10 +41,14 @@ export const getTimeSheets = () => {
   };
 };
 
-export const getTimeSheetsByEmployee = (id) => {
+export const getTimeSheetsByEmployee = (id, token) => {
   return (dispatch) => {
     dispatch(getTimeSheetsByEmployeePending());
-    fetch(`${process.env.REACT_APP_API_URL}/timeSheet/employee/${id}`)
+    fetch(`${process.env.REACT_APP_API_URL}/timeSheet/employee/${id}`, {
+      headers: {
+        token
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -55,10 +63,14 @@ export const getTimeSheetsByEmployee = (id) => {
   };
 };
 
-export const getOneTimeSheet = (id) => {
+export const getOneTimeSheet = (id, token) => {
   return (dispatch) => {
     dispatch(getOneTimeSheetPending());
-    fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`)
+    fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
+      headers: {
+        token
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -73,13 +85,14 @@ export const getOneTimeSheet = (id) => {
   };
 };
 
-export const postTimeSheet = (data) => {
+export const postTimeSheet = (data, token) => {
   return (dispatch) => {
     dispatch(postTimeSheetPending());
     fetch(`${process.env.REACT_APP_API_URL}/timeSheet/`, {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token
       },
       body: JSON.stringify({
         description: data.description,
@@ -105,13 +118,14 @@ export const postTimeSheet = (data) => {
   };
 };
 
-export const putTimeSheet = (data, id) => {
+export const putTimeSheet = (data, id, token) => {
   return (dispatch) => {
     dispatch(putTimeSheetPending());
     fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token
       },
       body: JSON.stringify({
         description: data.description,
@@ -137,13 +151,14 @@ export const putTimeSheet = (data, id) => {
   };
 };
 
-export const deleteTimeSheet = (id) => {
+export const deleteTimeSheet = (id, token) => {
   return (dispatch) => {
     dispatch(deleteTimeSheetPending());
     fetch(`${process.env.REACT_APP_API_URL}/timeSheet/${id}`, {
       method: 'DELETE',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token
       }
     })
       .then((response) => {

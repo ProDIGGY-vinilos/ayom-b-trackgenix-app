@@ -9,9 +9,10 @@ const TimeSheetsList = () => {
   const employeeId = '636c1e8ddabe537336ae082a';
   const { list: timeSheetsList, isLoading } = useSelector((state) => state.timeSheets);
   const dispatch = useDispatch();
+  const token = sessionStorage.getItem('token');
 
   useEffect(() => {
-    dispatch(getTimeSheetsByEmployee(employeeId));
+    dispatch(getTimeSheetsByEmployee(employeeId, token));
   }, []);
 
   const columns = [

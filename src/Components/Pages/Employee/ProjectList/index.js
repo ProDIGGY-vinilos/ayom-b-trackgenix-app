@@ -6,6 +6,7 @@ import MessageModal from 'Components/Shared/Modal/MessageModal';
 
 const ProjectsPage = () => {
   const userId = '636c1e8ddabe537336ae082a';
+  const token = sessionStorage.getItem('token');
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -13,7 +14,7 @@ const ProjectsPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProjectsByEmployee(userId));
+    dispatch(getProjectsByEmployee(userId, token));
   }, []);
 
   const openModal = () => {

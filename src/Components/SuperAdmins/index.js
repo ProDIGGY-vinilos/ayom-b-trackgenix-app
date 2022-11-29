@@ -10,6 +10,7 @@ const SuperAdmins = () => {
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
+  const token = sessionStorage.getItem('token');
 
   const { list: superAdminList, isLoading, error } = useSelector((state) => state.superAdmins);
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const SuperAdmins = () => {
   };
 
   useEffect(() => {
-    dispatch(getSuperAdmins());
+    dispatch(getSuperAdmins(token));
   }, []);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const SuperAdmins = () => {
   }, [error]);
 
   const onDeleteSuperAdmin = (id) => {
-    dispatch(deleteSuperAdmin(id));
+    dispatch(deleteSuperAdmin(id, token));
     if (error) {
       openModalOnError(error);
     } else {

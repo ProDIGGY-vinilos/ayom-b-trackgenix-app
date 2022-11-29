@@ -14,6 +14,7 @@ const Form = () => {
   const taskId = useParams().id;
   const dispatch = useDispatch();
   const dataTask = useSelector((state) => state.tasks.list.find((task) => task._id === taskId));
+  const token = sessionStorage.getItem('token');
 
   const { error } = useSelector((state) => state.tasks);
   const [typeModal, setTypeModal] = useState('');
@@ -41,7 +42,7 @@ const Form = () => {
   useEffect(() => {
     if (taskId) {
       if (dataTask === undefined) {
-        dispatch(getOneTask(taskId));
+        dispatch(getOneTask(taskId, token));
       }
     }
   }, []);
@@ -60,12 +61,12 @@ const Form = () => {
 
   const onSubmit = (data) => {
     if (taskId) {
-      dispatch(putTask(taskId, data));
+      dispatch(putTask(taskId, data, token));
       setTypeModal('Success');
       setTextMessageModal('The Task was updated successfully');
       openMessageModal();
     } else {
-      dispatch(postTask(data));
+      dispatch(postTask(data, token));
       setTypeModal('Success');
       setTextMessageModal('The Task was created successfully');
       openMessageModal();

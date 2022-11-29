@@ -13,6 +13,7 @@ const Employees = () => {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const { list: employeesList, isLoading, error } = useSelector((state) => state.employees);
+  const token = sessionStorage.getItem('token');
 
   const openModal = () => {
     setShowModal(true);
@@ -30,14 +31,14 @@ const Employees = () => {
   };
 
   const onDeleteEmployee = async (id) => {
-    dispatch(deleteEmployee(id));
+    dispatch(deleteEmployee(id, token));
     deleteItem(id);
   };
 
   useEffect(() => {
     dispatch(clearError());
     if (!employeesList.length || employeesList.length === 1) {
-      dispatch(getEmployees());
+      dispatch(getEmployees(token));
     }
   }, []);
 

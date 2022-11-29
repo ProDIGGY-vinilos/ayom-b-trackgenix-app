@@ -13,10 +13,14 @@ import {
   deleteAdminError
 } from 'redux/admins/actions';
 
-export const getAdmins = () => {
+export const getAdmins = (token) => {
   return (dispatch) => {
     dispatch(getAdminsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/admins`)
+    fetch(`${process.env.REACT_APP_API_URL}/admins`, {
+      headers: {
+        token
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -31,13 +35,14 @@ export const getAdmins = () => {
   };
 };
 
-export const postAdmin = (data) => {
+export const postAdmin = (data, token) => {
   return (dispatch) => {
     dispatch(postAdminPending());
     fetch(`${process.env.REACT_APP_API_URL}/admins/`, {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token
       },
       body: JSON.stringify({
         name: data.name,
@@ -60,13 +65,14 @@ export const postAdmin = (data) => {
   };
 };
 
-export const putAdmin = (data, id) => {
+export const putAdmin = (data, id, token) => {
   return (dispatch) => {
     dispatch(putAdminPending());
     fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token
       },
       body: JSON.stringify({
         name: data.name,
@@ -89,13 +95,14 @@ export const putAdmin = (data, id) => {
   };
 };
 
-export const deleteAdmin = (id) => {
+export const deleteAdmin = (id, token) => {
   return (dispatch) => {
     dispatch(deleteAdminPending());
     fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
       method: 'DELETE',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token
       }
     })
       .then((response) => {

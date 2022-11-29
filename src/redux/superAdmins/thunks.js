@@ -16,10 +16,14 @@ import {
   deleteSuperAdminError
 } from 'redux/superAdmins/actions';
 
-export const getSuperAdmins = () => {
+export const getSuperAdmins = (token) => {
   return (dispatch) => {
     dispatch(getSuperAdminsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/superAdmins`)
+    fetch(`${process.env.REACT_APP_API_URL}/superAdmins`, {
+      headers: {
+        token
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -34,10 +38,14 @@ export const getSuperAdmins = () => {
   };
 };
 
-export const getSuperAdminsById = (id) => {
+export const getSuperAdminsById = (id, token) => {
   return (dispatch) => {
     dispatch(getOneSuperAdminPending());
-    fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`)
+    fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
+      headers: {
+        token
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -76,13 +84,14 @@ export const postSuperAdmin = (superAdminId, superAdmin) => {
   };
 };
 
-export const putSuperAdmin = (superAdminId, superAdmin) => {
+export const putSuperAdmin = (superAdminId, superAdmin, token) => {
   return (dispatch) => {
     dispatch(putSuperAdminPending());
     fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${superAdminId}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token
       },
       body: JSON.stringify(superAdmin)
     })
@@ -100,13 +109,14 @@ export const putSuperAdmin = (superAdminId, superAdmin) => {
   };
 };
 
-export const deleteSuperAdmin = (id) => {
+export const deleteSuperAdmin = (id, token) => {
   return (dispatch) => {
     dispatch(deleteSuperAdminPending());
     fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
       method: 'DELETE',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token
       }
     })
       .then((response) => {

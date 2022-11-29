@@ -18,6 +18,7 @@ const EmployeeForm = () => {
   const employee = useSelector((state) =>
     state.employees.list.find((employee) => employee._id === employeeId)
   );
+  const token = sessionStorage.getItem('token');
 
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
@@ -69,7 +70,7 @@ const EmployeeForm = () => {
   }, [employee]);
 
   const onSubmit = (data) => {
-    dispatch(putEmployee(employeeId, data));
+    dispatch(putEmployee(employeeId, data, token));
     setTypeModal('Success');
     setTextModal('SuperAdmin updated successfully');
     openModal();

@@ -12,6 +12,7 @@ const Projects = () => {
   const [showModal, setShowModal] = useState(false);
   const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
+  const token = sessionStorage.getItem('token');
 
   const openModal = () => {
     setShowModal(true);
@@ -22,7 +23,7 @@ const Projects = () => {
   };
 
   useEffect(() => {
-    dispatch(getProjects());
+    dispatch(getProjects(token));
   }, []);
 
   useEffect(() => {
@@ -37,7 +38,7 @@ const Projects = () => {
   };
 
   const deleteItem = async (id) => {
-    dispatch(deleteProject(id));
+    dispatch(deleteProject(id, token));
     setTypeModal('Success');
     setTextModal(`Project with id:${id} was deleted`);
     openModal();

@@ -10,6 +10,7 @@ const Tasks = () => {
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const token = sessionStorage.getItem('token');
 
   const data = useSelector((state) => state.tasks.list);
 
@@ -26,7 +27,7 @@ const Tasks = () => {
 
   useEffect(() => {
     if (!data.length || data.length === 1) {
-      dispatch(getTasks());
+      dispatch(getTasks(token));
     }
   }, []);
 
@@ -35,7 +36,7 @@ const Tasks = () => {
   }, [error]);
 
   const deleteTaskFunction = async (id) => {
-    dispatch(deleteTask(id));
+    dispatch(deleteTask(id, token));
     if (error) {
       openModalOnError(error);
     } else {

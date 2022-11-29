@@ -10,6 +10,7 @@ const ListSuperAdmin = ({ superAdmin, onDeleteSuperAdmin }) => {
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showMessageModal, setShowMessageModal] = useState(false);
+  const token = sessionStorage.getItem('token');
 
   const openMessageModal = () => {
     setShowMessageModal(true);
@@ -32,7 +33,10 @@ const ListSuperAdmin = ({ superAdmin, onDeleteSuperAdmin }) => {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/superAdmins/${superAdmin._id}`,
         {
-          method: 'DELETE'
+          method: 'DELETE',
+          headers: {
+            token
+          }
         }
       );
       if (response.status === 204) {

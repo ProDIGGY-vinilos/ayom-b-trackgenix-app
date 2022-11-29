@@ -17,6 +17,7 @@ function Form() {
   const adminData = useSelector((state) =>
     state.admins.list.find((admin) => admin._id === adminId)
   );
+  const token = sessionStorage.getItem('token');
 
   const {
     register,
@@ -55,7 +56,11 @@ function Form() {
     if (adminId) {
       document.getElementById('fromHeader').innerHTML = 'EDIT ADMIN';
       if (adminData === undefined) {
-        fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`)
+        fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`, {
+          headers: {
+            token
+          }
+        })
           .then((response) => response.json())
           .then((response) => {
             data = {
@@ -85,14 +90,14 @@ function Form() {
 
   const onSubmit = (data) => {
     if (adminId) {
-      dispatch(putAdmin(data, adminId));
+      dispatch(putAdmin(data, adminId, token));
       if (!error) {
         setTypeModal('Success');
         setTextMessageModal('The administrator was edited successfully');
         openMessageModal();
       }
     } else {
-      dispatch(postAdmin(data));
+      dispatch(postAdmin(data, token));
       if (!error) {
         setTypeModal('Success');
         setTextMessageModal('The administrator was added successfully');

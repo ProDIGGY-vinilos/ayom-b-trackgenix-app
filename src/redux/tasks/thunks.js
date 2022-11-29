@@ -16,10 +16,14 @@ import {
   deleteTaskError
 } from 'redux/tasks/actions';
 
-export const getTasks = () => {
+export const getTasks = (token) => {
   return (dispatch) => {
     dispatch(getTasksPending());
-    fetch(`${process.env.REACT_APP_API_URL}/tasks`)
+    fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
+      headers: {
+        token
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -34,10 +38,14 @@ export const getTasks = () => {
   };
 };
 
-export const getOneTask = (id) => {
+export const getOneTask = (id, token) => {
   return (dispatch) => {
     dispatch(getOneTaskPending());
-    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`)
+    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
+      headers: {
+        token
+      }
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -52,13 +60,14 @@ export const getOneTask = (id) => {
   };
 };
 
-export const postTask = (taskBody) => {
+export const postTask = (taskBody, token) => {
   return (dispatch) => {
     dispatch(postTaskPending());
     fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token
       },
       body: JSON.stringify(taskBody)
     })
@@ -76,13 +85,14 @@ export const postTask = (taskBody) => {
   };
 };
 
-export const putTask = (id, taskBody) => {
+export const putTask = (id, taskBody, token) => {
   return (dispatch) => {
     dispatch(putTaskPending());
     fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token
       },
       body: JSON.stringify(taskBody)
     })
@@ -100,11 +110,14 @@ export const putTask = (id, taskBody) => {
   };
 };
 
-export const deleteTask = (id) => {
+export const deleteTask = (id, token) => {
   return (dispatch) => {
     dispatch(deleteTaskPending());
     fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        token
+      }
     })
       .then((response) => {
         if (response.status !== 204) {
