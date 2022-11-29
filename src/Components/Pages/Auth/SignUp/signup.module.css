@@ -55,11 +55,6 @@
   transform: scale(0.98);
 }
 
-.btnblock {
-  display: block;
-  width: 100%;
-}
-
 .formcontrol {
   margin: 20px 0;
 }

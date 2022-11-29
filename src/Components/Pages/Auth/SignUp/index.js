@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import styles from 'Components/Pages/Auth/SignUp/signup.module.css';
 import Button from 'Components/Shared/Button/Button';
@@ -16,10 +15,6 @@ const EmployeeForm = () => {
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.employees);
   const [requested, setRequested] = useState(false);
-  const employeeId = useParams().id;
-  const employee = useSelector((state) =>
-    state.employees.list.find((employee) => employee._id === employeeId)
-  );
 
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
@@ -28,8 +23,7 @@ const EmployeeForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    reset
+    formState: { errors }
   } = useForm({
     mode: 'onChange',
     resolver: joiResolver(schema)
@@ -50,27 +44,15 @@ const EmployeeForm = () => {
       setTextModal(error);
       openModal();
       setRequested(false);
-    } else if (!employeeId && requested) {
+    } else if (requested) {
       setTextModal('Employee created successfully');
       openModal();
       setRequested(false);
     }
   }, [error]);
 
-  const employeeData = {
-    name: employee?.name,
-    lastName: employee?.lastName,
-    email: employee?.email,
-    phone: employee?.phone,
-    password: employee?.password
-  };
-
   useEffect(() => {
     dispatch(clearError());
-    if (employeeId) {
-      reset(employeeData);
-      return;
-    }
   }, []);
 
   const onSubmit = (data) => {
