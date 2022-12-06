@@ -6,24 +6,19 @@ import Header from 'Components/Shared/Header/index';
 import Sidebar from 'Components/Shared/Sidebar';
 import styles from 'Components/Layout/AdminLayout/layout.module.css';
 
-const Projects = lazy(() => import('Components/Projects/index'));
-const ProjectForm = lazy(() => import('Components/Projects/Form/index'));
-const TimeSheets = lazy(() => import('Components/TimeSheets/index'));
-const TimeSheetsForm = lazy(() => import('Components/TimeSheets/Form/index'));
-const Employees = lazy(() => import('Components/Employees/index'));
-const EmployeeForm = lazy(() => import('Components/Employees/EmployeeForm'));
-const Admins = lazy(() => import('Components/Admins/index'));
-const AdminForm = lazy(() => import('Components/Admins/editAdminForm'));
-const Tasks = lazy(() => import('Components/Tasks/index'));
-const TasksForm = lazy(() => import('Components/Tasks/Form/index'));
+const Projects = lazy(() => import('Components/Pages/Admin/Projects/ProjectList/index'));
+const ProjectForm = lazy(() => import('Components/Pages/Admin/Projects/ProjectForm/index'));
+const Employees = lazy(() => import('Components/Pages/Admin/Employees/EmployeeList/index'));
+const EmployeeForm = lazy(() => import('Components/Pages/Admin/Employees/EmployeeForm/index'));
+const TimeSheets = lazy(() => import('Components/Pages/Admin/TimeSheetsList/index'));
+const MyProfile = lazy(() => import('Components/Pages/Admin/MyProfile/index'));
+const MyProfileForm = lazy(() => import('Components/Pages/Admin/MyProfile/MyProfileForm/index'));
 
 const AdminLayout = () => {
   const sideBarOptions = [
     { link: '/admin/projects', label: 'Projects' },
-    { link: '/admin/timesheets', label: 'Timesheets' },
     { link: '/admin/employees', label: 'Employees' },
-    { link: '/admin/tasks', label: 'Tasks' },
-    { link: '/admin/admins', label: 'Admins' },
+    { link: '/admin/timesheets', label: 'TimeSheets' },
     { link: '/admin/profile', label: 'Profile' }
   ];
   let path = useLocation().pathname.split('/');
@@ -40,18 +35,13 @@ const AdminLayout = () => {
             <Route exact path="/admin/projects" component={Projects} />
             <Route exact path="/admin/project-form" component={ProjectForm} />
             <Route path="/admin/project-form/:id" component={ProjectForm} />
-            <Route exact path="/admin/timesheets" component={TimeSheets} />
-            <Route exact path="/admin/time-sheet-form" component={TimeSheetsForm} />
-            <Route path="/admin/time-sheet-form/:id" component={TimeSheetsForm} />
-            <Route exact path="/admin/tasks" component={Tasks} />
-            <Route exact path="/admin/task-form" component={TasksForm} />
-            <Route path="/admin/task-form/:id" component={TasksForm} />
-            <Route exact path="/admin/admins" component={Admins} />
-            <Route exact path="/admin/admin-form" component={AdminForm} />
-            <Route path="/admin/admin-form/:id" component={AdminForm} />
             <Route exact path="/admin/employees" component={Employees} />
             <Route exact path="/admin/employee-form" component={EmployeeForm} />
             <Route path="/admin/employee-form/:id" component={EmployeeForm} />
+            <Route exact path="/admin/timesheets" component={TimeSheets} />
+            <Route exact path="/admin/profile" component={MyProfile} />
+            <Route exact path="/admin/profile-form" component={MyProfileForm} />
+            <Route path="/admin/profile-form/:id" component={MyProfileForm} />
             <Route path="/admin">
               <Redirect to="/admin/projects" />
             </Route>

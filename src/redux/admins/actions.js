@@ -2,6 +2,9 @@ import {
   GET_ADMINS_PENDING,
   GET_ADMINS_SUCCESS,
   GET_ADMINS_ERROR,
+  GET_ONE_ADMIN_PENDING,
+  GET_ONE_ADMIN_SUCCESS,
+  GET_ONE_ADMIN_ERROR,
   POST_ADMIN_PENDING,
   POST_ADMIN_SUCCESS,
   POST_ADMIN_ERROR,
@@ -29,6 +32,26 @@ export const getAdminsSuccess = (payload) => {
 export const getAdminsError = (error) => {
   return {
     type: GET_ADMINS_ERROR,
+    payload: error
+  };
+};
+
+export const getOneAdminPending = () => {
+  return {
+    type: GET_ONE_ADMIN_PENDING
+  };
+};
+
+export const getOneAdminSuccess = (payload) => {
+  return {
+    type: GET_ONE_ADMIN_SUCCESS,
+    payload
+  };
+};
+
+export const getOneAdminError = (error) => {
+  return {
+    type: GET_ONE_ADMIN_ERROR,
     payload: error
   };
 };

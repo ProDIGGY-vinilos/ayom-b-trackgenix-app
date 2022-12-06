@@ -2,6 +2,9 @@ import {
   getAdminsPending,
   getAdminsSuccess,
   getAdminsError,
+  getOneAdminPending,
+  getOneAdminSuccess,
+  getOneAdminError,
   postAdminPending,
   postAdminSuccess,
   postAdminError,
@@ -31,6 +34,28 @@ export const getAdmins = (token) => {
       })
       .catch((err) => {
         dispatch(getAdminsError(err.toString()));
+      });
+  };
+};
+
+export const getOneAdmin = (id, token) => {
+  return (dispatch) => {
+    dispatch(getOneAdminPending());
+    fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+      headers: {
+        token
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getOneAdminSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getOneAdminError(error.toString()));
       });
   };
 };
