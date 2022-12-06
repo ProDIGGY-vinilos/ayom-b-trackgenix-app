@@ -19,6 +19,9 @@ const Home = () => {
       <Link className={styles.link} to="/admin">
         Admin Page
       </Link>
+      <Link className={styles.link} to="/super-admin">
+        Super Admin Page
+      </Link>
     </section>
   );
 };
