@@ -38,7 +38,7 @@ export const getSuperAdmins = (token) => {
   };
 };
 
-export const getSuperAdminsById = (id, token) => {
+export const getOneSuperAdmin = (id, token) => {
   return (dispatch) => {
     dispatch(getOneSuperAdminPending());
     fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
@@ -84,16 +84,21 @@ export const postSuperAdmin = (superAdminId, superAdmin) => {
   };
 };
 
-export const putSuperAdmin = (superAdminId, superAdmin, token) => {
+export const putSuperAdmin = (data, id, token) => {
   return (dispatch) => {
     dispatch(putSuperAdminPending());
-    fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${superAdminId}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         token
       },
-      body: JSON.stringify(superAdmin)
+      body: JSON.stringify({
+        name: data.name,
+        lastName: data.lastName,
+        email: data.email,
+        password: data.password
+      })
     })
       .then((response) => response.json())
       .then((data) => {
