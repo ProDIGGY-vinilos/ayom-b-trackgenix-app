@@ -30,6 +30,7 @@ export const tokenListener = () => {
               email
             })
           );
+          sessionStorage.setItem('token', token);
         }
       } catch (error) {
         alert('Error', error);
