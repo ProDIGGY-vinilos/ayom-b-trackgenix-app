@@ -8,7 +8,7 @@ import { getOneSuperAdmin } from 'redux/superAdmins/thunks';
 const SuperAdminProfile = () => {
   const dispatch = useDispatch();
   const { list: superAdminsList, isLoading } = useSelector((state) => state.superAdmins);
-  const superAdminId = '638f920fd9cb9c970c557bc5';
+  const superAdminId = '63856ffc3e4dfd7aeec3ce1d';
   const token = sessionStorage.getItem('token');
 
   useEffect(() => {

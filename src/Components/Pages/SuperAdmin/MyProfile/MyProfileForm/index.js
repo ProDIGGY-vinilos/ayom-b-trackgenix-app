@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { postSuperAdmin, putSuperAdmin } from 'redux/superAdmins/thunks';
 import { schema } from 'Components/Admins/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { reLogin } from 'redux/auth/thunks';
 
 function Form() {
   const dispatch = useDispatch();
@@ -92,6 +93,12 @@ function Form() {
     if (superAdminId) {
       dispatch(putSuperAdmin(data, superAdminId, token));
       if (!error) {
+        dispatch(
+          reLogin({
+            email: data.email,
+            password: data.password
+          })
+        );
         setTypeModal('Success');
         setTextMessageModal('The administrator was edited successfully');
         openMessageModal();

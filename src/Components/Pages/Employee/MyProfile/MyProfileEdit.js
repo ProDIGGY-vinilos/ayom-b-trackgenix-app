@@ -9,12 +9,13 @@ import { useForm } from 'react-hook-form';
 import { getOneEmployee, putEmployee } from 'redux/employees/thunks';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { schema } from 'Components/Employees/validation';
+import { reLogin } from 'redux/auth/thunks';
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.employees);
   const [requested, setRequested] = useState(false);
-  const employeeId = '636c1e8ddabe537336ae082a';
+  const employeeId = '638fad574b02e1cdaea288ef';
   const employee = useSelector((state) =>
     state.employees.list.find((employee) => employee._id === employeeId)
   );
@@ -71,9 +72,17 @@ const EmployeeForm = () => {
 
   const onSubmit = (data) => {
     dispatch(putEmployee(employeeId, data, token));
-    setTypeModal('Success');
-    setTextModal('SuperAdmin updated successfully');
-    openModal();
+    if (!error) {
+      dispatch(
+        reLogin({
+          email: data.email,
+          password: data.password
+        })
+      );
+      setTypeModal('Success');
+      setTextModal('SuperAdmin updated successfully');
+      openModal();
+    }
   };
 
   return (
