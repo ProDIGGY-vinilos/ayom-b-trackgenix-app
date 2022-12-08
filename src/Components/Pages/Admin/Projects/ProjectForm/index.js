@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import FormEmployee from 'Components/Projects/Form/FormEmployees/index';
+import FormEmployee from 'Components/Pages/Admin/Projects/ProjectForm/ProjectEmployees';
 import DatePicker from 'Components/Shared/Datepicker';
 import Modal from 'Components/Shared/Modal/ActionModal';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import styles from 'Components/Projects/Form/form.module.css';
 import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
-import TextAreaField from 'Components/Shared/TextArea';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -20,6 +19,7 @@ const Project = () => {
   const projectData = useSelector((state) =>
     state.projects.list.find((project) => project._id === projectId)
   );
+
   const token = sessionStorage.getItem('token');
 
   const [showModal, setShowModal] = useState(false);
@@ -33,6 +33,7 @@ const Project = () => {
 
   const dispatch = useDispatch();
   const {
+    control,
     register,
     handleSubmit,
     reset,
@@ -60,19 +61,23 @@ const Project = () => {
     setShowSharedModal(false);
   };
 
+  const employeesMap = () => {
+    projectData?.employees.map((index) => {
+      return {
+        employee: projectData?.employees[index]?.employee,
+        role: projectData?.employees[index]?.role,
+        rate: projectData?.employees[index]?.rate
+      };
+    });
+  };
+
   let projectBodyData = {
     name: projectData?.name,
     description: projectData?.description,
     startDate: projectData?.startDate.substring(0, 10),
     endDate: projectData?.endDate.substring(0, 10),
     clientName: projectData?.clientName,
-    employees: [
-      {
-        employee: projectData?.employees[0].employee._id,
-        role: projectData?.employees[0].role,
-        rate: projectData?.employees[0].rate
-      }
-    ]
+    employees: employeesMap()
   };
 
   useEffect(() => {
@@ -88,7 +93,6 @@ const Project = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getEmployees(token));
     if (projectId) {
       setIsFetched(true);
       if (projectData !== undefined) {
@@ -98,13 +102,13 @@ const Project = () => {
           startDate: projectData?.startDate.substring(0, 10),
           endDate: projectData?.endDate.substring(0, 10),
           clientName: projectData?.clientName,
-          employees: [
-            {
-              employee: projectData?.employees[0]?.employee._id,
-              role: projectData?.employees[0]?.role,
-              rate: projectData?.employees[0]?.rate
-            }
-          ]
+          employees: projectData?.employees.map((employee) => {
+            return {
+              employee: employee.employee._id,
+              role: employee.role,
+              rate: employee.rate
+            };
+          })
         };
         reset(projectBodyData);
       } else {
@@ -173,14 +177,14 @@ const Project = () => {
         </div>
         <div className={styles.formFull}>
           <label>Description</label>
-          <TextAreaField
-            className={styles.textarea}
+          <textarea
             name="description"
-            placeholder="Description"
-            register={register}
-            columns="100"
-            error={errors.description?.message}
-          />
+            cols="30"
+            rows="10"
+            {...register('description')}
+            className={styles.textarea}
+          ></textarea>
+          {errors.description && <p>{errors.description.message}</p>}
         </div>
         <div className={styles.formDiv}>
           <DatePicker
@@ -200,7 +204,12 @@ const Project = () => {
         </div>
         <h4 className={styles.formFull}>Employees: </h4>
         <div className={`${styles.formFull} ${styles.employeesDiv}`}>
-          <FormEmployee employees={employeesList} register={register} errors={errors} />
+          <FormEmployee
+            control={control}
+            employees={employeesList}
+            register={register}
+            errors={errors}
+          />
         </div>
         <Button onClick={openModal} style="squaredPrimary" disabled={false} text="Save" />
       </form>

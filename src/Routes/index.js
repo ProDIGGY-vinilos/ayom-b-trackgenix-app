@@ -14,7 +14,6 @@ const SignUp = lazy(() => import('Components/Pages/Auth/SignUp/index'));
 const Routes = () => {
   useEffect(() => {
     tokenListener();
-    console.log('tokenListener');
   }, []);
   return (
     <BrowserRouter>
