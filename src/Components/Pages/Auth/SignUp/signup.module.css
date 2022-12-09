@@ -1,4 +1,95 @@
+.title {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  padding-left: 65px;
+  margin: 0px;
+  font-size: 45px;
+  color: #fff;
+  background-color: #373867;
+}
+
+.signUpDesign {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100%;
+}
+
+.imgForm {
+  background-image: url(./assets/sign-up-clock.png);
+  background-repeat: no-repeat;
+  background-size: 625px;
+  background-position: center;
+  background-position-y: 50px;
+  width: 60%;
+}
+
+.divForm {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-left: 0px;
+  margin-bottom: 200px;
+  width: 40%;
+}
+
 .container {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+.formControl input {
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  width: 100%;
+  font-size: 20px;
+  border-radius: 10px;
+  margin-top: 15px;
+  text-indent: 15px;
+}
+
+.titleForm {
+  align-content: left;
+  font-size: 30px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.formNameLast {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+
+.formNameLast input {
+  width: 90%;
+}
+
+.formControl {
+  width: 95%;
+}
+
+.divBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 96%;
+  margin-top: 20px;
+}
+
+.haveAccount {
+  font-size: 20px;
+
+}
+
+.link {
+  text-decoration: none;
+  font-weight: 700;
+  color: #373867;
+}
+/* .container {
   margin: auto;
   width: 30%;
   display: flex;
@@ -19,9 +110,16 @@
   color: #fff;
   background-color: #373867;
 }
-
+.imgForm {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
 .divForm {
-  margin-top: 100px;
+  margin: 0px;
+  padding: 0px;
+  background-color: aquamarine;
 }
 
 .titleForm {
@@ -81,4 +179,4 @@
   width: 40%;
   justify-content: space-between;
   padding-left: 30px;
-}
+} */
