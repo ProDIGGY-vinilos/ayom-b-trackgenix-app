@@ -1,10 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { lazy, Suspense } from 'react';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import { Route, Redirect, useLocation } from 'react-router-dom';
 import createTitle from 'Helpers/create-title.js';
-import Header from 'Components/Shared/Header/index';
-import Sidebar from 'Components/Shared/Sidebar';
-import styles from 'Components/Layout/EmployeeLayout/layout.module.css';
+import Layout from 'Components/Shared/Layout';
 
 const ProjectsList = lazy(() => import('Components/Pages/Employee/ProjectList/index'));
 const TimeSheets = lazy(() => import('Components/Pages/Employee/TimeSheetsList/index'));
@@ -12,7 +10,7 @@ const TimeSheetsForm = lazy(() => import('Components/Pages/Employee/TimeSheetsLi
 const MyProfile = lazy(() => import('Components/Pages/Employee/MyProfile/MyProfile'));
 const MyProfileForm = lazy(() => import('Components/Pages/Employee/MyProfile/MyProfileEdit'));
 
-const Layout = () => {
+const EmployeeLayout = () => {
   const sideBarOptions = [
     { link: '/employee/projects', label: 'Projects' },
     { link: '/employee/timesheets', label: 'Timesheets' },
@@ -22,26 +20,18 @@ const Layout = () => {
   path = path[path.length - 1];
   path = createTitle(path);
   return (
-    <div className={styles.container}>
-      <Header header={path} />
-      <div className={styles.bodyContainer}>
-        <Sidebar options={sideBarOptions} user={'Employee'} />
-        <Suspense fallback={<div>Loading...</div>}>
-          <Switch>
-            <Route exact path="/employee/projects" component={ProjectsList} />
-            <Route exact path="/employee/timesheets" component={TimeSheets} />
-            <Route exact path="/employee/time-sheet-form" component={TimeSheetsForm} />
-            <Route path="/employee/time-sheet-form/:id" component={TimeSheetsForm} />
-            <Route exact path="/employee/profile" component={MyProfile} />
-            <Route exact path="/employee/profile-form" component={MyProfileForm} />
-            <Route path="/employee">
-              <Redirect to="/employee/projects" />
-            </Route>
-          </Switch>
-        </Suspense>
-      </div>
-    </div>
+    <Layout sidebarOptions={sideBarOptions} user={'Employee'} path={path}>
+      <Route exact path="/employee/projects" component={ProjectsList} />
+      <Route exact path="/employee/timesheets" component={TimeSheets} />
+      <Route exact path="/employee/time-sheet-form" component={TimeSheetsForm} />
+      <Route path="/employee/time-sheet-form/:id" component={TimeSheetsForm} />
+      <Route exact path="/employee/profile" component={MyProfile} />
+      <Route exact path="/employee/profile-form" component={MyProfileForm} />
+      <Route path="/employee">
+        <Redirect to="/employee/projects" />
+      </Route>
+    </Layout>
   );
 };
 
-export default Layout;
+export default EmployeeLayout;
