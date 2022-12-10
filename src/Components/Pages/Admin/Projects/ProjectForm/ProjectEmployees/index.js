@@ -40,7 +40,7 @@ const FormEmployee = ({ register, control, errors, employees }) => {
                 placeholder="Rate"
                 label="Rate"
                 register={register}
-                error={errors.employees?.rate?.message}
+                error={errors.employees?.[index]?.rate.message}
               />
             </div>
             <button type="button" onClick={() => remove(index)}>

@@ -13,6 +13,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { schema } from 'Components/Projects/validations';
 import { getOneProject, postProject, putProject } from 'redux/projects/thunks';
 import { getEmployees } from 'redux/employees/thunks';
+import TextAreaField from 'Components/Shared/TextArea';
 
 const Project = () => {
   const projectId = useParams().id;
@@ -125,6 +126,10 @@ const Project = () => {
     setModalMessage(error);
   }, [error]);
 
+  useEffect(() => {
+    console.log(errors);
+  }, [Object.keys(errors).length]);
+
   const setModalMessage = (error) => {
     if (error) {
       setTypeModal('Error');
@@ -176,15 +181,14 @@ const Project = () => {
           />
         </div>
         <div className={styles.formFull}>
-          <label>Description</label>
-          <textarea
+          <TextAreaField
+            label="Description"
             name="description"
-            cols="30"
-            rows="10"
-            {...register('description')}
-            className={styles.textarea}
-          ></textarea>
-          {errors.description && <p>{errors.description.message}</p>}
+            placeholder="Project description..."
+            register={register}
+            columns="30"
+            error={errors.description?.message}
+          />
         </div>
         <div className={styles.formDiv}>
           <DatePicker

@@ -93,7 +93,6 @@ function Form() {
 
   const getNewToken = async () => {
     await auth.currentUser.getIdToken(true);
-    /* await auth.currentUser.reload(); */
     await onIdTokenChanged(auth, async (user) => {
       if (user) {
         try {
