@@ -119,3 +119,9 @@
     font-size: 16px;
     transition-duration: 0.4s;
 }
+
+.squaredSecondary2:hover {
+    cursor: pointer;
+    background-color: #373867;
+    color: #ffffff;
+}
