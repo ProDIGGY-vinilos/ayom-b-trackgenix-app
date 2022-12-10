@@ -2,6 +2,9 @@ import {
   LOGIN_PENDING,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
+  RELOGIN_PENDING,
+  RELOGIN_SUCCESS,
+  RELOGIN_ERROR,
   SIGN_UP_PENDING,
   SIGN_UP_SUCCESS,
   SIGN_UP_ERROR,
@@ -29,9 +32,12 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: true,
         error: ''
       };
+    case RELOGIN_PENDING:
+      return { ...state };
     case LOGIN_ERROR:
     case LOGOUT_ERROR:
     case SIGN_UP_ERROR:
+    case RELOGIN_ERROR:
       return {
         ...state,
         isLoading: false,
@@ -43,6 +49,12 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         authenticated: true,
         role: action.payload.role
+      };
+    }
+    case RELOGIN_SUCCESS: {
+      return {
+        ...state,
+        authenticated: true
       };
     }
     case LOGOUT_SUCCESS: {
