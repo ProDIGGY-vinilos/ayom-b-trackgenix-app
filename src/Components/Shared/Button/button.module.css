@@ -88,7 +88,7 @@
     margin: 4px 2px;
     padding: 10px 20px;
     text-align: center;
-    height: 50px;
+    height: 100%;
     width: 100%;
     background-color: #373867;
     border: 2px solid #373867;
@@ -108,8 +108,8 @@
     display: flex;
     justify-content: flex-end;
     margin: 4px 2px;
-    padding: 14px 20px;
-    height: 50px;
+    padding: 17px 20px;
+    height: 100%;
     text-align: center;
     background-color: #ffffff;
     border: 2px solid #373867;
