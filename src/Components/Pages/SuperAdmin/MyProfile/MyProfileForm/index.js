@@ -10,6 +10,9 @@ import { postSuperAdmin, putSuperAdmin } from 'redux/superAdmins/thunks';
 import { schema } from 'Components/Admins/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { reLogin } from 'redux/auth/thunks';
+/* import { auth } from 'Helpers/firebase/index';
+import { onIdTokenChanged } from 'firebase/auth';
+import { loginSuccess, logoutSuccess } from 'redux/auth/actions'; */
 
 function Form() {
   const dispatch = useDispatch();
@@ -89,7 +92,34 @@ function Form() {
     }
   };
 
-  const onSubmit = (data) => {
+  /* const getNewToken = async () => {
+    await auth.currentUser.getIdToken(true);
+    await onIdTokenChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const {
+            token,
+            claims: { role, email }
+          } = await user.getIdTokenResult();
+          if (token) {
+            dispatch(
+              loginSuccess({
+                role,
+                email
+              })
+            );
+            sessionStorage.setItem('token', token);
+          }
+        } catch (error) {
+          alert('Error', error);
+        }
+      } else {
+        dispatch(logoutSuccess());
+      }
+    });
+  }; */
+
+  const onSubmit = async (data) => {
     if (superAdminId) {
       dispatch(putSuperAdmin(data, superAdminId, token));
       if (!error) {
@@ -111,6 +141,7 @@ function Form() {
         openMessageModal();
       }
     }
+    /* await getNewToken(); */
   };
 
   return (

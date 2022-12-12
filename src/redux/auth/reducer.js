@@ -48,7 +48,8 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         authenticated: true,
-        role: action.payload.role
+        role: action.payload.role,
+        email: action.payload.email
       };
     }
     case RELOGIN_SUCCESS: {
