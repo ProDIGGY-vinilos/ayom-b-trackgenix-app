@@ -12,9 +12,8 @@ import { schema } from 'Components/Employees/validation';
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.employees);
-  const [requested, setRequested] = useState(false);
-  const employeeId = '636c1e8ddabe537336ae082a';
+  const { error, message } = useSelector((state) => state.employees);
+  const employeeId = '6395035b52d8ee68e3a7af99';
   const employee = useSelector((state) =>
     state.employees.list.find((employee) => employee._id === employeeId)
   );
@@ -47,12 +46,12 @@ const EmployeeForm = () => {
       setTypeModal('Error');
       setTextModal(error);
       openModal();
-      setRequested(false);
-    } else if (employeeId && requested) {
+    } else if (message) {
+      setTypeModal('Success');
+      setTextModal(message);
       openModal();
-      setRequested(false);
     }
-  }, [error]);
+  }, [error, message]);
 
   const employeeData = {
     name: employee?.name,
@@ -71,9 +70,6 @@ const EmployeeForm = () => {
 
   const onSubmit = (data) => {
     dispatch(putEmployee(employeeId, data, token));
-    setTypeModal('Success');
-    setTextModal('SuperAdmin updated successfully');
-    openModal();
   };
 
   return (

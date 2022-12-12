@@ -8,7 +8,7 @@ import { getOneEmployee } from 'redux/employees/thunks';
 const EmployeeProfile = () => {
   const dispatch = useDispatch();
   const { list: employeesList, isLoading } = useSelector((state) => state.employees);
-  const employeeId = '636c1e8ddabe537336ae082a';
+  const employeeId = '6395035b52d8ee68e3a7af99';
   const token = sessionStorage.getItem('token');
 
   useEffect(() => {

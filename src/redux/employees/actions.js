@@ -14,7 +14,7 @@ import {
   DELETE_EMPLOYEE_PENDING,
   DELETE_EMPLOYEE_SUCCESS,
   DELETE_EMPLOYEE_ERROR,
-  CLEAR_ERROR
+  CLEAR_ERROR_MESSAGE
 } from 'redux/employees/constant';
 
 export const getEmployeesPending = () => {
@@ -119,6 +119,6 @@ export const deleteEmployeesError = (error) => {
 
 export const clearError = () => {
   return {
-    type: CLEAR_ERROR
+    type: CLEAR_ERROR_MESSAGE
   };
 };
