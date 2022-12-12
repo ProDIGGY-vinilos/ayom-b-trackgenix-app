@@ -83,12 +83,13 @@ const Login = (props) => {
     <>
       <h2 className={styles.title}>TRACKGENIX</h2>
       <div className={styles.container}>
-        <div>
+        <div className={styles.loginImage}></div>
+        <div className={styles.loginContainer}>
           <h3 className={styles.login}>Login</h3>
           <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.flexForm}>
               <InputField
-                label="Email"
+                label=""
                 name="email"
                 type="text"
                 placeholder="Email"
@@ -98,7 +99,7 @@ const Login = (props) => {
             </div>
             <div className={styles.flexForm}>
               <InputField
-                label="Password"
+                label=""
                 name="password"
                 type={!showPassword ? 'password' : 'text'}
                 placeholder="Password"
@@ -111,12 +112,11 @@ const Login = (props) => {
               <input type="checkbox" onClick={() => viewPassword()} />
             </div>
             <div className={styles.buttons}>
-              <Button href="/home" style="squaredPrimary" disabled={false} text="Back" />
               <Button
                 onClick={handleSubmit(onSubmit)}
                 style="squaredPrimary"
                 disabled={false}
-                text="Submit"
+                text="Login"
               />
               <p>
                 New to Trackgenix?{' '}
