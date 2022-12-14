@@ -9,7 +9,8 @@ import { useForm } from 'react-hook-form';
 import { getOneEmployee, putEmployee } from 'redux/employees/thunks';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { schema } from 'Components/Employees/validation';
-import { reLogin } from 'redux/auth/thunks';
+import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
+import { auth } from 'Helpers/firebase/index';
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,14 @@ const EmployeeForm = () => {
     setShowModal(false);
   };
 
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    }
+  };
+
   useEffect(() => {
     if (error) {
       setTypeModal('Error');
@@ -70,15 +79,19 @@ const EmployeeForm = () => {
     reset(employeeData);
   }, [employee]);
 
+  const reAuth = (data) => {
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(user.email, data.password);
+
+    reauthenticateWithCredential(user, credential).catch((error) => {
+      openModalOnError(error);
+    });
+  };
+
   const onSubmit = (data) => {
     dispatch(putEmployee(employeeId, data, token));
     if (!error) {
-      dispatch(
-        reLogin({
-          email: data.email,
-          password: data.password
-        })
-      );
+      dispatch(reAuth(data));
       setTypeModal('Success');
       setTextModal('SuperAdmin updated successfully');
       openModal();

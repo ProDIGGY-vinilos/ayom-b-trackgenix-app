@@ -3,16 +3,18 @@ import styles from 'Components/Employees/employees.module.css';
 import Table from 'Components/Shared/Table';
 import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOneAdmin } from 'redux/admins/thunks';
+import { getAdminByFirebaseUid } from 'redux/admins/thunks';
 
 const AdminProfile = () => {
   const dispatch = useDispatch();
-  const { list: adminsList, isLoading } = useSelector((state) => state.admins);
-  const adminId = '6384cc21efce54826a2b23ca';
+  const { list: adminList, isLoading } = useSelector((state) => state.admins);
+  const { firebaseUid } = useSelector((state) => state.auth);
   const token = sessionStorage.getItem('token');
 
   useEffect(() => {
-    dispatch(getOneAdmin(adminId, token));
+    if (!adminList.length || adminList.length > 1) {
+      dispatch(getAdminByFirebaseUid(firebaseUid, token));
+    }
   }, []);
 
   const columns = [
@@ -29,9 +31,9 @@ const AdminProfile = () => {
   return (
     <section className={styles.container}>
       <h2>Admin</h2>
-      <Table data={adminsList} columns={columns} edit="/employee/profile" />
+      <Table data={adminList} columns={columns} edit="/admin/profile" />
       <Button
-        href={`profile-form/${adminId}`}
+        href={`profile-form/${adminList[0]?._id}`}
         style="squaredPrimary"
         disabled={false}
         text="Edit"

@@ -1,28 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styles from 'Components/Employees/employees.module.css';
 import Table from 'Components/Shared/Table';
 import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getSuperAdmins } from 'redux/superAdmins/thunks';
+import { getSuperAdminByFirebaseUid } from 'redux/superAdmins/thunks';
 
 const SuperAdminProfile = () => {
   const dispatch = useDispatch();
   const { list: superAdminsList, isLoading } = useSelector((state) => state.superAdmins);
-  const { email: authEmail } = useSelector((state) => state.auth);
-  const superAdmin = superAdminsList.filter((superAdmin) => superAdmin.email === authEmail);
-  const [superAdminId, setSuperAdminId] = useState('');
+  const { firebaseUid } = useSelector((state) => state.auth);
   const token = sessionStorage.getItem('token');
 
   useEffect(() => {
-    dispatch(getSuperAdmins(token));
-  }, []);
-
-  useEffect(() => {
-    if (superAdminsList.length) {
-      const superAdmin = superAdminsList.find((superAdmin) => superAdmin.email === authEmail);
-      setSuperAdminId(superAdmin._id);
+    if (!superAdminsList.length || superAdminsList.length > 1) {
+      dispatch(getSuperAdminByFirebaseUid(firebaseUid, token));
     }
-  }, [superAdminsList]);
+  }, []);
 
   const columns = [
     { heading: 'Name', value: 'name' },
@@ -38,9 +31,9 @@ const SuperAdminProfile = () => {
   return (
     <section className={styles.container}>
       <h2>Super Admin</h2>
-      <Table data={superAdmin} columns={columns} edit="/super-admin/profile" />
+      <Table data={superAdminsList} columns={columns} edit="/super-admin/profile" />
       <Button
-        href={`profile-form/${superAdminId}`}
+        href={`profile-form/${superAdminsList[0]._id}`}
         style="squaredPrimary"
         disabled={false}
         text="Edit"

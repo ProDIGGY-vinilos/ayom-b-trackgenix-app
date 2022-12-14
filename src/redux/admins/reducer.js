@@ -5,6 +5,9 @@ import {
   GET_ONE_ADMIN_PENDING,
   GET_ONE_ADMIN_SUCCESS,
   GET_ONE_ADMIN_ERROR,
+  GET_ADMIN_BY_FIREBASE_UID_PENDING,
+  GET_ADMIN_BY_FIREBASE_UID_SUCCESS,
+  GET_ADMIN_BY_FIREBASE_UID_ERROR,
   POST_ADMIN_PENDING,
   POST_ADMIN_SUCCESS,
   POST_ADMIN_ERROR,
@@ -55,6 +58,24 @@ const reducer = (state = INITIAL_STATE, action) => {
         list: [action.payload]
       };
     case GET_ONE_ADMIN_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case GET_ADMIN_BY_FIREBASE_UID_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GET_ADMIN_BY_FIREBASE_UID_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: action.payload
+      };
+    case GET_ADMIN_BY_FIREBASE_UID_ERROR:
       return {
         ...state,
         isLoading: false,

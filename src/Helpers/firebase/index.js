@@ -24,10 +24,12 @@ export const tokenListener = () => {
           claims: { role, email }
         } = await user.getIdTokenResult();
         if (token) {
+          const firebaseUid = user.uid;
           store.dispatch(
             loginSuccess({
               role,
-              email
+              email,
+              firebaseUid
             })
           );
           sessionStorage.setItem('token', token);

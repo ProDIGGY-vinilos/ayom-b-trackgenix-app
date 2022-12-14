@@ -19,6 +19,7 @@ const INITIAL_STATE = {
   authenticated: false,
   role: '',
   email: '',
+  firebaseUid: '',
   error: ''
 };
 
@@ -49,7 +50,8 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         authenticated: true,
         role: action.payload.role,
-        email: action.payload.email
+        email: action.payload.email,
+        firebaseUid: action.payload.firebaseUid
       };
     }
     case RELOGIN_SUCCESS: {
@@ -63,7 +65,8 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         authenticated: false,
-        role: null
+        role: null,
+        firebaseUid: ''
       };
     }
     case SIGN_UP_SUCCESS: {
@@ -77,7 +80,8 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         authenticated: true,
         role: action.payload.role,
-        email: action.payload.email
+        email: action.payload.email,
+        firebaseUid: action.payload.firebaseUid
       };
     }
     default:
