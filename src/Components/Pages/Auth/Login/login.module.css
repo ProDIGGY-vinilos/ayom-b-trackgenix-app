@@ -74,15 +74,17 @@ height: 100vh;
   font-weight: 400;
   line-height: 30px;
 }
+
 .passwordBox{
   position: relative;
 }
-.eye{
+
+.passwordIcon{
   display: flex;
   align-items: center;
   position: absolute;
   height: 100%;
-  top: 0;
+  top: 7px;
   right: 7px;
   padding-right: 1px;
   cursor: pointer;

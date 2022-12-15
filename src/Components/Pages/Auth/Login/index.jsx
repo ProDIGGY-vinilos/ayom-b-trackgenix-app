@@ -110,12 +110,10 @@ const Login = (props) => {
                   placeholder="Password"
                   register={register}
                   error={errors.password?.message}
-                  min="-10"
-                  max="10"
                 />
-                <span className={styles.eye} onClick={() => viewPassword()}>
+                <div className={styles.passwordIcon} onClick={() => viewPassword()}>
                   <i className={showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'}></i>
-                </span>
+                </div>
               </div>
             </div>
             <div className={styles.buttons}>
