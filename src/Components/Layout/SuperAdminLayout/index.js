@@ -7,8 +7,10 @@ import Sidebar from 'Components/Shared/Sidebar';
 
 const Admins = lazy(() => import('Components/Pages/SuperAdmin/Admins/AdminList/index'));
 const AdminForm = lazy(() => import('Components/Pages/SuperAdmin/Admins/AdminForm/index'));
-const MyProfile = lazy(() => import('Components/Pages/SuperAdmin/MyProfile/'));
-const MyProfileForm = lazy(() => import('Components/Pages/SuperAdmin/MyProfile/MyProfileForm'));
+const MyProfile = lazy(() => import('Components/Pages/SuperAdmin/MyProfile/index'));
+const MyProfileForm = lazy(() =>
+  import('Components/Pages/SuperAdmin/MyProfile/MyProfileForm/index')
+);
 
 const SuperAdminLayout = () => {
   const sideBarOptions = [

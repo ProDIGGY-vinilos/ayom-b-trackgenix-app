@@ -126,10 +126,6 @@ const Project = () => {
     setModalMessage(error);
   }, [error]);
 
-  useEffect(() => {
-    console.log(errors);
-  }, [Object.keys(errors).length]);
-
   const setModalMessage = (error) => {
     if (error) {
       setTypeModal('Error');

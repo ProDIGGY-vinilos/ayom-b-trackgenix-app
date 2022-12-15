@@ -5,6 +5,9 @@ import {
   GET_ONE_EMPLOYEE_PENDING,
   GET_ONE_EMPLOYEE_SUCCESS,
   GET_ONE_EMPLOYEE_ERROR,
+  GET_EMPLOYEE_BY_FIREBASE_UID_PENDING,
+  GET_EMPLOYEE_BY_FIREBASE_UID_SUCCESS,
+  GET_EMPLOYEE_BY_FIREBASE_UID_ERROR,
   POST_EMPLOYEE_PENDING,
   POST_EMPLOYEE_SUCCESS,
   POST_EMPLOYEE_ERROR,
@@ -64,6 +67,24 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         error: action.payload,
         list: []
+      };
+    case GET_EMPLOYEE_BY_FIREBASE_UID_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GET_EMPLOYEE_BY_FIREBASE_UID_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: action.payload
+      };
+    case GET_EMPLOYEE_BY_FIREBASE_UID_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
       };
     case POST_EMPLOYEE_PENDING:
       return {

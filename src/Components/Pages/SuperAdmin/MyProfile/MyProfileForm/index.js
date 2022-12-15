@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
-import styles from 'Components/Admins/admins.module.css';
+import styles from 'Components/Pages/SuperAdmin/Admins/admin.module.css';
 import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,9 +9,8 @@ import { useForm } from 'react-hook-form';
 import { postSuperAdmin, putSuperAdmin } from 'redux/superAdmins/thunks';
 import { schema } from 'Components/Admins/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 import { auth } from 'Helpers/firebase/index';
-import { onIdTokenChanged } from 'firebase/auth';
-import { loginSuccess, logoutSuccess } from 'redux/auth/actions';
 
 function Form() {
   const dispatch = useDispatch();
@@ -91,30 +90,12 @@ function Form() {
     }
   };
 
-  const getNewToken = async () => {
-    await auth.currentUser.getIdToken(true);
-    await onIdTokenChanged(auth, async (user) => {
-      if (user) {
-        try {
-          const {
-            token,
-            claims: { role, email }
-          } = await user.getIdTokenResult();
-          if (token) {
-            dispatch(
-              loginSuccess({
-                role,
-                email
-              })
-            );
-            sessionStorage.setItem('token', token);
-          }
-        } catch (error) {
-          alert('Error', error);
-        }
-      } else {
-        dispatch(logoutSuccess());
-      }
+  const reAuth = (data) => {
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(user.email, data.password);
+
+    reauthenticateWithCredential(user, credential).catch((error) => {
+      openModalOnError(error);
     });
   };
 
@@ -122,6 +103,7 @@ function Form() {
     if (superAdminId) {
       dispatch(putSuperAdmin(data, superAdminId, token));
       if (!error) {
+        reAuth(data);
         setTypeModal('Success');
         setTextMessageModal('The administrator was edited successfully');
         openMessageModal();
@@ -134,7 +116,6 @@ function Form() {
         openMessageModal();
       }
     }
-    await getNewToken();
   };
 
   return (

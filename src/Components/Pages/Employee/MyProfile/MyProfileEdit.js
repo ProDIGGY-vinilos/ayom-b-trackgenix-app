@@ -9,12 +9,14 @@ import { useForm } from 'react-hook-form';
 import { getOneEmployee, putEmployee } from 'redux/employees/thunks';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { schema } from 'Components/Employees/validation';
+import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
+import { auth } from 'Helpers/firebase/index';
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.employees);
   const [requested, setRequested] = useState(false);
-  const employeeId = '636c1e8ddabe537336ae082a';
+  const employeeId = '638fad574b02e1cdaea288ef';
   const employee = useSelector((state) =>
     state.employees.list.find((employee) => employee._id === employeeId)
   );
@@ -40,6 +42,14 @@ const EmployeeForm = () => {
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    }
   };
 
   useEffect(() => {
@@ -69,11 +79,23 @@ const EmployeeForm = () => {
     reset(employeeData);
   }, [employee]);
 
+  const reAuth = (data) => {
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(user.email, data.password);
+
+    reauthenticateWithCredential(user, credential).catch((error) => {
+      openModalOnError(error);
+    });
+  };
+
   const onSubmit = (data) => {
     dispatch(putEmployee(employeeId, data, token));
-    setTypeModal('Success');
-    setTextModal('SuperAdmin updated successfully');
-    openModal();
+    if (!error) {
+      dispatch(reAuth(data));
+      setTypeModal('Success');
+      setTextModal('SuperAdmin updated successfully');
+      openModal();
+    }
   };
 
   return (

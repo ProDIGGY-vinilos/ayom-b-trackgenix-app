@@ -5,6 +5,9 @@ import {
   getOneSuperAdminPending,
   getOneSuperAdminSuccess,
   getOneSuperAdminError,
+  getSuperAdminByFirebaseUidPending,
+  getSuperAdminByFirebaseUidSuccess,
+  getSuperAdminByFirebaseUidError,
   postSuperAdminPending,
   postSuperAdminSuccess,
   postSuperAdminError,
@@ -56,6 +59,28 @@ export const getOneSuperAdmin = (id, token) => {
       })
       .catch((error) => {
         dispatch(getOneSuperAdminError(error.toString()));
+      });
+  };
+};
+
+export const getSuperAdminByFirebaseUid = (firebaseUid, token) => {
+  return (dispatch) => {
+    dispatch(getSuperAdminByFirebaseUidPending());
+    fetch(`${process.env.REACT_APP_API_URL}/superAdmins/firebase/${firebaseUid}`, {
+      headers: {
+        token
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getSuperAdminByFirebaseUidSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getSuperAdminByFirebaseUidError(error.toString()));
       });
   };
 };

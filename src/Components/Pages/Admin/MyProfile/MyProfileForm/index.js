@@ -9,6 +9,8 @@ import { useForm } from 'react-hook-form';
 import { postAdmin, putAdmin } from 'redux/admins/thunks';
 import { schema } from 'Components/Admins/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
+import { auth } from 'Helpers/firebase/index';
 
 function Form() {
   const dispatch = useDispatch();
@@ -88,10 +90,20 @@ function Form() {
     }
   };
 
+  const reAuth = (data) => {
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(user.email, data.password);
+
+    reauthenticateWithCredential(user, credential).catch((error) => {
+      openModalOnError(error);
+    });
+  };
+
   const onSubmit = (data) => {
     if (adminId) {
       dispatch(putAdmin(data, adminId, token));
       if (!error) {
+        reAuth(data);
         setTypeModal('Success');
         setTextMessageModal('The administrator was edited successfully');
         openMessageModal();

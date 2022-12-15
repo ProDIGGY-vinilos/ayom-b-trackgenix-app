@@ -1,7 +1,25 @@
 import styles from 'Components/Home/home.module.css';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const Home = () => {
+const Home = (props) => {
+  const { role } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    switch (role) {
+      case 'EMPLOYEE':
+        props.history.push('/employee');
+        break;
+      case 'ADMIN':
+        props.history.push('/admin');
+        break;
+      case 'SUPER_ADMIN':
+        props.history.push('/super-admin');
+        break;
+    }
+  }, [role]);
+
   return (
     <section className={styles.container}>
       <div className={styles.title}>Home</div>

@@ -5,6 +5,9 @@ import {
   getOneEmployeePending,
   getOneEmployeeSuccess,
   getOneEmployeeError,
+  getEmployeeByFirebaseUidPending,
+  getEmployeeByFirebaseUidSuccess,
+  getEmployeeByFirebaseUidError,
   postEmployeesPending,
   postEmployeesSuccess,
   postEmployeesError,
@@ -56,6 +59,28 @@ export const getOneEmployee = (id, token) => {
       })
       .catch((error) => {
         dispatch(getOneEmployeeError(error.toString()));
+      });
+  };
+};
+
+export const getEmployeeByFirebaseUid = (firebaseUid, token) => {
+  return (dispatch) => {
+    dispatch(getEmployeeByFirebaseUidPending());
+    fetch(`${process.env.REACT_APP_API_URL}/employees/firebase/${firebaseUid}`, {
+      headers: {
+        token
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getEmployeeByFirebaseUidSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getEmployeeByFirebaseUidError(error.toString()));
       });
   };
 };
