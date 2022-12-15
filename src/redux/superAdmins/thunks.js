@@ -5,6 +5,9 @@ import {
   getOneSuperAdminPending,
   getOneSuperAdminSuccess,
   getOneSuperAdminError,
+  getSuperAdminByFirebaseUidPending,
+  getSuperAdminByFirebaseUidSuccess,
+  getSuperAdminByFirebaseUidError,
   postSuperAdminPending,
   postSuperAdminSuccess,
   postSuperAdminError,
@@ -38,7 +41,7 @@ export const getSuperAdmins = (token) => {
   };
 };
 
-export const getSuperAdminsById = (id, token) => {
+export const getOneSuperAdmin = (id, token) => {
   return (dispatch) => {
     dispatch(getOneSuperAdminPending());
     fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
@@ -56,6 +59,28 @@ export const getSuperAdminsById = (id, token) => {
       })
       .catch((error) => {
         dispatch(getOneSuperAdminError(error.toString()));
+      });
+  };
+};
+
+export const getSuperAdminByFirebaseUid = (firebaseUid, token) => {
+  return (dispatch) => {
+    dispatch(getSuperAdminByFirebaseUidPending());
+    fetch(`${process.env.REACT_APP_API_URL}/superAdmins/firebase/${firebaseUid}`, {
+      headers: {
+        token
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getSuperAdminByFirebaseUidSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getSuperAdminByFirebaseUidError(error.toString()));
       });
   };
 };
@@ -84,16 +109,21 @@ export const postSuperAdmin = (superAdminId, superAdmin) => {
   };
 };
 
-export const putSuperAdmin = (superAdminId, superAdmin, token) => {
+export const putSuperAdmin = (data, id, token) => {
   return (dispatch) => {
     dispatch(putSuperAdminPending());
-    fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${superAdminId}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         token
       },
-      body: JSON.stringify(superAdmin)
+      body: JSON.stringify({
+        name: data.name,
+        lastName: data.lastName,
+        email: data.email,
+        password: data.password
+      })
     })
       .then((response) => response.json())
       .then((data) => {

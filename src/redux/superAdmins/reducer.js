@@ -5,6 +5,9 @@ import {
   GET_ONE_SUPERADMIN_PENDING,
   GET_ONE_SUPERADMIN_SUCCESS,
   GET_ONE_SUPERADMIN_ERROR,
+  GET_SUPER_ADMIN_BY_FIREBASE_UID_PENDING,
+  GET_SUPER_ADMIN_BY_FIREBASE_UID_SUCCESS,
+  GET_SUPER_ADMIN_BY_FIREBASE_UID_ERROR,
   POST_SUPERADMIN_PENDING,
   POST_SUPERADMIN_SUCCESS,
   POST_SUPERADMIN_ERROR,
@@ -63,6 +66,24 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         error: action.payload,
         list: []
+      };
+    case GET_SUPER_ADMIN_BY_FIREBASE_UID_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GET_SUPER_ADMIN_BY_FIREBASE_UID_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: action.payload
+      };
+    case GET_SUPER_ADMIN_BY_FIREBASE_UID_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
       };
     case POST_SUPERADMIN_PENDING:
       return {

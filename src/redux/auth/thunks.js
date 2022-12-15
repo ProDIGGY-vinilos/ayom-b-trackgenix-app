@@ -1,4 +1,11 @@
-import { loginError, loginPending, logoutError, logoutPending } from './actions';
+import {
+  loginError,
+  reLoginError,
+  loginPending,
+  reLoginPending,
+  logoutError,
+  logoutPending
+} from './actions';
 
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../../Helpers/firebase';
@@ -20,6 +27,23 @@ export const login = (inputData) => {
       return role;
     } catch (error) {
       return dispatch(loginError(error.toString()));
+    }
+  };
+};
+
+export const reLogin = (inputData) => {
+  return async (dispatch) => {
+    dispatch(reLoginPending());
+    try {
+      const userCredencials = await signInWithEmailAndPassword(
+        auth,
+        inputData.email,
+        inputData.password
+      );
+      const { token } = await userCredencials.user.getIdTokenResult();
+      sessionStorage.setItem('token', token);
+    } catch (error) {
+      return dispatch(reLoginError(error.toString()));
     }
   };
 };

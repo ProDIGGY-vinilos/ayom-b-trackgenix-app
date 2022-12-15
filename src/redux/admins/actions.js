@@ -5,6 +5,9 @@ import {
   GET_ONE_ADMIN_PENDING,
   GET_ONE_ADMIN_SUCCESS,
   GET_ONE_ADMIN_ERROR,
+  GET_ADMIN_BY_FIREBASE_UID_PENDING,
+  GET_ADMIN_BY_FIREBASE_UID_SUCCESS,
+  GET_ADMIN_BY_FIREBASE_UID_ERROR,
   POST_ADMIN_PENDING,
   POST_ADMIN_SUCCESS,
   POST_ADMIN_ERROR,
@@ -52,6 +55,26 @@ export const getOneAdminSuccess = (payload) => {
 export const getOneAdminError = (error) => {
   return {
     type: GET_ONE_ADMIN_ERROR,
+    payload: error
+  };
+};
+
+export const getAdminByFirebaseUidPending = () => {
+  return {
+    type: GET_ADMIN_BY_FIREBASE_UID_PENDING
+  };
+};
+
+export const getAdminByFirebaseUidSuccess = (payload) => {
+  return {
+    type: GET_ADMIN_BY_FIREBASE_UID_SUCCESS,
+    payload
+  };
+};
+
+export const getAdminByFirebaseUidError = (error) => {
+  return {
+    type: GET_ADMIN_BY_FIREBASE_UID_ERROR,
     payload: error
   };
 };

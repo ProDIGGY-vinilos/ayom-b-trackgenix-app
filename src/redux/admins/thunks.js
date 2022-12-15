@@ -5,6 +5,9 @@ import {
   getOneAdminPending,
   getOneAdminSuccess,
   getOneAdminError,
+  getAdminByFirebaseUidPending,
+  getAdminByFirebaseUidSuccess,
+  getAdminByFirebaseUidError,
   postAdminPending,
   postAdminSuccess,
   postAdminError,
@@ -56,6 +59,28 @@ export const getOneAdmin = (id, token) => {
       })
       .catch((error) => {
         dispatch(getOneAdminError(error.toString()));
+      });
+  };
+};
+
+export const getAdminByFirebaseUid = (firebaseUid, token) => {
+  return (dispatch) => {
+    dispatch(getAdminByFirebaseUidPending());
+    fetch(`${process.env.REACT_APP_API_URL}/admins/firebase/${firebaseUid}`, {
+      headers: {
+        token
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getAdminByFirebaseUidSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getAdminByFirebaseUidError(error.toString()));
       });
   };
 };
