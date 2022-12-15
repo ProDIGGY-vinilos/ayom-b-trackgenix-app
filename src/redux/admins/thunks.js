@@ -106,7 +106,7 @@ export const postAdmin = (data, token) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(postAdminSuccess(data.data));
+          dispatch(postAdminSuccess(data));
         }
       })
       .catch((err) => {
@@ -136,7 +136,7 @@ export const putAdmin = (data, id, token) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(putAdminSuccess(data.data));
+          dispatch(putAdminSuccess(data));
         }
       })
       .catch((err) => {

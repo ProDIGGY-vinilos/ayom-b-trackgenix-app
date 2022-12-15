@@ -16,13 +16,15 @@ import {
   PUT_ADMIN_ERROR,
   DELETE_ADMIN_PENDING,
   DELETE_ADMIN_SUCCESS,
-  DELETE_ADMIN_ERROR
+  DELETE_ADMIN_ERROR,
+  CLEAR_ERROR_MESSAGE
 } from 'redux/admins/constant';
 
 const INITIAL_STATE = {
   list: [],
   isLoading: false,
-  error: ''
+  error: '',
+  message: ''
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -89,9 +91,10 @@ const reducer = (state = INITIAL_STATE, action) => {
     case POST_ADMIN_SUCCESS:
       return {
         ...state,
-        list: [...state.list, action.data],
+        list: [...state.list, action.payload.data],
         error: '',
-        isLoading: false
+        isLoading: false,
+        message: action.payload.message
       };
     case POST_ADMIN_ERROR:
       return {
@@ -107,6 +110,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case PUT_ADMIN_SUCCESS:
       return {
         ...state,
+        message: action.payload.message,
         list: [
           ...state.list.map((admin) => {
             if (admin._id === action.data._id) {
@@ -133,7 +137,8 @@ const reducer = (state = INITIAL_STATE, action) => {
     case DELETE_ADMIN_SUCCESS:
       return {
         ...state,
-        list: [...state.list.filter((task) => task._id !== action.payload)],
+        list: [...state.list.filter((task) => task._id !== action.payload.data)],
+        message: action.payload.message,
         error: '',
         isLoading: false
       };
@@ -142,6 +147,12 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: action.payload
+      };
+    case CLEAR_ERROR_MESSAGE:
+      return {
+        ...state,
+        error: '',
+        message: ''
       };
     default:
       return state;

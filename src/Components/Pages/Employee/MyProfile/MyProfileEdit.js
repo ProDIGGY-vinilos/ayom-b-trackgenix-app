@@ -58,7 +58,7 @@ const EmployeeForm = () => {
       openModal();
     } else if (message) {
       setTypeModal('Success');
-      setTextModal(message);
+      setTextModal('User Edited');
       openModal();
     }
   }, [error, message]);

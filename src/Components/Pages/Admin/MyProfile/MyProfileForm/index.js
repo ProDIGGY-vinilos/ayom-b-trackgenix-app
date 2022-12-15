@@ -14,7 +14,7 @@ import { auth } from 'Helpers/firebase/index';
 
 function Form() {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.admins);
+  const { error, message } = useSelector((state) => state.admins);
   const adminId = useParams().id;
   const adminData = useSelector((state) =>
     state.admins.list.find((admin) => admin._id === adminId)
@@ -79,8 +79,16 @@ function Form() {
   }, []);
 
   useEffect(() => {
-    openModalOnError(error);
-  }, [error]);
+    if (error) {
+      setTypeModal('Error');
+      setTextMessageModal(error);
+      openMessageModal();
+    } else if (message) {
+      setTypeModal('Success');
+      setTextMessageModal(message);
+      openMessageModal();
+    }
+  }, [error, message]);
 
   const openModalOnError = (error) => {
     if (error) {

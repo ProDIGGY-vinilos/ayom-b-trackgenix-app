@@ -7,13 +7,13 @@ import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { postAdmin, putAdmin } from 'redux/admins/thunks';
+import { clearError } from 'redux/admins/actions';
 import { schema } from 'Components/Admins/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { login } from 'redux/auth/thunks';
 
 function Form() {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.admins);
+  const { error, message } = useSelector((state) => state.admins);
   const adminId = useParams().id;
   const adminData = useSelector((state) =>
     state.admins.list.find((admin) => admin._id === adminId)
@@ -36,10 +36,12 @@ function Form() {
 
   const openMessageModal = () => {
     setShowMessageModal(true);
+    dispatch(clearError());
   };
 
   const closeMessageModal = () => {
     setShowMessageModal(false);
+    dispatch(clearError());
   };
 
   let data = {
@@ -50,6 +52,7 @@ function Form() {
   };
 
   useEffect(() => {
+    dispatch(clearError());
     reset(data);
   }, []);
 
@@ -78,33 +81,22 @@ function Form() {
   }, []);
 
   useEffect(() => {
-    openModalOnError(error);
-  }, [error]);
-
-  const openModalOnError = (error) => {
     if (error) {
       setTypeModal('Error');
       setTextMessageModal(error);
       openMessageModal();
+    } else if (message) {
+      setTypeModal('Success');
+      setTextMessageModal(message);
+      openMessageModal();
     }
-  };
+  }, [error, message]);
 
   const onSubmit = (data) => {
     if (adminId) {
       dispatch(putAdmin(data, adminId, token));
-      if (!error) {
-        dispatch(login(data));
-        setTypeModal('Success');
-        setTextMessageModal('The administrator was edited successfully');
-        openMessageModal();
-      }
     } else {
       dispatch(postAdmin(data, token));
-      if (!error) {
-        setTypeModal('Success');
-        setTextMessageModal('The administrator was added successfully');
-        openMessageModal();
-      }
     }
   };
 

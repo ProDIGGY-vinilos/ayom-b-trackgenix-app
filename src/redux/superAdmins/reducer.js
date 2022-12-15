@@ -16,7 +16,8 @@ import {
   PUT_SUPERADMIN_ERROR,
   DELETE_SUPERADMIN_PENDING,
   DELETE_SUPERADMIN_SUCCESS,
-  DELETE_SUPERADMIN_ERROR
+  DELETE_SUPERADMIN_ERROR,
+  CLEAR_ERROR_MESSAGE
 } from 'redux/superAdmins/constant';
 
 const INITIAL_STATE = {
@@ -150,6 +151,12 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         error: action.payload,
         list: [...state.list]
+      };
+    case CLEAR_ERROR_MESSAGE:
+      return {
+        ...state,
+        error: '',
+        message: ''
       };
     default:
       return state;

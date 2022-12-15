@@ -16,7 +16,8 @@ import {
   PUT_ADMIN_ERROR,
   DELETE_ADMIN_PENDING,
   DELETE_ADMIN_SUCCESS,
-  DELETE_ADMIN_ERROR
+  DELETE_ADMIN_ERROR,
+  CLEAR_ERROR_MESSAGE
 } from 'redux/admins/constant';
 
 export const getAdminsPending = () => {
@@ -88,7 +89,7 @@ export const postAdminPending = () => {
 export const postAdminSuccess = (data) => {
   return {
     type: POST_ADMIN_SUCCESS,
-    data
+    payload: data
   };
 };
 
@@ -136,5 +137,11 @@ export const deleteAdminError = (error) => {
   return {
     type: DELETE_ADMIN_ERROR,
     payload: error
+  };
+};
+
+export const clearError = () => {
+  return {
+    type: CLEAR_ERROR_MESSAGE
   };
 };

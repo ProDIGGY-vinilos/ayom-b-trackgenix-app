@@ -7,6 +7,7 @@ import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { postSuperAdmin, putSuperAdmin } from 'redux/superAdmins/thunks';
+import { clearError } from 'redux/superAdmins/actions';
 import { schema } from 'Components/Admins/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
@@ -14,7 +15,7 @@ import { auth } from 'Helpers/firebase/index';
 
 function Form() {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.superAdmins);
+  const { error, message } = useSelector((state) => state.superAdmins);
   const superAdminId = useParams().id;
   const superAdminData = useSelector((state) =>
     state.superAdmins.list.find((superAdmin) => superAdmin._id === superAdminId)
@@ -52,6 +53,7 @@ function Form() {
 
   useEffect(() => {
     reset(data);
+    dispatch(clearError);
   }, []);
 
   useEffect(async () => {
@@ -79,8 +81,18 @@ function Form() {
   }, []);
 
   useEffect(() => {
-    openModalOnError(error);
-  }, [error]);
+    if (error) {
+      setTypeModal('Error');
+      setTextMessageModal(error);
+      openMessageModal();
+      dispatch(clearError);
+    } else if (message) {
+      setTypeModal('Success');
+      setTextMessageModal('User Edited');
+      openMessageModal();
+      dispatch(clearError);
+    }
+  }, [error, message]);
 
   const openModalOnError = (error) => {
     if (error) {
