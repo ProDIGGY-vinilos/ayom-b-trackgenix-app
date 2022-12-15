@@ -5,6 +5,9 @@ import {
   GET_ONE_EMPLOYEE_PENDING,
   GET_ONE_EMPLOYEE_SUCCESS,
   GET_ONE_EMPLOYEE_ERROR,
+  GET_EMPLOYEE_BY_FIREBASE_UID_PENDING,
+  GET_EMPLOYEE_BY_FIREBASE_UID_SUCCESS,
+  GET_EMPLOYEE_BY_FIREBASE_UID_ERROR,
   POST_EMPLOYEE_PENDING,
   POST_EMPLOYEE_SUCCESS,
   POST_EMPLOYEE_ERROR,
@@ -53,6 +56,26 @@ export const getOneEmployeeSuccess = (data) => {
 export const getOneEmployeeError = (error) => {
   return {
     type: GET_ONE_EMPLOYEE_ERROR,
+    payload: error
+  };
+};
+
+export const getEmployeeByFirebaseUidPending = () => {
+  return {
+    type: GET_EMPLOYEE_BY_FIREBASE_UID_PENDING
+  };
+};
+
+export const getEmployeeByFirebaseUidSuccess = (payload) => {
+  return {
+    type: GET_EMPLOYEE_BY_FIREBASE_UID_SUCCESS,
+    payload
+  };
+};
+
+export const getEmployeeByFirebaseUidError = (error) => {
+  return {
+    type: GET_EMPLOYEE_BY_FIREBASE_UID_ERROR,
     payload: error
   };
 };

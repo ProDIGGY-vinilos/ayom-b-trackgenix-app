@@ -5,6 +5,9 @@ import {
   GET_ONE_SUPERADMIN_PENDING,
   GET_ONE_SUPERADMIN_SUCCESS,
   GET_ONE_SUPERADMIN_ERROR,
+  GET_SUPER_ADMIN_BY_FIREBASE_UID_PENDING,
+  GET_SUPER_ADMIN_BY_FIREBASE_UID_SUCCESS,
+  GET_SUPER_ADMIN_BY_FIREBASE_UID_ERROR,
   POST_SUPERADMIN_PENDING,
   POST_SUPERADMIN_SUCCESS,
   POST_SUPERADMIN_ERROR,
@@ -52,6 +55,26 @@ export const getOneSuperAdminSuccess = (payload) => {
 export const getOneSuperAdminError = (error) => {
   return {
     type: GET_ONE_SUPERADMIN_ERROR,
+    payload: error
+  };
+};
+
+export const getSuperAdminByFirebaseUidPending = () => {
+  return {
+    type: GET_SUPER_ADMIN_BY_FIREBASE_UID_PENDING
+  };
+};
+
+export const getSuperAdminByFirebaseUidSuccess = (payload) => {
+  return {
+    type: GET_SUPER_ADMIN_BY_FIREBASE_UID_SUCCESS,
+    payload
+  };
+};
+
+export const getSuperAdminByFirebaseUidError = (error) => {
+  return {
+    type: GET_SUPER_ADMIN_BY_FIREBASE_UID_ERROR,
     payload: error
   };
 };

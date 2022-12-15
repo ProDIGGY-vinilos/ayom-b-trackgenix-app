@@ -2,6 +2,9 @@ import {
   LOGIN_PENDING,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
+  RELOGIN_PENDING,
+  RELOGIN_SUCCESS,
+  RELOGIN_ERROR,
   SIGN_UP_PENDING,
   SIGN_UP_SUCCESS,
   SIGN_UP_ERROR,
@@ -27,6 +30,26 @@ export const loginSuccess = (data) => {
 export const loginError = (error) => {
   return {
     type: LOGIN_ERROR,
+    payload: error
+  };
+};
+
+export const reLoginPending = () => {
+  return {
+    type: RELOGIN_PENDING
+  };
+};
+
+export const reLoginSuccess = (data) => {
+  return {
+    type: RELOGIN_SUCCESS,
+    payload: data
+  };
+};
+
+export const reLoginError = (error) => {
+  return {
+    type: RELOGIN_ERROR,
     payload: error
   };
 };
