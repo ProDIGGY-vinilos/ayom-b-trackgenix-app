@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import styles from 'Components/Pages/Employee/MyProfile/my-profile-edit.module.css';
 import Button from 'Components/Shared/Button/Button';
@@ -15,7 +16,7 @@ import { auth } from 'Helpers/firebase/index';
 const EmployeeForm = () => {
   const dispatch = useDispatch();
   const { error, message } = useSelector((state) => state.employees);
-  const employeeId = '6395035b52d8ee68e3a7af99';
+  const employeeId = useParams().id;
   const employee = useSelector((state) =>
     state.employees.list.find((employee) => employee._id === employeeId)
   );
@@ -87,10 +88,10 @@ const EmployeeForm = () => {
     });
   };
 
-  const onSubmit = (data) => {
-    dispatch(putEmployee(employeeId, data, token));
+  const onSubmit = (employeeData) => {
+    dispatch(putEmployee(employeeId, employeeData, token));
     if (!error) {
-      dispatch(reAuth(data));
+      dispatch(reAuth(employeeData));
       setTypeModal('Success');
       setTextModal('SuperAdmin updated successfully');
       openModal();
