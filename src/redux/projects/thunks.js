@@ -2,6 +2,9 @@ import {
   getProjectsError,
   getProjectsSuccess,
   getProjectsPending,
+  getProjectsWithDeletedError,
+  getProjectsWithDeletedSuccess,
+  getProjectsWithDeletedPending,
   getOneProjectError,
   getOneProjectSuccess,
   getOneProjectPending,
@@ -37,6 +40,28 @@ export const getProjects = (token) => {
       })
       .catch((error) => {
         dispatch(getProjectsError(error.toString()));
+      });
+  };
+};
+
+export const getProjectsWithDeleted = (token) => {
+  return (dispatch) => {
+    dispatch(getProjectsWithDeletedPending());
+    fetch(`${process.env.REACT_APP_API_URL}/projects/withDeleted`, {
+      headers: {
+        token
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getProjectsWithDeletedSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getProjectsWithDeletedError(error.toString()));
       });
   };
 };

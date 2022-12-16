@@ -2,6 +2,9 @@ import {
   GET_PROJECTS_PENDING,
   GET_PROJECTS_SUCCESS,
   GET_PROJECTS_ERROR,
+  GET_PROJECTS_WITH_DELETED_PENDING,
+  GET_PROJECTS_WITH_DELETED_SUCCESS,
+  GET_PROJECTS_WITH_DELETED_ERROR,
   GET_ONE_PROJECT_PENDING,
   GET_ONE_PROJECT_SUCCESS,
   GET_ONE_PROJECT_ERROR,
@@ -35,6 +38,26 @@ export const getProjectsSuccess = (payload) => {
 export const getProjectsError = (error) => {
   return {
     type: GET_PROJECTS_ERROR,
+    payload: error
+  };
+};
+
+export const getProjectsWithDeletedPending = () => {
+  return {
+    type: GET_PROJECTS_WITH_DELETED_PENDING
+  };
+};
+
+export const getProjectsWithDeletedSuccess = (payload) => {
+  return {
+    type: GET_PROJECTS_WITH_DELETED_SUCCESS,
+    payload
+  };
+};
+
+export const getProjectsWithDeletedError = (error) => {
+  return {
+    type: GET_PROJECTS_WITH_DELETED_ERROR,
     payload: error
   };
 };
