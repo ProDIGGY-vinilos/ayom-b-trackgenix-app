@@ -64,7 +64,7 @@ const EmployeeForm = () => {
     }
   }, [error, message]);
 
-  const employeeData = {
+  let employeeData = {
     name: employee?.name,
     lastName: employee?.lastName,
     email: employee?.email,
@@ -73,11 +73,11 @@ const EmployeeForm = () => {
   };
 
   useEffect(() => {
+    reset(employeeData);
     if (!employee) {
       dispatch(getOneEmployee(employeeId));
     }
-    reset(employeeData);
-  }, [employee]);
+  }, []);
 
   const reAuth = (data) => {
     const user = auth.currentUser;
@@ -88,12 +88,14 @@ const EmployeeForm = () => {
     });
   };
 
-  const onSubmit = (employeeData) => {
+  const onSubmit = async (employeeData) => {
     dispatch(putEmployee(employeeId, employeeData, token));
     if (!error) {
+      console.log('pre-reaturh');
       dispatch(reAuth(employeeData));
+      console.log('pos-reaturh');
       setTypeModal('Success');
-      setTextModal('SuperAdmin updated successfully');
+      setTextModal('Employee updated successfully');
       openModal();
     }
   };

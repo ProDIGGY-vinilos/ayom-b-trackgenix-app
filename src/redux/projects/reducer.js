@@ -16,7 +16,8 @@ import {
   PUT_PROJECT_ERROR,
   DELETE_PROJECT_PENDING,
   DELETE_PROJECT_SUCCESS,
-  DELETE_PROJECT_ERROR
+  DELETE_PROJECT_ERROR,
+  CLEAR_ERROR_MESSAGE
 } from 'redux/projects/constant';
 
 const INITIAL_STATE = {
@@ -92,6 +93,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case POST_PROJECT_SUCCESS:
       return {
         ...state,
+        message: action.payload.message,
         list: [...state.list, action.payload.data],
         isLoading: false,
         error: ''
@@ -111,6 +113,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case PUT_PROJECT_SUCCESS:
       return {
         ...state,
+        message: action.payload.message,
         list: [
           ...state.list.map((project) => {
             if (project._id === action.payload.data._id) {
@@ -147,6 +150,12 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         error: action.payload,
         list: []
+      };
+    case CLEAR_ERROR_MESSAGE:
+      return {
+        ...state,
+        error: '',
+        message: ''
       };
     default:
       return {

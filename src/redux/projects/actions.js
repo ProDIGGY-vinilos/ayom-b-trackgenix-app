@@ -16,7 +16,8 @@ import {
   PUT_PROJECT_SUCCESS,
   DELETE_PROJECT_PENDING,
   DELETE_PROJECT_ERROR,
-  DELETE_PROJECT_SUCCESS
+  DELETE_PROJECT_SUCCESS,
+  CLEAR_ERROR_MESSAGE
 } from 'redux/projects/constant';
 
 export const getProjectsPending = () => {
@@ -136,5 +137,11 @@ export const deleteProjectError = (error) => {
   return {
     type: DELETE_PROJECT_ERROR,
     payload: error
+  };
+};
+
+export const clearError = () => {
+  return {
+    type: CLEAR_ERROR_MESSAGE
   };
 };

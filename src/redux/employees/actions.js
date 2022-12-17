@@ -66,10 +66,10 @@ export const getEmployeeByFirebaseUidPending = () => {
   };
 };
 
-export const getEmployeeByFirebaseUidSuccess = (payload) => {
+export const getEmployeeByFirebaseUidSuccess = (data) => {
   return {
     type: GET_EMPLOYEE_BY_FIREBASE_UID_SUCCESS,
-    payload
+    payload: data
   };
 };
 

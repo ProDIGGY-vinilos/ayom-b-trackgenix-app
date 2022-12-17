@@ -14,8 +14,7 @@ import { schema } from 'Components/Employees/validation';
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.employees);
-  const [requested, setRequested] = useState(false);
+  const { error, message } = useSelector((state) => state.employees);
   const employeeId = useParams().id;
   const employee = useSelector((state) =>
     state.employees.list.find((employee) => employee._id === employeeId)
@@ -38,6 +37,7 @@ const EmployeeForm = () => {
 
   const openModal = () => {
     setShowModal(true);
+    dispatch(clearError());
   };
 
   const closeModal = () => {
@@ -50,17 +50,12 @@ const EmployeeForm = () => {
       setTypeModal('Error');
       setTextModal(error);
       openModal();
-      setRequested(false);
-    } else if (employeeId && requested) {
-      setTextModal('Employee updated successfully');
+    } else if (message) {
+      setTypeModal('Success');
+      setTextModal(message);
       openModal();
-      setRequested(false);
-    } else if (!employeeId && requested) {
-      setTextModal('Employee created successfully');
-      openModal();
-      setRequested(false);
     }
-  }, [error]);
+  }, [error, message]);
 
   const employeeData = {
     name: employee?.name,
@@ -84,7 +79,6 @@ const EmployeeForm = () => {
     } else {
       dispatch(postEmployee('', data));
     }
-    setRequested(true);
     setTypeModal('Success');
   };
 
