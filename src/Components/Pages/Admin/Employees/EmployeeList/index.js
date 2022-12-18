@@ -35,8 +35,8 @@ const Employees = () => {
   };
 
   useEffect(() => {
-    dispatch(clearError());
     dispatch(getEmployees(token));
+    dispatch(clearError());
   }, []);
 
   useEffect(() => {

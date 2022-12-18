@@ -91,9 +91,7 @@ const EmployeeForm = () => {
   const onSubmit = async (employeeData) => {
     dispatch(putEmployee(employeeId, employeeData, token));
     if (!error) {
-      console.log('pre-reaturh');
-      dispatch(reAuth(employeeData));
-      console.log('pos-reaturh');
+      reAuth(employeeData);
       setTypeModal('Success');
       setTextModal('Employee updated successfully');
       openModal();
