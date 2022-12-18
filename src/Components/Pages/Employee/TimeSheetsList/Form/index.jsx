@@ -24,6 +24,7 @@ const TimeSheetsForm = () => {
   const { list: projectsList } = useSelector((state) => state.projects);
   const { list: taskList } = useSelector((state) => state.tasks);
   const employeeId = '636c1e8ddabe537336ae082a';
+  const token = sessionStorage.getItem('token');
 
   const {
     register,
@@ -55,9 +56,9 @@ const TimeSheetsForm = () => {
   }, [error]);
 
   useEffect(() => {
-    dispatch(getTasks());
-    dispatch(getEmployees());
-    dispatch(getProjectsByEmployee(employeeId));
+    dispatch(getTasks(token));
+    dispatch(getEmployees(token));
+    dispatch(getProjectsByEmployee(employeeId, token));
   }, []);
 
   const createTimeSheet = (data) => {

@@ -1,13 +1,13 @@
 import Table from 'Components/Shared/Table';
 import React, { useEffect, useState } from 'react';
-import { getProjectsByEmployee, deleteProject } from 'redux/projects/thunks';
+import { getProjects, deleteProject } from 'redux/projects/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import Button from 'Components/Shared/Button/Button';
 import styles from 'Components/Pages/Admin/Projects/ProjectList/adminProjectList.module.css';
 
 const ProjectsPage = () => {
-  const userId = '636c1e8ddabe537336ae082a';
+  // const userId = '636c1e8ddabe537336ae082a';
   const token = sessionStorage.getItem('token');
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');
@@ -16,7 +16,7 @@ const ProjectsPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProjectsByEmployee(userId, token));
+    dispatch(getProjects(token));
   }, []);
 
   const openModal = () => {

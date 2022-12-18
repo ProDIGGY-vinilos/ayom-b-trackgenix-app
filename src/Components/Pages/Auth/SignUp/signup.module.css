@@ -19,14 +19,16 @@
 .imgForm {
   background-image: url(./assets/sign-up-clock.png);
   background-repeat: no-repeat;
-  background-size: 625px;
+  background-size: 700px;
   background-position: center;
-  background-position-y: 50px;
+  background-position-y: center;
+  margin-bottom: 100px;
   width: 60%;
 }
 
 .divForm {
   display: flex;
+  flex-direction: row;
   justify-content: left;
   align-items: center;
   margin-left: 0px;
