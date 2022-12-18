@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import styles from 'Components/Pages/Employee/MyProfile/my-profile-edit.module.css';
 import Button from 'Components/Shared/Button/Button';
@@ -16,7 +17,7 @@ const EmployeeForm = () => {
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.employees);
   const [requested, setRequested] = useState(false);
-  const employeeId = '638fad574b02e1cdaea288ef';
+  const employeeId = useParams().id;
   const employee = useSelector((state) =>
     state.employees.list.find((employee) => employee._id === employeeId)
   );
