@@ -6,7 +6,7 @@ import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { postAdmin, putAdmin } from 'redux/admins/thunks';
+import { putAdmin } from 'redux/admins/thunks';
 import { clearError } from 'redux/admins/actions';
 import { schema } from 'Components/Admins/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -41,7 +41,6 @@ function Form() {
 
   const closeMessageModal = () => {
     setShowMessageModal(false);
-    dispatch(clearError());
   };
 
   let data = {
@@ -87,7 +86,7 @@ function Form() {
       openMessageModal();
     } else if (message) {
       setTypeModal('Success');
-      setTextMessageModal(message);
+      setTextMessageModal('User Edited');
       openMessageModal();
     }
   }, [error, message]);
@@ -95,8 +94,6 @@ function Form() {
   const onSubmit = (data) => {
     if (adminId) {
       dispatch(putAdmin(data, adminId, token));
-    } else {
-      dispatch(postAdmin(data, token));
     }
   };
 

@@ -12,6 +12,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { schema } from 'Components/Employees/validation';
 import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 import { auth } from 'Helpers/firebase/index';
+import { clearError } from 'redux/employees/actions';
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const EmployeeForm = () => {
 
   const openModal = () => {
     setShowModal(true);
+    dispatch(clearError());
   };
 
   const closeModal = () => {
@@ -92,9 +94,6 @@ const EmployeeForm = () => {
     dispatch(putEmployee(employeeId, employeeData, token));
     if (!error) {
       reAuth(employeeData);
-      setTypeModal('Success');
-      setTextModal('Employee updated successfully');
-      openModal();
     }
   };
 
@@ -166,7 +165,7 @@ const EmployeeForm = () => {
           </tbody>
         </table>
         <div className={styles.buttons}>
-          <Button href="profile" style="squaredPrimary" disabled={false} text="Back" />
+          <Button href="/employee/profile" style="squaredPrimary" disabled={false} text="Back" />
           <MessageModal
             type={typeModal}
             isOpen={showModal}

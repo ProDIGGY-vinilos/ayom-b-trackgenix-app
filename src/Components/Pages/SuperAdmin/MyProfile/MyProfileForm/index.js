@@ -6,7 +6,7 @@ import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { postSuperAdmin, putSuperAdmin } from 'redux/superAdmins/thunks';
+import { putSuperAdmin } from 'redux/superAdmins/thunks';
 import { clearError } from 'redux/superAdmins/actions';
 import { schema } from 'Components/Admins/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -38,6 +38,7 @@ function Form() {
 
   const openMessageModal = () => {
     setShowMessageModal(true);
+    dispatch(clearError);
   };
 
   const closeMessageModal = () => {
@@ -53,7 +54,6 @@ function Form() {
 
   useEffect(() => {
     reset(data);
-    dispatch(clearError);
   }, []);
 
   useEffect(async () => {
@@ -85,12 +85,10 @@ function Form() {
       setTypeModal('Error');
       setTextMessageModal(error);
       openMessageModal();
-      dispatch(clearError);
     } else if (message) {
       setTypeModal('Success');
       setTextMessageModal('User Edited');
       openMessageModal();
-      dispatch(clearError);
     }
   }, [error, message]);
 
@@ -116,16 +114,6 @@ function Form() {
       dispatch(putSuperAdmin(data, superAdminId, token));
       if (!error) {
         reAuth(data);
-        setTypeModal('Success');
-        setTextMessageModal('The administrator was edited successfully');
-        openMessageModal();
-      }
-    } else {
-      dispatch(postSuperAdmin(data, token));
-      if (!error) {
-        setTypeModal('Success');
-        setTextMessageModal('The administrator was added successfully');
-        openMessageModal();
       }
     }
   };

@@ -105,22 +105,23 @@ const reducer = (state = INITIAL_STATE, action) => {
     case PUT_ADMIN_PENDING:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        error: ''
       };
     case PUT_ADMIN_SUCCESS:
       return {
         ...state,
         message: action.payload.message,
+        error: false,
         list: [
           ...state.list.map((admin) => {
-            if (admin._id === action.data._id) {
-              return action.data;
+            if (admin._id === action.payload.data._id) {
+              return action.payload.data;
             } else {
               return admin;
             }
           })
         ],
-        error: '',
         isLoading: false
       };
     case PUT_ADMIN_ERROR:

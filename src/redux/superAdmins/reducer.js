@@ -116,10 +116,11 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: '',
+        message: action.payload.message,
         list: [
           ...state.list.map((superAdmins) => {
-            if (superAdmins._id === action.payload._id) {
-              return action.payload;
+            if (superAdmins._id === action.payload.data._id) {
+              return action.payload.data;
             } else {
               return superAdmins;
             }

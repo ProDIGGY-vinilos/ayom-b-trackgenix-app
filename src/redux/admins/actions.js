@@ -109,7 +109,7 @@ export const putAdminPending = () => {
 export const putAdminSuccess = (data) => {
   return {
     type: PUT_ADMIN_SUCCESS,
-    data
+    payload: data
   };
 };
 
