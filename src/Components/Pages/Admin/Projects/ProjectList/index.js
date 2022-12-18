@@ -1,7 +1,7 @@
 import Table from 'Components/Shared/Table';
 import React, { useEffect, useState } from 'react';
 import {
-  getProjectsWithDeleted,
+  getProjects,
   // getProjectsByEmployee,
   deleteProject
 } from 'redux/projects/thunks';
@@ -20,7 +20,7 @@ const ProjectsPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProjectsWithDeleted(token));
+    dispatch(getProjects(token));
   }, []);
 
   const openModal = () => {
