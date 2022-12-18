@@ -30,7 +30,7 @@ const Project = () => {
   const [showSharedModal, setShowSharedModal] = useState(false);
 
   const { isLoading, error } = useSelector((state) => state.projects);
-  const { list: employeesListt } = useSelector((state) => state.employees);
+  const { list: employeesList } = useSelector((state) => state.employees);
 
   const dispatch = useDispatch();
   const {
@@ -206,7 +206,7 @@ const Project = () => {
         <div className={`${styles.formFull} ${styles.employeesDiv}`}>
           <FormEmployee
             control={control}
-            employees={employeesListt}
+            employees={employeesList}
             register={register}
             errors={errors}
           />
