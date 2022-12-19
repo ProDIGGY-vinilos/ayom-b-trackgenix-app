@@ -9,7 +9,7 @@ function Form() {
       entity="admins"
       post={postAdmin}
       put={putAdmin}
-      getById={getOneAdmin}
+      getOne={getOneAdmin}
       textEdit="Edit Admin"
       textNew="New Admin"
       textEditSuccess="Admin edited successfully"

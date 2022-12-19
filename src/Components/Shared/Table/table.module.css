@@ -20,7 +20,8 @@
 
 .table{
   margin: 15px auto;
-  width: 80%;
+  width: fit-content;
+  height: fit-content;
   border-radius: 10px;
   background-color: #FFFFFF;
   border-spacing: 0px;

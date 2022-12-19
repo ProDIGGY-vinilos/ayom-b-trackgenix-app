@@ -15,7 +15,7 @@ const ProfileForm = ({
   entity,
   post,
   put,
-  getById,
+  getOne,
   textEdit,
   textNew,
   textEditSuccess,
@@ -78,7 +78,7 @@ const ProfileForm = ({
     if (id) {
       document.getElementById('fromHeader').innerHTML = `${textEdit}`;
       if (userData === undefined) {
-        dispatch(getById(id, token));
+        dispatch(getOne(id, token));
         reset(data);
       }
     } else document.getElementById('fromHeader').innerHTML = `${textNew}`;
@@ -157,13 +157,15 @@ const ProfileForm = ({
         />
       </div>
       {type == 'employee' ? (
-        <InputField
-          name="phone"
-          type="text"
-          placeholder="Phone Number"
-          register={register}
-          error={errors.phone?.message}
-        />
+        <div className={styles.fromInput}>
+          <InputField
+            name="phone"
+            type="text"
+            placeholder="Phone Number"
+            register={register}
+            error={errors.phone?.message}
+          />
+        </div>
       ) : null}
       <div className={styles.fromInput}>
         <InputField
