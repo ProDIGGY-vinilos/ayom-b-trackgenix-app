@@ -30,9 +30,6 @@ const Home = (props) => {
       <body>
         <aside>
           <div>
-            <div className={styles.asideBoxHeader}>
-              <img src={`${process.env.PUBLIC_URL}/assets/Home/AsideIcon/title.png`}></img>
-            </div>
             <div className={styles.asideBoxConteiner}>
               <img src={`${process.env.PUBLIC_URL}/assets/Home/AsideIcon/home.png`}></img>
               <Link className={styles.link} to="/home">
@@ -79,7 +76,7 @@ const Home = (props) => {
         <div className={styles.bodyConteiner}>
           <div className={styles.bodyImageConteiner}>
             <img
-              src={`${process.env.PUBLIC_URL}/assets/Home/MainImage/homePage.png`}
+              src={`${process.env.PUBLIC_URL}/assets/Home/mainImage/homePage.png`}
               className={styles.bodyImage}
             ></img>
             <h2 className={styles.bodyImageText}>Keep track of your employees’ progress easily </h2>
@@ -110,19 +107,19 @@ const Home = (props) => {
           <div className={styles.lastArticleConteiner}>
             <div className={styles.lastArticleBox}>
               <div>Hour long</div>
-              <img src={`${process.env.PUBLIC_URL}/assets/Home/MainImage/hourlog.png`}></img>
+              <img src={`${process.env.PUBLIC_URL}/assets/Home/mainImage/hourlog.png`}></img>
             </div>
             <div className={styles.lastArticleBox}>
               <div>Report</div>
-              <img src={`${process.env.PUBLIC_URL}/assets/Home/MainImage/report.png`}></img>
+              <img src={`${process.env.PUBLIC_URL}/assets/Home/mainImage/report.png`}></img>
             </div>
             <div className={styles.lastArticleBox}>
               <div>Resources Management</div>
-              <img src={`${process.env.PUBLIC_URL}/assets/Home/MainImage/rm.png`}></img>
+              <img src={`${process.env.PUBLIC_URL}/assets/Home/mainImage/rm.png`}></img>
             </div>
             <div className={styles.lastArticleBox}>
               <div>MultipleRole</div>
-              <img src={`${process.env.PUBLIC_URL}/assets/Home/MainImage/multipleRoles.png`}></img>
+              <img src={`${process.env.PUBLIC_URL}/assets/Home/mainImage/multipleRoles.png`}></img>
             </div>
           </div>
         </div>
