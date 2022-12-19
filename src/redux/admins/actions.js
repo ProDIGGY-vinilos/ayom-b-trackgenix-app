@@ -2,6 +2,9 @@ import {
   GET_ADMINS_PENDING,
   GET_ADMINS_SUCCESS,
   GET_ADMINS_ERROR,
+  GET_ADMINS_WITH_DELETED_PENDING,
+  GET_ADMINS_WITH_DELETED_SUCCESS,
+  GET_ADMINS_WITH_DELETED_ERROR,
   GET_ONE_ADMIN_PENDING,
   GET_ONE_ADMIN_SUCCESS,
   GET_ONE_ADMIN_ERROR,
@@ -36,6 +39,26 @@ export const getAdminsSuccess = (payload) => {
 export const getAdminsError = (error) => {
   return {
     type: GET_ADMINS_ERROR,
+    payload: error
+  };
+};
+
+export const getAdminsWithDeletedPending = () => {
+  return {
+    type: GET_ADMINS_WITH_DELETED_PENDING
+  };
+};
+
+export const getAdminsWithDeletedSuccess = (payload) => {
+  return {
+    type: GET_ADMINS_WITH_DELETED_SUCCESS,
+    payload
+  };
+};
+
+export const getAdminsWithDeletedError = (error) => {
+  return {
+    type: GET_ADMINS_WITH_DELETED_ERROR,
     payload: error
   };
 };

@@ -2,6 +2,9 @@ import {
   GET_TASKS_PENDING,
   GET_TASKS_SUCCESS,
   GET_TASKS_ERROR,
+  GET_TASKS_WITH_DELETED_PENDING,
+  GET_TASKS_WITH_DELETED_SUCCESS,
+  GET_TASKS_WITH_DELETED_ERROR,
   GET_ONE_TASK_PENDING,
   GET_ONE_TASK_SUCCESS,
   GET_ONE_TASK_ERROR,
@@ -32,6 +35,26 @@ export const getTasksSuccess = (payload) => {
 export const getTasksError = (error) => {
   return {
     type: GET_TASKS_ERROR,
+    payload: error
+  };
+};
+
+export const getTasksWithDeletedPending = () => {
+  return {
+    type: GET_TASKS_WITH_DELETED_PENDING
+  };
+};
+
+export const getTasksWithDeletedSuccess = (payload) => {
+  return {
+    type: GET_TASKS_WITH_DELETED_SUCCESS,
+    payload
+  };
+};
+
+export const getTasksWithDeletedError = (error) => {
+  return {
+    type: GET_TASKS_WITH_DELETED_ERROR,
     payload: error
   };
 };

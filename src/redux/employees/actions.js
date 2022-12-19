@@ -2,6 +2,9 @@ import {
   GET_EMPLOYEES_PENDING,
   GET_EMPLOYEES_SUCCESS,
   GET_EMPLOYEES_ERROR,
+  GET_EMPLOYEES_WITH_DELETED_PENDING,
+  GET_EMPLOYEES_WITH_DELETED_SUCCESS,
+  GET_EMPLOYEES_WITH_DELETED_ERROR,
   GET_ONE_EMPLOYEE_PENDING,
   GET_ONE_EMPLOYEE_SUCCESS,
   GET_ONE_EMPLOYEE_ERROR,
@@ -36,6 +39,26 @@ export const getEmployeesSuccess = (data) => {
 export const getEmployeesError = (error) => {
   return {
     type: GET_EMPLOYEES_ERROR,
+    payload: error
+  };
+};
+
+export const getEmployeesWithDeletedPending = () => {
+  return {
+    type: GET_EMPLOYEES_WITH_DELETED_PENDING
+  };
+};
+
+export const getEmployeesWithDeletedSuccess = (data) => {
+  return {
+    type: GET_EMPLOYEES_WITH_DELETED_SUCCESS,
+    payload: data
+  };
+};
+
+export const getEmployeesWithDeletedError = (error) => {
+  return {
+    type: GET_EMPLOYEES_WITH_DELETED_ERROR,
     payload: error
   };
 };

@@ -2,6 +2,9 @@ import {
   GET_ADMINS_PENDING,
   GET_ADMINS_SUCCESS,
   GET_ADMINS_ERROR,
+  GET_ADMINS_WITH_DELETED_PENDING,
+  GET_ADMINS_WITH_DELETED_SUCCESS,
+  GET_ADMINS_WITH_DELETED_ERROR,
   GET_ONE_ADMIN_PENDING,
   GET_ONE_ADMIN_SUCCESS,
   GET_ONE_ADMIN_ERROR,
@@ -42,6 +45,24 @@ const reducer = (state = INITIAL_STATE, action) => {
         list: action.payload
       };
     case GET_ADMINS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case GET_ADMINS_WITH_DELETED_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GET_ADMINS_WITH_DELETED_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: action.payload
+      };
+    case GET_ADMINS_WITH_DELETED_ERROR:
       return {
         ...state,
         isLoading: false,
@@ -138,7 +159,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case DELETE_ADMIN_SUCCESS:
       return {
         ...state,
-        list: [...state.list.filter((task) => task._id !== action.payload.data)],
+        list: [...state.list.filter((task) => task._id !== action.payload)],
         message: action.payload.message,
         error: '',
         isLoading: false

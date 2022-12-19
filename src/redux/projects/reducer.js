@@ -2,6 +2,9 @@ import {
   GET_PROJECTS_PENDING,
   GET_PROJECTS_SUCCESS,
   GET_PROJECTS_ERROR,
+  GET_PROJECTS_WITH_DELETED_PENDING,
+  GET_PROJECTS_WITH_DELETED_SUCCESS,
+  GET_PROJECTS_WITH_DELETED_ERROR,
   GET_ONE_PROJECT_PENDING,
   GET_ONE_PROJECT_SUCCESS,
   GET_ONE_PROJECT_ERROR,
@@ -41,6 +44,25 @@ const reducer = (state = INITIAL_STATE, action) => {
         list: action.payload
       };
     case GET_PROJECTS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+        list: []
+      };
+    case GET_PROJECTS_WITH_DELETED_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GET_PROJECTS_WITH_DELETED_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: action.payload
+      };
+    case GET_PROJECTS_WITH_DELETED_ERROR:
       return {
         ...state,
         isLoading: false,
