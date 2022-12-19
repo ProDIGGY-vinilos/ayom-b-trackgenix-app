@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { schema } from 'Components/Projects/validations';
 import { getOneProject, postProject, putProject } from 'redux/projects/thunks';
-import { getEmployees } from 'redux/employees/thunks';
+import { getEmployeesWithDeleted } from 'redux/employees/thunks';
 import TextAreaField from 'Components/Shared/TextArea';
 
 const Project = () => {
@@ -82,7 +82,7 @@ const Project = () => {
   };
 
   useEffect(() => {
-    dispatch(getEmployees(token));
+    dispatch(getEmployeesWithDeleted(token));
     if (projectId) {
       setIsFetched(true);
       if (projectData === undefined) {

@@ -2,6 +2,9 @@ import {
   getEmployeesPending,
   getEmployeesSuccess,
   getEmployeesError,
+  getEmployeesWithDeletedPending,
+  getEmployeesWithDeletedSuccess,
+  getEmployeesWithDeletedError,
   getOneEmployeePending,
   getOneEmployeeSuccess,
   getOneEmployeeError,
@@ -37,6 +40,28 @@ export const getEmployees = (token) => {
       })
       .catch((error) => {
         dispatch(getEmployeesError(error.toString()));
+      });
+  };
+};
+
+export const getEmployeesWithDeleted = (token) => {
+  return (dispatch) => {
+    dispatch(getEmployeesWithDeletedPending());
+    fetch(`${process.env.REACT_APP_API_URL}/employees/withDeleted`, {
+      headers: {
+        token
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getEmployeesWithDeletedSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getEmployeesWithDeletedError(error.toString()));
       });
   };
 };
