@@ -6,7 +6,8 @@ import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { postSuperAdmin, putSuperAdmin } from 'redux/superAdmins/thunks';
+import { putSuperAdmin } from 'redux/superAdmins/thunks';
+import { clearError } from 'redux/superAdmins/actions';
 import { schema } from 'Components/Admins/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
@@ -14,7 +15,7 @@ import { auth } from 'Helpers/firebase/index';
 
 function Form() {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.superAdmins);
+  const { error, message } = useSelector((state) => state.superAdmins);
   const superAdminId = useParams().id;
   const superAdminData = useSelector((state) =>
     state.superAdmins.list.find((superAdmin) => superAdmin._id === superAdminId)
@@ -37,6 +38,7 @@ function Form() {
 
   const openMessageModal = () => {
     setShowMessageModal(true);
+    dispatch(clearError);
   };
 
   const closeMessageModal = () => {
@@ -79,8 +81,16 @@ function Form() {
   }, []);
 
   useEffect(() => {
-    openModalOnError(error);
-  }, [error]);
+    if (error) {
+      setTypeModal('Error');
+      setTextMessageModal(error);
+      openMessageModal();
+    } else if (message) {
+      setTypeModal('Success');
+      setTextMessageModal('User Edited');
+      openMessageModal();
+    }
+  }, [error, message]);
 
   const openModalOnError = (error) => {
     if (error) {
@@ -104,16 +114,6 @@ function Form() {
       dispatch(putSuperAdmin(data, superAdminId, token));
       if (!error) {
         reAuth(data);
-        setTypeModal('Success');
-        setTextMessageModal('The administrator was edited successfully');
-        openMessageModal();
-      }
-    } else {
-      dispatch(postSuperAdmin(data, token));
-      if (!error) {
-        setTypeModal('Success');
-        setTextMessageModal('The administrator was added successfully');
-        openMessageModal();
       }
     }
   };

@@ -16,7 +16,8 @@ import {
   PUT_SUPERADMIN_ERROR,
   DELETE_SUPERADMIN_PENDING,
   DELETE_SUPERADMIN_SUCCESS,
-  DELETE_SUPERADMIN_ERROR
+  DELETE_SUPERADMIN_ERROR,
+  CLEAR_ERROR_MESSAGE
 } from 'redux/superAdmins/constant';
 
 export const getSuperAdminsPending = () => {
@@ -125,10 +126,10 @@ export const deleteSuperAdminPending = () => {
   };
 };
 
-export const deleteSuperAdminSuccess = (payload) => {
+export const deleteSuperAdminSuccess = (data) => {
   return {
     type: DELETE_SUPERADMIN_SUCCESS,
-    payload
+    payload: data
   };
 };
 
@@ -136,5 +137,11 @@ export const deleteSuperAdminError = (error) => {
   return {
     type: DELETE_SUPERADMIN_ERROR,
     payload: error
+  };
+};
+
+export const clearError = () => {
+  return {
+    type: CLEAR_ERROR_MESSAGE
   };
 };

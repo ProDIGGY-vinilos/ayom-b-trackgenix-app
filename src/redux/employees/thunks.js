@@ -35,7 +35,7 @@ export const getEmployees = (token) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(getEmployeesSuccess(data.data));
+          dispatch(getEmployeesSuccess(data));
         }
       })
       .catch((error) => {
@@ -79,7 +79,7 @@ export const getOneEmployee = (id, token) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(getOneEmployeeSuccess(data.data));
+          dispatch(getOneEmployeeSuccess(data));
         }
       })
       .catch((error) => {

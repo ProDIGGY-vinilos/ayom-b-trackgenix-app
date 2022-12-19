@@ -12,7 +12,8 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { schema } from 'Components/Projects/validations';
 import { getOneProject, postProject, putProject } from 'redux/projects/thunks';
-import { getEmployeesWithDeleted } from 'redux/employees/thunks';
+import { clearError } from 'redux/admins/actions';
+import { getEmployees } from 'redux/employees/thunks';
 import TextAreaField from 'Components/Shared/TextArea';
 
 const Project = () => {
@@ -29,7 +30,7 @@ const Project = () => {
   const [textModal, setTextModal] = useState('');
   const [showSharedModal, setShowSharedModal] = useState(false);
 
-  const { isLoading, error } = useSelector((state) => state.projects);
+  const { isLoading, error, message } = useSelector((state) => state.projects);
   const { list: employeesList } = useSelector((state) => state.employees);
 
   const dispatch = useDispatch();
@@ -53,13 +54,16 @@ const Project = () => {
 
   const closeModal = () => {
     setShowModal(false);
+    dispatch(clearError());
   };
 
   const openSharedModal = () => {
     setShowSharedModal(true);
+    dispatch(clearError());
   };
   const closeSharedModal = () => {
     setShowSharedModal(false);
+    dispatch(clearError());
   };
 
   const employeesMap = () => {
@@ -82,7 +86,8 @@ const Project = () => {
   };
 
   useEffect(() => {
-    dispatch(getEmployeesWithDeleted(token));
+    dispatch(clearError());
+    dispatch(getEmployees(token));
     if (projectId) {
       setIsFetched(true);
       if (projectData === undefined) {
@@ -119,22 +124,29 @@ const Project = () => {
   }, [projectData]);
 
   useEffect(() => {
+    dispatch(clearError());
     reset(projectBodyData);
   }, []);
 
   useEffect(() => {
-    setModalMessage(error);
-  }, [error]);
+    if (error) {
+      setTypeModal('Error');
+      setModalMessage(error);
+      openSharedModal();
+    } else if (message) {
+      setTypeModal('Success');
+      setModalMessage(error, message);
+      openSharedModal();
+    }
+  }, [error, message]);
 
   const setModalMessage = (error) => {
     if (error) {
       setTypeModal('Error');
       setTextModal(error);
-    } else {
+    } else if (message) {
       setTypeModal('Success');
-      projectId === ''
-        ? setTextModal('Project updated successfully')
-        : setTextModal('Project created successfully');
+      setTextModal(message);
     }
   };
 

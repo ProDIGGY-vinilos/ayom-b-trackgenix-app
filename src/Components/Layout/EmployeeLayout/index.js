@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { lazy, Suspense } from 'react';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import createTitle from 'Helpers/create-title.js';
@@ -30,10 +29,10 @@ const Layout = () => {
           <Switch>
             <Route exact path="/employee/projects" component={ProjectsList} />
             <Route exact path="/employee/timesheets" component={TimeSheets} />
-            <Route exact path="/employee/time-sheet-form" component={TimeSheetsForm} />
-            <Route path="/employee/time-sheet-form/:id" component={TimeSheetsForm} />
+            <Route exact path="/employee/time-sheet-form/:id" component={TimeSheetsForm} />
             <Route exact path="/employee/profile" component={MyProfile} />
             <Route exact path="/employee/profile-form" component={MyProfileForm} />
+            <Route exact path="/employee/profile-form/:id" component={MyProfileForm} />
             <Route path="/employee">
               <Redirect to="/employee/projects" />
             </Route>

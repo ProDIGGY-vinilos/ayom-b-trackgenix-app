@@ -20,13 +20,14 @@ import {
   DELETE_EMPLOYEE_PENDING,
   DELETE_EMPLOYEE_SUCCESS,
   DELETE_EMPLOYEE_ERROR,
-  CLEAR_ERROR
+  CLEAR_ERROR_MESSAGE
 } from 'redux/employees/constant';
 
 const INITIAL_STATE = {
   list: [],
   isLoading: false,
-  error: ''
+  error: '',
+  message: ''
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -42,7 +43,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: false,
-        list: action.payload
+        list: action.payload.data
       };
     case GET_EMPLOYEES_ERROR:
       return {
@@ -113,7 +114,8 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: true,
-        error: ''
+        error: '',
+        message: action.payload.message
       };
     case POST_EMPLOYEE_SUCCESS:
       return {
@@ -140,6 +142,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: false,
+        message: action.payload.message,
         list: [
           ...state.list.map((item) => {
             if (item._id === action.payload.data._id) {
@@ -173,10 +176,11 @@ const reducer = (state = INITIAL_STATE, action) => {
         error: action.payload,
         list: [...state.list]
       };
-    case CLEAR_ERROR:
+    case CLEAR_ERROR_MESSAGE:
       return {
         ...state,
-        error: ''
+        error: '',
+        message: ''
       };
     default:
       return state;
