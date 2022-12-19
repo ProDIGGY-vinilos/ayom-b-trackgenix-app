@@ -69,7 +69,7 @@ const Home = (props) => {
             </div>
             <div className={styles.asideBottomText}>
               <img src={`${process.env.PUBLIC_URL}/assets/Home/AsideIcon/phone.png`}></img>
-              03-03-456-(na na nará)
+              18-12-2022
             </div>
           </div>
         </aside>
