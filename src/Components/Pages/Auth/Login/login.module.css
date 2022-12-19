@@ -1,50 +1,50 @@
 .container{
-display: grid;
-grid-template-columns: repeat(2,50%);
-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100%;
 }
 
 .login{
-  font-size: 25px;
+  align-content: left;
+  font-size: 30px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .loginImage{
-  height: 400px;
-  width: 600px;
-  margin-top: 100px;
-  margin-left: 500px;
   background-image: url('./Login.png');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 700px;
   background-position: center;
-  display: flex;
-  justify-content:center;
-  align-items: center;
+  background-position-y: 50px;
+  width: 60%;
 }
 
 .loginContainer{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 140px;
-  margin-right: 500px;
+  align-items: flex-start;
+  justify-content: left;
+  margin-left: 0px;
+  margin-top: 100px;
+  width: 40%;
 }
 
 .title{
   display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  padding: 30px 30px 30px 30px;
+  align-items: center;
+  height: 100px;
+  padding-left: 65px;
   margin: 0px;
+  font-size: 45px;
   color: #fff;
   background-color: #373867;
 }
 
 .form{
   display: flex;
-  padding: 20px;
-  gap: 15px;
   flex-direction: column;
+  width: 70%;
 }
 
 .flexForm div{
@@ -54,27 +54,26 @@ height: 100vh;
 
 .flexForm input{
   display: flex;
-  justify-content: center;
-  background: #FFFFFF;
-  box-sizing: border-box;
-  border: 1px solid #000000;
-  border-radius: 5px;
-  font-size: 17px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 30px;
+  flex-direction: row;
+  height: 50px;
+  width: 100%;
+  font-size: 20px;
+  border-radius: 10px;
+  margin-top: 15px;
+  text-indent: 15px;
 }
 
 .buttons > button{
   background: #373867;
-  box-sizing: border-box;
   border: 2px solid  #373867;
-  padding: 1px 100px;
-  border-radius: 7px;
-  font-size: 17px;
   font-style: normal;
   font-weight: 400;
   line-height: 30px;
+  width: 100%;
+  font-size: 20px;
+  border-radius: 10px;
+  margin-top: 15px;
+  text-indent: 15px;
 }
 
 .passwordBox{
@@ -86,8 +85,15 @@ height: 100vh;
   align-items: center;
   position: absolute;
   height: 100%;
-  top: 7px;
+  top: 33px;
   right: 7px;
   padding-right: 1px;
   cursor: pointer;
+}
+
+
+.link {
+  text-decoration: none;
+  font-weight: 700;
+  color: #373867;
 }

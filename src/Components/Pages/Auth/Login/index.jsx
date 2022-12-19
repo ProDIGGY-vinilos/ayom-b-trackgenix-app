@@ -81,7 +81,7 @@ const Login = (props) => {
 
   return (
     <>
-      <h2 className={styles.title}>TRACKGENIX</h2>
+      <h2 className={styles.title}>Trackgenix</h2>
       <link
         rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
