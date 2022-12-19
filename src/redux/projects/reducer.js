@@ -2,6 +2,9 @@ import {
   GET_PROJECTS_PENDING,
   GET_PROJECTS_SUCCESS,
   GET_PROJECTS_ERROR,
+  GET_PROJECTS_WITH_DELETED_PENDING,
+  GET_PROJECTS_WITH_DELETED_SUCCESS,
+  GET_PROJECTS_WITH_DELETED_ERROR,
   GET_ONE_PROJECT_PENDING,
   GET_ONE_PROJECT_SUCCESS,
   GET_ONE_PROJECT_ERROR,
@@ -16,7 +19,8 @@ import {
   PUT_PROJECT_ERROR,
   DELETE_PROJECT_PENDING,
   DELETE_PROJECT_SUCCESS,
-  DELETE_PROJECT_ERROR
+  DELETE_PROJECT_ERROR,
+  CLEAR_ERROR_MESSAGE
 } from 'redux/projects/constant';
 
 const INITIAL_STATE = {
@@ -40,6 +44,25 @@ const reducer = (state = INITIAL_STATE, action) => {
         list: action.payload
       };
     case GET_PROJECTS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+        list: []
+      };
+    case GET_PROJECTS_WITH_DELETED_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GET_PROJECTS_WITH_DELETED_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: action.payload
+      };
+    case GET_PROJECTS_WITH_DELETED_ERROR:
       return {
         ...state,
         isLoading: false,
@@ -92,6 +115,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case POST_PROJECT_SUCCESS:
       return {
         ...state,
+        message: action.payload.message,
         list: [...state.list, action.payload.data],
         isLoading: false,
         error: ''
@@ -111,6 +135,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case PUT_PROJECT_SUCCESS:
       return {
         ...state,
+        message: action.payload.message,
         list: [
           ...state.list.map((project) => {
             if (project._id === action.payload.data._id) {
@@ -147,6 +172,12 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         error: action.payload,
         list: []
+      };
+    case CLEAR_ERROR_MESSAGE:
+      return {
+        ...state,
+        error: '',
+        message: ''
       };
     default:
       return {

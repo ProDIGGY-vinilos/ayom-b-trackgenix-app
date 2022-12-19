@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import styles from 'Components/Pages/Employee/MyProfile/my-profile-edit.module.css';
 import Button from 'Components/Shared/Button/Button';
@@ -9,12 +10,14 @@ import { useForm } from 'react-hook-form';
 import { getOneEmployee, putEmployee } from 'redux/employees/thunks';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { schema } from 'Components/Employees/validation';
+import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
+import { auth } from 'Helpers/firebase/index';
+import { clearError } from 'redux/employees/actions';
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.employees);
-  const [requested, setRequested] = useState(false);
-  const employeeId = '636c1e8ddabe537336ae082a';
+  const { error, message } = useSelector((state) => state.employees);
+  const employeeId = useParams().id;
   const employee = useSelector((state) =>
     state.employees.list.find((employee) => employee._id === employeeId)
   );
@@ -36,10 +39,19 @@ const EmployeeForm = () => {
 
   const openModal = () => {
     setShowModal(true);
+    dispatch(clearError());
   };
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const openModalOnError = (error) => {
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    }
   };
 
   useEffect(() => {
@@ -47,14 +59,14 @@ const EmployeeForm = () => {
       setTypeModal('Error');
       setTextModal(error);
       openModal();
-      setRequested(false);
-    } else if (employeeId && requested) {
+    } else if (message) {
+      setTypeModal('Success');
+      setTextModal('User Edited');
       openModal();
-      setRequested(false);
     }
-  }, [error]);
+  }, [error, message]);
 
-  const employeeData = {
+  let employeeData = {
     name: employee?.name,
     lastName: employee?.lastName,
     email: employee?.email,
@@ -63,17 +75,26 @@ const EmployeeForm = () => {
   };
 
   useEffect(() => {
+    reset(employeeData);
     if (!employee) {
       dispatch(getOneEmployee(employeeId));
     }
-    reset(employeeData);
-  }, [employee]);
+  }, []);
 
-  const onSubmit = (data) => {
-    dispatch(putEmployee(employeeId, data, token));
-    setTypeModal('Success');
-    setTextModal('SuperAdmin updated successfully');
-    openModal();
+  const reAuth = (data) => {
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(user.email, data.password);
+
+    reauthenticateWithCredential(user, credential).catch((error) => {
+      openModalOnError(error);
+    });
+  };
+
+  const onSubmit = async (employeeData) => {
+    dispatch(putEmployee(employeeId, employeeData, token));
+    if (!error) {
+      reAuth(employeeData);
+    }
   };
 
   return (
@@ -144,7 +165,7 @@ const EmployeeForm = () => {
           </tbody>
         </table>
         <div className={styles.buttons}>
-          <Button href="profile" style="squaredPrimary" disabled={false} text="Back" />
+          <Button href="/employee/profile" style="squaredPrimary" disabled={false} text="Back" />
           <MessageModal
             type={typeModal}
             isOpen={showModal}

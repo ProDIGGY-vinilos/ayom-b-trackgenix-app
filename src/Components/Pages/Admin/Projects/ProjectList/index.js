@@ -7,7 +7,6 @@ import Button from 'Components/Shared/Button/Button';
 import styles from 'Components/Pages/Admin/Projects/ProjectList/adminProjectList.module.css';
 
 const ProjectsPage = () => {
-  // const userId = '636c1e8ddabe537336ae082a';
   const token = sessionStorage.getItem('token');
   const [typeModal, setTypeModal] = useState('');
   const [textModal, setTextModal] = useState('');

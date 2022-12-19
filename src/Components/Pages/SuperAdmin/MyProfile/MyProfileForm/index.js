@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
-import styles from 'Components/Admins/admins.module.css';
+import styles from 'Components/Pages/SuperAdmin/Admins/admin.module.css';
 import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { putAdmin } from 'redux/admins/thunks';
+import { putSuperAdmin } from 'redux/superAdmins/thunks';
+import { clearError } from 'redux/superAdmins/actions';
 import { schema } from 'Components/Admins/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
@@ -14,10 +15,10 @@ import { auth } from 'Helpers/firebase/index';
 
 function Form() {
   const dispatch = useDispatch();
-  const { error, message } = useSelector((state) => state.admins);
-  const adminId = useParams().id;
-  const adminData = useSelector((state) =>
-    state.admins.list.find((admin) => admin._id === adminId)
+  const { error, message } = useSelector((state) => state.superAdmins);
+  const superAdminId = useParams().id;
+  const superAdminData = useSelector((state) =>
+    state.superAdmins.list.find((superAdmin) => superAdmin._id === superAdminId)
   );
   const token = sessionStorage.getItem('token');
 
@@ -37,6 +38,7 @@ function Form() {
 
   const openMessageModal = () => {
     setShowMessageModal(true);
+    dispatch(clearError);
   };
 
   const closeMessageModal = () => {
@@ -44,10 +46,10 @@ function Form() {
   };
 
   let data = {
-    name: adminData?.name,
-    lastName: adminData?.lastName,
-    email: adminData?.email,
-    password: adminData?.password
+    name: superAdminData?.name,
+    lastName: superAdminData?.lastName,
+    email: superAdminData?.email,
+    password: superAdminData?.password
   };
 
   useEffect(() => {
@@ -55,10 +57,10 @@ function Form() {
   }, []);
 
   useEffect(async () => {
-    if (adminId) {
-      document.getElementById('fromHeader').innerHTML = 'EDIT ADMIN';
-      if (adminData === undefined) {
-        fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`, {
+    if (superAdminId) {
+      document.getElementById('fromHeader').innerHTML = 'EDIT PROFILE';
+      if (superAdminData === undefined) {
+        fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${superAdminId}`, {
           headers: {
             token
           }
@@ -75,7 +77,7 @@ function Form() {
             reset(data);
           });
       }
-    } else document.getElementById('fromHeader').innerHTML = 'ADD ADMIN';
+    } else document.getElementById('fromHeader').innerHTML = 'ADD SUPER ADMIN';
   }, []);
 
   useEffect(() => {
@@ -107,9 +109,9 @@ function Form() {
     });
   };
 
-  const onSubmit = (data) => {
-    if (adminId) {
-      dispatch(putAdmin(data, adminId, token));
+  const onSubmit = async (data) => {
+    if (superAdminId) {
+      dispatch(putSuperAdmin(data, superAdminId, token));
       if (!error) {
         reAuth(data);
       }
@@ -120,7 +122,7 @@ function Form() {
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.formHeader}>
         <h3 id="fromHeader">Title</h3>
-        <Button href="/admin/admins" style="roundedSecondary" disabled={false} text="X" />
+        <Button href="/super-admin/profile" style="roundedSecondary" disabled={false} text="X" />
       </div>
       <div className={styles.fromInput}>
         <InputField
@@ -164,7 +166,7 @@ function Form() {
           isOpen={showMessageModal}
           message={textMessageModal}
           handleClose={closeMessageModal}
-          goBack={'/admin/admins'}
+          goBack={'/super-admin/profile'}
         />
       </div>
       <Button

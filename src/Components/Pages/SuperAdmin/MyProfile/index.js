@@ -3,17 +3,17 @@ import styles from 'Components/Employees/employees.module.css';
 import Table from 'Components/Shared/Table';
 import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getEmployeeByFirebaseUid } from 'redux/employees/thunks';
+import { getSuperAdminByFirebaseUid } from 'redux/superAdmins/thunks';
 
-const EmployeeProfile = () => {
+const SuperAdminProfile = () => {
   const dispatch = useDispatch();
-  const { list: employeesList, isLoading } = useSelector((state) => state.employees);
+  const { list: superAdminsList, isLoading } = useSelector((state) => state.superAdmins);
   const { firebaseUid } = useSelector((state) => state.auth);
   const token = sessionStorage.getItem('token');
 
   useEffect(() => {
-    if (!employeesList.length || employeesList.length > 1) {
-      dispatch(getEmployeeByFirebaseUid(firebaseUid, token));
+    if (!superAdminsList.length || superAdminsList.length > 1) {
+      dispatch(getSuperAdminByFirebaseUid(firebaseUid, token));
     }
   }, []);
 
@@ -21,7 +21,6 @@ const EmployeeProfile = () => {
     { heading: 'Name', value: 'name' },
     { heading: 'Last Name', value: 'lastName' },
     { heading: 'Email', value: 'email' },
-    { heading: 'Phone', value: 'phone' },
     { heading: 'Password', value: 'password' }
   ];
 
@@ -31,9 +30,10 @@ const EmployeeProfile = () => {
 
   return (
     <section className={styles.container}>
-      <Table data={employeesList} columns={columns} edit="/employee/profile" />
+      <h2>Super Admin</h2>
+      <Table data={superAdminsList} columns={columns} edit="/super-admin/profile" />
       <Button
-        href={`profile-form/${employeesList[0]?._id}`}
+        href={`profile-form/${superAdminsList[0]?._id}`}
         style="squaredPrimary"
         disabled={false}
         text="Edit"
@@ -41,4 +41,4 @@ const EmployeeProfile = () => {
     </section>
   );
 };
-export default EmployeeProfile;
+export default SuperAdminProfile;

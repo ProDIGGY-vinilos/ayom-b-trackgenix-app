@@ -2,9 +2,15 @@ import {
   getAdminsPending,
   getAdminsSuccess,
   getAdminsError,
+  getAdminsWithDeletedPending,
+  getAdminsWithDeletedSuccess,
+  getAdminsWithDeletedError,
   getOneAdminPending,
   getOneAdminSuccess,
   getOneAdminError,
+  getAdminByFirebaseUidPending,
+  getAdminByFirebaseUidSuccess,
+  getAdminByFirebaseUidError,
   postAdminPending,
   postAdminSuccess,
   postAdminError,
@@ -32,8 +38,30 @@ export const getAdmins = (token) => {
           dispatch(getAdminsSuccess(data.data));
         }
       })
-      .catch((err) => {
-        dispatch(getAdminsError(err.toString()));
+      .catch((error) => {
+        dispatch(getAdminsError(error.toString()));
+      });
+  };
+};
+
+export const getAdminsWithDeleted = (token) => {
+  return (dispatch) => {
+    dispatch(getAdminsWithDeletedPending());
+    fetch(`${process.env.REACT_APP_API_URL}/admins/withDeleted`, {
+      headers: {
+        token
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getAdminsWithDeletedSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getAdminsWithDeletedError(error.toString()));
       });
   };
 };
@@ -60,6 +88,28 @@ export const getOneAdmin = (id, token) => {
   };
 };
 
+export const getAdminByFirebaseUid = (firebaseUid, token) => {
+  return (dispatch) => {
+    dispatch(getAdminByFirebaseUidPending());
+    fetch(`${process.env.REACT_APP_API_URL}/admins/firebase/${firebaseUid}`, {
+      headers: {
+        token
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getAdminByFirebaseUidSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getAdminByFirebaseUidError(error.toString()));
+      });
+  };
+};
+
 export const postAdmin = (data, token) => {
   return (dispatch) => {
     dispatch(postAdminPending());
@@ -81,11 +131,11 @@ export const postAdmin = (data, token) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(postAdminSuccess(data.data));
+          dispatch(postAdminSuccess(data));
         }
       })
-      .catch((err) => {
-        dispatch(postAdminError(err.toString()));
+      .catch((error) => {
+        dispatch(postAdminError(error.toString()));
       });
   };
 };
@@ -111,11 +161,11 @@ export const putAdmin = (data, id, token) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(putAdminSuccess(data.data));
+          dispatch(putAdminSuccess(data));
         }
       })
-      .catch((err) => {
-        dispatch(putAdminError(err.toString()));
+      .catch((error) => {
+        dispatch(putAdminError(error.toString()));
       });
   };
 };
@@ -137,15 +187,15 @@ export const deleteAdmin = (id, token) => {
             .then((data) => {
               throw new Error(data.message);
             })
-            .catch((err) => {
-              dispatch(deleteAdminError(err.toString()));
+            .catch((error) => {
+              dispatch(deleteAdminError(error.toString()));
             });
         } else {
           dispatch(deleteAdminSuccess(id));
         }
       })
-      .catch((err) => {
-        dispatch(deleteAdminError(err.toString()));
+      .catch((error) => {
+        dispatch(deleteAdminError(error.toString()));
       });
   };
 };

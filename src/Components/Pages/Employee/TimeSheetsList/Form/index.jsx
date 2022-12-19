@@ -7,13 +7,13 @@ import MessageModal from 'Components/Shared/Modal/MessageModal';
 import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { postTimeSheet } from 'redux/timeSheets/thunks';
-import { getEmployees } from 'redux/employees/thunks';
 import { getProjectsByEmployee } from 'redux/projects/thunks';
 import { getTasks } from 'redux/tasks/thunks';
 import { useForm } from 'react-hook-form';
 import { timeSheetValidation } from './validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 import TextAreaField from 'Components/Shared/TextArea';
+import { useParams } from 'react-router-dom';
 
 const TimeSheetsForm = () => {
   const [typeModal, setTypeModal] = useState();
@@ -23,7 +23,7 @@ const TimeSheetsForm = () => {
   const { error } = useSelector((state) => state.timeSheets);
   const { list: projectsList } = useSelector((state) => state.projects);
   const { list: taskList } = useSelector((state) => state.tasks);
-  const employeeId = '636c1e8ddabe537336ae082a';
+  const employeeId = useParams().id;
   const token = sessionStorage.getItem('token');
 
   const {
@@ -57,7 +57,6 @@ const TimeSheetsForm = () => {
 
   useEffect(() => {
     dispatch(getTasks(token));
-    dispatch(getEmployees(token));
     dispatch(getProjectsByEmployee(employeeId, token));
   }, []);
 
@@ -66,7 +65,7 @@ const TimeSheetsForm = () => {
       ...data,
       employee: employeeId
     };
-    dispatch(postTimeSheet(data));
+    dispatch(postTimeSheet(data, token));
     setTypeModal('Success');
     setTextModal('TimeSheet added successfully');
     openModal();

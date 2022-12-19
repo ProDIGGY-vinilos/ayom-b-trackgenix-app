@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
-import styles from 'Components/Admins/admins.module.css';
+import styles from 'Components/Pages/SuperAdmin/Admins/admin.module.css';
 import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { putAdmin } from 'redux/admins/thunks';
+import { postAdmin, putAdmin } from 'redux/admins/thunks';
+import { clearError } from 'redux/admins/actions';
 import { schema } from 'Components/Admins/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
-import { auth } from 'Helpers/firebase/index';
 
 function Form() {
   const dispatch = useDispatch();
@@ -37,6 +36,7 @@ function Form() {
 
   const openMessageModal = () => {
     setShowMessageModal(true);
+    dispatch(clearError());
   };
 
   const closeMessageModal = () => {
@@ -51,6 +51,7 @@ function Form() {
   };
 
   useEffect(() => {
+    dispatch(clearError());
     reset(data);
   }, []);
 
@@ -90,29 +91,11 @@ function Form() {
     }
   }, [error, message]);
 
-  const openModalOnError = (error) => {
-    if (error) {
-      setTypeModal('Error');
-      setTextMessageModal(error);
-      openMessageModal();
-    }
-  };
-
-  const reAuth = (data) => {
-    const user = auth.currentUser;
-    const credential = EmailAuthProvider.credential(user.email, data.password);
-
-    reauthenticateWithCredential(user, credential).catch((error) => {
-      openModalOnError(error);
-    });
-  };
-
   const onSubmit = (data) => {
     if (adminId) {
       dispatch(putAdmin(data, adminId, token));
-      if (!error) {
-        reAuth(data);
-      }
+    } else {
+      dispatch(postAdmin(data, token));
     }
   };
 
@@ -120,7 +103,7 @@ function Form() {
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.formHeader}>
         <h3 id="fromHeader">Title</h3>
-        <Button href="/admin/admins" style="roundedSecondary" disabled={false} text="X" />
+        <Button href="/super-admin/admins" style="roundedSecondary" disabled={false} text="X" />
       </div>
       <div className={styles.fromInput}>
         <InputField
@@ -164,7 +147,7 @@ function Form() {
           isOpen={showMessageModal}
           message={textMessageModal}
           handleClose={closeMessageModal}
-          goBack={'/admin/admins'}
+          goBack={'/super-admin/admins'}
         />
       </div>
       <Button

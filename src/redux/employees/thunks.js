@@ -2,9 +2,15 @@ import {
   getEmployeesPending,
   getEmployeesSuccess,
   getEmployeesError,
+  getEmployeesWithDeletedPending,
+  getEmployeesWithDeletedSuccess,
+  getEmployeesWithDeletedError,
   getOneEmployeePending,
   getOneEmployeeSuccess,
   getOneEmployeeError,
+  getEmployeeByFirebaseUidPending,
+  getEmployeeByFirebaseUidSuccess,
+  getEmployeeByFirebaseUidError,
   postEmployeesPending,
   postEmployeesSuccess,
   postEmployeesError,
@@ -29,11 +35,33 @@ export const getEmployees = (token) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(getEmployeesSuccess(data.data));
+          dispatch(getEmployeesSuccess(data));
         }
       })
       .catch((error) => {
         dispatch(getEmployeesError(error.toString()));
+      });
+  };
+};
+
+export const getEmployeesWithDeleted = (token) => {
+  return (dispatch) => {
+    dispatch(getEmployeesWithDeletedPending());
+    fetch(`${process.env.REACT_APP_API_URL}/employees/withDeleted`, {
+      headers: {
+        token
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getEmployeesWithDeletedSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getEmployeesWithDeletedError(error.toString()));
       });
   };
 };
@@ -51,11 +79,33 @@ export const getOneEmployee = (id, token) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(getOneEmployeeSuccess(data.data));
+          dispatch(getOneEmployeeSuccess(data));
         }
       })
       .catch((error) => {
         dispatch(getOneEmployeeError(error.toString()));
+      });
+  };
+};
+
+export const getEmployeeByFirebaseUid = (firebaseUid, token) => {
+  return (dispatch) => {
+    dispatch(getEmployeeByFirebaseUidPending());
+    fetch(`${process.env.REACT_APP_API_URL}/employees/firebase/${firebaseUid}`, {
+      headers: {
+        token
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getEmployeeByFirebaseUidSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getEmployeeByFirebaseUidError(error.toString()));
       });
   };
 };

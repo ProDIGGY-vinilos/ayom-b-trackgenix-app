@@ -2,6 +2,9 @@ import {
   getTimeSheetsPending,
   getTimeSheetsSuccess,
   getTimeSheetsError,
+  getTimeSheetsWithDeletedPending,
+  getTimeSheetsWithDeletedSuccess,
+  getTimeSheetsWithDeletedError,
   getOneTimeSheetPending,
   getOneTimeSheetSuccess,
   getOneTimeSheetError,
@@ -37,6 +40,28 @@ export const getTimeSheets = (token) => {
       })
       .catch((error) => {
         dispatch(getTimeSheetsError(error.toString()));
+      });
+  };
+};
+
+export const getTimeSheetsWithDeleted = (token) => {
+  return (dispatch) => {
+    dispatch(getTimeSheetsWithDeletedPending());
+    fetch(`${process.env.REACT_APP_API_URL}/timeSheet/withDeleted`, {
+      headers: {
+        token
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getTimeSheetsWithDeletedSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getTimeSheetsWithDeletedError(error.toString()));
       });
   };
 };

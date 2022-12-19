@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import FormEmployee from 'Components/Projects/Form/FormEmployees/index';
+import FormEmployee from 'Components/Pages/Admin/Projects/ProjectForm/ProjectEmployees';
 import DatePicker from 'Components/Shared/Datepicker';
 import Modal from 'Components/Shared/Modal/ActionModal';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import styles from 'Components/Projects/Form/form.module.css';
 import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
-import TextAreaField from 'Components/Shared/TextArea';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { schema } from 'Components/Projects/validations';
 import { getOneProject, postProject, putProject } from 'redux/projects/thunks';
+import { clearError } from 'redux/admins/actions';
 import { getEmployees } from 'redux/employees/thunks';
+import TextAreaField from 'Components/Shared/TextArea';
 
 const Project = () => {
   const projectId = useParams().id;
   const projectData = useSelector((state) =>
     state.projects.list.find((project) => project._id === projectId)
   );
+
   const token = sessionStorage.getItem('token');
 
   const [showModal, setShowModal] = useState(false);
@@ -28,11 +30,12 @@ const Project = () => {
   const [textModal, setTextModal] = useState('');
   const [showSharedModal, setShowSharedModal] = useState(false);
 
-  const { isLoading, error } = useSelector((state) => state.projects);
+  const { isLoading, error, message } = useSelector((state) => state.projects);
   const { list: employeesList } = useSelector((state) => state.employees);
 
   const dispatch = useDispatch();
   const {
+    control,
     register,
     handleSubmit,
     reset,
@@ -51,13 +54,26 @@ const Project = () => {
 
   const closeModal = () => {
     setShowModal(false);
+    dispatch(clearError());
   };
 
   const openSharedModal = () => {
     setShowSharedModal(true);
+    dispatch(clearError());
   };
   const closeSharedModal = () => {
     setShowSharedModal(false);
+    dispatch(clearError());
+  };
+
+  const employeesMap = () => {
+    projectData?.employees.map((index) => {
+      return {
+        employee: projectData?.employees[index]?.employee,
+        role: projectData?.employees[index]?.role,
+        rate: projectData?.employees[index]?.rate
+      };
+    });
   };
 
   let projectBodyData = {
@@ -66,16 +82,11 @@ const Project = () => {
     startDate: projectData?.startDate.substring(0, 10),
     endDate: projectData?.endDate.substring(0, 10),
     clientName: projectData?.clientName,
-    employees: [
-      {
-        employee: projectData?.employees[0].employee._id,
-        role: projectData?.employees[0].role,
-        rate: projectData?.employees[0].rate
-      }
-    ]
+    employees: employeesMap()
   };
 
   useEffect(() => {
+    dispatch(clearError());
     dispatch(getEmployees(token));
     if (projectId) {
       setIsFetched(true);
@@ -88,7 +99,6 @@ const Project = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getEmployees(token));
     if (projectId) {
       setIsFetched(true);
       if (projectData !== undefined) {
@@ -98,13 +108,13 @@ const Project = () => {
           startDate: projectData?.startDate.substring(0, 10),
           endDate: projectData?.endDate.substring(0, 10),
           clientName: projectData?.clientName,
-          employees: [
-            {
-              employee: projectData?.employees[0]?.employee._id,
-              role: projectData?.employees[0]?.role,
-              rate: projectData?.employees[0]?.rate
-            }
-          ]
+          employees: projectData?.employees.map((employee) => {
+            return {
+              employee: employee.employee._id,
+              role: employee.role,
+              rate: employee.rate
+            };
+          })
         };
         reset(projectBodyData);
       } else {
@@ -114,22 +124,29 @@ const Project = () => {
   }, [projectData]);
 
   useEffect(() => {
+    dispatch(clearError());
     reset(projectBodyData);
   }, []);
 
   useEffect(() => {
-    setModalMessage(error);
-  }, [error]);
+    if (error) {
+      setTypeModal('Error');
+      setModalMessage(error);
+      openSharedModal();
+    } else if (message) {
+      setTypeModal('Success');
+      setModalMessage(error, message);
+      openSharedModal();
+    }
+  }, [error, message]);
 
   const setModalMessage = (error) => {
     if (error) {
       setTypeModal('Error');
       setTextModal(error);
-    } else {
+    } else if (message) {
       setTypeModal('Success');
-      projectId === ''
-        ? setTextModal('Project updated successfully')
-        : setTextModal('Project created successfully');
+      setTextModal(message);
     }
   };
 
@@ -172,13 +189,12 @@ const Project = () => {
           />
         </div>
         <div className={styles.formFull}>
-          <label>Description</label>
           <TextAreaField
-            className={styles.textarea}
+            label="Description"
             name="description"
-            placeholder="Description"
+            placeholder="Project description..."
             register={register}
-            columns="100"
+            columns="30"
             error={errors.description?.message}
           />
         </div>
@@ -200,7 +216,12 @@ const Project = () => {
         </div>
         <h4 className={styles.formFull}>Employees: </h4>
         <div className={`${styles.formFull} ${styles.employeesDiv}`}>
-          <FormEmployee employees={employeesList} register={register} errors={errors} />
+          <FormEmployee
+            control={control}
+            employees={employeesList}
+            register={register}
+            errors={errors}
+          />
         </div>
         <Button onClick={openModal} style="squaredPrimary" disabled={false} text="Save" />
       </form>
