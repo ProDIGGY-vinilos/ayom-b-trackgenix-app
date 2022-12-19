@@ -64,85 +64,85 @@ const EmployeeForm = () => {
 
   return (
     <>
-      <h1 className={styles.title}>TRACKGENIX</h1>
-      <div className={styles.divForm}>
-        <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
-          <h3 className={styles.titleForm}>Sign Up</h3>
-          <div className={styles.formControl}>
-            <InputField
-              label="Name"
-              name="name"
-              type="text"
-              placeholder="name"
-              register={register}
-              error={errors.name?.message}
-            />
-          </div>
-          <div className={styles.formControl}>
-            <InputField
-              label="Last Name"
-              name="lastName"
-              type="text"
-              placeholder="last name"
-              register={register}
-              error={errors.lastName?.message}
-            />
-          </div>
-          <div className={styles.formControl}>
-            <InputField
-              label="Email"
-              name="email"
-              type="mail"
-              placeholder="email"
-              register={register}
-              error={errors.email?.message}
-            />
-          </div>
-          <div className={styles.formControl}>
-            <InputField
-              label="Phone Number"
-              name="phone"
-              type="number"
-              placeholder="phone"
-              register={register}
-              error={errors.phone?.message}
-            />
-          </div>
-          <div className={styles.formControl}>
-            <InputField
-              label="Password"
-              name="password"
-              type="password"
-              placeholder="password"
-              register={register}
-              error={errors.password?.message}
-            />
-          </div>
-          <div>
-            <MessageModal
-              type={typeModal}
-              isOpen={showModal}
-              message={textModal}
-              handleClose={closeModal}
-              goBack={'/login'}
-            />
-          </div>
-          <div className={styles.divBtn}>
-            <Button href="/home" style="squaredSecondary" disabled={false} text="Back" />
-            <Button
-              onClick={handleSubmit(onSubmit)}
-              style="squaredPrimary"
-              disabled={false}
-              text="Save"
-            />
-          </div>
-          <p>
-            Already have an account?{' '}
-            <Link className={styles.link} to="/login">
-              Sign in now
-            </Link>
-          </p>
-        </form>
+      <h1 className={styles.title}>Trackgenix</h1>
+      <div className={styles.signUpDesign}>
+        <div className={styles.imgForm}></div>
+        <div className={styles.divForm}>
+          <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
+            <h3 className={styles.titleForm}>Sign up</h3>
+            <div className={styles.formNameLast}>
+              <div className={styles.formControl}>
+                <InputField
+                  name="name"
+                  type="text"
+                  placeholder="First name"
+                  register={register}
+                  error={errors.name?.message}
+                />
+              </div>
+              <div className={styles.formControl}>
+                <InputField
+                  name="lastName"
+                  type="text"
+                  placeholder="Last name"
+                  register={register}
+                  error={errors.lastName?.message}
+                />
+              </div>
+            </div>
+            <div className={styles.formControl}>
+              <InputField
+                name="email"
+                type="mail"
+                placeholder="Email"
+                register={register}
+                error={errors.email?.message}
+              />
+            </div>
+            <div className={styles.formControl}>
+              <InputField
+                name="phone"
+                type="number"
+                placeholder="Phone"
+                register={register}
+                error={errors.phone?.message}
+              />
+            </div>
+            <div className={styles.formControl}>
+              <InputField
+                name="password"
+                type="password"
+                placeholder="Password"
+                register={register}
+                error={errors.password?.message}
+              />
+            </div>
+            <div>
+              <MessageModal
+                type={typeModal}
+                isOpen={showModal}
+                message={textModal}
+                handleClose={closeModal}
+                goBack={'/login'}
+              />
+            </div>
+            <div className={styles.divBtn}>
+              <Button href="/home" style="squaredSecondary2" disabled={false} text="Back" />
+              <Button
+                onClick={handleSubmit(onSubmit)}
+                style="squaredPrimary2"
+                disabled={false}
+                text="Sign up"
+              />
+            </div>
+            <p className={styles.haveAccount}>
+              Already have an account?{' '}
+              <Link className={styles.link} to="/login">
+                Sign in
+              </Link>
+            </p>
+          </form>
+        </div>
       </div>
     </>
   );

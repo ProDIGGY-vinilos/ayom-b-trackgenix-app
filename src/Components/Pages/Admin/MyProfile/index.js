@@ -30,7 +30,6 @@ const AdminProfile = () => {
 
   return (
     <section className={styles.container}>
-      <h2>Admin</h2>
       <Table data={adminList} columns={columns} edit="/admin/profile" />
       <Button
         href={`profile-form/${adminList[0]?._id}`}

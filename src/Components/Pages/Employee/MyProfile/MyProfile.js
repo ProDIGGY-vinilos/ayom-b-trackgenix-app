@@ -31,7 +31,6 @@ const EmployeeProfile = () => {
 
   return (
     <section className={styles.container}>
-      <h2>Employee</h2>
       <Table data={employeesList} columns={columns} edit="/employee/profile" />
       <Button
         href={`profile-form/${employeesList[0]?._id}`}

@@ -35,10 +35,8 @@ const Employees = () => {
   };
 
   useEffect(() => {
+    dispatch(getEmployees(token));
     dispatch(clearError());
-    if (!employeesList.length || employeesList.length === 1) {
-      dispatch(getEmployees(token));
-    }
   }, []);
 
   useEffect(() => {

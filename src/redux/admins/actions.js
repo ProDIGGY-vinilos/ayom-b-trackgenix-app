@@ -2,6 +2,9 @@ import {
   GET_ADMINS_PENDING,
   GET_ADMINS_SUCCESS,
   GET_ADMINS_ERROR,
+  GET_ADMINS_WITH_DELETED_PENDING,
+  GET_ADMINS_WITH_DELETED_SUCCESS,
+  GET_ADMINS_WITH_DELETED_ERROR,
   GET_ONE_ADMIN_PENDING,
   GET_ONE_ADMIN_SUCCESS,
   GET_ONE_ADMIN_ERROR,
@@ -16,7 +19,8 @@ import {
   PUT_ADMIN_ERROR,
   DELETE_ADMIN_PENDING,
   DELETE_ADMIN_SUCCESS,
-  DELETE_ADMIN_ERROR
+  DELETE_ADMIN_ERROR,
+  CLEAR_ERROR_MESSAGE
 } from 'redux/admins/constant';
 
 export const getAdminsPending = () => {
@@ -35,6 +39,26 @@ export const getAdminsSuccess = (payload) => {
 export const getAdminsError = (error) => {
   return {
     type: GET_ADMINS_ERROR,
+    payload: error
+  };
+};
+
+export const getAdminsWithDeletedPending = () => {
+  return {
+    type: GET_ADMINS_WITH_DELETED_PENDING
+  };
+};
+
+export const getAdminsWithDeletedSuccess = (payload) => {
+  return {
+    type: GET_ADMINS_WITH_DELETED_SUCCESS,
+    payload
+  };
+};
+
+export const getAdminsWithDeletedError = (error) => {
+  return {
+    type: GET_ADMINS_WITH_DELETED_ERROR,
     payload: error
   };
 };
@@ -88,7 +112,7 @@ export const postAdminPending = () => {
 export const postAdminSuccess = (data) => {
   return {
     type: POST_ADMIN_SUCCESS,
-    data
+    payload: data
   };
 };
 
@@ -108,7 +132,7 @@ export const putAdminPending = () => {
 export const putAdminSuccess = (data) => {
   return {
     type: PUT_ADMIN_SUCCESS,
-    data
+    payload: data
   };
 };
 
@@ -136,5 +160,11 @@ export const deleteAdminError = (error) => {
   return {
     type: DELETE_ADMIN_ERROR,
     payload: error
+  };
+};
+
+export const clearError = () => {
+  return {
+    type: CLEAR_ERROR_MESSAGE
   };
 };

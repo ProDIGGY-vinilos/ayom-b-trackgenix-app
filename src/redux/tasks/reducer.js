@@ -2,6 +2,9 @@ import {
   GET_TASKS_PENDING,
   GET_TASKS_SUCCESS,
   GET_TASKS_ERROR,
+  GET_TASKS_WITH_DELETED_PENDING,
+  GET_TASKS_WITH_DELETED_SUCCESS,
+  GET_TASKS_WITH_DELETED_ERROR,
   GET_ONE_TASK_PENDING,
   GET_ONE_TASK_SUCCESS,
   GET_ONE_TASK_ERROR,
@@ -38,6 +41,25 @@ const reducer = (state = INITIAL_STATE, action) => {
         list: action.payload
       };
     case GET_TASKS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case GET_TASKS_WITH_DELETED_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        error: ''
+      };
+    case GET_TASKS_WITH_DELETED_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: action.payload
+      };
+    case GET_TASKS_WITH_DELETED_ERROR:
       return {
         ...state,
         isLoading: false,
