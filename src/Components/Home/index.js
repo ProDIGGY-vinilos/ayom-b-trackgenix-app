@@ -76,7 +76,7 @@ const Home = (props) => {
         <div className={styles.bodyConteiner}>
           <div className={styles.bodyImageConteiner}>
             <img
-              src={`${process.env.PUBLIC_URL}/assets/Home/mainImage/homePage.png`}
+              src={`${process.env.PUBLIC_URL}/assets/Home/mainImage/HomePage.png`}
               className={styles.bodyImage}
             ></img>
             <h2 className={styles.bodyImageText}>Keep track of your employees’ progress easily </h2>
