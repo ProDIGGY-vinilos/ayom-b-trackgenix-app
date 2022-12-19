@@ -2,8 +2,8 @@
     margin: 4px 2px;
     padding: 10px 20px;
     text-align: center;
-    background-color: #EA3354;
-    border: 2px solid #EA3354;
+    background-color: #373867;
+    border: 2px solid #373867;
     color: #ffffff;
     border-radius: 10%;
     text-decoration: none;
@@ -23,8 +23,8 @@
     margin: 5px 5px;
     padding: 10px 20px;
     text-align: center;
-    background-color: #EA3354;
-    border: 2px solid #EA3354;
+    background-color: #373867;
+    border: 2px solid #373867;
     color: #ffffff;
     border-radius: 100%;
     text-decoration: none;
@@ -45,7 +45,7 @@
     padding: 10px 20px;
     text-align: center;
     background-color: #ffffff;
-    border: 2px solid #EA3354;
+    border: 2px solid #373867;
     color: #000000;
     border-radius: 10%;
     text-decoration: none;
@@ -55,7 +55,7 @@
 
 .squaredSecondary:hover {
     cursor: pointer;
-    background-color: #EA3354;
+    background-color: #373867;
     color: #ffffff;
 }
 
@@ -64,7 +64,7 @@
     padding: 10px 16px;
     text-align: center;
     background-color: #ffffff;
-    border: 2px solid #EA3354;
+    border: 2px solid #373867;
     color: #000000;
     border-radius: 30%;
     text-decoration: none;
@@ -74,7 +74,7 @@
 
 .roundedSecondary:hover {
     cursor: pointer;
-    background-color: #EA3354;
+    background-color: #373867;
     color: #ffffff;
 }
 
@@ -82,4 +82,46 @@
     display: flex;
     justify-content: space-between;
     color: #373867;
+}
+
+.squaredPrimary2 {
+    margin: 4px 2px;
+    padding: 10px 20px;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    background-color: #373867;
+    border: 2px solid #373867;
+    color: #ffffff;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.4s;
+}
+.squaredPrimary2:hover {
+    cursor: pointer;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.squaredSecondary2 {
+    display: flex;
+    justify-content: flex-end;
+    margin: 4px 2px;
+    padding: 17px 20px;
+    height: 100%;
+    text-align: center;
+    background-color: #ffffff;
+    border: 2px solid #373867;
+    color: #000000;
+    border-radius: 10%;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.4s;
+}
+
+.squaredSecondary2:hover {
+    cursor: pointer;
+    background-color: #373867;
+    color: #ffffff;
 }
