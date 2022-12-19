@@ -114,8 +114,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: true,
-        error: '',
-        message: action.payload.message
+        error: ''
       };
     case POST_EMPLOYEE_SUCCESS:
       return {
