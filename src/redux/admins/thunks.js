@@ -140,7 +140,7 @@ export const postAdmin = (data, token) => {
   };
 };
 
-export const putAdmin = (data, id, token) => {
+export const putAdmin = (id, data, token) => {
   return (dispatch) => {
     dispatch(putAdminPending());
     fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {

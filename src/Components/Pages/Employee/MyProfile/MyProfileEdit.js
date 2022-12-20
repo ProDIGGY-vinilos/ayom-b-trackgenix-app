@@ -1,5 +1,5 @@
 import React from 'react';
-import { getOneEmployee, putEmployee, postEmployee } from 'redux/employees/thunks';
+import { getOneEmployee, putEmployee } from 'redux/employees/thunks';
 import { schema } from 'Components/Employees/validation';
 import ProfileForm from 'Components/Shared/ProfileForm';
 
@@ -8,7 +8,6 @@ const EmployeeForm = () => {
     <ProfileForm
       schema={schema}
       entity="employees"
-      post={postEmployee}
       put={putEmployee}
       getOne={getOneEmployee}
       textEdit="Edit Employee"

@@ -4,6 +4,7 @@ import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import createTitle from 'Helpers/create-title.js';
 import Header from 'Components/Shared/Header/index';
 import Sidebar from 'Components/Shared/Sidebar';
+import styles from 'Components/Layout/SuperAdminLayout/layout.module.css';
 
 const Admins = lazy(() => import('Components/Pages/SuperAdmin/Admins/AdminList/index'));
 const AdminForm = lazy(() => import('Components/Pages/SuperAdmin/Admins/AdminForm/index'));
@@ -22,9 +23,9 @@ const SuperAdminLayout = () => {
   path = createTitle(path);
 
   return (
-    <div>
+    <div className={styles.container}>
       <Header header={path} />
-      <div>
+      <div className={styles.bodyContainer}>
         <Sidebar options={sideBarOptions} user={'Super Admin'} />
         <Suspense fallback={<div>Loading...</div>}>
           <Switch>
