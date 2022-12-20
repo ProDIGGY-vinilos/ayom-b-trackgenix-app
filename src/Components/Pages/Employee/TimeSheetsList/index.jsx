@@ -6,6 +6,7 @@ import styles from 'Components/Pages/Employee/TimeSheetsList/time-sheets.module.
 import Table from 'Components/Shared/Table';
 import Button from 'Components/Shared/Button/Button';
 import { auth } from 'Helpers/firebase/index';
+import LoadingModal from 'Components/Shared/Loading';
 
 const TimeSheetsList = () => {
   const userUId = auth.currentUser.uid;
@@ -37,7 +38,7 @@ const TimeSheetsList = () => {
   return (
     <section className={styles.container}>
       {isLoading ? (
-        <h3>Loading...</h3>
+        <LoadingModal />
       ) : (
         <>
           <Table data={timeSheetsList} columns={columns} />

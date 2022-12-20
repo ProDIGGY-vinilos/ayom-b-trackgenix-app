@@ -6,6 +6,7 @@ import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { getEmployees, deleteEmployee } from 'redux/employees/thunks';
 import { clearError } from 'redux/employees/actions';
+import LoadingModal from 'Components/Shared/Loading';
 
 const Employees = () => {
   const [typeModal, setTypeModal] = useState('');
@@ -66,7 +67,7 @@ const Employees = () => {
   ];
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <LoadingModal />;
   }
 
   return (

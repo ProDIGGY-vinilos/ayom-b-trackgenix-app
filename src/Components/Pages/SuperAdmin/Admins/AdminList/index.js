@@ -6,6 +6,7 @@ import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAdmins, deleteAdmin } from 'redux/admins/thunks';
 import { clearError } from 'redux/admins/actions';
+import LoadingModal from 'Components/Shared/Loading';
 
 const Admins = () => {
   const { list: adminList, isLoading, error, message } = useSelector((state) => state.admins);
@@ -64,7 +65,7 @@ const Admins = () => {
   ];
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <LoadingModal />;
   }
 
   const openModalOnError = (error) => {
