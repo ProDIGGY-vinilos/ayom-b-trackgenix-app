@@ -109,7 +109,6 @@ const ProfileForm = ({ schema, entity, post, put, getOne, textEdit, textNew, typ
     const credential = EmailAuthProvider.credential(user.email, data.password);
 
     reauthenticateWithCredential(user, credential).catch((error) => {
-      console.log('error', error.message);
       openModalOnError(error.message);
     });
   };
