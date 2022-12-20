@@ -101,7 +101,7 @@ export const postTask = (taskBody, token) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(postTaskSuccess(data.data));
+          dispatch(postTaskSuccess(data));
         }
       })
       .catch((error) => {
@@ -126,7 +126,7 @@ export const putTask = (id, taskBody, token) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(putTaskSuccess(data.data));
+          dispatch(putTaskSuccess(data));
         }
       })
       .catch((error) => {

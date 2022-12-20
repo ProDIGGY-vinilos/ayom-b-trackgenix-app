@@ -16,7 +16,8 @@ import {
   PUT_TASK_ERROR,
   DELETE_TASK_PENDING,
   DELETE_TASK_SUCCESS,
-  DELETE_TASK_ERROR
+  DELETE_TASK_ERROR,
+  CLEAR_ERROR_MESSAGE
 } from 'redux/tasks/constant';
 
 export const getTasksPending = () => {
@@ -85,10 +86,10 @@ export const postTaskPending = () => {
   };
 };
 
-export const postTaskSuccess = (payload) => {
+export const postTaskSuccess = (data) => {
   return {
     type: POST_TASK_SUCCESS,
-    payload
+    payload: data
   };
 };
 
@@ -105,10 +106,10 @@ export const putTaskPending = () => {
   };
 };
 
-export const putTaskSuccess = (payload) => {
+export const putTaskSuccess = (data) => {
   return {
     type: PUT_TASK_SUCCESS,
-    payload
+    payload: data
   };
 };
 
@@ -136,5 +137,11 @@ export const deleteTaskError = (error) => {
   return {
     type: DELETE_TASK_ERROR,
     payload: error
+  };
+};
+
+export const clearError = () => {
+  return {
+    type: CLEAR_ERROR_MESSAGE
   };
 };
