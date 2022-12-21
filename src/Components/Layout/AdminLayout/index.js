@@ -1,11 +1,7 @@
-/* eslint-disable no-unused-vars */
-import React, { lazy, Suspense } from 'react';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import React, { lazy } from 'react';
+import { Route, Redirect, useLocation } from 'react-router-dom';
 import createTitle from 'Helpers/create-title.js';
-import Header from 'Components/Shared/Header/index';
-import Sidebar from 'Components/Shared/Sidebar';
-import styles from 'Components/Layout/AdminLayout/layout.module.css';
-import LoadingModal from 'Components/Shared/Loading';
+import Layout from 'Components/Shared/Layout';
 
 const Projects = lazy(() => import('Components/Pages/Admin/Projects/ProjectList/index'));
 const ProjectForm = lazy(() => import('Components/Pages/Admin/Projects/ProjectForm/index'));
@@ -30,32 +26,24 @@ const AdminLayout = () => {
   path = createTitle(path);
 
   return (
-    <div className={styles.container}>
-      <Header header={path} />
-      <div className={styles.bodyContainer}>
-        <Sidebar options={sideBarOptions} user={'Admin'} />
-        <Suspense fallback={<LoadingModal />}>
-          <Switch>
-            <Route exact path="/admin/projects" component={Projects} />
-            <Route exact path="/admin/project-form" component={ProjectForm} />
-            <Route path="/admin/project-form/:id" component={ProjectForm} />
-            <Route exact path="/admin/employees" component={Employees} />
-            <Route exact path="/admin/employee-form" component={EmployeeForm} />
-            <Route path="/admin/employee-form/:id" component={EmployeeForm} />
-            <Route exact path="/admin/timesheets" component={TimeSheets} />
-            <Route exact path="/admin/profile" component={MyProfile} />
-            <Route exact path="/admin/profile-form" component={MyProfileForm} />
-            <Route path="/admin/profile-form/:id" component={MyProfileForm} />
-            <Route exact path="/admin/tasks" component={Tasks} />
-            <Route exact path="/admin/task-form" component={TaskForm} />
-            <Route path="/admin/task-form/:id" component={TaskForm} />
-            <Route path="/admin">
-              <Redirect to="/admin/projects" />
-            </Route>
-          </Switch>
-        </Suspense>
-      </div>
-    </div>
+    <Layout sidebarOptions={sideBarOptions} user={'Admin'} path={path}>
+      <Route exact path="/admin/projects" component={Projects} />
+      <Route exact path="/admin/project-form" component={ProjectForm} />
+      <Route path="/admin/project-form/:id" component={ProjectForm} />
+      <Route exact path="/admin/employees" component={Employees} />
+      <Route exact path="/admin/employee-form" component={EmployeeForm} />
+      <Route path="/admin/employee-form/:id" component={EmployeeForm} />
+      <Route exact path="/admin/timesheets" component={TimeSheets} />
+      <Route exact path="/admin/profile" component={MyProfile} />
+      <Route exact path="/admin/profile-form" component={MyProfileForm} />
+      <Route path="/admin/profile-form/:id" component={MyProfileForm} />
+      <Route exact path="/admin/tasks" component={Tasks} />
+      <Route exact path="/admin/task-form" component={TaskForm} />
+      <Route path="/admin/task-form/:id" component={TaskForm} />
+      <Route path="/admin">
+        <Redirect to="/admin/projects" />
+      </Route>
+    </Layout>
   );
 };
 
