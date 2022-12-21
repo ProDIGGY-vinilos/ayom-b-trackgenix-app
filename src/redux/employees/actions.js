@@ -2,6 +2,9 @@ import {
   GET_EMPLOYEES_PENDING,
   GET_EMPLOYEES_SUCCESS,
   GET_EMPLOYEES_ERROR,
+  GET_EMPLOYEES_WITH_DELETED_PENDING,
+  GET_EMPLOYEES_WITH_DELETED_SUCCESS,
+  GET_EMPLOYEES_WITH_DELETED_ERROR,
   GET_ONE_EMPLOYEE_PENDING,
   GET_ONE_EMPLOYEE_SUCCESS,
   GET_ONE_EMPLOYEE_ERROR,
@@ -17,7 +20,7 @@ import {
   DELETE_EMPLOYEE_PENDING,
   DELETE_EMPLOYEE_SUCCESS,
   DELETE_EMPLOYEE_ERROR,
-  CLEAR_ERROR
+  CLEAR_ERROR_MESSAGE
 } from 'redux/employees/constant';
 
 export const getEmployeesPending = () => {
@@ -36,6 +39,26 @@ export const getEmployeesSuccess = (data) => {
 export const getEmployeesError = (error) => {
   return {
     type: GET_EMPLOYEES_ERROR,
+    payload: error
+  };
+};
+
+export const getEmployeesWithDeletedPending = () => {
+  return {
+    type: GET_EMPLOYEES_WITH_DELETED_PENDING
+  };
+};
+
+export const getEmployeesWithDeletedSuccess = (data) => {
+  return {
+    type: GET_EMPLOYEES_WITH_DELETED_SUCCESS,
+    payload: data
+  };
+};
+
+export const getEmployeesWithDeletedError = (error) => {
+  return {
+    type: GET_EMPLOYEES_WITH_DELETED_ERROR,
     payload: error
   };
 };
@@ -66,10 +89,10 @@ export const getEmployeeByFirebaseUidPending = () => {
   };
 };
 
-export const getEmployeeByFirebaseUidSuccess = (payload) => {
+export const getEmployeeByFirebaseUidSuccess = (data) => {
   return {
     type: GET_EMPLOYEE_BY_FIREBASE_UID_SUCCESS,
-    payload
+    payload: data
   };
 };
 
@@ -142,6 +165,6 @@ export const deleteEmployeesError = (error) => {
 
 export const clearError = () => {
   return {
-    type: CLEAR_ERROR
+    type: CLEAR_ERROR_MESSAGE
   };
 };

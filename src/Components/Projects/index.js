@@ -5,6 +5,7 @@ import MessageModal from 'Components/Shared/Modal/MessageModal';
 import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProjects, deleteProject } from 'redux/projects/thunks';
+import LoadingModal from 'Components/Shared/Loading';
 
 const Projects = () => {
   const [typeModal, setTypeModal] = useState('');
@@ -63,7 +64,7 @@ const Projects = () => {
   ];
 
   if (isLoading) {
-    return <h3>Loading...</h3>;
+    return <LoadingModal />;
   }
   return (
     <section className={styles.container}>

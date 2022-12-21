@@ -6,7 +6,7 @@ import Button from 'Components/Shared/Button/Button';
 import InputField from 'Components/Shared/Input/input';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { postAdmin, putAdmin } from 'redux/admins/thunks';
+import { putAdmin } from 'redux/admins/thunks';
 import { schema } from 'Components/Admins/validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
@@ -14,7 +14,7 @@ import { auth } from 'Helpers/firebase/index';
 
 function Form() {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.admins);
+  const { error, message } = useSelector((state) => state.admins);
   const adminId = useParams().id;
   const adminData = useSelector((state) =>
     state.admins.list.find((admin) => admin._id === adminId)
@@ -79,8 +79,16 @@ function Form() {
   }, []);
 
   useEffect(() => {
-    openModalOnError(error);
-  }, [error]);
+    if (error) {
+      setTypeModal('Error');
+      setTextMessageModal(error);
+      openMessageModal();
+    } else if (message) {
+      setTypeModal('Success');
+      setTextMessageModal('User Edited');
+      openMessageModal();
+    }
+  }, [error, message]);
 
   const openModalOnError = (error) => {
     if (error) {
@@ -104,16 +112,6 @@ function Form() {
       dispatch(putAdmin(data, adminId, token));
       if (!error) {
         reAuth(data);
-        setTypeModal('Success');
-        setTextMessageModal('The administrator was edited successfully');
-        openMessageModal();
-      }
-    } else {
-      dispatch(postAdmin(data, token));
-      if (!error) {
-        setTypeModal('Success');
-        setTextMessageModal('The administrator was added successfully');
-        openMessageModal();
       }
     }
   };
@@ -121,7 +119,7 @@ function Form() {
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.formHeader}>
-        <h3 id="fromHeader">Tittle</h3>
+        <h3 id="fromHeader">Title</h3>
         <Button href="/admin/admins" style="roundedSecondary" disabled={false} text="X" />
       </div>
       <div className={styles.fromInput}>

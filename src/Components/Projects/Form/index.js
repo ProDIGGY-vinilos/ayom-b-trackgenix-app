@@ -14,6 +14,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { schema } from 'Components/Projects/validations';
 import { getOneProject, postProject, putProject } from 'redux/projects/thunks';
 import { getEmployees } from 'redux/employees/thunks';
+import LoadingModal from 'Components/Shared/Loading';
 
 const Project = () => {
   const projectId = useParams().id;
@@ -139,7 +140,7 @@ const Project = () => {
   };
 
   if (isLoading) {
-    return <h3>Loading...</h3>;
+    return <LoadingModal />;
   }
 
   return (

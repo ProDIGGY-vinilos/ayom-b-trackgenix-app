@@ -9,6 +9,7 @@ import { schema } from 'Components/Pages/Auth/Login/validations';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import { login } from 'redux/auth/thunks';
 import { Link } from 'react-router-dom';
+import LoadingModal from 'Components/Shared/Loading';
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -76,19 +77,24 @@ const Login = (props) => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingModal />;
   }
 
   return (
     <>
-      <h2 className={styles.title}>TRACKGENIX</h2>
+      <h2 className={styles.title}>Trackgenix</h2>
+      <link
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
+      ></link>
       <div className={styles.container}>
-        <div>
+        <div className={styles.loginImage}></div>
+        <div className={styles.loginContainer}>
           <h3 className={styles.login}>Login</h3>
           <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.flexForm}>
               <InputField
-                label="Email"
+                label=""
                 name="email"
                 type="text"
                 placeholder="Email"
@@ -97,26 +103,26 @@ const Login = (props) => {
               />
             </div>
             <div className={styles.flexForm}>
-              <InputField
-                label="Password"
-                name="password"
-                type={!showPassword ? 'password' : 'text'}
-                placeholder="Password"
-                register={register}
-                error={errors.password?.message}
-              />
-            </div>
-            <div>
-              <label>Show Password</label>
-              <input type="checkbox" onClick={() => viewPassword()} />
+              <div className={styles.passwordBox}>
+                <InputField
+                  label=""
+                  name="password"
+                  type={!showPassword ? 'password' : 'text'}
+                  placeholder="Password"
+                  register={register}
+                  error={errors.password?.message}
+                />
+                <div className={styles.passwordIcon} onClick={() => viewPassword()}>
+                  <i className={showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'}></i>
+                </div>
+              </div>
             </div>
             <div className={styles.buttons}>
-              <Button href="/home" style="squaredPrimary" disabled={false} text="Back" />
               <Button
                 onClick={handleSubmit(onSubmit)}
                 style="squaredPrimary"
                 disabled={false}
-                text="Submit"
+                text="Login"
               />
               <p>
                 New to Trackgenix?{' '}

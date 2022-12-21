@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { lazy, Suspense } from 'react';
+import React, { lazy } from 'react';
 import { Route, Redirect, useLocation } from 'react-router-dom';
 import createTitle from 'Helpers/create-title.js';
 import Layout from 'Components/Shared/Layout';
@@ -11,13 +10,16 @@ const EmployeeForm = lazy(() => import('Components/Pages/Admin/Employees/Employe
 const TimeSheets = lazy(() => import('Components/Pages/Admin/TimeSheetsList/index'));
 const MyProfile = lazy(() => import('Components/Pages/Admin/MyProfile/index'));
 const MyProfileForm = lazy(() => import('Components/Pages/Admin/MyProfile/MyProfileForm/index'));
+const Tasks = lazy(() => import('Components/Pages/Admin/Tasks/Task List/index'));
+const TaskForm = lazy(() => import('Components/Pages/Admin/Tasks/Task Form/index'));
 
 const AdminLayout = () => {
   const sideBarOptions = [
     { link: '/admin/projects', label: 'Projects' },
     { link: '/admin/employees', label: 'Employees' },
     { link: '/admin/timesheets', label: 'TimeSheets' },
-    { link: '/admin/profile', label: 'Profile' }
+    { link: '/admin/profile', label: 'Profile' },
+    { link: '/admin/tasks', label: 'Tasks' }
   ];
   let path = useLocation().pathname.split('/');
   path = path[path.length - 1];
@@ -35,6 +37,9 @@ const AdminLayout = () => {
       <Route exact path="/admin/profile" component={MyProfile} />
       <Route exact path="/admin/profile-form" component={MyProfileForm} />
       <Route path="/admin/profile-form/:id" component={MyProfileForm} />
+      <Route exact path="/admin/tasks" component={Tasks} />
+      <Route exact path="/admin/task-form" component={TaskForm} />
+      <Route path="/admin/task-form/:id" component={TaskForm} />
       <Route path="/admin">
         <Redirect to="/admin/projects" />
       </Route>

@@ -130,7 +130,7 @@ export const putSuperAdmin = (data, id, token) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(putSuperAdminSuccess(data.data));
+          dispatch(putSuperAdminSuccess(data));
         }
       })
       .catch((error) => {

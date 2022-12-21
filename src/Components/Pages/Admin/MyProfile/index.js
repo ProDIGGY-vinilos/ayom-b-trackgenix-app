@@ -4,6 +4,7 @@ import Table from 'Components/Shared/Table';
 import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAdminByFirebaseUid } from 'redux/admins/thunks';
+import LoadingModal from 'Components/Shared/Loading';
 
 const AdminProfile = () => {
   const dispatch = useDispatch();
@@ -25,12 +26,11 @@ const AdminProfile = () => {
   ];
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <LoadingModal />;
   }
 
   return (
     <section className={styles.container}>
-      <h2>Admin</h2>
       <Table data={adminList} columns={columns} edit="/admin/profile" />
       <Button
         href={`profile-form/${adminList[0]?._id}`}

@@ -5,9 +5,11 @@ import Table from 'Components/Shared/Table';
 import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAdmins, deleteAdmin } from 'redux/admins/thunks';
+import { clearError } from 'redux/admins/actions';
+import LoadingModal from 'Components/Shared/Loading';
 
 const Admins = () => {
-  const { list: adminList, isLoading, error } = useSelector((state) => state.admins);
+  const { list: adminList, isLoading, error, message } = useSelector((state) => state.admins);
   const dispatch = useDispatch();
   const token = sessionStorage.getItem('token');
 
@@ -17,19 +19,30 @@ const Admins = () => {
 
   const openModal = () => {
     setShowModal(true);
+    dispatch(clearError);
   };
 
   const closeModal = () => {
     setShowModal(false);
+    dispatch(clearError);
   };
 
   useEffect(() => {
+    dispatch(clearError);
     dispatch(getAdmins(token));
   }, []);
 
   useEffect(() => {
-    openModalOnError(error);
-  }, [error]);
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    } else if (message) {
+      setTypeModal('Success');
+      setTextModal(message);
+      openModal();
+    }
+  }, [error, message]);
 
   const removeAdmin = (id) => {
     dispatch(deleteAdmin(id, token));
@@ -52,7 +65,7 @@ const Admins = () => {
   ];
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <LoadingModal />;
   }
 
   const openModalOnError = (error) => {

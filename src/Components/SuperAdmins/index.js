@@ -5,6 +5,7 @@ import Table from 'Components/Shared/Table';
 import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { getSuperAdmins, deleteSuperAdmin } from 'redux/superAdmins/thunks';
+import LoadingModal from 'Components/Shared/Loading';
 
 const SuperAdmins = () => {
   const [typeModal, setTypeModal] = useState();
@@ -66,7 +67,7 @@ const SuperAdmins = () => {
     <div className={styles.container}>
       <h2>Super Admin</h2>
       {isLoading ? (
-        <h3>Loading.. </h3>
+        <LoadingModal />
       ) : (
         <>
           <Table

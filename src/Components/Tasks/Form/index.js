@@ -10,7 +10,7 @@ import { getOneTask, postTask, putTask } from 'redux/tasks/thunks';
 import { joiResolver } from '@hookform/resolvers/joi';
 import schema from 'Components/Tasks/Form/validations';
 
-const Form = () => {
+const TaskForm = () => {
   const taskId = useParams().id;
   const dispatch = useDispatch();
   const dataTask = useSelector((state) => state.tasks.list.find((task) => task._id === taskId));
@@ -115,4 +115,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default TaskForm;

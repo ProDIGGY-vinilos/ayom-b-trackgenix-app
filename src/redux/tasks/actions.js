@@ -2,6 +2,9 @@ import {
   GET_TASKS_PENDING,
   GET_TASKS_SUCCESS,
   GET_TASKS_ERROR,
+  GET_TASKS_WITH_DELETED_PENDING,
+  GET_TASKS_WITH_DELETED_SUCCESS,
+  GET_TASKS_WITH_DELETED_ERROR,
   GET_ONE_TASK_PENDING,
   GET_ONE_TASK_SUCCESS,
   GET_ONE_TASK_ERROR,
@@ -13,7 +16,8 @@ import {
   PUT_TASK_ERROR,
   DELETE_TASK_PENDING,
   DELETE_TASK_SUCCESS,
-  DELETE_TASK_ERROR
+  DELETE_TASK_ERROR,
+  CLEAR_ERROR_MESSAGE
 } from 'redux/tasks/constant';
 
 export const getTasksPending = () => {
@@ -32,6 +36,26 @@ export const getTasksSuccess = (payload) => {
 export const getTasksError = (error) => {
   return {
     type: GET_TASKS_ERROR,
+    payload: error
+  };
+};
+
+export const getTasksWithDeletedPending = () => {
+  return {
+    type: GET_TASKS_WITH_DELETED_PENDING
+  };
+};
+
+export const getTasksWithDeletedSuccess = (payload) => {
+  return {
+    type: GET_TASKS_WITH_DELETED_SUCCESS,
+    payload
+  };
+};
+
+export const getTasksWithDeletedError = (error) => {
+  return {
+    type: GET_TASKS_WITH_DELETED_ERROR,
     payload: error
   };
 };
@@ -62,10 +86,10 @@ export const postTaskPending = () => {
   };
 };
 
-export const postTaskSuccess = (payload) => {
+export const postTaskSuccess = (data) => {
   return {
     type: POST_TASK_SUCCESS,
-    payload
+    payload: data
   };
 };
 
@@ -82,10 +106,10 @@ export const putTaskPending = () => {
   };
 };
 
-export const putTaskSuccess = (payload) => {
+export const putTaskSuccess = (data) => {
   return {
     type: PUT_TASK_SUCCESS,
-    payload
+    payload: data
   };
 };
 
@@ -113,5 +137,11 @@ export const deleteTaskError = (error) => {
   return {
     type: DELETE_TASK_ERROR,
     payload: error
+  };
+};
+
+export const clearError = () => {
+  return {
+    type: CLEAR_ERROR_MESSAGE
   };
 };

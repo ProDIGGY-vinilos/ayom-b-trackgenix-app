@@ -2,6 +2,9 @@ import {
   getTasksPending,
   getTasksSuccess,
   getTasksError,
+  getTasksWithDeletedPending,
+  getTasksWithDeletedSuccess,
+  getTasksWithDeletedError,
   getOneTaskPending,
   getOneTaskSuccess,
   getOneTaskError,
@@ -34,6 +37,28 @@ export const getTasks = (token) => {
       })
       .catch((error) => {
         dispatch(getTasksError(error.toString()));
+      });
+  };
+};
+
+export const getTasksWithDeleted = (token) => {
+  return (dispatch) => {
+    dispatch(getTasksWithDeletedPending());
+    fetch(`${process.env.REACT_APP_API_URL}/tasks/withDeleted`, {
+      headers: {
+        token
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.message);
+        } else {
+          dispatch(getTasksWithDeletedSuccess(data.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getTasksWithDeletedError(error.toString()));
       });
   };
 };
@@ -76,7 +101,7 @@ export const postTask = (taskBody, token) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(postTaskSuccess(data.data));
+          dispatch(postTaskSuccess(data));
         }
       })
       .catch((error) => {
@@ -101,7 +126,7 @@ export const putTask = (id, taskBody, token) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(putTaskSuccess(data.data));
+          dispatch(putTaskSuccess(data));
         }
       })
       .catch((error) => {

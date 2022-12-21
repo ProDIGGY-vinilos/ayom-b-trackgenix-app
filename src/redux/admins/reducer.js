@@ -2,6 +2,9 @@ import {
   GET_ADMINS_PENDING,
   GET_ADMINS_SUCCESS,
   GET_ADMINS_ERROR,
+  GET_ADMINS_WITH_DELETED_PENDING,
+  GET_ADMINS_WITH_DELETED_SUCCESS,
+  GET_ADMINS_WITH_DELETED_ERROR,
   GET_ONE_ADMIN_PENDING,
   GET_ONE_ADMIN_SUCCESS,
   GET_ONE_ADMIN_ERROR,
@@ -16,13 +19,15 @@ import {
   PUT_ADMIN_ERROR,
   DELETE_ADMIN_PENDING,
   DELETE_ADMIN_SUCCESS,
-  DELETE_ADMIN_ERROR
+  DELETE_ADMIN_ERROR,
+  CLEAR_ERROR_MESSAGE
 } from 'redux/admins/constant';
 
 const INITIAL_STATE = {
   list: [],
   isLoading: false,
-  error: ''
+  error: '',
+  message: ''
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -40,6 +45,24 @@ const reducer = (state = INITIAL_STATE, action) => {
         list: action.payload
       };
     case GET_ADMINS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case GET_ADMINS_WITH_DELETED_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GET_ADMINS_WITH_DELETED_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: action.payload
+      };
+    case GET_ADMINS_WITH_DELETED_ERROR:
       return {
         ...state,
         isLoading: false,
@@ -89,9 +112,10 @@ const reducer = (state = INITIAL_STATE, action) => {
     case POST_ADMIN_SUCCESS:
       return {
         ...state,
-        list: [...state.list, action.data],
+        list: [...state.list, action.payload.data],
         error: '',
-        isLoading: false
+        isLoading: false,
+        message: action.payload.message
       };
     case POST_ADMIN_ERROR:
       return {
@@ -102,21 +126,23 @@ const reducer = (state = INITIAL_STATE, action) => {
     case PUT_ADMIN_PENDING:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        error: ''
       };
     case PUT_ADMIN_SUCCESS:
       return {
         ...state,
+        message: action.payload.message,
+        error: false,
         list: [
           ...state.list.map((admin) => {
-            if (admin._id === action.data._id) {
-              return action.data;
+            if (admin._id === action.payload.data._id) {
+              return action.payload.data;
             } else {
               return admin;
             }
           })
         ],
-        error: '',
         isLoading: false
       };
     case PUT_ADMIN_ERROR:
@@ -134,6 +160,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         list: [...state.list.filter((task) => task._id !== action.payload)],
+        message: action.payload.message,
         error: '',
         isLoading: false
       };
@@ -142,6 +169,12 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: action.payload
+      };
+    case CLEAR_ERROR_MESSAGE:
+      return {
+        ...state,
+        error: '',
+        message: ''
       };
     default:
       return state;

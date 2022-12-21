@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { lazy, Suspense } from 'react';
+import React, { lazy } from 'react';
 import { Route, Redirect, useLocation } from 'react-router-dom';
 import createTitle from 'Helpers/create-title.js';
 import Layout from 'Components/Shared/Layout';

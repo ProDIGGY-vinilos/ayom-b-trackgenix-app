@@ -3,6 +3,7 @@ import Header from 'Components/Shared/Header/index';
 import styles from 'Components/Shared/Layout/layout.module.css';
 import { Switch } from 'react-router-dom';
 import React, { Suspense } from 'react';
+import LoadingModal from 'Components/Shared/Loading';
 
 const Layout = ({ children, sidebarOptions, user, path }) => {
   return (
@@ -10,7 +11,7 @@ const Layout = ({ children, sidebarOptions, user, path }) => {
       <Header header={path} />
       <div className={styles.bodyContainer}>
         <Sidebar options={sidebarOptions} user={user} />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LoadingModal />}>
           <Switch>{children}</Switch>
         </Suspense>
       </div>

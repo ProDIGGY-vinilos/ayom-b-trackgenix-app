@@ -5,6 +5,7 @@ import Table from 'Components/Shared/Table';
 import { useSelector, useDispatch } from 'react-redux';
 import { getEmployees, deleteEmployee } from 'redux/employees/thunks';
 import { clearError } from 'redux/employees/actions';
+import LoadingModal from 'Components/Shared/Loading';
 
 const Employees = () => {
   const [typeModal, setTypeModal] = useState('');
@@ -35,10 +36,8 @@ const Employees = () => {
   };
 
   useEffect(() => {
+    dispatch(getEmployees(token));
     dispatch(clearError());
-    if (!employeesList.length || employeesList.length === 1) {
-      dispatch(getEmployees(token));
-    }
   }, []);
 
   useEffect(() => {
@@ -64,7 +63,7 @@ const Employees = () => {
   ];
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <LoadingModal />;
   }
 
   return (

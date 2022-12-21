@@ -1,35 +1,50 @@
-.container {
-  width: 300px;
-  position: relative;
+.container{
   display: flex;
-  margin: auto;
-  margin-top: 8%;
-  padding: 15px 25px;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
-}
-
-.login {
-  font-size: 25px;
-}
-
-.title {
-  display: flex;
-  justify-content: center;
+  flex-direction: row;
+  height: 100vh;
   width: 100%;
-  padding: 30px 0px;
+}
+
+.login{
+  align-content: left;
+  font-size: 30px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.loginImage{
+  background-image: url('./Login.png');
+  background-repeat: no-repeat;
+  background-size: 700px;
+  background-position: center;
+  background-position-y: 50px;
+  width: 60%;
+}
+
+.loginContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: left;
+  margin-left: 0px;
+  margin-top: 100px;
+  width: 40%;
+}
+
+.title{
+  display: flex;
+  align-items: center;
+  height: 100px;
+  padding-left: 65px;
   margin: 0px;
+  font-size: 45px;
   color: #fff;
   background-color: #373867;
 }
 
-.form {
+.form{
   display: flex;
-  padding: 20px;
-  gap: 15px;
   flex-direction: column;
+  width: 70%;
 }
 
 .flexForm div{
@@ -37,14 +52,48 @@
   flex-direction: column;
 }
 
-.flexForm input {
+.flexForm input{
   display: flex;
-  justify-content: center;
-  height: 40px;
-  margin: 5px;
-  padding: 3px 7px;
-  font-size: 17px;
-  border: 2px solid #808080;
-  border-radius: 4px;
-  font-weight: 100;
+  flex-direction: row;
+  height: 50px;
+  width: 100%;
+  font-size: 20px;
+  border-radius: 10px;
+  margin-top: 15px;
+  text-indent: 15px;
+}
+
+.buttons > button{
+  background: #373867;
+  border: 2px solid  #373867;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px;
+  width: 100%;
+  font-size: 20px;
+  border-radius: 10px;
+  margin-top: 15px;
+  text-indent: 15px;
+}
+
+.passwordBox{
+  position: relative;
+}
+
+.passwordIcon{
+  display: flex;
+  align-items: center;
+  position: absolute;
+  height: 100%;
+  top: 33px;
+  right: 7px;
+  padding-right: 1px;
+  cursor: pointer;
+}
+
+
+.link {
+  text-decoration: none;
+  font-weight: 700;
+  color: #373867;
 }
