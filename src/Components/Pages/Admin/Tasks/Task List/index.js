@@ -46,11 +46,7 @@ const Tasks = () => {
     }
   };
 
-  const columns = [
-    { heading: 'Id', value: '_id' },
-    { heading: 'Description', value: 'description' },
-    { heading: 'Actions' }
-  ];
+  const columns = [{ heading: 'Description', value: 'description' }, { heading: 'Actions' }];
 
   const openModalOnError = (error) => {
     if (error) {
@@ -66,7 +62,6 @@ const Tasks = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Tasks</h2>
       {isLoading ? (
         <h3>Loading...</h3>
       ) : (

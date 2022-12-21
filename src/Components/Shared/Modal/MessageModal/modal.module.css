@@ -11,7 +11,7 @@
   width: 350px;
   height: 200px;
   background-color: #D9D9D9;
-  border-radius: 8px;
+  border-radius: 20px;
   margin: auto;
   margin-top: 100px;
   text-align: center;
@@ -21,9 +21,9 @@
   display: flex;
   justify-content: space-between;
   margin-top: 5px;
-  border: #9e210b solid 1px;
+  border: #373867 solid 1px;
   padding: 2px 16px;
-  background-color: #EA3354;
+  background-color: #373867;
   border-radius: 15px 15px 0px 0px;
   color: #ffffff;
   font-size: 22px;
@@ -39,12 +39,12 @@
   margin-top: 5px;
   width: fit-content;
   height: fit-content;
-  border: #9e210b solid 1px;
+  border: #373867 solid 1px;
 }
 
 .closeButton:hover {
-  background-color: #9e210b;
-  border-color: #F13312;
+  background-color: #373867;
+  border-color: #373867;
 }
 
 .modalText {
