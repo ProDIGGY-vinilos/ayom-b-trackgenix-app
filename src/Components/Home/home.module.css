@@ -3,11 +3,6 @@ html{
   overflow-x: hidden;
 }
 
-header{
-  height: 100px;
-  display: flex;
-}
-
 .headerConteiner{
   height: 100%;
   margin: 0px;
@@ -150,7 +145,7 @@ color: #373867;
   line-height: 35px;
 }
 
-aside{
+.aside{
   position: fixed;
   top: 0;
   left: 0;

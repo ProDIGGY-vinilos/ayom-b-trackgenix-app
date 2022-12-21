@@ -2,10 +2,8 @@
     display: flex;
     flex-direction: column;
     background-color: #d9d9d9;
-    width: 130px;
-    height: 94vh;
+    width: 220px;
     justify-content: space-between;
-    position: fixed;
 }
 
 .routes {
@@ -21,7 +19,7 @@
 .listItem {
     margin-bottom: 5px;
     padding: 15px 0;
-    font-size: 16px;
+    font-size: 18px;
     text-align: center;
     color: #373867;
     font-weight: bold;
@@ -31,7 +29,7 @@
 .logout {
     color: #373867;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
     text-decoration: none;
     margin: 0px;
     margin-bottom: 10px;
@@ -42,7 +40,7 @@
 .selected {
     margin-bottom: 5px;
     padding: 15px 0;
-    font-size: 17px;
+    font-size: 19px;
     text-align: center;
     color: #373867;
     font-weight: bold;

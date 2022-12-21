@@ -25,7 +25,7 @@ const EmployeeLayout = () => {
       <Route exact path="/employee/time-sheet-form" component={TimeSheetsForm} />
       <Route path="/employee/time-sheet-form/:id" component={TimeSheetsForm} />
       <Route exact path="/employee/profile" component={MyProfile} />
-      <Route exact path="/employee/profile-form" component={MyProfileForm} />
+      <Route exact path="/employee/profile-form/:id" component={MyProfileForm} />
       <Route path="/employee">
         <Redirect to="/employee/projects" />
       </Route>

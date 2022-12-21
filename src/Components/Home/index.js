@@ -28,7 +28,7 @@ const Home = (props) => {
         <h2 className={styles.headerSubTitle}>By GigaTech Software Solutions</h2>
       </header>
       <body>
-        <aside>
+        <aside className={styles.aside}>
           <div>
             <div className={styles.asideBoxConteiner}>
               <img src={`${process.env.PUBLIC_URL}/assets/Home/AsideIcon/home.png`}></img>

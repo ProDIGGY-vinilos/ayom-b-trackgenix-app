@@ -31,7 +31,6 @@ const SuperAdminProfile = () => {
 
   return (
     <section className={styles.container}>
-      <h2>Super Admin</h2>
       <Table data={superAdminsList} columns={columns} edit="/super-admin/profile" />
       <Button
         href={`profile-form/${superAdminsList[0]?._id}`}

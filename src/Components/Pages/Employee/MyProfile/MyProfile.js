@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import styles from 'Components/Employees/employees.module.css';
+import styles from 'Components/Pages/Employee/MyProfile/myprofile.module.css';
 import Table from 'Components/Shared/Table';
 import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
