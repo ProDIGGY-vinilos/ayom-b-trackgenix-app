@@ -1,11 +1,7 @@
-/* eslint-disable no-unused-vars */
-import React, { lazy, Suspense } from 'react';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import React, { lazy } from 'react';
+import { Route, Redirect, useLocation } from 'react-router-dom';
 import createTitle from 'Helpers/create-title.js';
-import Header from 'Components/Shared/Header/index';
-import Sidebar from 'Components/Shared/Sidebar';
-import styles from 'Components/Layout/SuperAdminLayout/layout.module.css';
-import LoadingModal from 'Components/Shared/Loading';
+import Layout from 'Components/Shared/Layout';
 
 const Admins = lazy(() => import('Components/Pages/SuperAdmin/Admins/AdminList/index'));
 const AdminForm = lazy(() => import('Components/Pages/SuperAdmin/Admins/AdminForm/index'));
@@ -24,24 +20,16 @@ const SuperAdminLayout = () => {
   path = createTitle(path);
 
   return (
-    <div className={styles.container}>
-      <Header header={path} />
-      <div className={styles.bodyContainer}>
-        <Sidebar options={sideBarOptions} user={'Super Admin'} />
-        <Suspense fallback={<LoadingModal />}>
-          <Switch>
-            <Route exact path="/super-admin/admins" component={Admins} />
-            <Route exact path="/super-admin/admin-form" component={AdminForm} />
-            <Route path="/super-admin/admin-form/:id" component={AdminForm} />
-            <Route exact path="/super-admin/profile" component={MyProfile} />
-            <Route path="/super-admin/profile-form/:id" component={MyProfileForm} />
-            <Route path="/super-admin">
-              <Redirect to="/super-admin/admins" />
-            </Route>
-          </Switch>
-        </Suspense>
-      </div>
-    </div>
+    <Layout sidebarOptions={sideBarOptions} user={'Super Admin'} path={path}>
+      <Route exact path="/super-admin/admins" component={Admins} />
+      <Route exact path="/super-admin/admin-form" component={AdminForm} />
+      <Route path="/super-admin/admin-form/:id" component={AdminForm} />
+      <Route exact path="/super-admin/profile" component={MyProfile} />
+      <Route path="/super-admin/profile-form/:id" component={MyProfileForm} />
+      <Route path="/super-admin">
+        <Redirect to="/super-admin/admins" />
+      </Route>
+    </Layout>
   );
 };
 
