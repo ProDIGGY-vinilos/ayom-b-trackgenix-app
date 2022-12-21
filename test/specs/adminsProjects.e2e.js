@@ -1,4 +1,3 @@
-const adminPage = require('../pageobjects/admin.page');
 const Admin = require('../pageobjects/admin.page')
 const Login = require('../pageobjects/login.page')
 
