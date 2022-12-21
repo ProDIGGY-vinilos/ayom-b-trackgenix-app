@@ -87,6 +87,30 @@ class Superadmin {
         return $('#root > div > div > aside > div.sidebar_bottom__3h20X > button');
     }
 
+    get profileMenu () {
+        return $('#root > div > div > aside > div.sidebar_routes__32H42 > a.sidebar_listItem__3QsHV');
+    }
+
+    get superAProfile () {
+        return $('#root > div > div > section > h2');
+    }
+
+    get editSABtn () {
+        return $('#root > div > div > section > button');
+    }
+
+    get nameEdited () {
+        return $('#root > div > div > section > table > tbody > tr > td:nth-child(1)')
+    }
+
+    get closeX () {
+        return $('#root > div > div > form > div:nth-child(6) > div > div > div > button')
+    }
+
+    get formClose () {
+        return $('#root > div > div > form > div.admin_formHeader__jsWIH > button')
+    }
+
     async addAdmin (name, lastName, email, password) {
         await this.nameInput.setValue(name);
         await this.lastNameInput.setValue(lastName);
