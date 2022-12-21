@@ -2,53 +2,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #000000;
+  background-color:#373867;;
 }
 
 .main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  text-align: center;
   padding: 0 5%;
   width: 90%;
   height: 100px;
 }
 
 .appName {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #FFF;
-}
-
-.rutes {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  list-style-type: none;
-}
-
-.rutes > li > a {
-  margin-left: 15px;
   font-size: 1rem;
-  font-weight: 600;
-  text-decoration: none;
-  text-transform: capitalize;
-  color: #FFF;
-}
-
-.license {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 50px;
-  width: 90%;
-  padding: 0 20px;
-  background-color: #EA3354;
-}
-
-.copyright {
-  font-size: 0.7rem;
-  font-style: italic;
+  font-weight: bold;
+  color: #FFFF;
 }
 
 .socialIcon {
@@ -67,6 +37,9 @@
   }
 
   .socialIcon {
+    width: 61px;
+    height: 45px;
+    filter: invert(1);
     margin-left: 15px;
   }
 }

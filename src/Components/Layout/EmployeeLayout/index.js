@@ -4,6 +4,7 @@ import createTitle from 'Helpers/create-title.js';
 import Header from 'Components/Shared/Header/index';
 import Sidebar from 'Components/Shared/Sidebar';
 import styles from 'Components/Layout/EmployeeLayout/layout.module.css';
+import LoadingModal from 'Components/Shared/Loading';
 
 const ProjectsList = lazy(() => import('Components/Pages/Employee/ProjectList/index'));
 const TimeSheets = lazy(() => import('Components/Pages/Employee/TimeSheetsList/index'));
@@ -25,7 +26,7 @@ const Layout = () => {
       <Header header={path} />
       <div className={styles.bodyContainer}>
         <Sidebar options={sideBarOptions} user={'Employee'} />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LoadingModal />}>
           <Switch>
             <Route exact path="/employee/projects" component={ProjectsList} />
             <Route exact path="/employee/timesheets" component={TimeSheets} />

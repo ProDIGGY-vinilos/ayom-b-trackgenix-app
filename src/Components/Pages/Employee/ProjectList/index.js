@@ -5,6 +5,7 @@ import { getEmployeeByFirebaseUid } from 'redux/employees/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import { auth } from 'Helpers/firebase/index';
+import LoadingModal from 'Components/Shared/Loading';
 
 const ProjectsPage = () => {
   const userUId = auth.currentUser.uid;
@@ -55,9 +56,12 @@ const ProjectsPage = () => {
     { heading: 'End Date', value: 'endDate', type: 'date' }
   ];
 
+  if (isLoading) {
+    return <LoadingModal />;
+  }
+
   return (
     <>
-      {isLoading && <h2>Loading...</h2>}
       {!isLoading && projectsList.length ? (
         <Table data={projectsList} columns={columns} />
       ) : (

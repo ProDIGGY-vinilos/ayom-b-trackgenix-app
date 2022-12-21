@@ -4,6 +4,7 @@ import Table from 'Components/Shared/Table';
 import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { getEmployeeByFirebaseUid } from 'redux/employees/thunks';
+import LoadingModal from 'Components/Shared/Loading';
 
 const EmployeeProfile = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const EmployeeProfile = () => {
   ];
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <LoadingModal />;
   }
 
   return (

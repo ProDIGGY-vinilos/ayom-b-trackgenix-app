@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import Button from 'Components/Shared/Button/Button';
 import styles from 'Components/Pages/Admin/Projects/ProjectList/adminProjectList.module.css';
+import LoadingModal from 'Components/Shared/Loading';
 
 const ProjectsPage = () => {
   const token = sessionStorage.getItem('token');
@@ -63,9 +64,12 @@ const ProjectsPage = () => {
     { heading: 'Actions' }
   ];
 
+  if (isLoading) {
+    return <LoadingModal />;
+  }
+
   return (
     <>
-      {isLoading && <h2>Loading...</h2>}
       <div className={styles.container}>
         {!isLoading && projectsList.length ? (
           <Table

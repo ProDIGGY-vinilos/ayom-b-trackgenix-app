@@ -5,6 +5,7 @@ import styles from 'Components/TimeSheets/time-sheets.module.css';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import Table from 'Components/Shared/Table';
 import Button from 'Components/Shared/Button/Button';
+import LoadingModal from 'Components/Shared/Loading';
 
 const TimeSheets = () => {
   const [typeModal, setTypeModal] = useState('');
@@ -63,7 +64,7 @@ const TimeSheets = () => {
     <section className={styles.container}>
       <h2>Time Sheets</h2>
       {isLoading ? (
-        <h3>Loading...</h3>
+        <LoadingModal />
       ) : (
         <>
           <Table

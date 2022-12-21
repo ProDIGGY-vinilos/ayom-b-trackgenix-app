@@ -9,6 +9,7 @@ import { schema } from 'Components/Pages/Auth/Login/validations';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import { login } from 'redux/auth/thunks';
 import { Link } from 'react-router-dom';
+import LoadingModal from 'Components/Shared/Loading';
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -76,7 +77,7 @@ const Login = (props) => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingModal />;
   }
 
   return (

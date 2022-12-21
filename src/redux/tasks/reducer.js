@@ -16,13 +16,15 @@ import {
   PUT_TASK_ERROR,
   DELETE_TASK_PENDING,
   DELETE_TASK_SUCCESS,
-  DELETE_TASK_ERROR
+  DELETE_TASK_ERROR,
+  CLEAR_ERROR_MESSAGE
 } from 'redux/tasks/constant';
 
 const INITIAL_STATE = {
   list: [],
   isLoading: false,
-  error: ''
+  error: '',
+  message: ''
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -94,8 +96,9 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-        list: [...state.list, action.payload],
-        error: ''
+        list: [...state.list, action.payload.data],
+        error: '',
+        message: action.payload.message
       };
     case POST_TASK_ERROR:
       return {
@@ -115,14 +118,15 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         list: [
           ...state.list.map((task) => {
-            if (task._id === action.payload._id) {
-              return action.payload;
+            if (task._id === action.payload.data._id) {
+              return action.payload.data;
             } else {
               return task;
             }
           })
         ],
-        error: ''
+        error: '',
+        message: action.payload.message
       };
     case PUT_TASK_ERROR:
       return {
@@ -148,6 +152,12 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: action.payload
+      };
+    case CLEAR_ERROR_MESSAGE:
+      return {
+        ...state,
+        error: '',
+        message: ''
       };
     default:
       return {

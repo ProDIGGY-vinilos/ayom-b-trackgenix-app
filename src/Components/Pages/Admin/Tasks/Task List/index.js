@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import Table from 'Components/Shared/Table';
-import styles from 'Components/Tasks/tasks.module.css';
+import styles from 'Components/Pages/Admin/Tasks/tasks.module.css';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTasks, deleteTask } from 'redux/tasks/thunks';
-import LoadingModal from 'Components/Shared/Loading';
 
 const Tasks = () => {
   const [typeModal, setTypeModal] = useState('');
@@ -69,7 +68,7 @@ const Tasks = () => {
     <div className={styles.container}>
       <h2>Tasks</h2>
       {isLoading ? (
-        <LoadingModal />
+        <h3>Loading...</h3>
       ) : (
         <>
           <Table
