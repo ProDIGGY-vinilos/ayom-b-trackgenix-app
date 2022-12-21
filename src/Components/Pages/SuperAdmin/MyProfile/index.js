@@ -4,6 +4,7 @@ import Table from 'Components/Shared/Table';
 import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { getSuperAdminByFirebaseUid } from 'redux/superAdmins/thunks';
+import LoadingModal from 'Components/Shared/Loading';
 
 const SuperAdminProfile = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const SuperAdminProfile = () => {
   ];
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <LoadingModal />;
   }
 
   return (

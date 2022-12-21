@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getTimeSheets } from 'redux/timeSheets/thunks';
 import styles from 'Components/Pages/Employee/TimeSheetsList/time-sheets.module.css';
 import Table from 'Components/Shared/Table';
+import LoadingModal from 'Components/Shared/Loading';
 
 const TimeSheetsList = () => {
   const { list: timeSheetsList, isLoading } = useSelector((state) => state.timeSheets);
@@ -24,7 +25,7 @@ const TimeSheetsList = () => {
   return (
     <section className={styles.container}>
       {isLoading ? (
-        <h3>Loading...</h3>
+        <LoadingModal />
       ) : (
         <>
           <Table data={timeSheetsList} columns={columns} />

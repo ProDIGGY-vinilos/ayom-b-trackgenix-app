@@ -5,6 +5,7 @@ import createTitle from 'Helpers/create-title.js';
 import Header from 'Components/Shared/Header/index';
 import Sidebar from 'Components/Shared/Sidebar';
 import styles from 'Components/Layout/AdminLayout/layout.module.css';
+import LoadingModal from 'Components/Shared/Loading';
 
 const Projects = lazy(() => import('Components/Pages/Admin/Projects/ProjectList/index'));
 const ProjectForm = lazy(() => import('Components/Pages/Admin/Projects/ProjectForm/index'));
@@ -33,7 +34,7 @@ const AdminLayout = () => {
       <Header header={path} />
       <div className={styles.bodyContainer}>
         <Sidebar options={sideBarOptions} user={'Admin'} />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LoadingModal />}>
           <Switch>
             <Route exact path="/admin/projects" component={Projects} />
             <Route exact path="/admin/project-form" component={ProjectForm} />
