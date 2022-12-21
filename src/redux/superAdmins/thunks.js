@@ -109,7 +109,7 @@ export const postSuperAdmin = (superAdminId, superAdmin) => {
   };
 };
 
-export const putSuperAdmin = (data, id, token) => {
+export const putSuperAdmin = (id, data, token) => {
   return (dispatch) => {
     dispatch(putSuperAdminPending());
     fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {

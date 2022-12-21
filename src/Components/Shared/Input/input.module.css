@@ -1,4 +1,5 @@
 .formcontrol {
+    width: 100%;
     margin: 20px 0;
 }
 
@@ -9,7 +10,7 @@
 .formControl input {
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 92%;
     height: 40px;
     margin: 5px;
     padding: 3px 7px;
