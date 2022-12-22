@@ -5,6 +5,7 @@ import Home from 'Components/Home';
 import 'index.css';
 import PrivateRoute from 'Routes/PrivateRoutes';
 import LoadingModal from 'Components/Shared/Loading';
+import styles from 'Components/Shared/Layout/layout.module.css';
 
 const EmployeeLayout = lazy(() => import('Components/Layout/EmployeeLayout'));
 const AdminLayout = lazy(() => import('Components/Layout/AdminLayout'));
@@ -18,7 +19,15 @@ const Routes = () => {
   }, []);
   return (
     <BrowserRouter>
-      <Suspense fallback={<LoadingModal />}>
+      <Suspense
+        fallback={
+          <div className={styles.bodyContainer}>
+            <div className={styles.spinnerContainer}>
+              <LoadingModal />
+            </div>
+          </div>
+        }
+      >
         <Switch>
           <PrivateRoute path="/employee" role="EMPLOYEE" component={EmployeeLayout} />
           <PrivateRoute path="/admin" role="ADMIN" component={AdminLayout} />

@@ -77,7 +77,13 @@ const Login = (props) => {
   };
 
   if (isLoading) {
-    return <LoadingModal />;
+    return (
+      <section className={styles.container}>
+        <div className={styles.loaderContainer}>
+          <LoadingModal />;
+        </div>
+      </section>
+    );
   }
 
   return (
