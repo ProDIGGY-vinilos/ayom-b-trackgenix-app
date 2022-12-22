@@ -13,3 +13,11 @@
     font-weight: bold;
     font-size: 16px;
 }
+
+.container input[type="date"] {
+    font-family: 'Roboto'
+}
+
+.container input[type="date"]:focus {
+    border-radius: 5px;
+}
