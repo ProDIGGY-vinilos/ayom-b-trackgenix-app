@@ -78,8 +78,8 @@ const Login = (props) => {
 
   if (isLoading) {
     return (
-      <section className={styles.container}>
-        <div className={styles.loaderContainer}>
+      <section className={styles.loaderContainer}>
+        <div className={styles.spinnerContainer}>
           <LoadingModal />;
         </div>
       </section>

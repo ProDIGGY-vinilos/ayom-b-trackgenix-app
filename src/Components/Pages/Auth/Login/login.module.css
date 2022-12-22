@@ -5,6 +5,23 @@
   width: 100%;
 }
 
+.loaderContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  height: 100vh;
+}
+
+.spinnerContainer {
+  margin: auto;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+}
+
 .login{
   align-content: left;
   font-size: 30px;
