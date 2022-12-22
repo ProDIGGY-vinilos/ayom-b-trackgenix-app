@@ -36,3 +36,13 @@
     width: 65%;
     margin-bottom: 15px;
 }
+
+.container {
+    margin: auto;
+    width: 80%;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+  }

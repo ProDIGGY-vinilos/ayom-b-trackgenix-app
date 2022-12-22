@@ -10,12 +10,13 @@ import { auth } from 'Helpers/firebase/index';
 import { EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearError } from 'redux/admins/actions';
+import LoadingModal from 'Components/Shared/Loading';
 
 const ProfileForm = ({ schema, entity, post, put, getOne, textEdit, textNew, type, href }) => {
   const dispatch = useDispatch();
   const id = useParams().id;
   const userData = useSelector((state) => state[entity].list.find((user) => user._id === id));
-  const { error, message } = useSelector((state) => state[entity]);
+  const { error, message, isLoading } = useSelector((state) => state[entity]);
 
   const token = sessionStorage.getItem('token');
 
@@ -123,6 +124,14 @@ const ProfileForm = ({ schema, entity, post, put, getOne, textEdit, textNew, typ
       dispatch(post(data, token));
     }
   };
+
+  if (isLoading) {
+    return (
+      <section className={styles.container}>
+        <LoadingModal />;
+      </section>
+    );
+  }
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>

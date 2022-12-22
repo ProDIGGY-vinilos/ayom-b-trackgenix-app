@@ -3,6 +3,7 @@ import styles from 'Components/Projects/Form/FormEmployees/formemployee.module.c
 import InputField from 'Components/Shared/Input/input';
 import Select from 'Components/Shared/Select';
 import { useFieldArray } from 'react-hook-form';
+import Button from 'Components/Shared/Button/Button';
 
 const FormEmployee = ({ register, control, errors, employees }) => {
   const roles = [{ role: 'DEV' }, { role: 'QA' }, { role: 'PM' }, { role: 'TL' }];
@@ -45,15 +46,13 @@ const FormEmployee = ({ register, control, errors, employees }) => {
                 error={errors.employees?.[index]?.rate.message}
               />
             </div>
-            <button type="button" onClick={() => remove(index)}>
-              Remove
-            </button>
+            <div className={styles.button}>
+              <Button style="squaredPrimary" text="Remove" onClick={() => remove(index)} />
+            </div>
           </div>
         );
       })}
-      <button type="button" onClick={() => append({})}>
-        Append
-      </button>
+      <Button onClick={() => append({})} text="Add employee" style="squaredPrimary2" />
     </>
   );
 };

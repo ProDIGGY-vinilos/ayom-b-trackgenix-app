@@ -10,6 +10,7 @@ import { getOneTask, postTask, putTask } from 'redux/tasks/thunks';
 import { joiResolver } from '@hookform/resolvers/joi';
 import schema from 'Components/Pages/Admin/Tasks/Task Form/validations';
 import { clearError } from 'redux/tasks/actions';
+import LoadingModal from 'Components/Shared/Loading';
 
 const TaskForm = () => {
   const taskId = useParams().id;
@@ -17,7 +18,7 @@ const TaskForm = () => {
   const dataTask = useSelector((state) => state.tasks.list.find((task) => task._id === taskId));
   const token = sessionStorage.getItem('token');
 
-  const { error, message } = useSelector((state) => state.tasks);
+  const { error, message, isLoading } = useSelector((state) => state.tasks);
   const [typeModal, setTypeModal] = useState('');
   const [textMessageModal, setTextMessageModal] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
@@ -76,6 +77,14 @@ const TaskForm = () => {
       dispatch(postTask(data, token));
     }
   };
+
+  if (isLoading) {
+    return (
+      <section className={styles.container}>
+        <LoadingModal />;
+      </section>
+    );
+  }
 
   return (
     <div className={styles.container}>

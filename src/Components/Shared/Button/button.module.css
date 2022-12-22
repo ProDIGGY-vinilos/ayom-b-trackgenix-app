@@ -5,7 +5,7 @@
     background-color: #373867;
     border: 2px solid #373867;
     color: #ffffff;
-    border-radius: 10%;
+    border-radius: 5px;
     text-decoration: none;
     font-size: 16px;
     transition-duration: 0.4s;
@@ -47,7 +47,7 @@
     background-color: #ffffff;
     border: 2px solid #373867;
     color: #000000;
-    border-radius: 10%;
+    border-radius: 5px;
     text-decoration: none;
     font-size: 16px;
     transition-duration: 0.4s;
@@ -93,7 +93,7 @@
     background-color: #373867;
     border: 2px solid #373867;
     color: #ffffff;
-    border-radius: 10px;
+    border-radius: 5px;
     text-decoration: none;
     font-size: 16px;
     transition-duration: 0.4s;
@@ -105,8 +105,6 @@
 }
 
 .squaredSecondary2 {
-    display: flex;
-    justify-content: flex-end;
     margin: 4px 2px;
     padding: 17px 20px;
     height: 100%;
@@ -114,7 +112,7 @@
     background-color: #ffffff;
     border: 2px solid #373867;
     color: #000000;
-    border-radius: 10%;
+    border-radius: 5px;
     text-decoration: none;
     font-size: 16px;
     transition-duration: 0.4s;
