@@ -19,6 +19,7 @@ const TimeSheetsList = () => {
     { heading: 'Date', value: 'date', type: 'date' },
     { heading: 'Project', value: 'project', subValue: 'name' },
     { heading: 'Task', value: 'task', subValue: 'description' },
+    { heading: 'Employee', value: 'employee', subValue: 'lastName' },
     { heading: 'Hours', value: 'hours' }
   ];
 
