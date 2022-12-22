@@ -40,7 +40,7 @@ const AdminProfile = () => {
         href={`profile-form/${adminList[0]?._id}`}
         style="squaredPrimary"
         disabled={false}
-        text="Edit"
+        icon="edit"
       />
     </section>
   );

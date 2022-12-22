@@ -47,7 +47,7 @@ const FormEmployee = ({ register, control, errors, employees }) => {
               />
             </div>
             <div className={styles.button}>
-              <Button style="squaredPrimary" text="Remove" onClick={() => remove(index)} />
+              <Button style="squaredPrimary" text="remove" onClick={() => remove(index)} />
             </div>
           </div>
         );

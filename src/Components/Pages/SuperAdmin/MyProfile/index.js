@@ -40,7 +40,7 @@ const SuperAdminProfile = () => {
         href={`profile-form/${superAdminsList[0]?._id}`}
         style="squaredPrimary"
         disabled={false}
-        text="Edit"
+        icon="edit"
       />
     </section>
   );
