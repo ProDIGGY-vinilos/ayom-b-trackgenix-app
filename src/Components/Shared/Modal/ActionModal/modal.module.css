@@ -10,10 +10,10 @@
 .modalHeader {
   margin-top: 5px;
   padding: 2px 16px;
-  border: #9e210b solid 1px;
+  border: #373867 solid 1px;
   border-radius: 15px 15px 0px 0px;
   color: #ffffff;
-  background-color: #EA3354;
+  background-color: #373867;
   font-size: 22px;
 }
 
@@ -27,12 +27,12 @@
   margin-top: 5px;
   width: fit-content;
   height: fit-content;
-  border: #9e210b solid 1px;
+  border: #373867 solid 1px;
 }
 
 .closeButton:hover {
-  background-color: #9e210b;
-  border-color: #F13312;
+  background-color: #373867;
+  border-color: #373867;
 }
 
 .modalText {
@@ -73,7 +73,7 @@
 .confirmButton {
   margin: 10px;
   padding: 20px;
-  background: #EA3354;
+  background: #373867;
   border-style: none;
   border-radius: 5px;
   font-weight: bold;

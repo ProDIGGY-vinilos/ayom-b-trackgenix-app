@@ -11,7 +11,7 @@ const FormEmployee = ({ register, errors, employees }) => {
         options={employees}
         field="lastName"
         name="employees[0].employee"
-        label="Employees"
+        label="Employee"
         register={register}
         error={errors.employees?.employee?.message}
       />

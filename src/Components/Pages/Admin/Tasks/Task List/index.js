@@ -5,6 +5,7 @@ import MessageModal from 'Components/Shared/Modal/MessageModal';
 import Button from 'Components/Shared/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTasks, deleteTask } from 'redux/tasks/thunks';
+import LoadingModal from 'Components/Shared/Loading';
 
 const Tasks = () => {
   const [typeModal, setTypeModal] = useState('');
@@ -46,11 +47,7 @@ const Tasks = () => {
     }
   };
 
-  const columns = [
-    { heading: 'Id', value: '_id' },
-    { heading: 'Description', value: 'description' },
-    { heading: 'Actions' }
-  ];
+  const columns = [{ heading: 'Description', value: 'description' }, { heading: 'Actions' }];
 
   const openModalOnError = (error) => {
     if (error) {
@@ -66,9 +63,8 @@ const Tasks = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Tasks</h2>
       {isLoading ? (
-        <h3>Loading...</h3>
+        <LoadingModal />
       ) : (
         <>
           <Table

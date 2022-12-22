@@ -13,7 +13,7 @@ function Form() {
       textEdit="Edit Admin"
       textNew="New Admin"
       type="admin"
-      href="/admin/admins"
+      href="/admin/profile"
     />
   );
 }

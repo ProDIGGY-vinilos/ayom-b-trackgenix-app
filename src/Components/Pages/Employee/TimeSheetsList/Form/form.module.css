@@ -15,12 +15,10 @@
 }
 
 .form {
-    background-color: #F0F4F9;
+    background-color: #e0e0e0;
     box-shadow: 5px 5px 5px #808080;
     border-top-style: none;
     border-radius: 5px;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -74,4 +72,8 @@ input[type=text], input[type=date], textarea{
     border-radius: 4px;
     font-weight: 100;
     font-size: 15px;
+}
+
+.buttons {
+    display: flex;
 }

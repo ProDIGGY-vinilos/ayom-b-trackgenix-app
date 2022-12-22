@@ -19,7 +19,8 @@ import {
   PUT_TIMESHEET_ERROR,
   DELETE_TIMESHEET_PENDING,
   DELETE_TIMESHEET_SUCCESS,
-  DELETE_TIMESHEET_ERROR
+  DELETE_TIMESHEET_ERROR,
+  CLEAR_ERROR_MESSAGE
 } from 'redux/timeSheets/constant';
 
 export const getTimeSheetsPending = () => {
@@ -159,5 +160,11 @@ export const deleteTimeSheetError = (error) => {
   return {
     type: DELETE_TIMESHEET_ERROR,
     payload: error
+  };
+};
+
+export const clearError = () => {
+  return {
+    type: CLEAR_ERROR_MESSAGE
   };
 };

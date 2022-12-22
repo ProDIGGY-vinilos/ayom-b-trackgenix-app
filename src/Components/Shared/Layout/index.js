@@ -8,10 +8,16 @@ import LoadingModal from 'Components/Shared/Loading';
 const Layout = ({ children, sidebarOptions, user, path }) => {
   return (
     <div className={styles.container}>
-      <Header header={path} />
+      <Sidebar options={sidebarOptions} user={user} />
       <div className={styles.bodyContainer}>
-        <Sidebar options={sidebarOptions} user={user} />
-        <Suspense fallback={<LoadingModal />}>
+        <Header header={path} />
+        <Suspense
+          fallback={
+            <div className={styles.spinnerContainer}>
+              <LoadingModal />
+            </div>
+          }
+        >
           <Switch>{children}</Switch>
         </Suspense>
       </div>

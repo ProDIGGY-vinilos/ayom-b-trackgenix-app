@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import MessageModal from 'Components/Shared/Modal/MessageModal';
 import { auth } from 'Helpers/firebase/index';
 import LoadingModal from 'Components/Shared/Loading';
+import styles from 'Components/Pages/Admin/Projects/ProjectList/adminProjectList.module.css';
 
 const ProjectsPage = () => {
   const userUId = auth.currentUser.uid;
@@ -57,11 +58,15 @@ const ProjectsPage = () => {
   ];
 
   if (isLoading) {
-    return <LoadingModal />;
+    return (
+      <section className={styles.container}>
+        <LoadingModal />;
+      </section>
+    );
   }
 
   return (
-    <>
+    <div className={styles.container}>
       {!isLoading && projectsList.length ? (
         <Table data={projectsList} columns={columns} />
       ) : (
@@ -73,7 +78,7 @@ const ProjectsPage = () => {
         message={textModal}
         handleClose={closeModal}
       />
-    </>
+    </div>
   );
 };
 

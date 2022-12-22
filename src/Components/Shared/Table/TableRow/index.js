@@ -53,7 +53,10 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
           }
 
           if (columnItem.type === 'date') {
-            return <td key={index}>{item[columnItem.value].substring(0, 10)}</td>;
+            let date = item[columnItem.value].substring(0, 10);
+            let dateArray = date.split('-');
+            let fixedDate = `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`;
+            return <td key={index}>{fixedDate}</td>;
           }
 
           if (columnItem.subValue) {
@@ -61,16 +64,29 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
           }
 
           if (columnItem.array) {
+            let employeeAmount = 0;
+            for (let index = 0; index < item[columnItem.value].length; index++) {
+              employeeAmount++;
+            }
             return (
               <td key={index}>
-                <p>
-                  Name: {item[columnItem.value][0][columnItem.array][columnItem.nameValue]}{' '}
-                  {item[columnItem.value][0][columnItem.array][columnItem.lastNameValue]}
-                </p>
-                <p>Role: {item[columnItem.value][0][columnItem.roleValue]}</p>
-                <p>Rate: {item[columnItem.value][0][columnItem.rateValue]}</p>
+                <p>{employeeAmount}</p>
               </td>
             );
+          }
+
+          /* if (columnItem.value === 'description') {
+            if (item[columnItem.value].length > 15) {
+              return <td key={index}>{item[columnItem.value].substring(0, 45)}...</td>;
+            }
+          } */
+
+          if (columnItem.value === 'password') {
+            let passwordHidden = '';
+            for (let index = 0; index < item[columnItem.value].length; index++) {
+              passwordHidden += '*';
+            }
+            return <td key={index}>{passwordHidden}</td>;
           }
 
           return <td key={index}>{item[columnItem.value]}</td>;

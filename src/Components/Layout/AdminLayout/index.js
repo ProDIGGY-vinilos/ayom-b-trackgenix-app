@@ -16,13 +16,17 @@ const TaskForm = lazy(() => import('Components/Pages/Admin/Tasks/Task Form/index
 const AdminLayout = () => {
   const sideBarOptions = [
     { link: '/admin/projects', label: 'Projects' },
+    { link: '/admin/tasks', label: 'Tasks' },
     { link: '/admin/employees', label: 'Employees' },
     { link: '/admin/timesheets', label: 'TimeSheets' },
-    { link: '/admin/profile', label: 'Profile' },
-    { link: '/admin/tasks', label: 'Tasks' }
+    { link: '/admin/profile', label: 'Profile' }
   ];
   let path = useLocation().pathname.split('/');
-  path = path[path.length - 1];
+  if (path[path.length - 1].length === 24) {
+    path = path[path.length - 2];
+  } else {
+    path = path[path.length - 1];
+  }
   path = createTitle(path);
 
   return (

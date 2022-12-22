@@ -3,6 +3,7 @@ import styles from 'Components/Projects/Form/FormEmployees/formemployee.module.c
 import InputField from 'Components/Shared/Input/input';
 import Select from 'Components/Shared/Select';
 import { useFieldArray } from 'react-hook-form';
+import Button from 'Components/Shared/Button/Button';
 
 const FormEmployee = ({ register, control, errors, employees }) => {
   const roles = [{ role: 'DEV' }, { role: 'QA' }, { role: 'PM' }, { role: 'TL' }];
@@ -17,22 +18,24 @@ const FormEmployee = ({ register, control, errors, employees }) => {
       {fields.map((field, index) => {
         return (
           <div key={field.id} className={styles.employees}>
-            <Select
-              options={employees}
-              field="lastName"
-              name={`employees[${index}].employee`}
-              label="Employees"
-              register={register}
-              error={errors.employees?.employee?.message}
-            />
-            <Select
-              options={roles}
-              field="role"
-              name={`employees[${index}].role`}
-              label="Role"
-              register={register}
-              error={errors.employees?.role?.message}
-            />
+            <div className={styles.selects}>
+              <Select
+                options={employees}
+                field="lastName"
+                name={`employees[${index}].employee`}
+                label="Employee"
+                register={register}
+                error={errors.employees?.employee?.message}
+              />
+              <Select
+                options={roles}
+                field="role"
+                name={`employees[${index}].role`}
+                label="Role"
+                register={register}
+                error={errors.employees?.role?.message}
+              />
+            </div>
             <div>
               <InputField
                 name={`employees[${index}].rate`}
@@ -43,15 +46,13 @@ const FormEmployee = ({ register, control, errors, employees }) => {
                 error={errors.employees?.[index]?.rate.message}
               />
             </div>
-            <button type="button" onClick={() => remove(index)}>
-              Remove
-            </button>
+            <div className={styles.button}>
+              <Button style="squaredPrimary" text="Remove" onClick={() => remove(index)} />
+            </div>
           </div>
         );
       })}
-      <button type="button" onClick={() => append({})}>
-        Append
-      </button>
+      <Button onClick={() => append({})} text="Add employee" style="squaredPrimary2" />
     </>
   );
 };

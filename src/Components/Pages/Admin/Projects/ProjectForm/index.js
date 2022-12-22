@@ -157,17 +157,15 @@ const Project = () => {
   };
 
   if (isLoading) {
-    return <LoadingModal />;
+    return (
+      <section className={styles.container}>
+        <LoadingModal />;
+      </section>
+    );
   }
 
   return (
     <div className={styles.container}>
-      {isFetched ? (
-        <h2 className={styles.title}>Edit Project</h2>
-      ) : (
-        <h2 className={styles.title}>Add new project</h2>
-      )}
-      <Button href="/admin/projects" style="roundedSecondary" disabled={false} text="X" />
       <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.formDiv}>
           <InputField
@@ -215,8 +213,8 @@ const Project = () => {
             error={errors.endDate?.message}
           />
         </div>
-        <h4 className={styles.formFull}>Employees: </h4>
         <div className={`${styles.formFull} ${styles.employeesDiv}`}>
+          <h4 className={styles.formFull}>Employees: </h4>
           <FormEmployee
             control={control}
             employees={employeesList}
@@ -224,6 +222,7 @@ const Project = () => {
             errors={errors}
           />
         </div>
+        <Button href="/admin/projects" style="squaredSecondary" disabled={false} text="Back" />
         <Button onClick={openModal} style="squaredPrimary" disabled={false} text="Save" />
       </form>
       <MessageModal

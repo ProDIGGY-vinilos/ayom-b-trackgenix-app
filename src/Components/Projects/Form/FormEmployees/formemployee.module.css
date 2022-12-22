@@ -6,3 +6,12 @@
 .displayNone{
   display: none;
 }
+
+.selects {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  align-self: center;
+}

@@ -26,12 +26,15 @@ const SuperAdminProfile = () => {
   ];
 
   if (isLoading) {
-    return <LoadingModal />;
+    return (
+      <section className={styles.container}>
+        <LoadingModal />;
+      </section>
+    );
   }
 
   return (
     <section className={styles.container}>
-      <h2>Super Admin</h2>
       <Table data={superAdminsList} columns={columns} edit="/super-admin/profile" />
       <Button
         href={`profile-form/${superAdminsList[0]?._id}`}

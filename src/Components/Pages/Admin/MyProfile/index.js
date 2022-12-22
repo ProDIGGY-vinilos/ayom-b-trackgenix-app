@@ -26,7 +26,11 @@ const AdminProfile = () => {
   ];
 
   if (isLoading) {
-    return <LoadingModal />;
+    return (
+      <section className={styles.container}>
+        <LoadingModal />;
+      </section>
+    );
   }
 
   return (

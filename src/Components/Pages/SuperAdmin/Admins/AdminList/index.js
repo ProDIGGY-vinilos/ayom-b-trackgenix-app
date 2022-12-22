@@ -56,16 +56,18 @@ const Admins = () => {
   };
 
   const columns = [
-    { heading: 'Id', value: '_id' },
     { heading: 'Name', value: 'name' },
     { heading: 'Last Name', value: 'lastName' },
     { heading: 'Email', value: 'email' },
-    { heading: 'Password', value: 'password' },
     { heading: 'Actions' }
   ];
 
   if (isLoading) {
-    return <LoadingModal />;
+    return (
+      <section className={styles.container}>
+        <LoadingModal />;
+      </section>
+    );
   }
 
   const openModalOnError = (error) => {
@@ -78,7 +80,6 @@ const Admins = () => {
 
   return (
     <section className={styles.container}>
-      <h2>Admin</h2>
       <Table
         data={adminList}
         columns={columns}

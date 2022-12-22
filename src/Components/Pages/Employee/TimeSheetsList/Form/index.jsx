@@ -14,13 +14,14 @@ import { timeSheetValidation } from './validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 import TextAreaField from 'Components/Shared/TextArea';
 import { useParams } from 'react-router-dom';
+import { clearError } from 'redux/timeSheets/actions';
 
 const TimeSheetsForm = () => {
   const [typeModal, setTypeModal] = useState();
   const [textModal, setTextModal] = useState();
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.timeSheets);
+  const { error, message } = useSelector((state) => state.timeSheets);
   const { list: projectsList } = useSelector((state) => state.projects);
   const { list: taskList } = useSelector((state) => state.tasks);
   const employeeId = useParams().id;
@@ -35,16 +36,9 @@ const TimeSheetsForm = () => {
     resolver: joiResolver(timeSheetValidation)
   });
 
-  const openModalOnError = (error) => {
-    if (error) {
-      setTypeModal('Error');
-      setTextModal(error);
-      openModal();
-    }
-  };
-
   const openModal = () => {
     setShowModal(true);
+    dispatch(clearError());
   };
 
   const closeModal = () => {
@@ -52,8 +46,16 @@ const TimeSheetsForm = () => {
   };
 
   useEffect(() => {
-    openModalOnError(error);
-  }, [error]);
+    if (error) {
+      setTypeModal('Error');
+      setTextModal(error);
+      openModal();
+    } else if (message) {
+      setTypeModal('Success');
+      setTextModal(message);
+      openModal();
+    }
+  }, [error, message]);
 
   useEffect(() => {
     dispatch(getTasks(token));
@@ -66,15 +68,10 @@ const TimeSheetsForm = () => {
       employee: employeeId
     };
     dispatch(postTimeSheet(data, token));
-    setTypeModal('Success');
-    setTextModal('TimeSheet added successfully');
-    openModal();
   };
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Add new time sheet</h2>
-      <Button href="/employee/timesheets" style="roundedSecondary" disabled={false} text="X" />
       <form onSubmit={handleSubmit(createTimeSheet)} className={styles.form}>
         <div className={styles.formContainer}>
           <div>
@@ -92,6 +89,7 @@ const TimeSheetsForm = () => {
               type="text"
               register={register}
               error={errors.hours?.message}
+              slimInput={true}
             />
           </div>
           <div>
@@ -116,8 +114,8 @@ const TimeSheetsForm = () => {
           </div>
         </div>
         <div className={styles.textAreaContainer}>
-          <label>Description</label>
           <TextAreaField
+            label="Description"
             name="description"
             placeholder="Description"
             register={register}
@@ -126,12 +124,15 @@ const TimeSheetsForm = () => {
           />
         </div>
       </form>
-      <Button
-        onClick={handleSubmit(createTimeSheet)}
-        style="squaredPrimary"
-        disabled={false}
-        text="Save"
-      />
+      <div className={styles.buttons}>
+        <Button href="/employee/timesheets" style="squaredSecondary" disabled={false} text="Back" />
+        <Button
+          onClick={handleSubmit(createTimeSheet)}
+          style="squaredPrimary"
+          disabled={false}
+          text="Save"
+        />
+      </div>
       <MessageModal
         type={typeModal}
         isOpen={showModal}

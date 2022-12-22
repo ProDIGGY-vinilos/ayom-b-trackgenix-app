@@ -3,7 +3,10 @@
     margin: 20px 0;
 }
 
-.formControl label {
+.formControl label, .formControlSlim label {
+    color: #373867;
+    font-weight: bold;
+    font-size: 16px;
     display: block;
 }
 
@@ -12,6 +15,19 @@
     justify-content: center;
     width: 92%;
     height: 40px;
+    margin: 5px;
+    padding: 3px 7px;
+    font-size: 17px;
+    border: 2px solid #808080;
+    border-radius: 4px;
+    font-weight: 100;
+}
+
+.formControlSlim input {
+    display: flex;
+    justify-content: center;
+    width: 92%;
+    height: 20px;
     margin: 5px;
     padding: 3px 7px;
     font-size: 17px;

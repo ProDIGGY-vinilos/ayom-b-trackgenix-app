@@ -9,6 +9,23 @@
   background-color: #373867;
 }
 
+.loaderContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  height: 100vh;
+}
+
+.spinnerContainer {
+  margin: auto;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+}
+
 .signUpDesign {
   display: flex;
   flex-direction: row;
