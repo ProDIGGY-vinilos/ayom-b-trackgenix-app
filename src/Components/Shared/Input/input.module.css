@@ -4,6 +4,9 @@
 }
 
 .formControl label {
+    color: #373867;
+    font-weight: bold;
+    font-size: 16px;
     display: block;
 }
 

@@ -17,22 +17,24 @@ const FormEmployee = ({ register, control, errors, employees }) => {
       {fields.map((field, index) => {
         return (
           <div key={field.id} className={styles.employees}>
-            <Select
-              options={employees}
-              field="lastName"
-              name={`employees[${index}].employee`}
-              label="Employees"
-              register={register}
-              error={errors.employees?.employee?.message}
-            />
-            <Select
-              options={roles}
-              field="role"
-              name={`employees[${index}].role`}
-              label="Role"
-              register={register}
-              error={errors.employees?.role?.message}
-            />
+            <div className={styles.selects}>
+              <Select
+                options={employees}
+                field="lastName"
+                name={`employees[${index}].employee`}
+                label="Employee"
+                register={register}
+                error={errors.employees?.employee?.message}
+              />
+              <Select
+                options={roles}
+                field="role"
+                name={`employees[${index}].role`}
+                label="Role"
+                register={register}
+                error={errors.employees?.role?.message}
+              />
+            </div>
             <div>
               <InputField
                 name={`employees[${index}].rate`}

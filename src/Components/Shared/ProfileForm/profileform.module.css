@@ -30,7 +30,6 @@
 }
 
 .buttons {
-    align-self: flex-end;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

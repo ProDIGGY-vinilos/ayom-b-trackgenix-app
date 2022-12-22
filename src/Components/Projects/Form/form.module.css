@@ -29,7 +29,7 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   border-radius: 15px;
-  background-color: #F0F4F9;
+  background-color: #e0e0e0;
 }
 
 .formContainer {
@@ -44,11 +44,13 @@
 .formFull{
   margin: 10px;
   width: 100%;
+  color: #373867;
 }
 
 .employeesDiv{
   display: flex;
   flex-direction: column;
+  background-color: #d9d9d8;
 }
 
 .btn {

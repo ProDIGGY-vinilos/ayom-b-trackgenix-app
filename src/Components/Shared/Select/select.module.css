@@ -7,6 +7,13 @@
     flex-direction: column;
 }
 
+.selectContainer label {
+    color: #373867;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+
 .select , .option{
     border: 2px solid #808080;
     padding-top: 2px;

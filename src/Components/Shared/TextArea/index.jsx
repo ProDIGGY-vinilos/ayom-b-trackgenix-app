@@ -2,7 +2,7 @@ import styles from './textArea.module.css';
 
 const TextAreaField = ({ label, name, placeholder, register, columns, error = '' }) => {
   return (
-    <div>
+    <div className={styles.container}>
       {label && <label>{label}</label>}
       <textarea
         className={styles.textArea}

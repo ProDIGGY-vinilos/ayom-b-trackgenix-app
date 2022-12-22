@@ -145,11 +145,6 @@ const Project = () => {
 
   return (
     <div className={styles.container}>
-      {isFetched ? (
-        <h2 className={styles.title}>Edit Project</h2>
-      ) : (
-        <h2 className={styles.title}>Add new project</h2>
-      )}
       <Button href="/admin/projects" style="roundedSecondary" disabled={false} text="X" />
       <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.formDiv}>

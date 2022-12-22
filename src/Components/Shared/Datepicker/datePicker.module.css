@@ -2,3 +2,14 @@
     color: #f00;
     margin: 0px;
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.container label {
+    color: #373867;
+    font-weight: bold;
+    font-size: 16px;
+}

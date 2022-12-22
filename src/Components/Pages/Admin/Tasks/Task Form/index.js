@@ -91,7 +91,7 @@ const TaskForm = () => {
           />
         </div>
         <div className={styles.buttonsDiv}>
-          <Button href="/admin/tasks" style="squaredPrimary" diabled={false} text="Back" />
+          <Button href="/admin/tasks" style="squaredSecondary" diabled={false} text="Back" />
           <Button
             onClick={handleSubmit(onSubmit)}
             style="squaredPrimary"

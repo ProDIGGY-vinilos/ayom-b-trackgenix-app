@@ -1,13 +1,9 @@
 .loader {
   width: 32px;
   height: 90px;
-  display: block;
-  margin-left: auto;
   margin: auto;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  align-self: center;
+  justify-self: center;
   position: fixed;
   border-radius: 50% 50% 0 0;
   border-bottom: 10px solid #373867;

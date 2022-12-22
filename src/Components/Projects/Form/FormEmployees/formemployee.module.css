@@ -6,3 +6,8 @@
 .displayNone{
   display: none;
 }
+
+.selects {
+  display: flex;
+  flex-direction: column;
+}

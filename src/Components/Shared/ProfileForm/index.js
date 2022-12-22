@@ -127,7 +127,7 @@ const ProfileForm = ({ schema, entity, post, put, getOne, textEdit, textNew, typ
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.formHeader}>
-        <h3 id="fromHeader">Tittle</h3>
+        <h3 id="fromHeader">Title</h3>
       </div>
       <div className={styles.fromInput}>
         <InputField

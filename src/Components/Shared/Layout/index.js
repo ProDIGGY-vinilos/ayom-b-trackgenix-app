@@ -11,7 +11,13 @@ const Layout = ({ children, sidebarOptions, user, path }) => {
       <Sidebar options={sidebarOptions} user={user} />
       <div className={styles.bodyContainer}>
         <Header header={path} />
-        <Suspense fallback={<LoadingModal />}>
+        <Suspense
+          fallback={
+            <div className={styles.spinnerContainer}>
+              <LoadingModal />
+            </div>
+          }
+        >
           <Switch>{children}</Switch>
         </Suspense>
       </div>
