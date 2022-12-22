@@ -134,7 +134,7 @@ export const postTimeSheet = (data, token) => {
         if (data.error) {
           throw new Error(data.message);
         } else {
-          dispatch(postTimeSheetSuccess(data.data));
+          dispatch(postTimeSheetSuccess(data));
         }
       })
       .catch((error) => {

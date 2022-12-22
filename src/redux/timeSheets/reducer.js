@@ -19,13 +19,15 @@ import {
   PUT_TIMESHEET_ERROR,
   DELETE_TIMESHEET_PENDING,
   DELETE_TIMESHEET_SUCCESS,
-  DELETE_TIMESHEET_ERROR
+  DELETE_TIMESHEET_ERROR,
+  CLEAR_ERROR_MESSAGE
 } from 'redux/timeSheets/constant';
 
 const INITIAL_STATE = {
   list: [],
   isLoading: false,
-  error: ''
+  error: '',
+  message: ''
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -117,9 +119,10 @@ const reducer = (state = INITIAL_STATE, action) => {
     case POST_TIMESHEET_SUCCESS:
       return {
         ...state,
-        list: [...state.list, action.payload],
+        list: [...state.list, action.payload.data],
         error: '',
-        isLoading: false
+        isLoading: false,
+        message: action.payload.message
       };
     case POST_TIMESHEET_ERROR:
       return {
@@ -175,6 +178,12 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         error: action.payload,
         list: []
+      };
+    case CLEAR_ERROR_MESSAGE:
+      return {
+        ...state,
+        error: '',
+        message: ''
       };
     default:
       return {

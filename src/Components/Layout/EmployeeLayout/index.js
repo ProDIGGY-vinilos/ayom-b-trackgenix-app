@@ -16,7 +16,11 @@ const EmployeeLayout = () => {
     { link: '/employee/profile', label: 'Profile' }
   ];
   let path = useLocation().pathname.split('/');
-  path = path[path.length - 1];
+  if (path[path.length - 1].length === 24) {
+    path = path[path.length - 2];
+  } else {
+    path = path[path.length - 1];
+  }
   path = createTitle(path);
   return (
     <Layout sidebarOptions={sideBarOptions} user={'Employee'} path={path}>

@@ -66,7 +66,7 @@ const ProjectsPage = () => {
   }
 
   return (
-    <>
+    <div className={styles.container}>
       {!isLoading && projectsList.length ? (
         <Table data={projectsList} columns={columns} />
       ) : (
@@ -78,7 +78,7 @@ const ProjectsPage = () => {
         message={textModal}
         handleClose={closeModal}
       />
-    </>
+    </div>
   );
 };
 
