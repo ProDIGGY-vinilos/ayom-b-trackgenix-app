@@ -37,7 +37,7 @@ const EmployeeProfile = () => {
         href={`profile-form/${employeesList[0]?._id}`}
         style="squaredPrimary"
         disabled={false}
-        text="Edit"
+        icon="edit"
       />
     </section>
   );

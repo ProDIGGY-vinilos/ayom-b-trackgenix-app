@@ -31,13 +31,13 @@ const TableRow = ({ item, columns, deleteItem, edit }) => {
                     href={`${edit}/${item._id}`}
                     style="squaredSecondary"
                     disabled={false}
-                    text="Edit"
+                    icon="edit"
                   />
                   <Button
                     onClick={openModal}
                     style="squaredPrimary"
                     disabled={false}
-                    text="Delete"
+                    icon="delete"
                   />
                   <Modal
                     showModal={showModal}
