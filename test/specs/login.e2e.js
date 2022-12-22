@@ -7,6 +7,7 @@ describe('TG Login', () => {
     });
 
     it('Should enter the login form', async () => {
+        await Login.loginBtn.waitForClickable();
         await Login.loginBtn.click();
         await expect(browser).toHaveUrl('https://ayom-b-trackgenix-app.vercel.app/login');
         await expect(Login.loginImg).toBeDisplayed();
@@ -63,7 +64,7 @@ describe('TG Login', () => {
     });
 
     it('Should login with existent employee data', async () => {
-        await Login.login('cristiangerster@gmail.com', 'asdasd12');
+        await Login.login('aguero@trackgenix.com', '1argentina2francia');
         await expect(Login.successModal).toBeDisplayed();
         await expect(Login.successModal).toHaveText('Success')
         await Login.modalBtn.click();
@@ -73,13 +74,16 @@ describe('TG Login', () => {
         await expect(Login.userType).toHaveTextContaining('Employee');
         await Login.logOutBtn.click();
         await expect(browser).toHaveUrlContaining('https://ayom-b-trackgenix-app.vercel.app/home');
+        await expect(Login.homeImg).toBeDisplayed();
+        await expect(Login.homeImg).toHaveAttr('src', '/assets/Home/mainImage/HomePage.png');
     });
 
     it('Should login with existent admin data', async () => {
+        await Login.loginBtn.waitForClickable();
         await Login.loginBtn.click();
         await expect(browser).toHaveUrl('https://ayom-b-trackgenix-app.vercel.app/login');
         await expect(Login.loginImg).toBeDisplayed();
-        await Login.login('lanuevaShopie@gmail.com', 'asdf1234');
+        await Login.login('scaloneta@trackgenix.com', 'campeon2022');
         await expect(Login.successModal).toBeDisplayed();
         await expect(Login.successModal).toHaveText('Success')
         await Login.modalBtn.click();
@@ -89,13 +93,16 @@ describe('TG Login', () => {
         await expect(Login.userType).toHaveTextContaining('Admin');
         await Login.logOutBtn.click();
         await expect(browser).toHaveUrlContaining('https://ayom-b-trackgenix-app.vercel.app/home');
+        await expect(Login.homeImg).toBeDisplayed();
+        await expect(Login.homeImg).toHaveAttr('src', '/assets/Home/mainImage/HomePage.png');
     });
 
     it('Should login with existent super admin data', async () => {
+        await Login.loginBtn.waitForClickable();
         await Login.loginBtn.click();
         await expect(browser).toHaveUrl('https://ayom-b-trackgenix-app.vercel.app/login');
         await expect(Login.loginImg).toBeDisplayed();
-        await Login.login('supergodmin0@ihg.com', 'JBGkgzZbq589');
+        await Login.login('montyb@trackgenix.com', 'JBGkgzZbq589');
         await expect(Login.successModal).toBeDisplayed();
         await expect(Login.successModal).toHaveText('Success')
         await Login.modalBtn.click();
@@ -105,6 +112,8 @@ describe('TG Login', () => {
         await expect(Login.userType).toHaveTextContaining('Super Admin');
         await Login.logOutBtn.click();
         await expect(browser).toHaveUrlContaining('https://ayom-b-trackgenix-app.vercel.app/home');
+        await expect(Login.homeImg).toBeDisplayed();
+        await expect(Login.homeImg).toHaveAttr('src', '/assets/Home/mainImage/HomePage.png');
     });
 });
 

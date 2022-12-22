@@ -1,6 +1,6 @@
 class Signup {
     get signupBtn () {
-        return $('#root > section > div:nth-child(2) > a:nth-child(2)');
+        return $('body > aside > div:nth-child(1) > div:nth-child(3) > a');
     }
 
     get signupImg () {

@@ -1,7 +1,7 @@
 const SuperAdmin = require('../pageobjects/superadmin.page');
 const Login = require('../pageobjects/login.page')
 
-describe('Manage projects by admin', () => {
+describe('Create admin by super admin', () => {
     beforeAll('Navigate to url', () => {
         browser.url("https://ayom-b-trackgenix-app.vercel.app/home")
         browser.setWindowSize(1920, 1080);
@@ -25,8 +25,6 @@ describe('Manage projects by admin', () => {
     });
 
     it('Should open the "Add admin" form', async () => {
-        //await browser.executeAsync((done) => { done(document.body.style.zoom = '50%'); });
-        //await browser.waitUntil(() => (Superadmin.addAdminBtn).isClickable())
         await SuperAdmin.addAdminBtn.waitForClickable();
         await SuperAdmin.addAdminBtn.click();
         await expect(browser).toHaveUrl('https://ayom-b-trackgenix-app.vercel.app/super-admin/admin-form');
@@ -84,7 +82,7 @@ describe('Manage projects by admin', () => {
     })
 
     it('Should edit an admin', async () => {
-        await SuperAdmin.editBtn.waitForClickable()
+        await SuperAdmin.editBtn.waitForClickable();
         await SuperAdmin.editBtn.click();
         await expect(SuperAdmin.formTitle).toHaveText('EDIT ADMIN')
         await SuperAdmin.nameInput.setValue('TestNameEdit');

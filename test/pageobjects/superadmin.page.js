@@ -8,7 +8,7 @@ class Superadmin {
     }
 
     get saveBtn () {
-        return $('#root > div > div > form > button');
+        return $('#root > div > div > form > div.profileform_buttons__1_O7R > button.button_squaredPrimary__1ip0a');
     }
 
     get nameInput () {
@@ -49,6 +49,10 @@ class Superadmin {
 
     get acceptBtn () {
         return $('#root > div > div > form > div:nth-child(6) > div > div > button');
+    }
+
+    get successX () {
+        return $('#root > div > div > form > div:nth-child(6) > div > div > div > button');
     }
 
     get adminCreated () {

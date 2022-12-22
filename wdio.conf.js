@@ -135,7 +135,6 @@ exports.config = {
     reporters: ['spec',['allure', {outputDir: 'allure-results'}]],
 
 
-    
     //
     // Options to be passed to Jasmine.
     jasmineOpts: {

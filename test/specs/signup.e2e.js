@@ -85,7 +85,7 @@ describe('TG Signup', () => {
     });
 
     it('Should successfully create an employee with valid inputs', async () => {
-        await Signup.signup('testEmployee', 'testEmployee', 'newemployee@tester.com', '1234567890', 'abcd1234');
+        await Signup.signup('testEmployee', 'testEmployee', 'newwemployee@tester.com', '1234567890', 'abcd1234');
         await Signup.submitBtn.click();
         await expect(Signup.successModal).toBeDisplayed();
         await expect(Signup.successModal).toHaveText('Success');

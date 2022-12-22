@@ -1,7 +1,7 @@
 const SuperAdmin = require('../pageobjects/superadmin.page');
 const Login = require('../pageobjects/login.page')
 
-describe('Manage projects by admin', () => {
+describe('Edit super admin profile', () => {
     beforeAll('Navigate to url', () => {
         browser.url("https://ayom-b-trackgenix-app.vercel.app/home")
         browser.setWindowSize(1920, 1080);
@@ -14,7 +14,7 @@ describe('Manage projects by admin', () => {
     });
 
     it('Should login with existent super admin data', async () => {
-        await Login.login('supergodmin0@ihg.com', 'JBGkgzZbq589');
+        await Login.login('montyb@trackgenix.com', 'JBGkgzZbq589');
         await expect(Login.successModal).toBeDisplayed();
         await expect(Login.successModal).toHaveText('Success')
         await Login.modalBtn.click();
@@ -34,17 +34,29 @@ describe('Manage projects by admin', () => {
         await SuperAdmin.editSABtn.waitForClickable();
         await SuperAdmin.editSABtn.click();
         await expect(SuperAdmin.formTitle).toBeDisplayed();
-        await expect(SuperAdmin.formTitle).toHaveText('EDIT PROFILE');
+        await expect(SuperAdmin.formTitle).toHaveText('Edit Super Admin');
     })
 
     it('Should edit the data', async () => {
-        await SuperAdmin.nameInput.setValue('SUPERGODADMIN');
+        await SuperAdmin.nameInput.setValue('Montgomer');
+        await SuperAdmin.saveBtn.click();
+        await SuperAdmin.formClose.click();
+        await expect(SuperAdmin.successModal).toBeDisplayed();
+        await expect(SuperAdmin.successModal).toHaveText('Success');
+        await SuperAdmin.successX.waitForClickable();
+        await SuperAdmin.successX.click();
+        await expect(browser).toHaveUrlContaining('https://ayom-b-trackgenix-app.vercel.app/super-admin/profile');
+        await expect(SuperAdmin.nameEdited).toHaveText('Montgomer');
+    })
+
+    it('Should edit the data', async () => {
+        await SuperAdmin.nameInput.setValue('Montgomery');
         await SuperAdmin.saveBtn.click();
         await SuperAdmin.formClose.click();
         // await expect(SuperAdmin.successModal).toBeDisplayed();
         // await expect(SuperAdmin.successModal).toHaveText('Success');
         // await SuperAdmin.acceptBtn.click();
         await expect(browser).toHaveUrlContaining('https://ayom-b-trackgenix-app.vercel.app/super-admin/profile');
-        await expect(SuperAdmin.nameEdited).toHaveText('SUPERGODADMIN');
+        await expect(SuperAdmin.nameEdited).toHaveText('Montgomery');
     })
 })

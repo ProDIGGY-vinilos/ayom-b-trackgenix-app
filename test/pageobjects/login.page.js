@@ -1,6 +1,10 @@
 class Login {
     get loginBtn () {
-        return $('#root > section > div:nth-child(2) > a:nth-child(1)')
+        return $('body > aside > div:nth-child(1) > div:nth-child(2) > a');
+    }
+
+    get homeImg () {
+        return $('body > div > div.home_bodyImageConteiner__2cxSV > img');
     }
 
     get inputMail () {
